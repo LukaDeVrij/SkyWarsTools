@@ -1,6 +1,6 @@
 
 # SkyWarsTools
->Issue and patch notes tracker for lukatools.nl/hypixeltools
+>Issue and patch notes tracker for https://lukatools.nl/hypixeltools
 
 ## What is SkyWarsTools?
 SkyWarsTools is a stats website, similar to Plancke, Shmeado or Skycrypt. It specializes in tools for SkyWars. Similarly to the other tools, stats can be looked up for any player. But, every time someone does, these stats are also saved. This allows for stats progression through time.
@@ -9,7 +9,7 @@ Using these so-called 'snapshots' of stats, you can compare a snapshots with one
 
 ## Where do I use this tool?
 The tool can be found at the following URL:
->lukatools.nl/hypixeltools
+>https://lukatools.nl/hypixeltools
 
 ## How do I use this tool?
 Please refer to the GitHub wiki pages for explanations of specific pages and features.
