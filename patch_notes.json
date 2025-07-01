@@ -1,0 +1,131 @@
+[
+    {
+        "date": "2025/07/01",
+        "changes": [
+            "Import and export snapshots/settings in settings"
+            "Changed main domain"
+        ]
+    },
+    {
+        "date": "2025/06/18",
+        "changes": [
+            "Kit prestiges on statistics page"
+        ]
+    },
+    {
+        "date": "2025/06/15",
+        "changes": [
+            "Overall leaderboards added"
+        ]
+    },
+    {
+        "date": "2025/05/12",
+        "changes": [
+            "Reworked Calculate UI to be less confusing"
+        ]
+    },
+    {
+        "date": "2025/04/24",
+        "changes": [
+            "Added Angel's Descent",
+            "Backend rework for better performance/UX",
+            "Fixed various bugs"
+        ]
+    },
+    {
+        "date": "2025/04/14",
+        "changes": [
+            "Mini, solo and team stats shown separately",
+            "Added stats captured in snapshots for comparisons/session",
+            "Added kit leaderboards for mini"
+        ]
+    },
+    {
+        "date": "2025/05/10",
+        "changes": [
+            "EXP changes after SkyWars update"
+        ]
+    },
+    {
+        "date": "2025/03/19",
+        "changes": [
+            "Stats Extra tab - Name history, recent games and player card"
+        ]
+    },
+    {
+        "date": "2025/03/06",
+        "changes": [
+            "Calculate feature"
+        ]
+    },
+    {
+        "date": "2025/02/27",
+        "changes": [
+            "Cooldown UI and from 12h to 16h for saving stats"
+        ]
+    },
+    {
+        "date": "2025/02/07",
+        "changes": [
+            "Bug fixes & swapper URL auto-navigation",
+            "Kit Stats Leaderboards",
+            "Guild Tag on stats page",
+            "Overhauled session graphic"
+        ]
+    },
+    {
+        "date": "2025/01/12",
+        "changes": [
+            "Consolidated info & stats and added Ranked and perks"
+        ]
+    },
+    {
+        "date": "2025/01/03",
+        "changes": [
+            "Improved performance"
+        ]
+    },
+    {
+        "date": "2024/12/22",
+        "changes": [
+            "Level Progress"
+        ]
+    },
+    {
+        "date": "2024/11/07",
+        "changes": [
+            "Current map rotation page",
+            "Extended and kit stats"
+        ]
+    },
+    {
+        "date": "2024/11/02",
+        "changes": [
+            "Cloud snapshots (16h delay)"
+        ]
+    },
+    {
+        "date": "2024/10/31",
+        "changes": [
+            "Prestige progress"
+        ]
+    },
+    {
+        "date": "2024/10/29",
+        "changes": [
+            "Profiles added (auth)"
+        ]
+    },
+    {
+        "date": "2024/10/25",
+        "changes": [
+            "Added some stats and optimized stats saving"
+        ]
+    },
+    {
+        "date": "2024/10/18",
+        "changes": [
+            "Initial beta launch"
+        ]
+    }
+]
