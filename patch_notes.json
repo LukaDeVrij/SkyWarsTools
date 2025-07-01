@@ -2,7 +2,7 @@
     {
         "date": "2025/07/01",
         "changes": [
-            "Import and export snapshots/settings in settings"
+            "Import and export snapshots/settings in settings",
             "Changed main domain"
         ]
     },
