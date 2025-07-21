@@ -1,5 +1,19 @@
 [
     {
+        "date": "2025/07/21",
+        "changes": [
+            "Reworked Map Rotation page",
+            "Added extra map information",
+            "Reworked overall stat leaderboard selector"
+        ]
+    },
+    {
+        "date": "2025/07/12",
+        "changes": [
+            "Added extra overall stat leaderboards"
+        ]
+    },
+    {
         "date": "2025/07/01",
         "changes": [
             "Import and export snapshots/settings in settings",
