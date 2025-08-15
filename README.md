@@ -1,6 +1,9 @@
 
 # SkyWarsTools
->Issue and patch notes tracker for https://lukatools.nl/hypixeltools
+>Open source front end, issue and patch notes tracker for https://skywarstools.com
+
+## Open source front-end
+I am working on a new front end with optimized UI that actually makes use of a framework instead of plain HTML/CSS/JS. Bare with me while I get the basics of React and NextJS. 
 
 ## What is SkyWarsTools?
 SkyWarsTools is a stats website, similar to Plancke, Shmeado or Skycrypt. It specializes in tools for SkyWars. Similarly to the other tools, stats can be looked up for any player. But, every time someone does, these stats are also saved. This allows for stats progression through time.
