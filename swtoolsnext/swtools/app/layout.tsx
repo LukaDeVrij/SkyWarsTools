@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { TopNavBar } from "@/components/TopNavBar";
 import "./globals.css";
+import TopNavBar from "./components/TopNavBar";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -26,12 +26,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen w-full flex-col items-center justify-center"`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				{/* Navigation Menu from shadcn */}
-				<TopNavBar />
-
 				{children}
+        <TopNavBar />
 			</body>
 		</html>
 	);
