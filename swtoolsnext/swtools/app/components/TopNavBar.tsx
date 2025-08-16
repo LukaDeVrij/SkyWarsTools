@@ -2,20 +2,11 @@ import React from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import NavDropdownMenu from "./NavDropdownMenu";
-import Profile from "./Profile";
+import NavBarProfile from "./NavBarProfile";
+import PlayerInputField from "./PlayerInputField";
 
 const TopNavBar = () => {
 	const content = [
-		
-		{
-			name: "Player",
-			dropdown: [
-				{ name: "Stats", href: "/player/[playername]/stats" },
-				{ name: "Compare", href: "/player/[playername]/compare" },
-				{ name: "Session", href: "/player/[playername]/session" },
-				{ name: "Calculate", href: "/player/[playername]/calculate" },
-			],
-		},
 		{
 			name: "Leaderboards",
 			// Could maybe just become one page with tabs or something
@@ -31,7 +22,7 @@ const TopNavBar = () => {
 				{ name: "Montage Card", href: "/extra/montage-card" },
 			],
 		},
-        {
+		{
 			name: "About",
 			dropdown: [
 				{ name: "About", href: "/about" },
@@ -41,27 +32,21 @@ const TopNavBar = () => {
 	];
 	return (
 		<>
-			<nav className="bg-[var(--background-layer)] w-full h-18 flex justify-center space-between">
-				<div className="bg-[var(--background-layer)]h-18 w-[1000px] flex items-center justify-start gap-4">
+			<nav className="bg-[var(--background-layer)] w-full h-full lg:h-18 flex justify-center space-between">
+				<div className="bg-[var(--background-layer)] h-full lg:h-18 w-[100vw] lg:w-[1000px] items-center justify-start flex-row lg:flex gap-2">
 					<Link
-						className="flex items-center gap-2 bg-[var(--skywarstools-accent)] p-2 pl-4 pr-4 rounded transition-transform active:scale-98"
+						className="flex items-center gap-2 p-2 bg-[var(--skywarstools-accent)] rounded transition-transform active:scale-98"
 						href="/"
 					>
 						<Logo />
-						<span className="text-[var(--foreground)] text-xl ml-2 font-[700] font-montserrat">
-							SkyWarsTools
-						</span>
 					</Link>
+					<PlayerInputField />
 					<div className="flex items-center gap-5 font-montserrat font-[500] text-lg">
 						{content.map((item, idx) => (
-							<NavDropdownMenu
-								key={item.name}
-								label={item.name}
-								dropdown={item.dropdown}
-							/>
+							<NavDropdownMenu key={item.name} label={item.name} dropdown={item.dropdown} />
 						))}
 					</div>
-                    <Profile />
+					<NavBarProfile />
 				</div>
 			</nav>
 		</>
