@@ -1,15 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+body {
+	font-family: 'Montserrat', system-ui, sans-serif;
+}
+
 @import "tailwindcss";
 
 :root {
 	--background: #0a0a0a;
-  --background-layer: #272727;
+	--background-layer: #272727;
 	--foreground: #ededed;
-  --skywarstools-accent: rgb(4, 170, 109);
-  --skywarstools-accent-hover: rgb(15, 180, 120);
+	--skywarstools-accent: rgb(4, 170, 109);
+	--skywarstools-accent-hover: rgb(15, 180, 120);
 }
 
 body {
 	background: var(--background);
 	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
 }
