@@ -40,7 +40,7 @@ const PlayerInputField = () => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="flex align-middle gap-2 text-lg lg:text-3xl w-[100px] lg:w-[250px] m-2">
+			<form onSubmit={handleSubmit} className="flex align-middle gap-1 lg:text-xl w-[160px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl">
 				<input
 					type="text"
 					value={input}
@@ -48,9 +48,9 @@ const PlayerInputField = () => {
 					onKeyDown={(e) => {
 						if (e.key === "Enter") handleSubmit(e);
 					}}
-					placeholder="Name..."
+					placeholder="Search a player..."
 					disabled={loading}
-					className="flex w-[80px] lg:w-[230px]"
+					className="flex w-[120px] lg:w-[200px] outline-0" // Im gonna be honest, magic numbered this - looks good on mobile and desktop
 				/>
 				<button
 					type="submit"
@@ -84,7 +84,7 @@ const PlayerInputField = () => {
 							</svg>
 						</div>
 					) : (
-						<Search className="h-6 w-6" />
+						<Search className="h-[20px] w-[20px]" />
 					)}
 				</button>
 			</form>

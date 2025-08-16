@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // import { Montserrat } from "next/font/google";
 import "./globals.css";
-import TopNavBar from "./components/TopNavBar";
+import TopNavBar from "./components/navbar/TopNavBar";
 
 // const montserrat = Montserrat({
 // 	variable: "--font-montserrat",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 	title: "SkyWarsTools",
 	description: "A set of tools for SkyWars",
 	icons: {
-		icon: "/favicon.ico",
+		icon: "/logo_200.png",
 	},
 };
 

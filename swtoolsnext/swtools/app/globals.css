@@ -19,3 +19,11 @@ body {
 	color: var(--foreground);
 	overflow-y: scroll;
 }
+
+.animate-press {
+	transition: transform 0.1s;
+}
+
+.animate-press:active {
+	transform: scale(0.98);
+}

@@ -11,7 +11,7 @@ const PlayerStatsPage = async ({ params }: PlayerStatsPageProps) => {
 
     return (
         // Width is 1000px, rest of styles are just placeholders to make it look somewhat decent
-        <div className='w-[1000px] h-full bg-[var(--background-layer)] m-auto mt-2 mb-2 p-4 rounded-lg'> 
+        <div className='w-[100vw] lg:w-[1000px] h-[80vh] bg-[var(--background-layer)] m-auto p-4'> 
             <h1>Stats for {resolvedParams.playername}</h1>
             {/* Render player stats here */}
             <Logo></Logo>
