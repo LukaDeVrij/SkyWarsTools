@@ -17,7 +17,7 @@ const PlayerInputField = () => {
 		if (!input.trim()) return;
 		setLoading(true);
 		setError("");
-		let playerName = input.trim();
+		const playerName = input.trim();
 		setInput("");
 		try {
 			const res = await fetch(`https://skywarstools.com/api/getUUID?player=${encodeURIComponent(playerName)}`);
@@ -40,7 +40,7 @@ const PlayerInputField = () => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="flex align-middle gap-1 lg:text-xl w-[160px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl">
+			<form onSubmit={handleSubmit} className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl">
 				<input
 					type="text"
 					value={input}
@@ -50,7 +50,7 @@ const PlayerInputField = () => {
 					}}
 					placeholder="Search a player..."
 					disabled={loading}
-					className="flex w-[120px] lg:w-[200px] outline-0" // Im gonna be honest, magic numbered this - looks good on mobile and desktop
+					className="flex w-[140px] lg:w-[200px] outline-0" // Im gonna be honest, magic numbered this - looks good on mobile and desktop
 				/>
 				<button
 					type="submit"

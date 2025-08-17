@@ -36,12 +36,12 @@ const NavDropdownMenu: React.FC<NavDropdownMenuProps> = ({ label, dropdown }) =>
 	return (
 		<div
 			ref={containerRef}
-			className="relative group font-montserrat font-[500] text-xl"
+			className="relative group font-montserrat font-[700] text-xl"
 			// On touch devices, open on click; on desktop, allow hover
 		>
 			<button
 				type="button"
-				className="px-3 py-2 hover:bg-[var(--skywarstools-accent)] rounded transition-colors"
+				className="px-3 py-2 hover:border-b-4 border-[var(--accent)] rounded transition-all duration-50"
 				onClick={handleButtonClick}
 				aria-expanded={open}
 				aria-haspopup="true"
@@ -61,7 +61,8 @@ const NavDropdownMenu: React.FC<NavDropdownMenuProps> = ({ label, dropdown }) =>
 							<li key={item.name}>
 								<a
 									href={item.href}
-									className="block px-4 py-2 text-[var(--foreground)] hover:bg-[var(--skywarstools-accent)] rounded transition-colors whitespace-nowrap animate-press"
+									className="block px-4 py-2 text-[var(--foreground)] border-[var(--background-layer)] border-b-4 hover:border-[var(--accent)] 
+									rounded transition-all duration-50 whitespace-nowrap animate-press"
 									onClick={() => setOpen(false)}
 								>
 									{item.name}
