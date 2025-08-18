@@ -70,7 +70,7 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = ({ stats }) => {
                     </tr>
                     <tr>
                         <td style={{ width: "50%" }}>Heads</td>
-                        <td>{stats.heads.toLocaleString()}</td>
+                        <td>{stats.heads?.toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td style={{ width: "50%" }}>Playtime</td>

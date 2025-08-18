@@ -21,7 +21,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 	];
 
 	return (
-		<nav className="bg-gray-800 w-full h-10 lg:h-[60px] flex p-1 lg:p-3 lg:rounded-t-xl overflow-x-scroll lg:overflow-hidden">
+		<nav className="bg-gray-900 w-full h-10 lg:h-[60px] flex p-1 lg:p-3 lg:rounded-t-xl overflow-x-scroll lg:overflow-hidden">
 			{/* Left spacer */}
 			<div className="w-2 flex flex-col justify-center items-center">
 				<div className="h-7 w-full lg:h-[32px]" />

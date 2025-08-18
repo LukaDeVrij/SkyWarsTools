@@ -43,3 +43,16 @@ body {
 .animate-press:active {
 	transform: scale(0.98);
 }
+
+.animate-press-hard {
+	transition: transform 0.1s;
+}
+
+.animate-press-hard:active {
+	transform: scale(0.92);
+}
+
+.extended-table > table > tbody > tr > td {
+	padding-left: 5px;
+	padding-right: 5px;
+}

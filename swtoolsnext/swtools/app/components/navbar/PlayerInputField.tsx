@@ -40,7 +40,10 @@ const PlayerInputField = () => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl">
+			<form
+				onSubmit={handleSubmit}
+				className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl"
+			>
 				<input
 					type="text"
 					value={input}
@@ -84,7 +87,7 @@ const PlayerInputField = () => {
 							</svg>
 						</div>
 					) : (
-						<Search className="h-[20px] w-[20px]" />
+						<Search className="h-[20px] w-[20px] animate-press-hard" />
 					)}
 				</button>
 			</form>

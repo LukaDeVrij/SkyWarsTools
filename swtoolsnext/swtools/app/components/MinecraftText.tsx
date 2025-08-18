@@ -74,7 +74,7 @@ const letterMap: { [key in ColorLetter]: keyof ColorMap } = {
 export default function MinecraftText(props: Props) {
 	let { prefix } = props
 	const { children } = props
-	prefix = prefix ? prefix : '&'
+	prefix = prefix ? prefix : '§'
 
 	const segments = (`${prefix}r${children}` || `${prefix}r`).split(new RegExp(`(?=${prefix}r)`, 'g'))
 	return (
@@ -91,7 +91,7 @@ export default function MinecraftText(props: Props) {
 function MinecraftInnerText(props: Props) {
 	let { prefix } = props
 	const { colors, children } = props
-	prefix = prefix ? prefix : '&'
+	prefix = prefix ? prefix : '§'
 
 	const segments = (children || '').split(new RegExp(`(?=${prefix})`, 'g'))
 

@@ -1,12 +1,44 @@
 import React from "react";
 import Image from "next/image";
+import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate } from "@/app/utils/Utils"; // Assuming you have a utility function for this
 
 interface PlayerExtraInfoProps {
 	playerName: string;
-	info: any; // Adjust type as needed based on the data structure
+	info: {
+		display: {
+			levelFormattedWithBrackets: string;
+			levelFormatted: string;
+			newPackageRank: string;
+			monthlyPackageRank: string;
+			rankPlusColor: string;
+			monthlyRankColor: string;
+			skywarsActiveScheme: string;
+			tagColor: string;
+			tag: string;
+		};
+		stats: {
+			karma: number;
+			networkExp: number;
+			firstLogin: number;
+			lastLogin: number;
+			achievementPoints: number;
+			guild: string;
+			guildRank: string;
+			guildJoined: number;
+		};
+		socials: {
+			twitter?: string;
+			youtube?: string;
+			instagram?: string;
+			tiktok?: string;
+			twitch?: string;
+			discord?: string;
+			hypixel?: string;
+		};
+	};
 }
 
-let socials = {
+const socials = {
 	twitter: "/icons/twitter.png",
 	youtube: "/icons/youtube.png",
 	instagram: "/icons/instagram.png",
@@ -16,25 +48,45 @@ let socials = {
 	hypixel: "/icons/hypixel.png",
 };
 
-const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = ({ info }) => {
-	info.twitter = "https://twitter.com/NerdLifeless"; // Example data, replace with actual data from API
-	info.youtube = "https://twitter.com/NerdLifeless";
-	info.discord = "https://twitter.com/NerdLifeless";
-	info.hypixel = "https://twitter.com/NerdLifeless";
+const extraStats: (keyof PlayerExtraInfoProps["info"]["stats"])[] = ["networkExp", "firstLogin", "lastLogin"]; // Typescript magic?
+
+const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, info }) => {
 	return (
 		<>
 			<div className="bg-gray-800 p-4 font-bold flex gap-4">
-				{Object.entries(socials).map(([social, iconPath]) => {
-					return (
-						<a key={social}>
-							<Image src={iconPath.startsWith('/') ? iconPath : `/${iconPath}`} alt={`${social} icon`} width={32} height={32} />
-						</a>
-					);
-				})}
+				{info.socials && Object.entries(info.socials).length > 0 ? (
+					<>
+						{Object.entries(info.socials).map(([social]) => {
+							const socialKey = social as keyof typeof info.socials;
+							const iconPath = socials[socialKey];
+							if (!iconPath) return null;
+							return (
+								<a key={social} href={info.socials[socialKey]}>
+									<Image
+										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
+										alt={`${social} icon`}
+										width={32}
+										height={32}
+									/>
+								</a>
+							);
+						})}
+					</>
+				) : (
+					<p className="text-gray-400">No socials linked</p>
+				)}
 			</div>
-			<div className="w-full h-30 bg-gray-800 p-4 font-bold">
-                Overall Stats
-            </div>
+			<div className="w-full bg-gray-800 p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
+				<span>Network Level: {calcHypixelLevel(info.stats.networkExp)}</span>
+				<span title={timeAgo(info.stats.firstLogin / 1000)}>
+					First Login: {formatTimestampToVerboseDate(info.stats.firstLogin)}
+				</span>
+				<span title={formatTimestampToVerboseDate(info.stats.lastLogin)}>
+					Last Login: {timeAgo(info.stats.lastLogin / 1000)}
+				</span>
+				<span>AP: {info.stats.achievementPoints.toLocaleString()}</span>
+				<span>Karma: {info.stats.karma.toLocaleString()}</span>
+			</div>
 		</>
 	);
 };
