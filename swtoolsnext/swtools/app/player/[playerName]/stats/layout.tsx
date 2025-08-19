@@ -16,10 +16,12 @@ interface LayoutProps {
 }
 
 const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
-    const awaitedParams = await params;
+	const awaitedParams = await params;
 	const playerName = awaitedParams.playerName;
 
-	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`);
+	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`, {
+		next: { revalidate: 300 },
+	});
 	if (!res.ok) {
 		console.log(res.statusText);
 		throw new Error("Failed to fetch player data");

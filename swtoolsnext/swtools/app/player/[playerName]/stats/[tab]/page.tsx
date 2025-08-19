@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import Table from "@/app/components/player/tabs/Table";
 import Extended from "@/app/components/player/tabs/Extended";
 import Prestige from "@/app/components/player/tabs/Prestige";
+import GrimReaper from "@/app/components/player/tabs/GrimReaper";
 
 const tabs = [
 	{ label: "Table", value: "table" },
 	{ label: "Extended", value: "extended" },
 	{ label: "Prestige", value: "prestige" },
-	{ label: "Descent", value: "descent" },
+	{ label: "Grim Reaper", value: "grimreaper" },
 	{ label: "Playtime", value: "playtime" },
 	{ label: "Kits", value: "kits" },
 	{ label: "Legacy", value: "legacy" },
@@ -25,28 +26,21 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 		notFound();
 	}
 
-	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`);
+	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`, {
+		next: { revalidate: 300 },
+	});
 	if (!res.ok) {
 		console.log(res.statusText);
 		throw new Error("Failed to fetch player data");
 	}
-	const overallData = await res.json();
-	// console.log(overallData);
+	const overallData: APIResponse = await res.json();
 
 	return (
 		<>
-			{currentTab.value === "table" && <Table stats={overallData.stats}></Table>}
-			{currentTab.value === "extended" && (
-				<Extended extendedStats={overallData.extendedStats} stats={overallData.stats}></Extended>
-			)}
-			{currentTab.value === "prestige" && (
-				<Prestige
-					display={overallData.generic.display}
-					stats={overallData.stats}
-					player={overallData.player}
-				></Prestige>
-			)}
-			{currentTab.value === "descent" && <div>Descent stats for {playerName}</div>}
+			{currentTab.value === "table" && <Table {...overallData} />}
+			{currentTab.value === "extended" && <Extended {...overallData} />}
+			{currentTab.value === "prestige" && <Prestige {...overallData} />}
+			{currentTab.value === "grimreaper" && <GrimReaper {...overallData} />}
 			{currentTab.value === "playtime" && <div>Playtime stats for {playerName}</div>}
 			{currentTab.value === "kits" && <div>Kits stats for {playerName}</div>}
 			{currentTab.value === "legacy" && <div>Legacy stats for {playerName}</div>}

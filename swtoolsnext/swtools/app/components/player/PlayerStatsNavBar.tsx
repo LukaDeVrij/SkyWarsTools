@@ -6,7 +6,7 @@ const tabs = [
 	{ label: "Table", value: "table" },
 	{ label: "Extended", value: "extended" },
 	{ label: "Prestige", value: "prestige" },
-	{ label: "Grim Reaper", value: "descent" },
+	{ label: "Grim Reaper", value: "grimreaper" },
 	{ label: "Playtime", value: "playtime" },
 	{ label: "Kits", value: "kits" },
 	{ label: "Legacy", value: "legacy" },
@@ -20,7 +20,7 @@ const PlayerStatsNavBar = () => {
 	const playerName = params.playerName as string;
 
 	return (
-		<nav className="bg-gray-900 h-12 w-full flex gap-2 items-center px-2 overflow-x-scroll lg:overflow-auto text-base lg:text-lg">
+		<nav className="bg-gray-900 h-12 w-full flex gap-2 items-center px-2 overflow-x-scroll lg:overflow-auto text-base lg:text-xl">
 			{tabs.map((tab) => (
 				<div
 					key={tab.value}

@@ -1,33 +1,7 @@
 import React from "react";
-interface TableProps {
-	stats: {
-		skywars_experience: number;
-		coins: number;
-		opals: number;
-		heads: number;
-		souls: number;
-		kills: number;
-		deaths: number;
-		wins: number;
-		losses: number;
-		time_played: number;
-		wins_solo: number;
-		losses_solo: number;
-		kills_solo: number;
-		deaths_solo: number;
-		time_played_solo: number;
-		wins_team: number;
-		losses_team: number;
-		kills_team: number;
-		deaths_team: number;
-		time_played_team: number;
-		wins_mini: number;
-		kills_mini: number;
-		time_played_mini: number;
-	};
-}
 
-const Table: React.FC<TableProps> = ({ stats }) => {
+
+const Table: React.FC<APIResponse> = (response) => {
     const getWLR = (wins: number, losses: number) => {
         if (losses === 0) return wins > 0 ? "∞" : "0.00";
         return (wins / losses).toFixed(3);
@@ -47,25 +21,25 @@ const Table: React.FC<TableProps> = ({ stats }) => {
                 <tbody>
                     <tr className="border-b-1 border-white">
                         <td>Overall</td>
-                        <td>{stats.wins}</td>
-                        <td>{stats.losses}</td>
-                        <td>{getWLR(stats.wins, stats.losses)}</td>
+                        <td>{response.stats.wins.toLocaleString()}</td>
+                        <td>{response.stats.losses.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.wins, response.stats.losses).toLocaleString()}</td>
                     </tr>
                     <tr className="border-b-1 border-white">
                         <td>Solo</td>
-                        <td>{stats.wins_solo}</td>
-                        <td>{stats.losses_solo}</td>
-                        <td>{getWLR(stats.wins_solo, stats.losses_solo)}</td>
+                        <td>{response.stats.wins_solo.toLocaleString()}</td>
+                        <td>{response.stats.losses_solo.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.wins_solo, response.stats.losses_solo).toLocaleString()}</td>
                     </tr>
                     <tr className="border-b-1 border-white">
                         <td>Teams</td>
-                        <td>{stats.wins_team}</td>
-                        <td>{stats.losses_team}</td>
-                        <td>{getWLR(stats.wins_team, stats.losses_team)}</td>
+                        <td>{response.stats.wins_team.toLocaleString()}</td>
+                        <td>{response.stats.losses_team.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.wins_team, response.stats.losses_team).toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td>Mini</td>
-                        <td>{stats.wins_mini}</td>
+                        <td>{response.stats.wins_mini.toLocaleString()}</td>
                         <td>-</td>
                         <td>-</td>
                     </tr>
@@ -84,25 +58,25 @@ const Table: React.FC<TableProps> = ({ stats }) => {
                 <tbody>
                     <tr className="border-b-1 border-white">
                         <td className="inline lg:hidden">Overall</td>
-                        <td>{stats.kills}</td>
-                        <td>{stats.deaths}</td>
-                        <td>{getWLR(stats.kills, stats.deaths)}</td>
+                        <td>{response.stats.kills.toLocaleString()}</td>
+                        <td>{response.stats.deaths.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.kills, response.stats.deaths).toLocaleString()}</td>
                     </tr>
                     <tr className="border-b-1 border-white">
                         <td className="inline lg:hidden">Solo</td>
-                        <td>{stats.kills_solo}</td>
-                        <td>{stats.deaths_solo}</td>
-                        <td>{getWLR(stats.kills_solo, stats.deaths_solo)}</td>
+                        <td>{response.stats.kills_solo.toLocaleString()}</td>
+                        <td>{response.stats.deaths_solo.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.kills_solo, response.stats.deaths_solo).toLocaleString()}</td>
                     </tr>
                     <tr className="border-b-1 border-white">
                         <td className="inline lg:hidden">Teams</td>
-                        <td>{stats.kills_team}</td>
-                        <td>{stats.deaths_team}</td>
-                        <td>{getWLR(stats.kills_team, stats.deaths_team)}</td>
+                        <td>{response.stats.kills_team.toLocaleString()}</td>
+                        <td>{response.stats.deaths_team.toLocaleString()}</td>
+                        <td>{getWLR(response.stats.kills_team, response.stats.deaths_team).toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td className="inline lg:hidden">Mini</td>
-                        <td>{stats.kills_mini}</td>
+                        <td>{response.stats.kills_mini.toLocaleString()}</td>
                         <td>-</td>
                         <td>-</td>
                     </tr>

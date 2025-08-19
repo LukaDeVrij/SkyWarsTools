@@ -1,3 +1,5 @@
+import { DescentMap } from "../types/DescentMap";
+
 export function calcLevel(xp: number): number {
 	const perLevelXp = [
 		10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000,
@@ -631,4 +633,80 @@ export function calcNextPrestigeObj(level: number): [PrestigeObject, number] {
 	}
 	const nextPrestigeKey = prestigeKeys[currentIndex + 1] as keyof typeof prestigeColors;
 	return [prestigeColors[nextPrestigeKey], nextPrestigeKey]; // Return next prestige object and its key as a tuple
+}
+
+export function romanize(num: number): string {
+	if (isNaN(num)) return "";
+	const lookup: [number, string][] = [
+		[1000, "M"],
+		[900, "CM"],
+		[500, "D"],
+		[400, "CD"],
+		[100, "C"],
+		[90, "XC"],
+		[50, "L"],
+		[40, "XL"],
+		[10, "X"],
+		[9, "IX"],
+		[5, "V"],
+		[4, "IV"],
+		[1, "I"],
+	];
+	let roman = "";
+	for (let [value, numeral] of lookup) {
+		while (num >= value) {
+			roman += numeral;
+			num -= value;
+		}
+	}
+	return roman;
+}
+
+// Descent stuff (ported from JS)
+export function combineDescentData(descentPlayer: APIResponse["descentStats"], descentData: DescentMap) {
+	let combinedData = { ...descentData };
+	Object.keys(combinedData).forEach((key) => {
+		let typedKey = key as keyof DescentMap;
+		let playerKey = key as keyof APIResponse["descentStats"];
+		combinedData[typedKey]["playerOwns"] = descentPlayer[playerKey] ? descentPlayer[playerKey] : false;
+	});
+	return combinedData;
+}
+
+export function calculateOpalsSpent(playerDescentData: DescentMap) {
+	let spent = 0;
+
+	Object.keys(playerDescentData).forEach((key) => {
+		const object = playerDescentData[key as keyof DescentMap];
+		if (object.playerOwns != false) {
+			if (typeof object.playerOwns === "number") {
+				let tier: number = object.playerOwns;
+				spent += object.tiers[0].cost * tier;
+			} else {
+				spent += object.tiers[0].cost;
+			}
+		}
+	});
+	return spent;
+}
+
+export function calculateCraftableOpals(souls: number, opalsmith: number) {
+	let craftable = 0;
+	if (opalsmith == 1) {
+		craftable = Math.floor(souls / 1250);
+	} else {
+		craftable = Math.floor(souls / 1500);
+	}
+	return craftable;
+}
+
+export function calculateOpalProgress(souls: number, opalsmith: number) {
+	let progress = 0;
+	if (opalsmith == 1) {
+		progress = (souls / 1250) % 1;
+	} else {
+		progress = (souls / 1500) % 1;
+	}
+	progress *= 100;
+	return progress;
 }
