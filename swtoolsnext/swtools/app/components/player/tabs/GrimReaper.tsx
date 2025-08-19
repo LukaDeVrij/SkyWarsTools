@@ -31,7 +31,7 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 				<TabPanel className={"w-full h-auto p-4 flex flex-col lg:flex-row gap-4"}>
 					<div className="w-full lg:w-1/2 h-full bg-gray-800 p-4 flex flex-col gap-2 items-center rounded-4xl">
 						<h2 className="font-semibold flex items-center flex-col justify-center text-center">
-							<span className="text-l text-blue-300">Angel's Descent</span>
+							<span className="text-l text-blue-300">Angel&apos;s Descent</span>
 							<span className="text-sm">Hover over upgrades for details<br></br> Tiered descriptions are of the upgrade, not current value</span>
 							<span className="text-red-500 text-sm">Use desktop for the best experience</span>
 						</h2>

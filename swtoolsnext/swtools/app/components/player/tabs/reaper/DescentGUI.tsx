@@ -52,7 +52,7 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 	}
 
 	function getItemDescription(item: DescentItem): string | undefined {
-		let playerOwns = item.playerOwns;
+		const playerOwns = item.playerOwns;
 		let tier = 0;
 		let explainText: string | undefined;
 
@@ -84,10 +84,49 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 		return explainText;
 	}
 
-	function getItemTitle(item: DescentItem): string {
-		let playerOwns = item.playerOwns;
+	function getItemCostText(item: DescentItem): string | undefined {
+		const playerOwns = item.playerOwns;
 		let tier = 0;
 		let costText: string | undefined;
+
+		if (typeof playerOwns === "boolean") {
+			tier = 0;
+		} else if (typeof playerOwns === "number") {
+			tier = playerOwns;
+		}
+
+		let tiered = false;
+		let maxTier = 0;
+		if (item.tiers && item.tiers.length > 1) {
+			tiered = true;
+			maxTier = item.tiers.length;
+		}
+
+		if (tiered) {
+			if (tier === maxTier) {
+				costText = "§aUNLOCKED";
+			} else if (tier !== 0) {
+				costText = `§7Cost: ${item.tiers[tier]?.cost} §9Opals`;
+				if (item.tiers[tier]?.cost === 1) costText = costText.replace("Opals", "Opal");
+			} else {
+				costText = `§7Cost: ${item.tiers[tier]?.cost} §9Opals`;
+				if (item.tiers[tier]?.cost === 1) costText = costText.replace("Opals", "Opal");
+			}
+		} else {
+			if (playerOwns) {
+				costText = "§aUNLOCKED";
+			} else {
+				costText = `§7Cost: ${item.tiers?.[0]?.cost} §9Opals`;
+				if (item.tiers?.[0]?.cost === 1) costText = costText.replace("Opals", "Opal");
+			}
+		}
+
+		return costText;
+	}
+
+	function getItemTitle(item: DescentItem): string {
+		const playerOwns = item.playerOwns;
+		let tier = 0;
 		let titleText = item.title;
 
 		if (typeof playerOwns === "boolean") {
@@ -106,24 +145,16 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 		if (tiered) {
 			if (tier === maxTier) {
 				titleText = `§a${titleText} §a${romanize(tier)} §7(Maxed)`;
-				costText = "§aUNLOCKED";
 			} else if (tier !== 0) {
 				titleText = `§e${titleText} §e${romanize(tier)}/§7${romanize(maxTier)}`;
-				costText = `§7Cost: ${item.tiers[tier]?.cost} §9Opals`;
-				if (item.tiers[tier]?.cost === 1) costText = costText.replace("Opals", "Opal");
 			} else {
 				titleText = `§c${titleText} §7(${maxTier} Tiers)`;
-				costText = `§7Cost: ${item.tiers[tier]?.cost} §9Opals`;
-				if (item.tiers[tier]?.cost === 1) costText = costText.replace("Opals", "Opal");
 			}
 		} else {
 			if (playerOwns) {
 				titleText = `§a${titleText}`;
-				costText = "§aUNLOCKED";
 			} else {
 				titleText = `§c${titleText}`;
-				costText = `§7Cost: ${item.tiers?.[0]?.cost} §9Opals`;
-				if (item.tiers?.[0]?.cost === 1) costText = costText.replace("Opals", "Opal");
 			}
 		}
 
@@ -135,7 +166,7 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 		<div className="grid grid-cols-7 gap-0.2 min-w-10 min-h-10 w-auto h-auto">
 			{Array.from({ length: 18 * 7 }, (_, i) => {
 				i = i + 1;
-				const item: DescentItem | undefined = Object.values(combinedData).find((it: any) => it.slot === i);
+				const item: DescentItem | undefined = Object.values(combinedData).find((it: DescentItem) => it.slot === i);
 
 				return (
 					<div
@@ -160,6 +191,7 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 										<MinecraftText>{getItemTitle(item)}</MinecraftText>
 										<MinecraftText>{item.subtitle}</MinecraftText>
 										<MinecraftText>{getItemDescription(item)}</MinecraftText>
+										<MinecraftText>{getItemCostText(item)}</MinecraftText>
 									</div>
 								</div>
 							</>

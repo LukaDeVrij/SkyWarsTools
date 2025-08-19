@@ -48,8 +48,6 @@ const socials = {
 	hypixel: "/icons/hypixel.png",
 };
 
-const extraStats: (keyof PlayerExtraInfoProps["info"]["stats"])[] = ["networkExp", "firstLogin", "lastLogin"]; // Typescript magic?
-
 const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, info }) => {
 	return (
 		<>

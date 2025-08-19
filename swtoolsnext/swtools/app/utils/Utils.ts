@@ -653,7 +653,7 @@ export function romanize(num: number): string {
 		[1, "I"],
 	];
 	let roman = "";
-	for (let [value, numeral] of lookup) {
+	for (const [value, numeral] of lookup) {
 		while (num >= value) {
 			roman += numeral;
 			num -= value;
@@ -664,10 +664,10 @@ export function romanize(num: number): string {
 
 // Descent stuff (ported from JS)
 export function combineDescentData(descentPlayer: APIResponse["descentStats"], descentData: DescentMap) {
-	let combinedData = { ...descentData };
+	const combinedData = { ...descentData };
 	Object.keys(combinedData).forEach((key) => {
-		let typedKey = key as keyof DescentMap;
-		let playerKey = key as keyof APIResponse["descentStats"];
+		const typedKey = key as keyof DescentMap;
+		const playerKey = key as keyof APIResponse["descentStats"];
 		combinedData[typedKey]["playerOwns"] = descentPlayer[playerKey] ? descentPlayer[playerKey] : false;
 	});
 	return combinedData;
@@ -680,7 +680,7 @@ export function calculateOpalsSpent(playerDescentData: DescentMap) {
 		const object = playerDescentData[key as keyof DescentMap];
 		if (object.playerOwns != false) {
 			if (typeof object.playerOwns === "number") {
-				let tier: number = object.playerOwns;
+				const tier: number = object.playerOwns;
 				spent += object.tiers[0].cost * tier;
 			} else {
 				spent += object.tiers[0].cost;
