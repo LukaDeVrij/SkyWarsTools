@@ -1,6 +1,6 @@
 import React from "react";
 
-enum ProgressBarMode {
+export enum ProgressBarMode {
 	DEFAULT,
 	PERCENTAGE_ONLY,
 }

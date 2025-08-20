@@ -173,7 +173,7 @@ const DescentGUI: React.FC<{ combinedData: DescentMap }> = ({ combinedData }) =>
 										}}
 									/>
 									<div
-										className="fixed lg:absolute bottom-0 left-0 w-full lg:w-100 p-2 rounded items-center justify-center opacity-0 group-hover:opacity-100 peer-hover:opacity-100 transition-opacity bg-black/90 z-10 text-xl text-white text-left pointer-events-none group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
+										className="fixed lg:absolute bottom-0 lg:bottom-11/12 left-0 lg:left-11/12 w-full lg:w-100 p-2 rounded items-center justify-center opacity-0 group-hover:opacity-100 peer-hover:opacity-100 transition-opacity bg-black/90 z-10 text-xl text-white text-left pointer-events-none group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
 										tabIndex={-1}
 									>
 										<MinecraftText>{getItemTitle(item)}</MinecraftText>

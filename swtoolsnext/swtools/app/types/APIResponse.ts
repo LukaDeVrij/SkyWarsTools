@@ -36,13 +36,13 @@ interface APIResponse {
 	};
 	generic: {
 		display: {
-			levelFormattedWithBrackets: string;
+			levelFormattedWithBrackets?: string;
 			levelFormatted: string;
 			newPackageRank: string;
-			monthlyPackageRank: string;
-			rankPlusColor: string;
-			monthlyRankColor: string;
-			skywarsActiveScheme: string;
+			monthlyPackageRank?: string;
+			rankPlusColor?: string;
+			monthlyRankColor?: string;
+			skywarsActiveScheme?: string;
 			tagColor?: string;
 			tag?: string;
 		};
@@ -61,7 +61,7 @@ interface APIResponse {
 		activeKit_SOLO?: string;
 		activeKit_TEAM?: string;
 		activeKit_RANKED?: string;
-		angel_of_death_level: number;
+		angel_of_death_level: number | null;
 		angels_offering: number | null;
 		survived_players: number;
 		blocks_broken: number;

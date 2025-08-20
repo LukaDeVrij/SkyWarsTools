@@ -29,14 +29,14 @@ const Extended: React.FC<APIResponse> = (response) => {
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Display Scheme</td>
-						<td>{response.generic.display.skywarsActiveScheme}</td>
+						<td>{response.generic.display.skywarsActiveScheme ?? "Unknown"}</td>
 					</tr>
 					<tr>
 						<td colSpan={2} style={{ height: "24px" }}></td>
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Angel of Death Level</td>
-						<td>{response.extendedStats.angel_of_death_level}</td>
+						<td>{response.extendedStats.angel_of_death_level ?? 0}</td>
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Angels Offering</td>
@@ -45,10 +45,10 @@ const Extended: React.FC<APIResponse> = (response) => {
 					<tr className="border-b-1 border-white">
 						<td>Total Corruption Chance</td>
 						<td>
-							{response.extendedStats.angel_of_death_level +
+							{(response.extendedStats.angel_of_death_level ?? 0) +
 								(response.extendedStats.angels_offering ?? 0) +
-								(response.descentStats.favor_of_the_angel ? 1 : 0)} {" "}
-							 %
+								(response.descentStats.favor_of_the_angel ? 1 : 0)}{" "}
+							%
 						</td>
 					</tr>
 					<tr>
@@ -121,9 +121,7 @@ const Extended: React.FC<APIResponse> = (response) => {
 						<td>Arrows Hit/Miss</td>
 						<td>
 							{response.extendedStats.arrows_shot > 0
-								? `${((response.extendedStats.arrows_hit / response.extendedStats.arrows_shot) * 100).toFixed(
-										2
-								  )}%`
+								? `${((response.extendedStats.arrows_hit / response.extendedStats.arrows_shot) * 100).toFixed(2)}%`
 								: "N/A"}
 						</td>
 					</tr>
@@ -133,9 +131,7 @@ const Extended: React.FC<APIResponse> = (response) => {
 					<tr className="border-b-1 border-white">
 						<td>Kill/Win Ratio</td>
 						<td>
-							{response.stats.kills && response.stats.wins
-								? (response.stats.kills / response.stats.wins).toFixed(2)
-								: "N/A"}
+							{response.stats.kills && response.stats.wins ? (response.stats.kills / response.stats.wins).toFixed(2) : "N/A"}
 						</td>
 					</tr>
 					{/* <tr className="border-b-1 border-white">
