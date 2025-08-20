@@ -45,6 +45,7 @@ interface APIResponse {
 			skywarsActiveScheme?: string;
 			tagColor?: string;
 			tag?: string;
+			rank?: string;
 		};
 		stats: {
 			karma: number;

@@ -15,6 +15,7 @@ export enum PlayerRanks {
 	HELPER = 80,
 	MODERATOR = 90,
 	ADMIN = 100,
+	STAFF = 101
 }
 
 /**
@@ -79,19 +80,7 @@ export interface PlayerRank {
  * @param onlyPackages Whether to ignore their staff / youtube rank and only get their donor rank.
  * @category Helper
  */
-type PlayerDisplay = {
-	levelFormattedWithBrackets: string;
-	levelFormatted: string;
-	newPackageRank: string;
-	monthlyPackageRank: string;
-	rankPlusColor: string;
-	monthlyRankColor: string;
-	skywarsActiveScheme: string;
-	tagColor?: string;
-	tag?: string;
-	packageRank?: string;
-	rank?: string;
-};
+type PlayerDisplay = APIResponse["generic"]["display"];
 export function getPlayerRank(playerDisplay: PlayerDisplay, onlyPackages = false): PlayerRank {
 	let foundRank: PlayerRanks = PlayerRanks.NON_DONOR;
 	if (onlyPackages) {
@@ -107,8 +96,8 @@ export function getPlayerRank(playerDisplay: PlayerDisplay, onlyPackages = false
 				foundRank = rank;
 			}
 		}
-		if (playerDisplay.packageRank) {
-			const rank = PlayerRanks[playerDisplay.packageRank as keyof typeof PlayerRanks];
+		if (playerDisplay.newPackageRank) {
+			const rank = PlayerRanks[playerDisplay.newPackageRank as keyof typeof PlayerRanks];
 			if (rank && rank > foundRank) {
 				foundRank = rank;
 			}
@@ -240,6 +229,18 @@ export function getPlayerRank(playerDisplay: PlayerDisplay, onlyPackages = false
 				cleanName: "ADMIN",
 				prefix: "§c[ADMIN]",
 				cleanPrefix: "[ADMIN]",
+				colorCode: MinecraftFormatting.RED,
+				colorHex: MinecraftColorAsHex[MinecraftFormatting.RED],
+				staff: true,
+			};
+			break;
+		case PlayerRanks.STAFF:
+			out = {
+				priority: foundRank,
+				name: "STAFF",
+				cleanName: "STAFF",
+				prefix: "§c[STAFF]",
+				cleanPrefix: "[STAFF]",
 				colorCode: MinecraftFormatting.RED,
 				colorHex: MinecraftColorAsHex[MinecraftFormatting.RED],
 				staff: true,
