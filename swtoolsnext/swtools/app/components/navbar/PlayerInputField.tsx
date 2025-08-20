@@ -34,6 +34,7 @@ const PlayerInputField = () => {
 		} catch {
 			setError("Error checking player.");
 		} finally {
+			// This happens too quick...
 			setLoading(false);
 		}
 	};

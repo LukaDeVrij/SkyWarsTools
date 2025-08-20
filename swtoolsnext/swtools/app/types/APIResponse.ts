@@ -30,9 +30,9 @@ interface APIResponse {
 		kills_team: number;
 		deaths_team: number;
 		time_played_team: number;
-		wins_mini: number;
-		kills_mini: number;
-		time_played_mini: number;
+		wins_mini?: number;
+		kills_mini?: number;
+		time_played_mini?: number;
 	};
 	generic: {
 		display: {
@@ -85,10 +85,10 @@ interface APIResponse {
 		kitsMaxPrestige: number;
 		time_played_solo: number;
 		time_played_team: number;
-		time_played_mega: number;
-		time_played_ranked: number;
-		time_played_lab: number;
-		time_played_mini: number;
+		time_played_mega?: number;
+		time_played_ranked?: number;
+		time_played_lab?: number;
+		time_played_mini?: number;
 		heads_eww: number | null;
 		heads_yucky: number | null;
 		heads_meh: number | null;

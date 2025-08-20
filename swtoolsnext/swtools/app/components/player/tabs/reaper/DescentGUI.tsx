@@ -1,39 +1,9 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import type { DescentItem, DescentMap } from "@/app/types/DescentMap";
-import { LoaderCircle } from "lucide-react";
-import { combineDescentData, romanize } from "@/app/utils/Utils";
-import MinecraftText from "@/app/components/MinecraftText";
-type DescentStats = APIResponse["descentStats"];
+import MinecraftText from "@/app/utils/MinecraftText";
+import { romanize } from "@/app/utils/Utils";
 
-const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
-	const [descentData, setDescentData] = useState<DescentMap | null>(null);
-	const [combinedData, setCombinedData] = useState<DescentMap | null>(null);
-
-	useEffect(() => {
-		fetch("/json/descent.json")
-			.then((res) => res.json())
-			.then((json) => {
-				setDescentData(json);
-				// Call combineDescentData before setting combinedData
-				try {
-					// Assuming combineDescentData is imported
-					const result = combineDescentData(data, json);
-					setCombinedData(result);
-				} catch {
-					setCombinedData(null);
-				}
-			})
-			.catch(() => {
-				setDescentData(null);
-				setCombinedData(null);
-			});
-	}, [data]);
-
-	if (!descentData || !combinedData) {
-		return <LoaderCircle className="animate-spin"></LoaderCircle>;
-	}
-
+const DescentGUI: React.FC<{ combinedData: DescentMap }> = ({ combinedData }) => {
 	// Lotta helper function here - way better than to have it in the JSX
 	// Partially ported from JS
 	function getSlotBackground(item: DescentItem | undefined): string {
@@ -171,23 +141,41 @@ const DescentGUI: React.FC<{ data: DescentStats }> = ({ data }) => {
 				return (
 					<div
 						key={i}
-						className="flex items-center justify-center h-12 w-12 bg-cover bg-center relative"
+						className="flex items-center justify-center h-13 w-13 bg-cover bg-center relative"
 						style={{
 							backgroundImage: getSlotBackground(item),
 						}}
 					>
 						{item ? (
 							<>
-								<div className="relative">
+								<div className="">
 									<img
 										src={"/items/" + item.image}
-										height={46}
-										width={46}
+										height={50}
+										width={50}
 										style={{ imageRendering: "pixelated" }}
 										className="p-0.5 peer"
 										alt=""
+										tabIndex={0}
+										onClick={(e) => {
+											const tooltip = e.currentTarget.nextSibling as HTMLElement;
+											if (tooltip) {
+												tooltip.classList.toggle("opacity-100");
+												tooltip.classList.toggle("pointer-events-auto");
+											}
+										}}
+										onBlur={(e) => {
+											const tooltip = e.currentTarget.nextSibling as HTMLElement;
+											if (tooltip) {
+												tooltip.classList.remove("opacity-100");
+												tooltip.classList.remove("pointer-events-auto");
+											}
+										}}
 									/>
-									<div className="absolute w-100 p-2 rounded items-center justify-center opacity-0 peer-hover:opacity-100 transition-opacity bg-black/90 z-10 text-xl text-white text-left pointer-events-none">
+									<div
+										className="fixed lg:absolute bottom-0 left-0 w-full lg:w-100 p-2 rounded items-center justify-center opacity-0 group-hover:opacity-100 peer-hover:opacity-100 transition-opacity bg-black/90 z-10 text-xl text-white text-left pointer-events-none group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
+										tabIndex={-1}
+									>
 										<MinecraftText>{getItemTitle(item)}</MinecraftText>
 										<MinecraftText>{item.subtitle}</MinecraftText>
 										<MinecraftText>{getItemDescription(item)}</MinecraftText>

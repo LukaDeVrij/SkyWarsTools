@@ -45,7 +45,10 @@ const Extended: React.FC<APIResponse> = (response) => {
 					<tr className="border-b-1 border-white">
 						<td>Total Corruption Chance</td>
 						<td>
-							{response.extendedStats.angel_of_death_level + (response.extendedStats.angels_offering ?? 0)} %
+							{response.extendedStats.angel_of_death_level +
+								(response.extendedStats.angels_offering ?? 0) +
+								(response.descentStats.favor_of_the_angel ? 1 : 0)} {" "}
+							 %
 						</td>
 					</tr>
 					<tr>
@@ -129,7 +132,11 @@ const Extended: React.FC<APIResponse> = (response) => {
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Kill/Win Ratio</td>
-						<td>{response.stats.kills && response.stats.wins ? (response.stats.kills / response.stats.wins).toFixed(2) : "N/A"}</td>
+						<td>
+							{response.stats.kills && response.stats.wins
+								? (response.stats.kills / response.stats.wins).toFixed(2)
+								: "N/A"}
+						</td>
 					</tr>
 					{/* <tr className="border-b-1 border-white">
 						<td>Kill/Game Ratio</td>

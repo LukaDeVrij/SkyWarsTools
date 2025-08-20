@@ -1,4 +1,4 @@
-import { DescentMap } from "../types/DescentMap";
+import { DescentItem, DescentMap } from "../types/DescentMap";
 
 export function calcLevel(xp: number): number {
 	const perLevelXp = [
@@ -673,20 +673,21 @@ export function combineDescentData(descentPlayer: APIResponse["descentStats"], d
 	return combinedData;
 }
 
-export function calculateOpalsSpent(playerDescentData: DescentMap) {
+export function calculateOpalsSpent(playerDescentData: DescentMap): number {
 	let spent = 0;
 
 	Object.keys(playerDescentData).forEach((key) => {
-		const object = playerDescentData[key as keyof DescentMap];
-		if (object.playerOwns != false) {
-			if (typeof object.playerOwns === "number") {
-				const tier: number = object.playerOwns;
-				spent += object.tiers[0].cost * tier;
+		const object: DescentItem = playerDescentData[key as keyof DescentMap];
+		if (object.playerOwns != false && object.playerOwns) {
+			if (object.tiers.length > 1) {
+				spent += object.tiers[0].cost * (object.playerOwns as number);
+				// Not really a safe cast, but this is ported over from JS, the edge case in which this errors does not occur
 			} else {
 				spent += object.tiers[0].cost;
 			}
 		}
 	});
+
 	return spent;
 }
 

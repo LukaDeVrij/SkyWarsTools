@@ -1,5 +1,5 @@
 import React from "react";
-import MinecraftText from "@/app/components/MinecraftText";
+import MinecraftText from "@/app/utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import {
 	calcEXPFromLevel,
@@ -9,6 +9,7 @@ import {
 	calcPrestigeTag,
 	PrestigeObject,
 } from "@/app/utils/Utils";
+import ProgressBar from "../../universal/ProgressBar";
 
 const Prestige: React.FC<APIResponse> = (response) => {
 	const rank = getPlayerRank(response.generic.display);
@@ -117,18 +118,12 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</tbody>
 					</table>
 				</div>
-				<div className="w-full mt-2">
-					<div className="relative w-full h-8 rounded-full bg-yellow-500 overflow-hidden flex items-center">
-						<div
-							className="absolute left-0 top-0 h-full bg-pink-500 transition-all"
-							style={{ width: `${progressPercentage}%` }}
-						/>
-						<div className="relative z-10 w-full flex justify-center items-center text-white font-bold text-lg">
-							{experience.toLocaleString()}/{expNextPrestige.toLocaleString()} (
-							{progressPercentage.toFixed(2)}%)
-						</div>
-					</div>
-				</div>
+				<ProgressBar
+					progress={experience - expCurPrestige}
+					total={expDiffCurNext}
+					bgColor={"gray-400"}
+					progressColor="pink-500"
+				></ProgressBar>
 			</div>
 			{/* This is for desktop */}
 			<div className="hidden lg:block p-6 w-full font-semibold text-xl bg-gray-800">
@@ -204,18 +199,12 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</tbody>
 					</table>
 				</div>
-				<div className="w-full mt-2">
-					<div className="relative w-full h-8 rounded-full bg-yellow-500 overflow-hidden flex items-center">
-						<div
-							className="absolute left-0 top-0 h-full bg-pink-500 transition-all"
-							style={{ width: `${progressPercentage}%` }}
-						/>
-						<div className="relative z-10 w-full flex justify-center items-center text-white font-bold text-xl">
-							{experience.toLocaleString()}/{expNextPrestige.toLocaleString()} (
-							{progressPercentage.toFixed(2)}%)
-						</div>
-					</div>
-				</div>
+				<ProgressBar
+					progress={experience - expCurPrestige}
+					total={expDiffCurNext}
+					bgColor="darkorange"
+					progressColor="magenta"
+				/>
 			</div>
 		</>
 	);
