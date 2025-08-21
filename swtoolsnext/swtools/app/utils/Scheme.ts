@@ -1,4 +1,3 @@
-
 type Scheme = {
 	name: string;
 	rankColor: string | string[];
@@ -1006,10 +1005,10 @@ const schemes: Scheme[] = [
 	},
 	{
 		name: "???",
-		rankColor: '§5',
-		iconColor: '§5',
-		req: 9999
-	}
+		rankColor: "§5",
+		iconColor: "§5",
+		req: 9999,
+	},
 ];
 
 const schemeByName = new Map<string, Scheme>();
@@ -1034,7 +1033,7 @@ type PlayerDisplay = APIResponse["generic"]["display"];
 export function formatScheme(level: number, playerDisplay: PlayerDisplay, overwriteScheme: boolean): string {
 	if (!playerDisplay.skywarsActiveScheme || !playerDisplay.levelFormattedWithBrackets) {
 		// Fallback for legacy players who havent logged on since update
-		return playerDisplay.levelFormatted.slice(0, 2) + "[" + playerDisplay.levelFormatted + "]";
+		return playerDisplay.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
 	}
 
 	const icon: string = extractIcon(playerDisplay.levelFormattedWithBrackets);
@@ -1047,8 +1046,7 @@ export function formatScheme(level: number, playerDisplay: PlayerDisplay, overwr
 
 	const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
 	const demigod: boolean = playerDisplay.skywarsActiveScheme == "scheme_demigod";
-
-	const levelStr: string = level.toFixed(0).toString();
+	const levelStr: string = Math.floor(level).toString();
 
 	let rankColor: string[] | string = scheme.rankColor;
 	const iconColor: string = scheme.iconColor;
