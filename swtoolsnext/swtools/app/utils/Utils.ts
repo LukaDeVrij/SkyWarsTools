@@ -1,9 +1,7 @@
 import { DescentItem, DescentMap } from "../types/DescentMap";
 
 export function calcLevel(xp: number): number {
-	const perLevelXp = [
-		10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000,
-	];
+	const perLevelXp = [10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
 
 	let level = 1;
 	for (let i = 0; i < perLevelXp.length; i++) {
@@ -187,9 +185,7 @@ export function calcKitPrestigeExp(level: number): number {
 export function calcEXPFromLevel(level: number): number {
 	// sw level that is
 
-	const perLevelXp = [
-		10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000,
-	];
+	const perLevelXp = [10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
 
 	if (level <= 1) return 0;
 
@@ -710,4 +706,41 @@ export function calculateOpalProgress(souls: number, opalsmith: number) {
 	}
 	progress *= 100;
 	return progress;
+}
+
+export type KitPrestigeInfo = {
+	name: string;
+	minXp: number;
+	color: string;
+};
+export const kitPrestiges: Record<number, KitPrestigeInfo & { rewards: string[] }> = {
+	0: { name: "-", minXp: 0, color: "#808080", rewards: [] }, // Gray
+	1: { name: "I", minXp: 1000, color: "#ffffff", rewards: ["§650,000 Coins", "§fSilver §7Particle Trail"] }, // Silver
+	2: { name: "II", minXp: 2500, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
+	3: { name: "III", minXp: 5000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
+	4: { name: "IV", minXp: 10000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
+	5: { name: "V", minXp: 25000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
+	6: { name: "VI", minXp: 50000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
+	7: {
+		name: "VII",
+		minXp: 75000,
+		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
+		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail", "§bPrestige Scheme"],
+	}, // Rainbow Gradient
+};
+
+export function getKitPrestigeInfo(kitExp: number): KitPrestigeInfo {
+	const levels = Object.keys(kitPrestiges)
+		.map(Number)
+		.sort((a, b) => a - b);
+
+	let lastPrestige = kitPrestiges[0];
+	for (const lvl of levels) {
+		if (kitExp >= kitPrestiges[lvl].minXp) {
+			lastPrestige = kitPrestiges[lvl];
+		} else {
+			break;
+		}
+	}
+	return lastPrestige;
 }

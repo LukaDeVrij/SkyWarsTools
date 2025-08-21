@@ -1,5 +1,6 @@
 import React from "react";
 import { toCamelCase } from "@/app/utils/Utils";
+import KitPrestigeString from "../../universal/KitPrestigeString";
 
 const Extended: React.FC<APIResponse> = (response) => {
 	function kitProcessing(value: string): string {
@@ -13,15 +14,24 @@ const Extended: React.FC<APIResponse> = (response) => {
 				<tbody>
 					<tr className="border-b-1 border-white">
 						<td>Current Kit (Normal)</td>
-						<td>{kitProcessing(response.extendedStats.activeKit_SOLO ?? "None")}</td>
+						<td>
+							{kitProcessing(response.extendedStats.activeKit_SOLO ?? "None")}{" "}
+							{<KitPrestigeString kit={response.extendedStats.activeKit_SOLO} kitStats={response.kitStats} />}
+						</td>
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Current Kit (Insane)</td>
-						<td>{kitProcessing(response.extendedStats.activeKit_TEAM ?? "None")}</td>
+						<td>
+							{kitProcessing(response.extendedStats.activeKit_TEAM ?? "None")}{" "}
+							{<KitPrestigeString kit={response.extendedStats.activeKit_TEAM} kitStats={response.kitStats} />}
+						</td>
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Current Kit (Mini)</td>
-						<td>{kitProcessing(response.extendedStats.activeKit_RANKED ?? "None")}</td>
+						<td>
+							{kitProcessing(response.extendedStats.activeKit_RANKED ?? "None")}{" "}
+							{<KitPrestigeString kit={response.extendedStats.activeKit_RANKED} kitStats={response.kitStats} />}
+						</td>
 					</tr>
 					<tr className="border-b-1 border-white">
 						<td>Max Prestige Kits</td>
