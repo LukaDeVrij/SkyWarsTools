@@ -9,7 +9,7 @@ interface KitPrestigeStringProps {
 const KitPrestigeString: React.FC<KitPrestigeStringProps> = ({ kit, kitStats }) => {
 	const xp: number = kitStats["xp_" + kit] || 0;
 
-	let prestige: KitPrestigeInfo = getKitPrestigeInfo(xp);
+	const prestige: KitPrestigeInfo = getKitPrestigeInfo(xp);
 
 	return (
 		<span style={{ color: prestige.color }}>
