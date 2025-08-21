@@ -1,15 +1,10 @@
 import React from "react";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
-import {
-	calcEXPFromLevel,
-	calcLevel,
-	calcNextPrestigeObj,
-	calcPrestigeObj,
-	calcPrestigeTag,
-	PrestigeObject,
-} from "@/app/utils/Utils";
+import { calcEXPFromLevel, calcLevel, calcNextPrestigeObj, calcPrestigeObj, calcPrestigeTag, PrestigeObject } from "@/app/utils/Utils";
 import ProgressBar from "../../universal/ProgressBar";
+import { formatScheme } from "@/app/utils/Scheme";
+import TabContent from "./TabContent";
 
 const Prestige: React.FC<APIResponse> = (response) => {
 	const rank = getPlayerRank(response.generic.display);
@@ -20,7 +15,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 	const [currentPrestigeObj, currentPrestige] = calcPrestigeObj(currentLevel);
 	const currentPrestigeString = calcPrestigeTag(currentPrestige);
 	const [nextPrestigeObj, nextPrestige]: [PrestigeObject, number] = calcNextPrestigeObj(currentLevel);
-	const nextPrestigeString = calcPrestigeTag(nextPrestige);
+	const nextPrestigeString = formatScheme(nextPrestige, response.generic.display, true);
 
 	const expTotalNextPrestige = calcEXPFromLevel(nextPrestige);
 	const expDiffNextPrestige = expTotalNextPrestige - experience;
@@ -44,9 +39,9 @@ const Prestige: React.FC<APIResponse> = (response) => {
 	const killsNeeded = killsPerHour > 0 ? Math.ceil(nextPrestigePlaytime * killsPerHour) : 0;
 
 	return (
-		<>
+		<TabContent>
 			{/* First div is for mobile layout */}
-			<div className="block lg:hidden p-4 w-full h-auto font-semibold bg-gray-800">
+			<div className="block lg:hidden w-full h-auto font-semibold bg-gray-800">
 				<div className="flex flex-col items-center gap-3">
 					<span className="text-[5rem] font-semibold">
 						{progressPercentage.toFixed(2)}
@@ -81,9 +76,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</div>
 						<div className="text-lg font-bold">
 							Playtime Needed:{" "}
-							<span className="text-pink-500">
-								{nextPrestigePlaytime > 0 ? nextPrestigePlaytime.toFixed(1) : "0"} Hours
-							</span>
+							<span className="text-pink-500">{nextPrestigePlaytime > 0 ? nextPrestigePlaytime.toFixed(1) : "0"} Hours</span>
 						</div>
 					</div>
 				</div>
@@ -118,20 +111,14 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</tbody>
 					</table>
 				</div>
-				<ProgressBar
-					progress={experience - expCurPrestige}
-					total={expDiffCurNext}
-					bgColor={"gray-400"}
-					progressColor="pink-500"
-				></ProgressBar>
+				<ProgressBar progress={experience - expCurPrestige} total={expDiffCurNext} bgColor="darkorange" progressColor="magenta" />
 			</div>
 			{/* This is for desktop */}
-			<div className="hidden lg:block p-6 w-full font-semibold text-xl bg-gray-800">
+			<div className="hidden lg:block w-full font-semibold text-xl bg-gray-800">
 				<div className="flex items-center justify-center gap-4">
 					<span className="text-3xl font-semibold flex gap-3 items-center">
 						<MinecraftText>{`${rank.prefix} ${response.player}`}</MinecraftText>
-						is <span>{progressPercentage.toFixed(2)}%</span> towards{" "}
-						<MinecraftText>{nextPrestigeString}</MinecraftText>
+						is <span>{progressPercentage.toFixed(2)}%</span> towards <MinecraftText>{nextPrestigeString}</MinecraftText>
 					</span>
 				</div>
 				<div className="flex flex-wrap justify-between rounded-xl my-4">
@@ -162,9 +149,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</div>
 						<div className="text-lg font-bold">
 							Playtime Needed:{" "}
-							<span className="text-pink-500">
-								{nextPrestigePlaytime > 0 ? nextPrestigePlaytime.toFixed(1) : "0"} Hours
-							</span>
+							<span className="text-pink-500">{nextPrestigePlaytime > 0 ? nextPrestigePlaytime.toFixed(1) : "0"} Hours</span>
 						</div>
 					</div>
 				</div>
@@ -199,14 +184,9 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</tbody>
 					</table>
 				</div>
-				<ProgressBar
-					progress={experience - expCurPrestige}
-					total={expDiffCurNext}
-					bgColor="darkorange"
-					progressColor="magenta"
-				/>
+				<ProgressBar progress={experience - expCurPrestige} total={expDiffCurNext} bgColor="darkorange" progressColor="magenta" />
 			</div>
-		</>
+		</TabContent>
 	);
 };
 

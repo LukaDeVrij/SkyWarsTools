@@ -3,6 +3,8 @@ import twemoji from "@twemoji/api";
 import Image from "next/image";
 import MinecraftText from "../../utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
+import { calcLevel } from "@/app/utils/Utils";
+import { formatScheme } from "@/app/utils/Scheme";
 
 interface PlayerTitleProps {
 	playerName: string;
@@ -16,21 +18,16 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 		throw new Error("Failed to fetch player status");
 	}
 
-	function addBracketsLevelFormatted(levelFormatted: string): string {
-		if (!levelFormatted.startsWith("§")) {
-			return levelFormatted;
-		}
-		const color = levelFormatted.charAt(1);
-		return `§${color}[` + levelFormatted + "]";
-	}
-
 	const statusData = await statusRes.json();
-	let level: string =
-		response.generic.display.levelFormattedWithBrackets || addBracketsLevelFormatted(response.generic.display.levelFormatted);
-	if (!level) level = "§7[1★]";
 
+	// Scheme bits
+	const level = calcLevel(response.stats.skywars_experience);
+	const scheme = formatScheme(level, response.generic.display, false);
+
+	// Rank
 	const rank = getPlayerRank(response.generic.display);
 
+	// Guild Suffix
 	let guildColor: string = "§7";
 	let guildTagFormatted: string = "";
 	if (response.generic.display.tag) {
@@ -53,6 +50,8 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 
 		guildTagFormatted = guildColor + "[" + response.generic.display.tag + "]";
 	}
+
+	const playerTitle = `${scheme} ${rank.prefix} ${playerName} ${guildTagFormatted}`;
 
 	return (
 		<div className="bg-gray-900 h-22 lg:h-25 w-full flex items-center">
@@ -88,8 +87,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 			</div>
 
 			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-4 text-center lg:text-left">
-				<MinecraftText>{`${level} ${rank.prefix} ${response.player} ${guildTagFormatted}`}</MinecraftText>{" "}
-				{/* No space for guild tag on mobile*/}
+				<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="flex items-center gap-2 text-sm lg:text-lg">
 						{/* <span className="text-2xl">🇳🇱</span> */}
@@ -107,7 +105,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 							style={{ display: "flex" }}
 							title="View on NameMC"
 						>
-							<Image src="/namemc.png" alt="NameMC logo" width={32} height={32} className="inline h-6 w-6" />
+							<Image src="/icons/namemc.png" alt="NameMC logo" width={32} height={32} className="inline h-6 w-6" />
 						</a>
 						<a
 							href={`https://www.shmeado.club/player/stats/${playerName}/SkyWars/Table/`}
@@ -133,7 +131,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 							style={{ display: "flex" }}
 							title="View on Plancke"
 						>
-							<Image src="/plancke.png" alt="Plancke logo" width={32} height={32} className="inline h-6 w-6" />
+							<Image src="/icons/plancke.png" alt="Plancke logo" width={32} height={32} className="inline h-6 w-6" />
 						</a>
 					</div>
 				</div>

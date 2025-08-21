@@ -586,7 +586,7 @@ const prestigeColors: { [key: number]: PrestigeObject } = {
 
 export function calcPrestigeObj(level: number): [PrestigeObject, number] {
 	if (level === 9999) {
-		return [prestigeColors[9999], 999]; // Return the ??? prestige object directly
+		return [prestigeColors[9999], 9999]; // Return the ??? prestige object directly
 	} // Special case for ??? prestige
 	if (level >= 500) {
 		return [prestigeColors[500], 500];
@@ -602,9 +602,10 @@ export function calcPrestigeTag(level: number): string {
 	let prestigeTag = `[${level}]`;
 
 	const prestigeLevelKey = prestigeLevel as keyof typeof prestigeColors;
+
 	const prestigeData = prestigeColors[prestigeLevelKey];
 
-	if (Array.isArray(prestigeData.rank)) {
+	if (Array.isArray(prestigeData?.rank)) {
 		prestigeTag = prestigeTag
 			.split("")
 			.map((char, index) => {
@@ -613,6 +614,7 @@ export function calcPrestigeTag(level: number): string {
 			.join("");
 	} else {
 		prestigeTag = prestigeData.rank + prestigeTag;
+		// TODO
 	}
 
 	prestigeTag = prestigeTag.slice(0, -1) + prestigeData.emblem + "✯" + prestigeTag.slice(-1);

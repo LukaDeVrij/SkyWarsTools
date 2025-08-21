@@ -2,11 +2,6 @@ import { formatPlaytime } from "@/app/utils/Utils";
 import React from "react";
 
 const Playtime: React.FC<APIResponse> = (response) => {
-	function getWLR(wins: number, losses: number) {
-		if (losses === 0) return wins > 0 ? "∞" : "0.00";
-		return (wins / losses).toFixed(3);
-	}
-
 	return (
 		<div className="flex lg:p-3 overflow-hidden">
 			<div className="w-full h-auto bg-gray-800 lg:rounded-2xl py-4 px-6 flex flex-col gap-2 lg:gap-0 font-semibold lg:text-xl">

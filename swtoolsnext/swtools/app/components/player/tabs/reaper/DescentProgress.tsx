@@ -3,7 +3,7 @@ import Title from "@/app/components/universal/Title";
 import { calculateCraftableOpals } from "@/app/utils/Utils";
 import React from "react";
 
-const DescentProgress: React.FC<{ response: APIResponse, opalsSpent: number }> = ({ response, opalsSpent }) => {
+const DescentProgress: React.FC<{ response: APIResponse; opalsSpent: number }> = ({ response, opalsSpent }) => {
 	return (
 		<div className="w-full h-auto bg-gray-800 rounded-2xl py-3 px-4 flex flex-col justify-center gap-2 font-semibold items-center">
 			<Title color="text-blue-400">Angel&apos;s Descent Progress</Title>
@@ -42,7 +42,7 @@ const DescentProgress: React.FC<{ response: APIResponse, opalsSpent: number }> =
 					</tr>
 					<tr>
 						<td>Souls</td>
-						<td className="">{response.stats.souls}</td>
+						<td className="">{response.stats.souls.toLocaleString()}</td>
 						<td></td>
 					</tr>
 					<tr>

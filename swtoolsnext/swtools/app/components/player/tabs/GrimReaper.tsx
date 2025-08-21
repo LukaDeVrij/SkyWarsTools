@@ -6,11 +6,9 @@ import React, { useEffect, useState } from "react";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DescentGUI from "./reaper/DescentGUI";
-import { calculateCraftableOpals, calculateOpalProgress, calculateOpalsSpent, combineDescentData, romanize } from "@/app/utils/Utils";
+import {calculateOpalsSpent, combineDescentData } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
 import { DescentMap } from "@/app/types/DescentMap";
-import ProgressBar from "../../universal/ProgressBar";
-import { ProgressBarMode } from "../../universal/ProgressBar";
 import Title from "../../universal/Title";
 import SoulUpgrades from "./reaper/SoulUpgrades";
 import DescentProgress from "./reaper/DescentProgress";
