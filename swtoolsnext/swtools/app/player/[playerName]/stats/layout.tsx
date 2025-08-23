@@ -29,7 +29,7 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	const overallData = await res.json();
 
 	return (
-		<div className="w-[100vw] lg:w-[1000px] bg-[var(--background-layer)] m-auto lg:mt-2 lg:rounded-xl">
+		<>
 			<PlayerNavBar playerName={playerName} />
 			<PlayerBanner playerName={playerName} />
 			<PlayerTitle playerName={playerName} response={overallData} />
@@ -40,7 +40,7 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 			<PlayerExtraInfo playerName={playerName} info={overallData.generic} />
 			<PlayerStatsNavBar />
 			{children}
-		</div>
+		</>
 	);
 };
 

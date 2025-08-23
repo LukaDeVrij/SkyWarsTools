@@ -25,12 +25,9 @@ export default function RootLayout({
 		<html lang="en">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<body className="antialiased">
-
 				<TopNavBar />
 
-				
-				{children}
-				
+				<div className="w-[100vw] lg:w-[1000px] bg-[var(--background-layer)] m-auto lg:mt-2 lg:rounded-xl">{children}</div>
 			</body>
 		</html>
 	);
