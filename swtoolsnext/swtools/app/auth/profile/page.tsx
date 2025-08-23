@@ -3,9 +3,20 @@
 import { useEffect, useState } from "react";
 
 type User = {
-	uid: string;
+	auth_time: number;
+	user_id: string;
+	sub: string;
+	iat: number;
+	exp: number;
 	email: string;
-	[key: string]: any;
+	email_verified: boolean;
+	firebase: {
+		identities: {
+			email: string[];
+		};
+		sign_in_provider: string;
+	};
+	uid: string;
 };
 
 export default function ProfilePage() {
@@ -44,8 +55,12 @@ export default function ProfilePage() {
 				const data = await res.json();
 				console.log(data.user);
 				setUser(data.user);
-			} catch (err: any) {
-				setError(err.message);
+			} catch (err: unknown) {
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError("An unknown error occurred");
+				}
 			} finally {
 				setLoading(false);
 			}

@@ -22,8 +22,12 @@ export default function LogoutPage() {
 
 				setMessage("Logged out successfully. Redirecting...");
 				setTimeout(() => router.push("/auth/login"), 1000);
-			} catch (err: any) {
-				setMessage(err.message);
+			} catch (err: unknown) {
+				if (err instanceof Error) {
+					setMessage(err.message);
+				} else {
+					setMessage("An unknown error occurred");
+				}
 			}
 		};
 

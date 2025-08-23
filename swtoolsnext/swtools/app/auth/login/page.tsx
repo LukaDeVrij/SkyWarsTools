@@ -28,18 +28,18 @@ export default function LoginPage() {
 
 			alert("Login successful!");
 			router.push("/auth/profile");
-		} catch (err: any) {
-			setError(err.message);
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				setError("An unknown error occurred");
+			}
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const handleGoogleSignin = () => {
-        
-	};
-
-    
+	const handleGoogleSignin = () => {};
 
 	return (
 		<div className="flex h-screen flex-col items-center justify-center bg-gray-900">
