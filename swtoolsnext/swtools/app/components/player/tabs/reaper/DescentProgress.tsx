@@ -5,7 +5,7 @@ import React from "react";
 
 const DescentProgress: React.FC<{ response: APIResponse; opalsSpent: number }> = ({ response, opalsSpent }) => {
 	return (
-		<div className="w-full h-auto bg-gray-800 rounded-2xl py-3 px-4 flex flex-col justify-center gap-2 font-semibold items-center">
+		<div className="w-full h-auto bg-content rounded-2xl py-3 px-4 flex flex-col justify-center gap-2 font-semibold items-center">
 			<Title color="text-blue-400">Angel&apos;s Descent Progress</Title>
 			<table className="text-lg w-full">
 				<tbody>

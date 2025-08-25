@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DescentGUI from "./reaper/DescentGUI";
-import {calculateOpalsSpent, combineDescentData } from "@/app/utils/Utils";
+import { calculateOpalsSpent, combineDescentData } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
 import { DescentMap } from "@/app/types/DescentMap";
 import Title from "../../universal/Title";
@@ -49,7 +49,7 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 			<Tabs>
 				{/* TODO figure out how to get selected to work */}
 				<TabList
-					className={"bg-gray-900 h-12 w-full flex gap-2 items-center px-2 overflow-scroll lg:overflow-auto text-base lg:text-lg"}
+					className={"bg-main h-12 w-full flex gap-2 items-center px-2 overflow-scroll lg:overflow-auto text-base lg:text-lg"}
 				>
 					<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Descent</Tab>
 					<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Potions</Tab>
@@ -58,7 +58,7 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 
 				<TabPanel>
 					<div className="flex flex-col lg:flex-row lg:gap-4 lg:p-4 overflow-hidden">
-						<div className="w-full lg:w-1/2 h-100rem bg-gray-800 py-3 px-4 flex flex-col gap-2 items-center rounded-2xl">
+						<div className="w-full lg:w-1/2 h-100rem bg-content py-3 px-4 flex flex-col gap-2 items-center rounded-2xl">
 							<h2 className="font-semibold flex items-center flex-col justify-center text-center">
 								<Title color="text-blue-400">Angel&apos;s Descent</Title>
 								<span className="text-base">
@@ -78,7 +78,9 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 				</TabPanel>
 				<TabPanel>{/* <Potions></Potions> */}</TabPanel>
 				<TabPanel>
-					<Heads response={response}></Heads>
+					<div className="w-full h-full p-0 lg:p-4 flex lg:gap-4 flex-col justify-between ">
+						<Heads response={response}></Heads>
+					</div>
 				</TabPanel>
 			</Tabs>
 		</>

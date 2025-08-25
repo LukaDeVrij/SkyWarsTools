@@ -4,10 +4,10 @@ import React from "react";
 const Playtime: React.FC<APIResponse> = (response) => {
 	return (
 		<div className="flex lg:p-3 overflow-hidden">
-			<div className="w-full h-auto bg-gray-800 lg:rounded-2xl py-4 px-6 flex flex-col gap-2 lg:gap-0 font-semibold lg:text-xl">
+			<div className="w-full h-auto bg-content lg:rounded-2xl py-4 px-6 flex flex-col gap-2 lg:gap-0 font-semibold lg:text-xl">
 				<div className="w-full h-auto flex flex-col lg:flex-row">
-					<table className="p-4 w-full text-left bg-gray-800 ">
-						<thead className="text-[var(--accent)]">
+					<table className="p-4 w-full text-left bg-content ">
+						<thead className="text-accent">
 							<tr>
 								<th>Mode</th>
 								<th>Wins</th>
@@ -43,8 +43,8 @@ const Playtime: React.FC<APIResponse> = (response) => {
 						</tbody>
 					</table>
 
-					<table className="p-4 w-full text-left bg-gray-800 ">
-						<thead className="text-[var(--accent)]">
+					<table className="p-4 w-full text-left bg-content ">
+						<thead className="text-accent">
 							<tr>
 								<th className="inline lg:hidden">Mode</th>
 								<th>Kills</th>

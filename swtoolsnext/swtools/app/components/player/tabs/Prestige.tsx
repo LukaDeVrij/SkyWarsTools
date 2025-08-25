@@ -41,7 +41,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 	return (
 		<TabContent>
 			{/* First div is for mobile layout */}
-			<div className="block lg:hidden w-full h-auto font-semibold bg-gray-800">
+			<div className="block lg:hidden w-full h-auto font-semibold bg-content">
 				<div className="flex flex-col items-center gap-3">
 					<span className="text-[5rem] font-semibold">
 						{progressPercentage.toFixed(2)}
@@ -52,14 +52,14 @@ const Prestige: React.FC<APIResponse> = (response) => {
 					<table className="text-lg font-semibold w-full mb-2">
 						<tbody>
 							<tr>
-								<td className="pr-2 text-[var(--accent)]">Current Prestige</td>
+								<td className="pr-2 text-accent">Current Prestige</td>
 								<td className="pr-2">{currentPrestigeObj.name}</td>
 								<td>
 									<MinecraftText>{currentPrestigeString}</MinecraftText>
 								</td>
 							</tr>
 							<tr>
-								<td className="pr-2 text-[var(--accent)]">Next Prestige</td>
+								<td className="pr-2 text-accent">Next Prestige</td>
 								<td className="pr-2">{nextPrestigeObj.name}</td>
 								<td>
 									<MinecraftText>{nextPrestigeString}</MinecraftText>
@@ -80,7 +80,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</div>
 					</div>
 				</div>
-				<div className="w-full h-2 rounded-xl bg-gray-900 my-2"></div>
+				<div className="w-full h-2 rounded-xl bg-main my-2"></div>
 				<div className="flex flex-col text-lg my-4 w-full">
 					<table className="w-full">
 						<tbody>
@@ -114,7 +114,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 				<ProgressBar progress={experience - expCurPrestige} total={expDiffCurNext} bgColor="darkorange" progressColor="magenta" />
 			</div>
 			{/* This is for desktop */}
-			<div className="hidden lg:block w-full font-semibold text-xl bg-gray-800">
+			<div className="hidden lg:block w-full font-semibold text-xl bg-content">
 				<div className="flex items-center justify-center gap-4">
 					<span className="text-3xl font-semibold flex gap-3 items-center">
 						<MinecraftText>{`${rank.prefix} ${response.player}`}</MinecraftText>
@@ -125,14 +125,14 @@ const Prestige: React.FC<APIResponse> = (response) => {
 					<table className="text-2xl font-semibold w-[50%]">
 						<tbody>
 							<tr>
-								<td className="pr-2 text-[var(--accent)]">Current Prestige</td>
+								<td className="pr-2 text-accent">Current Prestige</td>
 								<td className="pr-2">{currentPrestigeObj.name}</td>
 								<td>
 									<MinecraftText>{currentPrestigeString}</MinecraftText>
 								</td>
 							</tr>
 							<tr>
-								<td className="pr-2 text-[var(--accent)]">Next Prestige</td>
+								<td className="pr-2 text-accent">Next Prestige</td>
 								<td className="pr-2">{nextPrestigeObj.name}</td>
 								<td>
 									<MinecraftText>{nextPrestigeString}</MinecraftText>
@@ -153,7 +153,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 						</div>
 					</div>
 				</div>
-				<div className="w-full h-2 rounded-xl bg-gray-900"></div>
+				<div className="w-full h-2 rounded-xl bg-main"></div>
 				<div className="flex flex-wrap gap-2 justify-between text-xl my-6">
 					<table className="w-[50%]">
 						<tbody>

@@ -28,11 +28,11 @@ const Heads: React.FC<{ response: APIResponse }> = ({ response }) => {
 	});
 
 	return (
-		<div className="w-full h-fit p-4 flex flex-col lg:flex-row overflow-hidden bg-gray-800">
+		<div className="w-full h-fit p-4 flex flex-col lg:flex-row overflow-hidden bg-content lg:rounded-2xl">
 			<div className="overflow-x-scroll w-full lg:overflow-x-auto font-semibold text-base lg:text-xl">
 				<table className="w-full">
 					<thead>
-						<tr className="border-t border-b border-white text-[var(--accent)]">
+						<tr className="border-t border-b border-white text-accent">
 							<th className="text-left px-2">Flavour</th>
 							<th className="text-right px-2">Kills Required</th>
 							<th className="text-right px-2">EXP/Head</th>

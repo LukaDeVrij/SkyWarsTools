@@ -22,12 +22,12 @@ const AngelProgress: React.FC<{ response: APIResponse }> = ({ response }) => {
 	];
 
 	return (
-		<div className="w-full h-auto bg-gray-800 rounded-2xl py-3 px-4 flex flex-col justify-center gap-2 font-semibold items-center">
+		<div className="w-full h-auto bg-content rounded-2xl py-3 px-4 flex flex-col justify-center gap-2 font-semibold items-center">
 			<Title color="text-blue-400">Angel of Death Progress</Title>
 			<div className="overflow-x-scroll w-full lg:overflow-x-auto">
 				<table className="text-base w-full ">
 					<thead>
-						<tr className="text-lg text-[var(--accent)] border-b border-white">
+						<tr className="text-lg text-accent border-b border-white">
 							<th className="px-2 text-left">Lvl</th>
 							<th className="px-2 text-left">Cost</th>
 							<th className="px-2 text-left">Total</th>

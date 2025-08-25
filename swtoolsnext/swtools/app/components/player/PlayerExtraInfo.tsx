@@ -51,7 +51,7 @@ const socials = {
 const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, info }) => {
 	return (
 		<>
-			<div className="bg-gray-800 p-4 font-bold flex gap-4">
+			<div className="bg-content p-4 font-bold flex gap-4">
 				{info.socials && Object.entries(info.socials).length > 0 ? (
 					<>
 						{Object.entries(info.socials).map(([social]) => {
@@ -74,7 +74,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, inf
 					<p className="text-gray-400">No socials linked</p>
 				)}
 			</div>
-			<div className="w-full bg-gray-800 p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
+			<div className="w-full bg-content p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
 				<span>Network Level: {calcHypixelLevel(info.stats.networkExp)}</span>
 				<span title={timeAgo(info.stats.firstLogin / 1000)}>
 					First Login: {formatTimestampToVerboseDate(info.stats.firstLogin)}

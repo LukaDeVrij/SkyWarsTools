@@ -11,8 +11,8 @@ const Extended: React.FC<APIResponse> = (response) => {
 
 	return (
 		<TabContent>
-			<div className="extended-table w-full text-left bg-gray-800 font-bold font flex flex-col lg:flex-row lg:text-lg lg:justify-center">
-				<table className="p-4 w-full lg:w-[65%] text-left bg-gray-800 ">
+			<div className="extended-table w-full text-left bg-content font-bold font flex flex-col lg:flex-row lg:text-lg lg:justify-center">
+				<table className="p-4 w-full lg:w-[65%] text-left bg-content ">
 					<tbody>
 						<tr className="border-b-1 border-white">
 							<td>Current Kit (Normal)</td>

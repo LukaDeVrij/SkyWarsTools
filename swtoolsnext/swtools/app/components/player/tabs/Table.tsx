@@ -9,9 +9,9 @@ const Table: React.FC<APIResponse> = (response) => {
 
 	return (
 		<TabContent>
-			<div className="w-full text-left bg-gray-800 font-bold font flex flex-col lg:flex-row lg:text-lg">
-				<table className="p-4 w-full lg:w-[65%] text-left bg-gray-800 ">
-					<thead className="text-[var(--accent)]">
+			<div className="w-full text-left bg-content font-bold font flex flex-col lg:flex-row lg:text-lg">
+				<table className="p-4 w-full lg:w-[65%] text-left bg-content ">
+					<thead className="text-accent">
 						<tr>
 							<th>Mode</th>
 							<th>Wins</th>
@@ -47,8 +47,8 @@ const Table: React.FC<APIResponse> = (response) => {
 					</tbody>
 				</table>
 
-				<table className="p-4 w-full lg:w-[50%] text-left bg-gray-800 ">
-					<thead className="text-[var(--accent)]">
+				<table className="p-4 w-full lg:w-[50%] text-left bg-content ">
+					<thead className="text-accent">
 						<tr>
 							<th className="inline lg:hidden">Mode</th>
 							<th>Kills</th>

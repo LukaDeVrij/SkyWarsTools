@@ -54,7 +54,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 	const playerTitle = `${scheme} ${rank.prefix} ${playerName} ${guildTagFormatted}`;
 
 	return (
-		<div className="bg-gray-900 h-22 lg:h-25 w-full flex items-center">
+		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
 			<div className="z-10 relative">
 				<Image
 					alt="player avatar"

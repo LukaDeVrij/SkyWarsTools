@@ -7,10 +7,40 @@ body {
 @import "tailwindcss";
 
 :root {
-	--background: #0a0a0a;
-	--background-layer: #272727;
+	--background: #0c0c0c;
+	--background-nav: #1a1a1a;
+	--background-layer: #1e2434;
+	--background-content: #31394c;
+	--background-button: #6d1c70;
+	--background-button-hover: #88148b;
 	--foreground: #ededed;
 	--accent: #ffcd22;
+}
+/*  for the two navbars at the top */
+.bg-nav {  
+	background: var(--background-nav);
+}
+.bg-main {
+	background: var(--background-layer);
+}
+.bg-content {
+	background: var(--background-content);
+}
+.bg-layer {
+	background: var(--background-layer);
+}
+.bg-accent {
+	background: var(--accent);
+}
+.bg-button {
+	background: var(--background-button);
+	
+}
+.bg-button:hover {
+	background: var(--background-button-hover);
+}
+.text-accent {
+	color: var(--accent);
 }
 
 body {

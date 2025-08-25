@@ -32,14 +32,14 @@ interface PlayerOverallStatsProps {
 
 const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = ({ stats }) => {
 	return (
-		<div className="w-full lg:w-[40%] h-72 bg-gray-800 font-[600] flex justify-center items-center">
+		<div className="w-full lg:w-[40%] h-72 bg-content font-[600] flex justify-center items-center">
 			<table className="w-[90%] h-[90%] text-[var(--foreground)] text-lg text-left">
                 <tbody>
                     <tr>
                         <td style={{ width: "50%" }}>Level</td>
                         <td>
                             <span>{calcLevel(stats.skywars_experience).toFixed(3)} </span>
-                            <span className="text-[var(--accent)]">
+                            <span className="text-accent">
                                 ({calcLevelOld(stats.skywars_experience).toFixed(3)})
                             </span>
                         </td>
