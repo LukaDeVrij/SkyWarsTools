@@ -7,6 +7,37 @@ import React from "react";
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
 	const [signOut, signOutLoading, signOutError] = useSignOut(auth);
+	const [userInfo, setUserInfo] = React.useState<any>(null);
+	const [userInfoLoading, setUserInfoLoading] = React.useState(false);
+	const [userInfoError, setUserInfoError] = React.useState<Error | null>(null);
+
+	React.useEffect(() => {
+		if (user && user.uid) {
+			setUserInfoLoading(true);
+			user.getIdToken()
+				.then((token: string) => {
+					fetch(`http://localhost:3001/auth/getUserInfo`, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					})
+						.then((res) => {
+							if (!res.ok) throw new Error("Failed to fetch user info");
+							return res.json();
+						})
+						.then((data) => setUserInfo(data))
+						.catch((err) => setUserInfoError(err))
+						.finally(() => setUserInfoLoading(false));
+				})
+				.catch((err) => {
+					setUserInfoError(err);
+					setUserInfoLoading(false);
+				});
+		} else {
+			setUserInfo(null);
+			setUserInfoError(null);
+		}
+	}, [user]);
 
 	return (
 		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1000px] rounded-xl">
@@ -23,6 +54,25 @@ export default function ProfilePage() {
 						<p>
 							<strong>UID:</strong> {user.uid}
 						</p>
+						<p>
+							<strong>Email verified:</strong> {user.emailVerified ? "Yes" : "No"}
+						</p>
+						{userInfo && userInfo.user ? (
+							<div>
+								<strong>Custom properties:</strong>
+								<ul className="list-disc ml-6">
+									{Object.entries(userInfo.user).map(([key, value]) => (
+										<li key={key}>
+											<strong>{key}:</strong> {String(value)}
+										</li>
+									))}
+								</ul>
+							</div>
+						) : (
+							<p>
+								<strong>Custom properties: </strong>None
+							</p>
+						)}
 						<button
 							onClick={signOut}
 							disabled={signOutLoading}

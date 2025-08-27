@@ -1,5 +1,5 @@
 "use client";
-import { LogIn } from "lucide-react";
+import { LogIn, User } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { auth } from "@/app/firebase/config";
@@ -29,7 +29,7 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 					className="h-12 w-12 rounded aspect-square bg-gray-600 flex items-center justify-center text-2xl uppercase "
 					title={"Profile"}
 				>
-					{user.email?.charAt(0)}
+					<User></User>
 				</div>
 			) : (
 				<div title={"Login"}>
