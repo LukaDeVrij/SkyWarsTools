@@ -1,3 +1,7 @@
+"use client";
+import useSWR from "swr";
+import { fetcher } from "./utils/Utils";
+
 type QueryStats = {
 	weekKey: string;
 	stats: StatEntry[];
@@ -7,29 +11,32 @@ type StatEntry = {
 	score: number;
 };
 
-async function getStats(): Promise<QueryStats> {
-	const res = await fetch("https://skywarstools.com/api/queryStats", { cache: "no-store" });
-	if (!res.ok) return { weekKey: "", stats: [] };
-	return res.json();
-}
-
-export default async function Home() {
-	const response: QueryStats = await getStats();
-
+export default function Home() {
+	const { data, error, isLoading } = useSWR<QueryStats>(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/queryStats`, fetcher);
 	return (
-		<div>
-			<h1>Stats</h1>
-			{response.stats.length === 0 ? (
-				<p>No stats found.</p>
-			) : (
-				<ul>
-					{response.stats.slice(0,10).map((entry, idx) => (
-						<li key={entry.value + idx}>
-							{entry.value}: {entry.score}
-						</li>
-					))}
-				</ul>
-			)}
+		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1000px] rounded-xl">
+			<div className="bg-content p-10 lg:rounded-lg shadow-xl w-full lg:w-120">
+				{isLoading && <div>Loading...</div>}
+				{error && <div>Error: {error.message}</div>}
+				{!isLoading && !error && data && (
+					<table className="table-auto w-full text-left">
+						<thead>
+							<tr>
+								<th className="px-4 py-2">Value</th>
+								<th className="px-4 py-2">Score</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data.stats.map((entry, index) => (
+								<tr key={index} className={index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}>
+									<td className="border px-4 py-2">{entry.value}</td>
+									<td className="border px-4 py-2">{entry.score}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				)}
+			</div>
 		</div>
 	);
 }

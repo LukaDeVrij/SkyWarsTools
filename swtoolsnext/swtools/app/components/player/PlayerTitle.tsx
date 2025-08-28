@@ -1,28 +1,51 @@
+"use client";
+
 import React from "react";
 import twemoji from "@twemoji/api";
 import Image from "next/image";
 import MinecraftText from "../../utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
-import { calcLevel } from "@/app/utils/Utils";
+import { calcLevel, fetcher } from "@/app/utils/Utils";
 import { formatScheme } from "@/app/utils/Scheme";
+import useSWR from "swr";
+import { OverallResponse } from "@/app/types/OverallResponse";
 
 interface PlayerTitleProps {
 	playerName: string;
-	response: APIResponse;
+	response: OverallResponse;
 }
+type StatusResponse = {
+	success: boolean;
+	uuid: string;
+	session: {
+		online: boolean;
+		gameType?: string;
+		mode?: string;
+	};
+};
 
-const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response }) => {
-	const statusRes = await fetch(`https://skywarstools.com/api/status?player=${encodeURIComponent(playerName)}`);
-	if (!statusRes.ok) {
-		console.error(statusRes.statusText);
-		throw new Error("Failed to fetch player status");
+const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
+	const { data, error, isLoading } = useSWR<StatusResponse>(
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${playerName}`,
+		fetcher
+	);
+
+	// Status
+	let bgColor = "bg-red-500";
+	let title = "(Appears) Offline";
+	if (data && data.session.online) {
+		if (data.session.gameType === "SKYWARS") {
+			bgColor = "bg-green-500";
+			title = `Player is in SkyWars! (${data.session.gameType} - ${data.session.mode})`;
+		} else {
+			bgColor = "bg-yellow-400";
+			title = `${data.session.gameType ?? "Online"}${data.session.mode ? ` - ${data.session.mode}` : ""}`;
+		}
 	}
 
-	const statusData = await statusRes.json();
-
 	// Scheme bits
-	const level = calcLevel(response.stats.skywars_experience);
-	const scheme = formatScheme(level, response.generic.display, false);
+	const level = calcLevel(response.stats.skywars_experience ?? 0);
+	const scheme = formatScheme(level, response, false);
 
 	// Rank
 	const rank = getPlayerRank(response.generic.display);
@@ -51,6 +74,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 		guildTagFormatted = guildColor + "[" + response.generic.display.tag + "]";
 	}
 
+	// Final assembled title
 	const playerTitle = `${scheme} ${rank.prefix} ${playerName} ${guildTagFormatted}`;
 
 	return (
@@ -64,26 +88,10 @@ const PlayerTitle: React.FC<PlayerTitleProps> = async ({ playerName, response })
 					src={`https://www.mc-heads.net/avatar/${playerName}`}
 				/>
 				{/* Online status indicator overlay */}
-				{statusData.session && (
-					// TODO Refactor this, pull JS out of the component (instead of nested ternaries)
-					<span
-						title={
-							statusData.session.online
-								? statusData.session.gameType === "SKYWARS"
-									? `Player is in SkyWars! (${statusData.session.gameType} - ${statusData.session.mode})`
-									: `${statusData.session.gameType} - ${statusData.session.mode}`
-								: "(Appears) Offline"
-						}
-						// Bit fucky this - absolute positioning to the right of playerName
-						className={`absolute top-[-12px] right-[-25px] lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 block ${
-							statusData.session.online
-								? statusData.session.gameType === "SKYWARS"
-									? "bg-green-500"
-									: "bg-yellow-400"
-								: "bg-red-500"
-						}`}
-					></span>
-				)}
+				<span
+					title={title}
+					className={`absolute top-[-12px] right-[-25px] lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 block ${bgColor}`}
+				></span>
 			</div>
 
 			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-4 text-center lg:text-left">

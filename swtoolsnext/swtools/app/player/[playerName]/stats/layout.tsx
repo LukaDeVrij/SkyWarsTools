@@ -9,6 +9,8 @@ import React from "react";
 import PlayerStatsNavBar from "@/app/components/player/PlayerStatsNavBar";
 
 import { type ReactNode } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/app/utils/Utils";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -19,14 +21,14 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	const awaitedParams = await params;
 	const playerName = awaitedParams.playerName;
 
-	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`, {
-		next: { revalidate: 300 },
-	});
-	if (!res.ok) {
-		console.log(res.statusText);
-		throw new Error("Failed to fetch player data");
+	const { data: overallData, error, isLoading } = useSWR<APIResponse>(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`, fetcher);
+
+	if (error) {
+		throw error;
 	}
-	const overallData = await res.json();
+	if (!overallData) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<>

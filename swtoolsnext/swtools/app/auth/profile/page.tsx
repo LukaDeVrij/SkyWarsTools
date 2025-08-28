@@ -4,12 +4,23 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import React from "react";
 
+// TODO break up into components later, useSWR for fetching user info
+// TODO allow changing profile bg w POST request to backend
+
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
 	const [signOut, signOutLoading, signOutError] = useSignOut(auth);
-	const [userInfo, setUserInfo] = React.useState<any>(null);
+	const [userInfo, setUserInfo] = React.useState<UserInfoResponse>();
 	const [userInfoLoading, setUserInfoLoading] = React.useState(false);
 	const [userInfoError, setUserInfoError] = React.useState<Error | null>(null);
+
+	type UserInfoResponse = {
+		user: {
+			mc_account: string | null;
+			patreon: boolean;
+			profile_bg: string | null;
+		};
+	};
 
 	React.useEffect(() => {
 		if (user && user.uid) {
@@ -34,7 +45,7 @@ export default function ProfilePage() {
 					setUserInfoLoading(false);
 				});
 		} else {
-			setUserInfo(null);
+			setUserInfo(undefined);
 			setUserInfoError(null);
 		}
 	}, [user]);

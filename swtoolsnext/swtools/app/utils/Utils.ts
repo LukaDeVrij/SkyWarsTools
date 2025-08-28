@@ -746,3 +746,7 @@ export function getKitPrestigeInfo(kitExp: number): KitPrestigeInfo {
 	}
 	return lastPrestige;
 }
+
+export const fetcher = <T = unknown>(...args: [RequestInfo, RequestInit?]): Promise<T> =>
+	fetch(...args).then((res) => res.json() as Promise<T>);
+// no explicit any, this is some AI typescript magic

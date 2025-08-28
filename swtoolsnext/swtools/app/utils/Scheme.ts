@@ -1,3 +1,5 @@
+import { OverallResponse } from "../types/OverallResponse";
+
 type Scheme = {
 	name: string;
 	rankColor: string | string[];
@@ -1029,23 +1031,22 @@ export function getSchemeByReq(req: string | number): Scheme | undefined {
 	return schemeByReq.get(req);
 }
 
-type PlayerDisplay = APIResponse["generic"]["display"];
-export function formatScheme(level: number, playerDisplay: PlayerDisplay, overwriteScheme: boolean): string {
-	if (!playerDisplay.skywarsActiveScheme || !playerDisplay.levelFormattedWithBrackets) {
+export function formatScheme(level: number, overallResponse: OverallResponse, overwriteScheme: boolean): string {
+	if (!overallResponse.stats.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
 		// Fallback for legacy players who havent logged on since update
-		return playerDisplay.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
+		return overallResponse.display.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
 	}
 
-	const icon: string = extractIcon(playerDisplay.levelFormattedWithBrackets);
+	const icon: string = extractIcon(overallResponse.display.levelFormattedWithBrackets);
 	let schemeName: string;
 	if (!overwriteScheme) {
-		schemeName = playerDisplay.skywarsActiveScheme.split("scheme_")[1] ?? "stone_prestige";
+		schemeName = overallResponse.stats.active_scheme.split("scheme_")[1] ?? "stone_prestige";
 	} else {
 		schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
 	}
 
 	const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
-	const demigod: boolean = playerDisplay.skywarsActiveScheme == "scheme_demigod";
+	const demigod: boolean = overallResponse.stats.active_scheme == "scheme_demigod";
 	const levelStr: string = Math.floor(level).toString();
 
 	let rankColor: string[] | string = scheme.rankColor;
