@@ -2,12 +2,16 @@ import React from "react";
 import { toCamelCase } from "@/app/utils/Utils";
 import KitPrestigeString from "../../universal/KitPrestigeString";
 import TabContent from "./TabContent";
+import { OverallResponse } from "@/app/types/OverallResponse";
+import { useOverall } from "@/app/hooks/useOverall";
 
-const Extended: React.FC<APIResponse> = (response) => {
+const Extended: React.FC<OverallResponse> = (response) => {
 	function kitProcessing(value: string): string {
 		const parts = value.split("_");
 		return toCamelCase(parts[parts.length - 1]);
 	}
+
+	response = useOverall(response.player); // Temp hook fix
 
 	return (
 		<TabContent>
@@ -17,49 +21,49 @@ const Extended: React.FC<APIResponse> = (response) => {
 						<tr className="border-b-1 border-white">
 							<td>Current Kit (Normal)</td>
 							<td>
-								{kitProcessing(response.extendedStats.activeKit_SOLO ?? "None")}{" "}
-								{<KitPrestigeString kit={response.extendedStats.activeKit_SOLO} kitStats={response.kitStats} />}
+								{kitProcessing(response.stats.activeKit_SOLO ?? "None")}{" "}
+								{<KitPrestigeString kit={response.stats.activeKit_SOLO} response={response} />}
 							</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Current Kit (Insane)</td>
 							<td>
-								{kitProcessing(response.extendedStats.activeKit_TEAM ?? "None")}{" "}
-								{<KitPrestigeString kit={response.extendedStats.activeKit_TEAM} kitStats={response.kitStats} />}
+								{kitProcessing(response.stats.activeKit_TEAM ?? "None")}{" "}
+								{<KitPrestigeString kit={response.stats.activeKit_TEAM} response={response} />}
 							</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Current Kit (Mini)</td>
 							<td>
-								{kitProcessing(response.extendedStats.activeKit_RANKED ?? "None")}{" "}
-								{<KitPrestigeString kit={response.extendedStats.activeKit_RANKED} kitStats={response.kitStats} />}
+								{kitProcessing(response.stats.activeKit_RANKED ?? "None")}{" "}
+								{<KitPrestigeString kit={response.stats.activeKit_RANKED} response={response} />}
 							</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Max Prestige Kits</td>
-							<td>{response.extendedStats.kitsMaxPrestige ?? "0"}</td>
+							<td>{response.stats.kitsMaxPrestige ?? "0"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Display Scheme</td>
-							<td>{response.generic.display.skywarsActiveScheme ?? "Unknown"}</td>
+							<td>{response.display.active_scheme ?? "Unknown"}</td>
 						</tr>
 						<tr>
 							<td colSpan={2} style={{ height: "24px" }}></td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Angel of Death Level</td>
-							<td>{response.extendedStats.angel_of_death_level ?? 0}</td>
+							<td>{response.stats.angel_of_death_level ?? 0}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Angels Offering</td>
-							<td>{response.extendedStats.angels_offering == 1 ? "Yes" : "No"}</td>
+							<td>{response.stats.angels_offering == 1 ? "Yes" : "No"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Total Corruption Chance</td>
 							<td>
-								{(response.extendedStats.angel_of_death_level ?? 0) +
-									(response.extendedStats.angels_offering ?? 0) +
-									(response.descentStats.favor_of_the_angel ? 1 : 0)}{" "}
+								{(response.stats.angel_of_death_level ?? 0) +
+									(response.stats.angels_offering ?? 0) +
+									(response.stats.favor_of_the_angel ? 1 : 0)}{" "}
 								%
 							</td>
 						</tr>
@@ -76,64 +80,65 @@ const Extended: React.FC<APIResponse> = (response) => {
 						</tr>
 						{/* <tr className="border-b-1 border-white">
 						<td>Tokens</td>
-						<td>{stats.extendedStats.tokens?.toLocaleString()}</td>
+						<td>{stats.stats.tokens?.toLocaleString()}</td>
 					</tr> */}
 						<tr className="border-b-1 border-white">
 							<td>Opals</td>
-							<td>{response.extendedStats.opals ?? "None"}</td>
+							<td>{response.stats.opals ?? "None"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Souls</td>
-							<td>{response.extendedStats.souls?.toLocaleString()}</td>
+							<td>{response.stats.souls?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Paid Souls</td>
-							<td>{response.extendedStats.paid_souls?.toLocaleString()}</td>
+							<td>{response.stats.paid_souls?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Total Souls</td>
-							<td>{response.extendedStats.souls_gathered?.toLocaleString()}</td>
+							<td>{response.stats.souls_gathered?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Soul Well Uses</td>
-							<td>{response.extendedStats.soul_well?.toLocaleString()}</td>
+							<td>{response.stats.soul_well?.toLocaleString()}</td>
 						</tr>
 						<tr>
 							<td colSpan={2} style={{ height: "24px" }}></td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Assists</td>
-							<td>{response.extendedStats.assists?.toLocaleString()}</td>
+							<td>{response.stats.assists?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Melee Kills</td>
-							<td>{response.extendedStats.melee_kills?.toLocaleString()}</td>
+							<td>{response.stats.melee_kills?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Void Kills</td>
-							<td>{response.extendedStats.void_kills?.toLocaleString()}</td>
+							<td>{response.stats.void_kills?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Mob Kills</td>
-							<td>{response.extendedStats.mob_kills?.toLocaleString()}</td>
+							<td>{response.stats.mob_kills?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Bow Kills</td>
-							<td>{response.extendedStats.bow_kills?.toLocaleString()}</td>
+							<td>{response.stats.bow_kills?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Arrows Shot</td>
-							<td>{response.extendedStats.arrows_shot?.toLocaleString()}</td>
+							<td>{response.stats.arrows_shot?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Arrows Hit</td>
-							<td>{response.extendedStats.arrows_hit?.toLocaleString()}</td>
+							<td>{response.stats.arrows_hit?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Arrows Hit/Miss</td>
 							<td>
-								{response.extendedStats.arrows_shot > 0
-									? `${((response.extendedStats.arrows_hit / response.extendedStats.arrows_shot) * 100).toFixed(2)}%`
+								{/* 	TODO Refactor this bs */}
+								{response.stats.arrows_shot && response.stats.arrows_shot > 0
+									? `${(((response.stats.arrows_hit ?? 0) / response.stats.arrows_shot) * 100).toFixed(2)}%`
 									: "N/A"}
 							</td>
 						</tr>
@@ -158,34 +163,34 @@ const Extended: React.FC<APIResponse> = (response) => {
 					</tr> */}
 						<tr className="border-b-1 border-white">
 							<td>Survived Players</td>
-							<td>{response.extendedStats.survived_players?.toLocaleString()}</td>
+							<td>{response.stats.survived_players?.toLocaleString()}</td>
 						</tr>
 						<tr>
 							<td colSpan={2} style={{ height: "24px" }}></td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Eggs Thrown</td>
-							<td>{response.extendedStats.egg_thrown?.toLocaleString()}</td>
+							<td>{response.stats.egg_thrown?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Pearls Thrown</td>
-							<td>{response.extendedStats.enderpearls_thrown?.toLocaleString()}</td>
+							<td>{response.stats.enderpearls_thrown?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Blocks Broken</td>
-							<td>{response.extendedStats.blocks_broken?.toLocaleString()}</td>
+							<td>{response.stats.blocks_broken?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Blocks Placed</td>
-							<td>{response.extendedStats.blocks_placed?.toLocaleString()}</td>
+							<td>{response.stats.blocks_placed?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Items Enchanted</td>
-							<td>{response.extendedStats.items_enchanted?.toLocaleString()}</td>
+							<td>{response.stats.items_enchanted?.toLocaleString()}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Chests Opened</td>
-							<td>{response.extendedStats.chests_opened?.toLocaleString()}</td>
+							<td>{response.stats.chests_opened?.toLocaleString()}</td>
 						</tr>
 					</tbody>
 				</table>

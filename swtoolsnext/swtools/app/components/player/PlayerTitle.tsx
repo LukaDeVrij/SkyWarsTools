@@ -24,9 +24,9 @@ type StatusResponse = {
 	};
 };
 
-const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
+const PlayerTitle: React.FC<PlayerTitleProps> = ({playerName, response}) => {
 	const { data, error, isLoading } = useSWR<StatusResponse>(
-		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${playerName}`,
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${response.player}`,
 		fetcher
 	);
 
@@ -48,13 +48,13 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	const scheme = formatScheme(level, response, false);
 
 	// Rank
-	const rank = getPlayerRank(response.generic.display);
+	const rank = getPlayerRank(response);
 
 	// Guild Suffix
 	let guildColor: string = "§7";
 	let guildTagFormatted: string = "";
-	if (response.generic.display.tag) {
-		switch (response.generic.display.tagColor) {
+	if (response.guild.tag) {
+		switch (response.guild.tagColor) {
 			case "YELLOW":
 				guildColor = "§e";
 				break;
@@ -71,11 +71,11 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 				guildColor = "§7";
 		}
 
-		guildTagFormatted = guildColor + "[" + response.generic.display.tag + "]";
+		guildTagFormatted = guildColor + "[" + response.guild.tag + "]";
 	}
 
 	// Final assembled title
-	const playerTitle = `${scheme} ${rank.prefix} ${playerName} ${guildTagFormatted}`;
+	const playerTitle = `${scheme} ${rank.prefix} ${response.player} ${guildTagFormatted}`;
 
 	return (
 		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
@@ -85,7 +85,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 					width={100}
 					height={100}
 					className="rounded h-20 w-20 lg:h-28 lg:w-28 mb-6 lg:mb-12 mx-2 lg:mx-4 z-10 hidden lg:inline"
-					src={`https://www.mc-heads.net/avatar/${playerName}`}
+					src={`https://www.mc-heads.net/avatar/${response.player}`}
 				/>
 				{/* Online status indicator overlay */}
 				<span
@@ -100,13 +100,13 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 					<div className="flex items-center gap-2 text-sm lg:text-lg">
 						{/* <span className="text-2xl">🇳🇱</span> */}
 						<span className="font-semibold hidden lg:inline">
-							{response.generic.stats.guild} ({response.generic.stats.guildRank})
+							{response.guild.guild} ({response.guild.guildRank})
 						</span>
 					</div>
 
 					<div className="hidden lg:flex items-center gap-2 mx-4">
 						<a
-							href={`https://namemc.com/profile/${playerName}`}
+							href={`https://namemc.com/profile/${response.player}`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="animate-press-hard"
@@ -116,7 +116,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 							<Image src="/icons/namemc.png" alt="NameMC logo" width={32} height={32} className="inline h-6 w-6" />
 						</a>
 						<a
-							href={`https://www.shmeado.club/player/stats/${playerName}/SkyWars/Table/`}
+							href={`https://www.shmeado.club/player/stats/${response.player}/SkyWars/Table/`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline h-6 w-6 animate-press-hard"
@@ -132,7 +132,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 							/>
 						</a>
 						<a
-							href={`https://plancke.io/hypixel/player/stats/${playerName}`}
+							href={`https://plancke.io/hypixel/player/stats/${response.player}`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="animate-press-hard"

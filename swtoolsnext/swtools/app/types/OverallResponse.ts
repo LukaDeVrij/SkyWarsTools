@@ -31,6 +31,7 @@ export interface Stats {
 	activeKit_SOLO?: string;
 	activeKit_TEAM?: string;
 	activeKit_RANKED?: string;
+	favor_of_the_angel?: number;
 	karma: number;
 	networkExp: number;
 	firstLogin: number;
@@ -753,4 +754,6 @@ export interface Display {
 	rankPlusColor?: string;
 	monthlyRankColor?: string;
 	active_scheme?: string;
+	rank?: string;
+	prefix?: string;
 }

@@ -1,65 +1,35 @@
 import React from "react";
 import Image from "next/image";
 import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate } from "@/app/utils/Utils"; // Assuming you have a utility function for this
+import { OverallResponse } from "@/app/types/OverallResponse";
 
 interface PlayerExtraInfoProps {
-	playerName: string;
-	info: {
-		display: {
-			levelFormattedWithBrackets: string;
-			levelFormatted: string;
-			newPackageRank: string;
-			monthlyPackageRank: string;
-			rankPlusColor: string;
-			monthlyRankColor: string;
-			skywarsActiveScheme: string;
-			tagColor: string;
-			tag: string;
-		};
-		stats: {
-			karma: number;
-			networkExp: number;
-			firstLogin: number;
-			lastLogin: number;
-			achievementPoints: number;
-			guild: string;
-			guildRank: string;
-			guildJoined: number;
-		};
-		socials: {
-			twitter?: string;
-			youtube?: string;
-			instagram?: string;
-			tiktok?: string;
-			twitch?: string;
-			discord?: string;
-			hypixel?: string;
-		};
-	};
+	response: OverallResponse;
 }
 
 const socials = {
-	twitter: "/icons/twitter.png",
-	youtube: "/icons/youtube.png",
-	instagram: "/icons/instagram.png",
-	tiktok: "/icons/tiktok.png",
-	twitch: "/icons/twitch.png",
-	discord: "/icons/discord.png",
-	hypixel: "/icons/hypixel.png",
+	TWITTER: "/icons/twitter.png",
+	YOUTUBE: "/icons/youtube.png",
+	INSTAGRAM: "/icons/instagram.png",
+	TIKTOK: "/icons/tiktok.png",
+	TWITCH: "/icons/twitch.png",
+	DISCORD: "/icons/discord.png",
+	HYPIXEL: "/icons/hypixel.png",
 };
 
-const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, info }) => {
+const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => {
+	let links = response.stats.socialMedia?.links;
 	return (
 		<>
 			<div className="bg-content p-4 font-bold flex gap-4">
-				{info.socials && Object.entries(info.socials).length > 0 ? (
+				{links && Object.entries(links).length > 0 ? (
 					<>
-						{Object.entries(info.socials).map(([social]) => {
-							const socialKey = social as keyof typeof info.socials;
+						{Object.entries(links).map(([social]) => {
+							const socialKey = social as keyof typeof links;
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
 							return (
-								<a key={social} href={info.socials[socialKey]}>
+								<a key={social} href={links[socialKey]}>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
@@ -75,15 +45,15 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ playerName, inf
 				)}
 			</div>
 			<div className="w-full bg-content p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
-				<span>Network Level: {calcHypixelLevel(info.stats.networkExp)}</span>
-				<span title={timeAgo(info.stats.firstLogin / 1000)}>
-					First Login: {formatTimestampToVerboseDate(info.stats.firstLogin)}
+				<span>Network Level: {calcHypixelLevel(response.stats.networkExp)}</span>
+				<span title={timeAgo(response.stats.firstLogin / 1000)}>
+					First Login: {formatTimestampToVerboseDate(response.stats.firstLogin)}
 				</span>
-				<span title={formatTimestampToVerboseDate(info.stats.lastLogin)}>
-					Last Login: {timeAgo(info.stats.lastLogin / 1000)}
+				<span title={formatTimestampToVerboseDate(response.stats.lastLogin)}>
+					Last Login: {timeAgo(response.stats.lastLogin / 1000)}
 				</span>
-				<span>AP: {info.stats.achievementPoints.toLocaleString()}</span>
-				<span>Karma: {info.stats.karma.toLocaleString()}</span>
+				<span>AP: {response.stats.achievementPoints.toLocaleString()}</span>
+				<span>Karma: {response.stats.karma.toLocaleString()}</span>
 			</div>
 		</>
 	);

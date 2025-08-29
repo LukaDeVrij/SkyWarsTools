@@ -1,5 +1,6 @@
 // https://node-hypixel.zikeji.com/ UNDER MIT License
 
+import { OverallResponse } from "../types/OverallResponse";
 import { MinecraftColorAsHex, MinecraftFormatting } from "./MinecraftFormatting";
 
 /** @internal */
@@ -15,7 +16,7 @@ export enum PlayerRanks {
 	HELPER = 80,
 	MODERATOR = 90,
 	ADMIN = 100,
-	STAFF = 101
+	STAFF = 101,
 }
 
 /**
@@ -80,9 +81,10 @@ export interface PlayerRank {
  * @param onlyPackages Whether to ignore their staff / youtube rank and only get their donor rank.
  * @category Helper
  */
-type PlayerDisplay = APIResponse["generic"]["display"];
-export function getPlayerRank(playerDisplay: PlayerDisplay, onlyPackages = false): PlayerRank {
+export function getPlayerRank(playerOverall: OverallResponse, onlyPackages = false): PlayerRank {
+	const playerDisplay = playerOverall.display;
 	let foundRank: PlayerRanks = PlayerRanks.NON_DONOR;
+
 	if (onlyPackages) {
 		if (playerDisplay.monthlyPackageRank) {
 			const rank = PlayerRanks[playerDisplay.monthlyPackageRank as keyof typeof PlayerRanks];
@@ -102,15 +104,15 @@ export function getPlayerRank(playerDisplay: PlayerDisplay, onlyPackages = false
 				foundRank = rank;
 			}
 		}
-	} else if (typeof playerDisplay.rank !== "undefined" && playerDisplay.rank !== "NORMAL") {
+	} else if (typeof playerDisplay?.rank !== "undefined" && playerDisplay.rank !== "NORMAL") {
 		const rank = PlayerRanks[playerDisplay.rank as keyof typeof PlayerRanks];
 		if (rank) {
 			foundRank = rank;
 		} else {
-			return getPlayerRank(playerDisplay, true);
+			return getPlayerRank(playerOverall, true);
 		}
 	} else {
-		return getPlayerRank(playerDisplay, true);
+		return getPlayerRank(playerOverall, true);
 	}
 	let out: PlayerRank;
 	switch (foundRank) {

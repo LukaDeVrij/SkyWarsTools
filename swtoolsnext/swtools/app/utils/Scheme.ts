@@ -1032,15 +1032,16 @@ export function getSchemeByReq(req: string | number): Scheme | undefined {
 }
 
 export function formatScheme(level: number, overallResponse: OverallResponse, overwriteScheme: boolean): string {
-	if (!overallResponse.stats.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
+	// console.log(overallResponse);
+	if (!overallResponse.display?.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
 		// Fallback for legacy players who havent logged on since update
-		return overallResponse.display.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
+		return overallResponse.display?.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
 	}
 
 	const icon: string = extractIcon(overallResponse.display.levelFormattedWithBrackets);
 	let schemeName: string;
 	if (!overwriteScheme) {
-		schemeName = overallResponse.stats.active_scheme.split("scheme_")[1] ?? "stone_prestige";
+		schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
 	} else {
 		schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
 	}

@@ -5,6 +5,7 @@ import Prestige from "@/app/components/player/tabs/Prestige";
 import GrimReaper from "@/app/components/player/tabs/GrimReaper";
 import Playtime from "@/app/components/player/tabs/Playtime";
 import Legacy from "@/app/components/player/tabs/Legacy";
+import { OverallResponse } from "@/app/types/OverallResponse";
 
 const tabs = [
 	{ label: "Table", value: "table" },
@@ -28,6 +29,9 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 		notFound();
 	}
 
+	// TODO I think this is unnecessary since its done in each tab component - When we do it here half the time its undefined in the tab component
+	// Not sure what the cause is but its cached so whatever, well just refetch in every tab component for now
+
 	const res = await fetch(`https://skywarstools.com/api/overall?player=${encodeURIComponent(playerName)}`, {
 		next: { revalidate: 300 },
 	});
@@ -35,8 +39,9 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 		console.log(res.statusText);
 		throw new Error("Failed to fetch player data");
 	}
-	const overallData: APIResponse = await res.json();
+	const overallData: OverallResponse = await res.json();
 
+	// Yeah and then just pass only playerName into the components and let them fetch their own data
 	return (
 		<>
 			{currentTab.value === "table" && <Table {...overallData} />}

@@ -5,17 +5,32 @@ import { calcEXPFromLevel, calcLevel, calcNextPrestigeObj, calcPrestigeObj, calc
 import ProgressBar from "../../universal/ProgressBar";
 import { formatScheme } from "@/app/utils/Scheme";
 import TabContent from "./TabContent";
+import { OverallResponse } from "@/app/types/OverallResponse";
 
-const Prestige: React.FC<APIResponse> = (response) => {
-	const rank = getPlayerRank(response.generic.display);
+const Prestige: React.FC<OverallResponse> = async (response) => {
+	// hacky fix
+	// TODO fucking bs bug cost me 2 hours - for some reason we need to refetch the data here, otherwise its undefined half the time??? some SSR bs
+	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(response.player)}`, {
+		next: { revalidate: 300 },
+	});
+	// I mean its not that big a deal since its cached and all but still
+	if (!res.ok) {
+		console.log(res.statusText);
+		throw new Error("Failed to fetch player data");
+	}
+	const overallData = await res.json();
+	response = overallData;
+	// hacky fix over
+
+	const rank = getPlayerRank(response);
 
 	// Prestige calculations - lot of stuff
-	const experience = response.stats.skywars_experience;
+	const experience: number = response.stats.skywars_experience ?? 0;
 	const currentLevel = Math.floor(calcLevel(experience));
 	const [currentPrestigeObj, currentPrestige] = calcPrestigeObj(currentLevel);
 	const currentPrestigeString = calcPrestigeTag(currentPrestige);
 	const [nextPrestigeObj, nextPrestige]: [PrestigeObject, number] = calcNextPrestigeObj(currentLevel);
-	const nextPrestigeString = formatScheme(nextPrestige, response.generic.display, true);
+	const nextPrestigeString = formatScheme(nextPrestige, response, true);
 
 	const expTotalNextPrestige = calcEXPFromLevel(nextPrestige);
 	const expDiffNextPrestige = expTotalNextPrestige - experience;
@@ -100,13 +115,13 @@ const Prestige: React.FC<APIResponse> = (response) => {
 								<td className="flex gap-2 items-center">
 									Wins at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td className="text-right">{(response.stats.wins + winsNeeded).toLocaleString()}</td>
+								<td className="text-right">{(response.stats.wins ?? 0 + winsNeeded).toLocaleString()}</td>
 							</tr>
 							<tr>
 								<td className="flex gap-2 items-center">
 									Kills at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td className="text-right">{(response.stats.kills + killsNeeded).toLocaleString()}</td>
+								<td className="text-right">{(response.stats.kills ?? 0 + killsNeeded).toLocaleString()}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -117,7 +132,7 @@ const Prestige: React.FC<APIResponse> = (response) => {
 			<div className="hidden lg:block w-full font-semibold text-xl bg-content">
 				<div className="flex items-center justify-center gap-4">
 					<span className="text-3xl font-semibold flex gap-3 items-center">
-						<MinecraftText>{`${rank.prefix} ${response.player}`}</MinecraftText>
+						<MinecraftText>{` ${response.player}`}</MinecraftText>
 						is <span>{progressPercentage.toFixed(2)}%</span> towards <MinecraftText>{nextPrestigeString}</MinecraftText>
 					</span>
 				</div>
@@ -173,13 +188,13 @@ const Prestige: React.FC<APIResponse> = (response) => {
 								<td className="flex gap-3">
 									Wins at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td>{(response.stats.wins + winsNeeded).toLocaleString()}</td>
+								<td>{(response.stats.wins ?? 0 + winsNeeded).toLocaleString()}</td>
 							</tr>
 							<tr>
 								<td className="flex gap-3">
 									Kills at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td>{(response.stats.kills + killsNeeded).toLocaleString()}</td>
+								<td>{(response.stats.kills ?? 0 + killsNeeded).toLocaleString()}</td>
 							</tr>
 						</tbody>
 					</table>
