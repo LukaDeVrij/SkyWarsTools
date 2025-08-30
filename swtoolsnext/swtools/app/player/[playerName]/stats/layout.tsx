@@ -7,6 +7,7 @@ import PlayerExtraInfo from "@/app/components/player/PlayerExtraInfo";
 import React from "react";
 import PlayerStatsNavBar from "@/app/components/player/PlayerStatsNavBar";
 import { type ReactNode } from "react";
+import Footer from "@/app/components/Footer";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -39,6 +40,8 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 			<PlayerExtraInfo response={overallData} />
 			<PlayerStatsNavBar />
 			{children}
+
+			
 		</>
 	);
 };
