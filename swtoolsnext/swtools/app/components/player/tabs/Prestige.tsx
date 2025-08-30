@@ -132,7 +132,7 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 			<div className="hidden lg:block w-full font-semibold text-xl bg-content">
 				<div className="flex items-center justify-center gap-4">
 					<span className="text-3xl font-semibold flex gap-3 items-center">
-						<MinecraftText>{` ${response.player}`}</MinecraftText>
+						<MinecraftText>{`${rank.prefix} ${response.player}`}</MinecraftText>
 						is <span>{progressPercentage.toFixed(2)}%</span> towards <MinecraftText>{nextPrestigeString}</MinecraftText>
 					</span>
 				</div>

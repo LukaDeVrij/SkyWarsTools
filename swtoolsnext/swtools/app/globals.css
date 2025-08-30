@@ -17,7 +17,7 @@ body {
 	--accent: #ffcd22;
 }
 /*  for the two navbars at the top */
-.bg-nav {  
+.bg-nav {
 	background: var(--background-nav);
 }
 .bg-main {
@@ -34,7 +34,6 @@ body {
 }
 .bg-button {
 	background: var(--background-button);
-	
 }
 .bg-button:hover {
 	background: var(--background-button-hover);
@@ -85,4 +84,37 @@ body {
 .extended-table > table > tbody > tr > td {
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+.enchanted {
+	position: relative;
+	overflow: hidden;
+}
+
+.enchanted::before {
+	content: "";
+	position: absolute;
+	top: -200%;
+	left: -200%;
+	width: 500%;
+	height: 500%;
+	background: linear-gradient(120deg, rgba(5, 5, 5, 0.1) 0%, rgba(90, 100, 0, 0.3) 50%, rgba(120, 0, 255, 0.1) 100%);
+	mix-blend-mode: lighten;
+	animation: enchanted-shine 2s alternate infinite;
+	pointer-events: none;
+}
+
+@keyframes enchanted-shine {
+	0% {
+		transform: rotate(0deg) translateX(-20%) scale(1.1);
+		opacity: 0.7;
+	}
+	50% {
+		transform: rotate(10deg) translateX(20%) scale(1.1);
+		opacity: 1;
+	}
+	100% {
+		transform: rotate(0deg) translateX(-20%) scale(1.1);
+		opacity: 0.7;
+	}
 }

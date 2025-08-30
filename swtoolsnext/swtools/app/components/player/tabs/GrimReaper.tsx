@@ -14,8 +14,12 @@ import SoulUpgrades from "./reaper/SoulUpgrades";
 import DescentProgress from "./reaper/DescentProgress";
 import AngelProgress from "./reaper/AngelProgress";
 import Heads from "./reaper/Heads";
+import { OverallResponse } from "@/app/types/OverallResponse";
+import Potions from "./reaper/Potions";
+import TabContent from "./TabContent";
 
-const GrimReaper: React.FC<APIResponse> = (response) => {
+const GrimReaper: React.FC<OverallResponse> = (response) => {
+	// console.log(response);
 	const [descentData, setDescentData] = useState<DescentMap | null>(null);
 	const [combinedData, setCombinedData] = useState<DescentMap | null>(null);
 
@@ -25,7 +29,7 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 			.then((json) => {
 				setDescentData(json);
 				try {
-					const result = combineDescentData(response.descentStats, json);
+					const result = combineDescentData(response, json);
 					setCombinedData(result);
 				} catch {
 					setCombinedData(null);
@@ -35,7 +39,7 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 				setDescentData(null);
 				setCombinedData(null);
 			});
-	}, [response.descentStats]);
+	}, [response]);
 
 	if (!descentData || !combinedData) {
 		return <LoaderCircle className="animate-spin"></LoaderCircle>;
@@ -76,11 +80,15 @@ const GrimReaper: React.FC<APIResponse> = (response) => {
 						</div>
 					</div>
 				</TabPanel>
-				<TabPanel>{/* <Potions></Potions> */}</TabPanel>
 				<TabPanel>
-					<div className="w-full h-full p-0 lg:p-4 flex lg:gap-4 flex-col justify-between ">
+					<TabContent>
+						<Potions response={response}></Potions>
+					</TabContent>
+				</TabPanel>
+				<TabPanel>
+					<TabContent>
 						<Heads response={response}></Heads>
-					</div>
+					</TabContent>
 				</TabPanel>
 			</Tabs>
 		</>

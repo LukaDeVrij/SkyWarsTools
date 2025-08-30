@@ -17,6 +17,7 @@ export interface NextSave {
 
 export interface Stats {
 	brewery?: Brewery;
+	brewery_active?: string;
 	perkslot?: Perkslot;
 	active_victorydance?: string;
 	active_cage?: string;
@@ -31,7 +32,6 @@ export interface Stats {
 	activeKit_SOLO?: string;
 	activeKit_TEAM?: string;
 	activeKit_RANKED?: string;
-	favor_of_the_angel?: number;
 	karma: number;
 	networkExp: number;
 	firstLogin: number;
@@ -65,7 +65,6 @@ export interface Stats {
 	double_edged_sword?: number;
 	quest_masters_friend?: number;
 	kill_xp_boost?: number;
-	perk_slot?: number;
 	xezbeth_luck?: number;
 	harvesting_season?: number;
 	survived_players?: number;
@@ -678,12 +677,13 @@ export interface Stats {
 }
 
 export interface Brewery {
-	level_up_energy?: number;
+	gilded_tonic?: number;
 	ender_elixir?: number;
 	corrupting_brew?: number;
 	builders_blend?: number;
-	gilded_tonic?: number;
-
+	robinhoods_concoction?: number;
+	brawlers_refreshment?: number;
+	level_up_energy?: number;
 	//TODO EXPAND
 }
 

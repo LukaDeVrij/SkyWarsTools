@@ -30,7 +30,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 					className="absolute left-0 top-0 h-full transition-all"
 					style={{ width: `${progressPercentage}%`, backgroundColor: progressColor }}
 				/>
-				<div className={`relative z-10 w-full flex justify-center items-center text-white font-bold text-lg`}>
+				<div className={`relative z-5 w-full flex justify-center items-center text-white font-bold text-lg`}>
 					{mode === ProgressBarMode.PERCENTAGE_ONLY
 						? `${progressPercentage.toFixed(decimals)}%`
 						: `${progress.toLocaleString()}/${total.toLocaleString()} (${progressPercentage.toFixed(decimals)}%)`}

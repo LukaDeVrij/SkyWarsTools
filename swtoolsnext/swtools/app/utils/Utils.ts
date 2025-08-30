@@ -1,4 +1,5 @@
 import { DescentItem, DescentMap } from "../types/DescentMap";
+import { OverallResponse } from "../types/OverallResponse";
 
 export function calcLevel(xp: number): number {
 	const perLevelXp = [10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
@@ -661,13 +662,23 @@ export function romanize(num: number): string {
 }
 
 // Descent stuff (ported from JS)
-export function combineDescentData(descentPlayer: APIResponse["descentStats"], descentData: DescentMap) {
+export function combineDescentData(overall: OverallResponse, descentData: DescentMap) {
 	const combinedData = { ...descentData };
-	Object.keys(combinedData).forEach((key) => {
-		const typedKey = key as keyof DescentMap;
-		const playerKey = key as keyof APIResponse["descentStats"];
-		combinedData[typedKey]["playerOwns"] = descentPlayer[playerKey] ? descentPlayer[playerKey] : false;
-	});
+	try {
+		Object.keys(combinedData).forEach((key) => {
+			const typedKey = key as keyof DescentMap;
+			let owns;
+			if (overall.stats[key as keyof OverallResponse["stats"]] === undefined) {
+				owns = overall.stats.packages.includes(key) ? true : false;
+			} else {
+				owns = overall.stats[key as keyof OverallResponse["stats"]];
+			}
+			combinedData[typedKey]["playerOwns"] = owns as boolean | number;
+		});
+	} catch (e) {
+		console.error("Error combining descent data:", e);
+		return descentData; // Return original data in case of error
+	}
 	return combinedData;
 }
 

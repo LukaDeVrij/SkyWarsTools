@@ -1,7 +1,11 @@
+import { OverallResponse } from "@/app/types/OverallResponse";
 import { formatPlaytime } from "@/app/utils/Utils";
 import React from "react";
 
-const Playtime: React.FC<APIResponse> = (response) => {
+const Playtime: React.FC<OverallResponse> = (response) => {
+	const calcRatio = (stat: number, timePlayed: number): string => {
+		return (stat / (timePlayed / 60 / 60)).toFixed(2);
+	};
 	return (
 		<div className="flex lg:p-3 overflow-hidden">
 			<div className="w-full h-auto bg-content lg:rounded-2xl py-4 px-6 flex flex-col gap-2 lg:gap-0 font-semibold lg:text-xl">
@@ -18,26 +22,26 @@ const Playtime: React.FC<APIResponse> = (response) => {
 						<tbody>
 							<tr className="border-b-1 border-white">
 								<td>Overall</td>
-								<td>{response.stats.wins.toLocaleString()}</td>
-								<td>{(response.stats.wins / (response.stats.time_played / 60 / 60)).toFixed(2)}</td>
-								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played)}</td>
+								<td>{response.stats.wins?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.wins ?? 0, response.stats.time_played ?? 0)}</td>
+								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played ?? 0)}</td>
 							</tr>
 							<tr className="border-b-1 border-white">
 								<td>Solo</td>
-								<td>{response.stats.wins_solo.toLocaleString()}</td>
-								<td>{(response.stats.wins_solo / (response.stats.time_played_solo / 60 / 60)).toFixed(2)}</td>
-								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_solo)}</td>
+								<td>{response.stats.wins_solo?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.wins_solo ?? 0, response.stats.time_played_solo ?? 0)}</td>
+								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_solo ?? 0)}</td>
 							</tr>
 							<tr className="border-b-1 border-white">
 								<td>Teams</td>
-								<td>{response.stats.wins_team.toLocaleString()}</td>
-								<td>{(response.stats.wins_team / (response.stats.time_played_team / 60 / 60)).toFixed(2)}</td>
-								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_team)}</td>
+								<td>{response.stats.wins_team?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.wins_team ?? 0, response.stats.time_played_team ?? 0)}</td>
+								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
 							<tr>
 								<td>Mini</td>
 								<td>{(response.stats.wins_mini ?? 0).toLocaleString()}</td>
-								<td>{((response.stats.wins_mini ?? 0) / ((response.stats.time_played_mini ?? 0) / 60 / 60)).toFixed(2)}</td>
+								<td>{calcRatio(response.stats.wins_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
 							</tr>
 						</tbody>
@@ -55,28 +59,26 @@ const Playtime: React.FC<APIResponse> = (response) => {
 						<tbody>
 							<tr className="border-b-1 border-white">
 								<td className="inline lg:hidden">Overall</td>
-								<td>{response.stats.kills.toLocaleString()}</td>
-								<td>{(response.stats.kills / (response.stats.time_played / 60 / 60)).toFixed(2)}</td>
-								<td>{formatPlaytime(response.stats.time_played)}</td>
+								<td>{response.stats.kills?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.kills ?? 0, response.stats.time_played ?? 0)}</td>
+								<td>{formatPlaytime(response.stats.time_played ?? 0)}</td>
 							</tr>
 							<tr className="border-b-1 border-white">
 								<td className="inline lg:hidden">Solo</td>
-								<td>{response.stats.kills_solo.toLocaleString()}</td>
-								<td>{(response.stats.kills_solo / (response.stats.time_played_solo / 60 / 60)).toFixed(2)}</td>
-								<td>{formatPlaytime(response.stats.time_played_solo)}</td>
+								<td>{response.stats.kills_solo?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.kills_solo ?? 0, response.stats.time_played_solo ?? 0)}</td>
+								<td>{formatPlaytime(response.stats.time_played_solo ?? 0)}</td>
 							</tr>
 							<tr className="border-b-1 border-white">
 								<td className="inline lg:hidden">Teams</td>
-								<td>{response.stats.kills_team.toLocaleString()}</td>
-								<td>{(response.stats.kills_team / (response.stats.time_played_team / 60 / 60)).toFixed(2)}</td>
-								<td>{formatPlaytime(response.stats.time_played_team)}</td>
+								<td>{response.stats.kills_team?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.kills_team ?? 0, response.stats.time_played_team ?? 0)}</td>
+								<td>{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
 							<tr>
 								<td className="inline lg:hidden">Mini</td>
 								<td>{(response.stats.kills_mini ?? 0).toLocaleString()}</td>
-								<td>
-									{((response.stats.kills_mini ?? 0) / ((response.stats.time_played_mini ?? 0) / 60 / 60)).toFixed(2)}
-								</td>
+								<td>{calcRatio(response.stats.kills_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
 							</tr>
 						</tbody>

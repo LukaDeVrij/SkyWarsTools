@@ -1,10 +1,11 @@
 import ProgressBar, { ProgressBarMode } from "@/app/components/universal/ProgressBar";
 import Title from "@/app/components/universal/Title";
+import { OverallResponse } from "@/app/types/OverallResponse";
 import { romanize } from "@/app/utils/Utils";
 import React from "react";
 
-const AngelProgress: React.FC<{ response: APIResponse }> = ({ response }) => {
-	const playerAod: number = response.extendedStats.angel_of_death_level ?? 0;
+const AngelProgress: React.FC<{ response: OverallResponse }> = ({ response }) => {
+	const playerAod: number = response.stats.angel_of_death_level ?? 0;
 
 	const aodMap = [
 		{ level: "I", cost: 50000, total: 50000, chance: "1%" },
@@ -50,44 +51,48 @@ const AngelProgress: React.FC<{ response: APIResponse }> = ({ response }) => {
 				<tbody>
 					<tr>
 						<td>Angel&apos;s Offering (+1%)</td>
-						<td className={` ${response.descentStats.angels_offering ? "text-green-600" : ""}`}>
-							{response.descentStats.angels_offering ? "Unlocked" : "Locked"}
+						<td className={` ${response.stats.angels_offering ? "text-green-600" : ""}`}>
+							{response.stats.angels_offering ? "Unlocked" : "Locked"}
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Favour of the Angel (+1%)</td>
-						<td className={` ${response.descentStats.favor_of_the_angel ? "text-green-600" : ""}`}>
-							{response.descentStats.favor_of_the_angel ? "Unlocked" : "Locked"}
+						<td className={` ${response.stats.packages.includes("favor_of_the_angel") ? "text-green-600" : ""}`}>
+							{response.stats.packages.includes("favor_of_the_angel") ? "Unlocked" : "Locked"}
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Total Corruption Chance</td>
 						<td className="text-pink-500">
-							{playerAod + (response.descentStats.angels_offering ?? 0) + (response.descentStats.favor_of_the_angel ? 1 : 0)}%
+							{playerAod + (response.stats.angels_offering ?? 0) + (response.stats.packages.includes("favor_of_the_angel") ? 1 : 0)}%
 						</td>
 					</tr>
-                    {playerAod < 12 && (
-                        <tr>
-                            <td colSpan={2} className="">
-                                <span className="text-sm">Progress to Tier {romanize(playerAod + 1)}</span>
-                                <ProgressBar
-                                    progress={response.stats.coins}
-                                    total={aodMap[playerAod].cost}
-                                    bgColor="#424242"
-                                    progressColor="#cc3320ff"
-                                    decimals={0}
-                                    mode={ProgressBarMode.PERCENTAGE_ONLY}
-                                />
-                            </td>
-                        </tr>
-                    )}
+					{playerAod < 12 && (
+						<tr>
+							<td colSpan={2} className="">
+								<span className="text-sm">Progress to Tier {romanize(playerAod + 1)}</span>
+								<ProgressBar
+									progress={response.stats.coins ?? 0}
+									total={aodMap[playerAod].cost}
+									bgColor="#424242"
+									progressColor="#cc3320ff"
+									decimals={0}
+									mode={ProgressBarMode.PERCENTAGE_ONLY}
+								/>
+							</td>
+						</tr>
+					)}
 					<tr>
 						<td colSpan={2} className="pb-2">
 							<span className="text-sm">Total Angel of Death Progress</span>
 							<ProgressBar
-								progress={playerAod === 0 ? 0 + response.stats.coins : aodMap[playerAod - 1].total + response.stats.coins}
+								progress={
+									playerAod === 0
+										? 0 + (response.stats.coins ?? 0)
+										: aodMap[playerAod - 1].total + (response.stats.coins ?? 0)
+								}
 								total={208750000} // Total cost for all levels of Angel of Death
 								bgColor="#424242"
 								progressColor="#cc3320ff"

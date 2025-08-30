@@ -10,6 +10,7 @@ const tabs = [
 	{ label: "Playtime", value: "playtime" },
 	{ label: "Kits", value: "kits" },
 	{ label: "Legacy", value: "legacy" },
+	{ label: "Equips", value: "equips" },
 ];
 
 const PlayerStatsNavBar = () => {

@@ -8,8 +8,8 @@ interface KitPrestigeStringProps {
 }
 
 const KitPrestigeString: React.FC<KitPrestigeStringProps> = ({ kit, response }) => {
-	console.log(response)
-	let indexer = ("xp_" + kit) as keyof OverallResponse["stats"];
+	// console.log(response)
+	const indexer = ("xp_" + kit) as keyof OverallResponse["stats"];
 	const xp: number = (response.stats[indexer] || 0) as number; // sorry ts
 
 	const prestige: KitPrestigeInfo = getKitPrestigeInfo(xp);

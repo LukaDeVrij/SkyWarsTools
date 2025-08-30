@@ -18,7 +18,7 @@ const socials = {
 };
 
 const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => {
-	let links = response.stats.socialMedia?.links;
+	const links = response.stats.socialMedia?.links;
 	return (
 		<>
 			<div className="bg-content p-4 font-bold flex gap-4">
@@ -35,6 +35,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 										alt={`${social} icon`}
 										width={32}
 										height={32}
+										className="animate-press-hard"
 									/>
 								</a>
 							);

@@ -3,7 +3,7 @@ import { toCamelCase } from "@/app/utils/Utils";
 import KitPrestigeString from "../../universal/KitPrestigeString";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
-import { useOverall } from "@/app/hooks/useOverall";
+import MinecraftText from "@/app/utils/MinecraftText";
 
 const Extended: React.FC<OverallResponse> = (response) => {
 	function kitProcessing(value: string): string {
@@ -11,7 +11,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 		return toCamelCase(parts[parts.length - 1]);
 	}
 
-	response = useOverall(response.player); // Temp hook fix
+	// response = useOverall(response.player); // Temp hook fix
 
 	return (
 		<TabContent>
@@ -41,7 +41,9 @@ const Extended: React.FC<OverallResponse> = (response) => {
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Max Prestige Kits</td>
-							<td>{response.stats.kitsMaxPrestige ?? "0"}</td>
+							<td>
+								<MinecraftText>{response.stats.kitsMaxPrestige ?? "0"}</MinecraftText>
+							</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Display Scheme</td>
@@ -59,11 +61,15 @@ const Extended: React.FC<OverallResponse> = (response) => {
 							<td>{response.stats.angels_offering == 1 ? "Yes" : "No"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
+							<td>Favour of the Angel</td>
+							<td>{response.stats.packages.includes("favor_of_the_angel") ? "Yes" : "No"}</td>
+						</tr>
+						<tr className="border-b-1 border-white">
 							<td>Total Corruption Chance</td>
 							<td>
 								{(response.stats.angel_of_death_level ?? 0) +
 									(response.stats.angels_offering ?? 0) +
-									(response.stats.favor_of_the_angel ? 1 : 0)}{" "}
+									(response.stats.packages.includes("favor_of_the_angel") ? 1 : 0)}{" "}
 								%
 							</td>
 						</tr>
