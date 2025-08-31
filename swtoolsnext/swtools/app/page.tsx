@@ -1,6 +1,7 @@
 "use client";
 import useSWR from "swr";
 import { fetcher } from "./utils/Utils";
+import { LoaderCircle } from "lucide-react";
 
 type QueryStats = {
 	weekKey: string;
@@ -16,7 +17,7 @@ export default function Home() {
 	return (
 		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1000px] rounded-xl">
 			<div className="bg-content p-10 lg:rounded-lg shadow-xl w-full lg:w-120">
-				{isLoading && <div>Loading...</div>}
+				{isLoading && <LoaderCircle className="animate-spin"></LoaderCircle>}
 				{error && <div>Error: {error.message}</div>}
 				{!isLoading && !error && data && (
 					<table className="table-auto w-full text-left">

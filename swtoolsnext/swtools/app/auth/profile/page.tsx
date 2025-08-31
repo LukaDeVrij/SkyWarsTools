@@ -1,100 +1,41 @@
 "use client";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import React from "react";
-
-// TODO break up into components later, useSWR for fetching user info
-// TODO allow changing profile bg w POST request to backend
+import PropertyStatic from "@/app/components/settings/PropertyStatic";
+import { LoaderCircle } from "lucide-react";
 
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
-	const [signOut, signOutLoading, signOutError] = useSignOut(auth);
-	const [userInfo, setUserInfo] = React.useState<UserInfoResponse>();
-	const [userInfoLoading, setUserInfoLoading] = React.useState(false);
-	const [userInfoError, setUserInfoError] = React.useState<Error | null>(null);
-
-	type UserInfoResponse = {
-		user: {
-			mc_account: string | null;
-			patreon: boolean;
-			profile_bg: string | null;
-		};
-	};
-
-	React.useEffect(() => {
-		if (user && user.uid) {
-			setUserInfoLoading(true);
-			user.getIdToken()
-				.then((token: string) => {
-					fetch(`http://localhost:3001/auth/getUserInfo`, {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					})
-						.then((res) => {
-							if (!res.ok) throw new Error("Failed to fetch user info");
-							return res.json();
-						})
-						.then((data) => setUserInfo(data))
-						.catch((err) => setUserInfoError(err))
-						.finally(() => setUserInfoLoading(false));
-				})
-				.catch((err) => {
-					setUserInfoError(err);
-					setUserInfoLoading(false);
-				});
-		} else {
-			setUserInfo(undefined);
-			setUserInfoError(null);
-		}
-	}, [user]);
 
 	return (
-		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1000px] rounded-xl">
-			<div className="bg-content p-10 lg:rounded-lg shadow-xl w-full lg:w-120">
-				{loading && <div>Loading...</div>}
-				{error && <div>Error: {error.message}</div>}
-				{!loading && !error && !user && <div>You are not logged in.</div>}
-				{!loading && !error && user && (
-					<>
-						<h1 className="text-white text-2xl mb-5 font-semibold">Profile</h1>
-						<p>
-							<strong>Email:</strong> {user.email}
-						</p>
-						<p>
-							<strong>UID:</strong> {user.uid}
-						</p>
-						<p>
-							<strong>Email verified:</strong> {user.emailVerified ? "Yes" : "No"}
-						</p>
-						{userInfo && userInfo.user ? (
-							<div>
-								<strong>Custom properties:</strong>
-								<ul className="list-disc ml-6">
-									{Object.entries(userInfo.user).map(([key, value]) => (
-										<li key={key}>
-											<strong>{key}:</strong> {String(value)}
-										</li>
-									))}
-								</ul>
-							</div>
-						) : (
-							<p>
-								<strong>Custom properties: </strong>None
-							</p>
-						)}
-						<button
-							onClick={signOut}
-							disabled={signOutLoading}
-							className="mt-4 w-full p-3 bg-button rounded text-white animate-press cursor-pointer"
-						>
-							{signOutLoading ? "Logging out..." : "Logout"}
-						</button>
-						{signOutError && <div style={{ color: "red" }}>Error: {signOutError.message}</div>}
-					</>
-				)}
-			</div>
-		</div>
+		<>
+			{loading && <div className="w-full h-80 flex justify-center text-center items-center text-3xl"><LoaderCircle className="animate-spin"></LoaderCircle></div>}
+			{error && <div>Error: {error.message}</div>}
+			{!loading && !error && !user && <div>You are not logged in.</div>}
+			{!loading && !error && user && (
+				<>
+					<div className="p-5 w-full flex flex-col gap-2">
+						<PropertyStatic
+							title="Email address"
+							explainText={"The email address connected to the account"}
+							value={user.email}
+							hideValue={true}
+						/>
+						<PropertyStatic
+							title="Email verified"
+							explainText={"Whether the email is verified"}
+							value={user.emailVerified == true ? "Yes" : "No"}
+						/>
+						<PropertyStatic
+							title="UID"
+							explainText={"Profile unique ID, useful for development"}
+							value={user.uid}
+							hideValue={true}
+						/>
+					</div>
+				</>
+			)}
+		</>
 	);
 }

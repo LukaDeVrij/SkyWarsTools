@@ -1,0 +1,210 @@
+"use client";
+import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { useProfile } from "@/app/hooks/useProfile";
+import PropertyLinking from "@/app/components/auth/PropertyLinking";
+import PropertyCombobox from "@/app/components/settings/PropertyCombobox";
+import { LoaderCircle } from "lucide-react";
+
+const ProfileSettingsPage = () => {
+	const [user, loading, error] = useAuthState(auth);
+
+	type UserInfoResponse = {
+		user: {
+			mc_account: string | null;
+			patreon: boolean;
+			profile_bg: string | null;
+		};
+	};
+
+	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
+	const [profileToken, setProfileToken] = React.useState<string | null>(null);
+
+	React.useEffect(() => {
+		if (user) {
+			user.getIdToken().then(setProfileToken);
+		} else {
+			setProfileToken(null);
+		}
+	}, [user]);
+
+	const { user: profileUser, isLoading: profileLoading } = useProfile(profileToken);
+
+	React.useEffect(() => {
+		if (profileUser) {
+			setTypedUserInfo({ user: profileUser });
+		} else {
+			setTypedUserInfo(null);
+		}
+	}, [profileUser]);
+
+	console.log(profileUser);
+
+	const maps = [
+		"Aegis.png",
+		"Aelle.png",
+		"Aku.png",
+		"Ancient.png",
+		"Aquacrown.png",
+		"Aquarius.png",
+		"Arkose.png",
+		"Arule.png",
+		"Atlas.png",
+		"Atuin.png",
+		"Bastion.png",
+		"Blossom.png",
+		"Bonsai.png",
+		"Candylane.png",
+		"Canopy.png",
+		"Causeway.png",
+		"Chateau.png",
+		"Checkered Manor.png",
+		"Chronos.png",
+		"Citadel.png",
+		"Clearing.png",
+		"Congestion.png",
+		"Cookie Fest.png",
+		"Craboab.png",
+		"Crumble.png",
+		"Crystal Source.png",
+		"Dawn.png",
+		"Deadland.png",
+		"Deserted Dunes.png",
+		"Desserted Islands.png",
+		"Dwarven.png",
+		"Egg Isle.png",
+		"Elven.png",
+		"Embercell.png",
+		"Entangled.png",
+		"Farmstead.png",
+		"Felkenheart.png",
+		"Firelink Shrine.png",
+		"Forest.png",
+		"Forgotten.png",
+		"Fossil.png",
+		"Fragment.png",
+		"Frostbound.png",
+		"Frostgard.png",
+		"Frosty.png",
+		"Fruitcake.png",
+		"Garage.png",
+		"Garland.png",
+		"Garrison.png",
+		"Glacier.png",
+		"Glazed.png",
+		"Hanging Gardens.png",
+		"Harmony.png",
+		"Heaven Palace.png",
+		"Helios.png",
+		"Hibiscus.png",
+		"Honeycomb.png",
+		"Jagged.png",
+		"Jinzhou.png",
+		"Kingdom.png",
+		"Kraken.png",
+		"loading.png",
+		"Long Island.png",
+		"Manor.png",
+		"Martian.png",
+		"Memorial.png",
+		"Metari Temple.png",
+		"Mont Golball.png",
+		"Mothership.png",
+		"Mountain Top.png",
+		"Mushroom Vale.png",
+		"Mushy.png",
+		"Mythic.png",
+		"Mythos.png",
+		"Neapolitan.png",
+		"Nightmare.png",
+		"Niu.png",
+		"Nomad.png",
+		"Oberon Towers.png",
+		"Oceana.png",
+		"Offering.png",
+		"Onionring 2.png",
+		"Onionring.png",
+		"Overfall.png",
+		"Palette.png",
+		"Paradise.png",
+		"Plateau.png",
+		"Pralines.png",
+		"Radis.png",
+		"Railroad.png",
+		"Railwork.png",
+		"Redfang.png",
+		"Roots.png",
+		"Rustic.png",
+		"Sacrifice.png",
+		"Sanctuary.png",
+		"Sanctum.png",
+		"Selene.png",
+		"Sentinel.png",
+		"Shaohao.png",
+		"Shire.png",
+		"Shoompa.png",
+		"Siege.png",
+		"Simiao.png",
+		"Skychurch.png",
+		"Steampunk.png",
+		"Strata.png",
+		"Stronghold.png",
+		"Submerged.png",
+		"Sugar Rush.png",
+		"Sunken.png",
+		"Tain.png",
+		"Teatime.png",
+		"Tiki.png",
+		"Toadstool.png",
+		"Towers.png",
+		"Tribal.png",
+		"Tribute.png",
+		"Triffids.png",
+		"Tundra.png",
+		"Ukishima.png",
+		"Undead Isle.png",
+		"Villa.png",
+		"Waititi.png",
+		"Waterways.png",
+		"Winterhelm.png",
+		"Winter Retreat.png",
+		"Witch's Brew.png",
+		"Workshop.png",
+		"Wreath.png",
+	];
+
+	return (
+		<>
+			{loading && (
+				<div className="w-full h-80 flex justify-center text-center items-center text-3xl ">
+					<LoaderCircle className="animate-spin"></LoaderCircle>
+				</div>
+			)}
+			{error && <div>Error: {error.message}</div>}
+			{!loading && !error && !user && <div>You are not logged in.</div>}
+			{!loading &&
+				!error &&
+				user &&
+				(typedUserInfo && typedUserInfo.user ? (
+					<>
+						<div className="p-5 w-full flex flex-col gap-2">
+							<PropertyLinking
+								linked={!!typedUserInfo.user.mc_account}
+								uuid={typedUserInfo.user.mc_account ?? undefined}
+							></PropertyLinking>
+							<PropertyCombobox
+								title={"Profile Background"}
+								explainText="The image shown on your MC account page"
+								options={maps}
+							></PropertyCombobox>
+						</div>
+					</>
+				) : (
+					<p>Something went wrong.</p>
+				))}
+		</>
+	);
+};
+
+export default ProfileSettingsPage;
