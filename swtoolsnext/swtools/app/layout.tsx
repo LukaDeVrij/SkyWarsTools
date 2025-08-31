@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 // import { Montserrat } from "next/font/google";
 import "./globals.css";
+import "./react-widgets.scss";
 import TopNavBar from "./components/navbar/TopNavBar";
 import Footer from "./components/Footer";
 
@@ -30,7 +31,7 @@ export default function RootLayout({
 
 				<div className="w-[100vw] lg:w-[1000px] bg-[var(--background-layer)] m-auto lg:mt-2 lg:rounded-xl">{children}</div>
 
-				<Footer/>
+				<Footer />
 			</body>
 		</html>
 	);

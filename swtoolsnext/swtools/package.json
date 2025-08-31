@@ -19,7 +19,6 @@
     "react-firebase-hooks": "^5.1.1",
     "react-tabs": "^6.1.0",
     "react-widgets": "^5.8.6",
-    "sass": "^1.91.0",
     "swr": "^2.3.6"
   },
   "devDependencies": {
@@ -31,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "sass": "^1.91.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

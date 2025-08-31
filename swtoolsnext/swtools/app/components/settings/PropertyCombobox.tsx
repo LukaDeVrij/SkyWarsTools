@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
-import { useState } from 'react'
+import { useState } from "react";
 import Combobox from "react-widgets/cjs/Combobox";
-
-
-
 
 type PropertyComboboxProps = {
 	title: string;
@@ -24,6 +21,7 @@ const PropertyCombobox: React.FC<PropertyComboboxProps> = ({ title, explainText,
 				{explainText && <div className="text-sm text-gray-200 mt-[-6px]">{explainText}</div>}
 			</div>
 			<Combobox data={options} defaultValue={initialValue} placeholder={placeholder} />
+			<span className="test">AAA</span>
 		</div>
 	);
 };

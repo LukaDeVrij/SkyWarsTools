@@ -6,6 +6,8 @@ body {
 
 @import "tailwindcss";
 
+
+
 :root {
 	--background: #0c0c0c;
 	--background-nav: #1a1a1a;
