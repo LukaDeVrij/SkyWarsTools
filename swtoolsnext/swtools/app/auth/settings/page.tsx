@@ -2,19 +2,19 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-import { useProfile } from "@/app/hooks/useProfile";
 import PropertyCombobox from "@/app/components/settings/PropertyCombobox";
 import { LoaderCircle } from "lucide-react";
+import Button from "@/app/components/universal/Button";
+import { useProfile } from "@/app/hooks/useProfile";
 
 const ProfileSettingsPage = () => {
 	const [user, loading, error] = useAuthState(auth);
-
 	type UserInfoResponse = {
 		user: UserProfile;
 	};
 
-	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
 	const [profileToken, setProfileToken] = React.useState<string | null>(null);
+	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
 
 	React.useEffect(() => {
 		if (user) {
@@ -29,12 +29,12 @@ const ProfileSettingsPage = () => {
 	React.useEffect(() => {
 		if (profileUser) {
 			setTypedUserInfo({ user: profileUser });
+			setNationality(profileUser.nationality ?? null);
+			setBackground(profileUser.profile_bg ?? null);
 		} else {
 			setTypedUserInfo(null);
 		}
 	}, [profileUser]);
-
-	console.log(profileUser);
 
 	const maps = [
 		"Aegis.png",
@@ -169,6 +169,54 @@ const ProfileSettingsPage = () => {
 		"Wreath.png",
 	];
 
+	// Fetch country flag emoji JSON by code
+	const [nats, setNats] = React.useState<string[]>([]);
+
+	React.useEffect(() => {
+		fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/by-code.json")
+			.then((res) => res.json())
+			.then((data) => {
+				type NatItem = {
+					name: string;
+					emoji: string;
+				};
+				const arr = Object.values(data).map((item) => {
+					const natItem = item as { name: string; emoji: string };
+					return `${natItem.name} ${natItem.emoji}`;
+				});
+				setNats(arr);
+			});
+	}, []);
+
+	const [background, setBackground] = React.useState<string | null>(null);
+	const [nationality, setNationality] = React.useState<string | null>(null);
+
+	function updateProfile() {
+		if (!user) return;
+
+		const newUserProfile = {
+			profile_bg: background,
+			nationality: nationality,
+		};
+
+		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/updateUserInfo`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${profileToken}`,
+			},
+			body: JSON.stringify({ userData: newUserProfile }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				alert("Profile updated!");
+				console.log(data);
+			})
+			.catch((err) => {
+				console.error("Failed to update profile:", err);
+			});
+	}
+
 	return (
 		<>
 			{loading && (
@@ -188,8 +236,19 @@ const ProfileSettingsPage = () => {
 								title={"Profile Background"}
 								explainText="The image shown on your MC account page"
 								options={maps}
-								initialValue="Siege.png"
+								initialValue={background ?? undefined}
+								onChange={(value) => setBackground(value)}
 							></PropertyCombobox>
+							<PropertyCombobox
+								title={"Nationality"}
+								explainText="The country/flag shown on your MC account page"
+								options={nats}
+								initialValue={nationality ?? undefined}
+								onChange={(value) => setNationality(value)}
+							></PropertyCombobox>
+							<div className="w-full flex justify-center">
+								<Button onClick={updateProfile}>Save</Button>
+							</div>
 						</div>
 					</>
 				) : (

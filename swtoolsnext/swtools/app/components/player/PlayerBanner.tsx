@@ -1,8 +1,8 @@
-"use client";
+"use client"; 
 import React from "react";
 import Image from "next/image";
-import { fetcher } from "@/app/utils/Utils";
-import useSWR from "swr";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
 
 interface PlayerBannerProps {
 	playerName: string;
@@ -14,15 +14,31 @@ type ProfileBGResponse = {
 };
 
 const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
-	const { data, error, isLoading } = useSWR<ProfileBGResponse>(
-		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getProfileBG?player=${playerName}`,
-		fetcher
-	);
+	const [user, authLoading, authError] = useAuthState(auth);
+	type UserInfoResponse = {
+		user: UserProfile;
+	};
+	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
+
+	const [bg, setBG] = React.useState<string | null>(null);
+
+	React.useEffect(() => {
+		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${playerName}`, {
+			method: "GET",
+		})
+			.then((res) => res.json())
+			.then((data: UserInfoResponse) => {
+				setTypedUserInfo(data);
+				setBG(data.user.profile_bg ?? null);
+			})
+			.catch(() => setTypedUserInfo(null));
+	});
+
 	return (
 		// In the future, make request to backend to get the banner for that player
 		<div className="relative w-full">
 			<Image
-				src={isLoading ? "/maps/loading.png" : data && data.profile_bg ? `/maps/${data.profile_bg}.png` : "/maps/Siege.png"}
+				src={authLoading ? "/maps/loading.png" : bg ? `/maps/${bg}` : "/maps/Siege.png"}
 				priority
 				width={1920}
 				height={1080}

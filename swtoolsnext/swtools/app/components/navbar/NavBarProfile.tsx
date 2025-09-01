@@ -20,7 +20,7 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 			className={`float-right ml-auto p-2 rounded-md text-[var(--foreground)] font-montserrat font-[700] animate-press ${
 				mobile ? "block lg:hidden" : "hidden lg:block"
 			}`}
-			href={user ? "/profile" : "/login"}
+			href={user ? "/auth/profile" : "/login"}
 		>
 			{loading ? (
 				<div className="h-12 w-12 rounded aspect-square" title={"Profile"} />

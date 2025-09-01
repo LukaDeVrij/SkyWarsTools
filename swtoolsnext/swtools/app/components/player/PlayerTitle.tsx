@@ -9,6 +9,9 @@ import { calcLevel, fetcher } from "@/app/utils/Utils";
 import { formatScheme } from "@/app/utils/Scheme";
 import useSWR from "swr";
 import { OverallResponse } from "@/app/types/OverallResponse";
+import { useProfile } from "@/app/hooks/useProfile";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
 
 interface PlayerTitleProps {
 	playerName: string;
@@ -24,11 +27,30 @@ type StatusResponse = {
 	};
 };
 
-const PlayerTitle: React.FC<PlayerTitleProps> = ({playerName, response}) => {
+const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	const { data, error, isLoading } = useSWR<StatusResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${response.player}`,
 		fetcher
 	);
+
+	type UserInfoResponse = {
+		user: UserProfile;
+	};
+	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
+
+	const [nationality, setNationality] = React.useState<string | null>(null);
+
+	React.useEffect(() => {
+		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`, {
+			method: "GET",
+		})
+			.then((res) => res.json())
+			.then((data: UserInfoResponse) => {
+				setTypedUserInfo(data);
+				setNationality(data.user.nationality ?? null);
+			})
+			.catch(() => setTypedUserInfo(null));
+	});
 
 	// Status
 	let bgColor = "bg-red-500";
@@ -98,10 +120,14 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({playerName, response}) => {
 				<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="flex items-center gap-2 text-sm lg:text-lg">
-						{/* <span className="text-2xl">🇳🇱</span> */}
-						<span className="font-semibold hidden lg:inline">
-							{response.guild.guild} ({response.guild.guildRank})
+						<span className="text-2xl hidden lg:inline" title={nationality?.split(" ")[0]}>
+							{nationality?.split(" ")[1]}
 						</span>
+						{response.guild.guild && (
+							<span className="font-semibold hidden lg:inline">
+								{response.guild.guild} ({response.guild.guildRank})
+							</span>
+						)}
 					</div>
 
 					<div className="hidden lg:flex items-center gap-2 mx-4">
