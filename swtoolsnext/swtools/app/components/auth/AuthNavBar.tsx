@@ -11,6 +11,7 @@ const PlayerNavBar: React.FC = () => {
 	const navItems = [
 		{ label: "Profile", href: "/auth/profile" },
 		{ label: "Settings", href: "/auth/settings" },
+		{ label: "MC Link", href: "/auth/mc-link" },
 		{ label: "Log out", href: "/auth/log-out" },
 	];
 
@@ -27,6 +28,7 @@ const PlayerNavBar: React.FC = () => {
 				if (item.label.toLowerCase() === "profile") itemPath = "/auth/profile";
 				if (item.label.toLowerCase() === "settings") itemPath = "/auth/settings";
 				if (item.label.toLowerCase() === "log-out") itemPath = "/auth/log-out";
+				if (item.label.toLowerCase() === "mc-link") itemPath = "/auth/mc-link";
 				const isActive = normalizedPath.endsWith(itemPath);
 				return (
 					<React.Fragment key={item.label}>

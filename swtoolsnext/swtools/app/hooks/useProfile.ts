@@ -2,11 +2,7 @@ import axios from "axios";
 import useSWR from "swr";
 
 type UserInfoResponse = {
-	user: {
-		mc_account: string | null;
-		patreon: boolean;
-		profile_bg: string | null;
-	};
+	user: UserProfile;
 };
 
 const fetcher = (url: string, token: string) =>

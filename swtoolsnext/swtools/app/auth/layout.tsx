@@ -6,7 +6,7 @@ interface LayoutProps {
 	children: ReactNode;
 }
 
-const PlayerStatsLayout = async ({ children }: LayoutProps) => {
+const ProfileLayout = async ({ children }: LayoutProps) => {
 	return (
 		<>
 			<AuthNavBar />
@@ -15,4 +15,4 @@ const PlayerStatsLayout = async ({ children }: LayoutProps) => {
 	);
 };
 
-export default PlayerStatsLayout;
+export default ProfileLayout;

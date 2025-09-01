@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 // import { Montserrat } from "next/font/google";
 import "./globals.css";
-import "./react-widgets.scss";
 import TopNavBar from "./components/navbar/TopNavBar";
 import Footer from "./components/Footer";
 

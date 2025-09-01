@@ -3,7 +3,6 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useProfile } from "@/app/hooks/useProfile";
-import PropertyLinking from "@/app/components/auth/PropertyLinking";
 import PropertyCombobox from "@/app/components/settings/PropertyCombobox";
 import { LoaderCircle } from "lucide-react";
 
@@ -11,11 +10,7 @@ const ProfileSettingsPage = () => {
 	const [user, loading, error] = useAuthState(auth);
 
 	type UserInfoResponse = {
-		user: {
-			mc_account: string | null;
-			patreon: boolean;
-			profile_bg: string | null;
-		};
+		user: UserProfile;
 	};
 
 	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
@@ -189,14 +184,11 @@ const ProfileSettingsPage = () => {
 				(typedUserInfo && typedUserInfo.user ? (
 					<>
 						<div className="p-5 w-full flex flex-col gap-2">
-							<PropertyLinking
-								linked={!!typedUserInfo.user.mc_account}
-								uuid={typedUserInfo.user.mc_account ?? undefined}
-							></PropertyLinking>
 							<PropertyCombobox
 								title={"Profile Background"}
 								explainText="The image shown on your MC account page"
 								options={maps}
+								initialValue="Siege.png"
 							></PropertyCombobox>
 						</div>
 					</>
