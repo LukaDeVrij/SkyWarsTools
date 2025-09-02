@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-import router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LogoutPage() {
 	const router = useRouter();

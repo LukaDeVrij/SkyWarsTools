@@ -81,6 +81,11 @@ export function parseKitStatsKey(key: string): {
 		const kitParts = kit.split("_");
 		mode = "mythical";
 		kitName = kitParts[1];
+	} else if (key.includes("mini")) {
+		const parts = key.split("_");
+		stat = "";
+		mode = "mini";
+		kitName = parts[parts.length - 1];
 	} else {
 		const parts = key.split("kit_");
 		stat = parts[0];

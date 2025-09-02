@@ -24,6 +24,7 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 	const [order, setOrder] = React.useState<"xp" | "prestige">("xp");
 
 	const filteredKitNames = kitNames.filter((kit) => kit.toLowerCase().includes(search.toLowerCase()));
+	// TODO add search by mode properly (with 3rd party lib? this is what i did in the old site)
 
 	function closestPrestige(xp: number, nextPrestige: KitPrestigeInfo): number {
 		return (xp / nextPrestige.minXp) % 1;
@@ -39,7 +40,7 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 					onChange={(e) => setSearch(e.target.value)}
 					className="bg-layer rounded-xl h-12 p-3"
 				/>
-                <p className="text-center"></p>
+				<p className="text-center"></p>
 				<select
 					id="kitPrestigeSortMode"
 					title="Sort by"
@@ -49,7 +50,6 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 					<option value="xp">Highest EXP</option>
 					<option value="prestige">Highest %</option>
 				</select>
-                
 			</div>
 			<div className="flex flex-wrap gap-2 lg:gap-3 justify-center lg:justify-start">
 				{filteredKitNames
@@ -59,18 +59,10 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 								typeof stats[`wins_${kit}` as keyof typeof stats] === "number"
 									? (stats[`wins_${kit}` as keyof typeof stats] as number)
 									: Number(stats[`wins_${kit}` as keyof typeof stats]),
-							losses:
-								typeof stats[`losses_${kit}` as keyof typeof stats] === "number"
-									? (stats[`losses_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`losses_${kit}` as keyof typeof stats]),
 							kills:
 								typeof stats[`kills_${kit}` as keyof typeof stats] === "number"
 									? (stats[`kills_${kit}` as keyof typeof stats] as number)
 									: Number(stats[`kills_${kit}` as keyof typeof stats]),
-							deaths:
-								typeof stats[`deaths_${kit}` as keyof typeof stats] === "number"
-									? (stats[`deaths_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`deaths_${kit}` as keyof typeof stats]),
 							timePlayed:
 								typeof stats[`time_played_${kit}` as keyof typeof stats] === "number"
 									? (stats[`time_played_${kit}` as keyof typeof stats] as number)
@@ -84,6 +76,7 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 						const currentPrestige: KitPrestigeInfo = getKitPrestigeInfo(kitStats.xp ?? 0);
 						const nextPrestige: KitPrestigeInfo = getKitPrestigeInfoByPrestige(currentPrestige.key + 1);
 
+						// console.log(kit, kitStats, currentPrestige, nextPrestige);
 						return { kit, kitStats, currentPrestige, nextPrestige };
 					})
 					.sort((a, b) => {

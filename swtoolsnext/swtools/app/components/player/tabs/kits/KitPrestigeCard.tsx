@@ -81,13 +81,10 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 	return (
 		<div
 			className={
-				`bg-gray-900 rounded-xl p-4 w-75 max-h-${maxHeight} overflow-hidden  cursor-pointer shadow-lg border ` +
+				`bg-gray-900 rounded-xl p-4 w-75 h-${maxHeight} overflow-hidden  cursor-pointer shadow-lg border ` +
 				(maxed ? "enchanted border-amber-400" : "border-gray-700")
 			}
 			onClick={() => toggleHeight()}
-			style={{
-				transition: "max-height 0.2s",
-			}}
 		>
 			<div className="flex justify-between items-center mb-2">
 				<span className="text-lg font-se</div>mibold">
@@ -196,7 +193,9 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 							</td>
 						</tr>
 						<tr>
-							<td className="w-3/5 pr-2 font-medium align-middle">Wins in {formatTime(playtimeRequiredSeconds)}</td>
+							<td className="w-3/5 pr-2 font-medium align-middle">
+								Wins in {playtimeRequiredSeconds > 0 ? formatTime(playtimeRequiredSeconds) : "N/A"}
+							</td>
 							<td className="w-2/5 pl-2 align-middle">
 								<input
 									className="w-full text-lg rounded border border-gray-300 bg-content text-center"
@@ -206,7 +205,9 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 							</td>
 						</tr>
 						<tr>
-							<td className="w-3/5 pr-2 font-medium align-middle h-1">Kills in {formatTime(playtimeRequiredSeconds)}</td>
+							<td className="w-3/5 pr-2 font-medium align-middle h-1">
+								Kills in {playtimeRequiredSeconds > 0 ? formatTime(playtimeRequiredSeconds) : "N/A"}
+							</td>
 							<td className="w-2/5 pl-2 align-middle">
 								<input
 									className="w-full text-lg rounded border border-gray-300 bg-content text-center"
