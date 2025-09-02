@@ -7,11 +7,6 @@ import { auth } from "@/app/firebase/config";
 interface PlayerBannerProps {
 	playerName: string;
 }
-type ProfileBGResponse = {
-	success: boolean;
-	cause?: string;
-	profile_bg?: string | null;
-};
 
 const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 	const [user, authLoading, authError] = useAuthState(auth);

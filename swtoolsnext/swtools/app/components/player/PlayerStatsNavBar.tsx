@@ -9,7 +9,7 @@ const tabs = [
 	{ label: "Grim Reaper", value: "grimreaper" },
 	{ label: "Playtime", value: "playtime" },
 	{ label: "Kits", value: "kits" },
-	{ label: "Legacy", value: "legacy" },
+	// { label: "Legacy", value: "legacy" },
 	{ label: "Equips", value: "equips" },
 ];
 

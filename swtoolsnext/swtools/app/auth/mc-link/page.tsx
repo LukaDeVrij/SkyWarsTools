@@ -4,7 +4,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useProfile } from "@/app/hooks/useProfile";
 import PropertyLinking from "@/app/components/auth/PropertyLinking";
-import PropertyCombobox from "@/app/components/settings/PropertyCombobox";
 import { LoaderCircle } from "lucide-react";
 
 const ProfileSettingsPage = () => {

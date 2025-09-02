@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
-import { useState } from "react";
 import { Combobox } from "react-widgets/cjs";
-import Button from "../universal/Button";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
 
 type PropertyComboboxProps = {
 	title: string;

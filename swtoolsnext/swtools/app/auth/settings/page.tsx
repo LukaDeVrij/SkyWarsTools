@@ -176,10 +176,6 @@ const ProfileSettingsPage = () => {
 		fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/by-code.json")
 			.then((res) => res.json())
 			.then((data) => {
-				type NatItem = {
-					name: string;
-					emoji: string;
-				};
 				const arr = Object.values(data).map((item) => {
 					const natItem = item as { name: string; emoji: string };
 					return `${natItem.name} ${natItem.emoji}`;

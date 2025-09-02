@@ -9,9 +9,6 @@ import { calcLevel, fetcher } from "@/app/utils/Utils";
 import { formatScheme } from "@/app/utils/Scheme";
 import useSWR from "swr";
 import { OverallResponse } from "@/app/types/OverallResponse";
-import { useProfile } from "@/app/hooks/useProfile";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
 
 interface PlayerTitleProps {
 	playerName: string;

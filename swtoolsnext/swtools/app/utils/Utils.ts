@@ -74,7 +74,7 @@ export function parseKitStatsKey(key: string): {
 	let mode;
 	let kitName;
 	if (key.includes("mythical")) {
-		const parts = key.split("_kit_");
+		const parts = key.split("kit_");
 		stat = parts[0];
 		const kit = parts[1];
 
@@ -94,7 +94,7 @@ export function parseKitStatsKey(key: string): {
 	return {
 		original: key,
 		stat: stat,
-		mode: mode,
+		mode: toCamelCase(mode),
 		kit: toCamelCase(kitName),
 	};
 }
@@ -722,19 +722,22 @@ export function calculateOpalProgress(souls: number, opalsmith: number) {
 }
 
 export type KitPrestigeInfo = {
+	key: number;
 	name: string;
 	minXp: number;
 	color: string;
+	rewards: string[];
 };
-export const kitPrestiges: Record<number, KitPrestigeInfo & { rewards: string[] }> = {
-	0: { name: "-", minXp: 0, color: "#808080", rewards: [] }, // Gray
-	1: { name: "I", minXp: 1000, color: "#ffffff", rewards: ["§650,000 Coins", "§fSilver §7Particle Trail"] }, // Silver
-	2: { name: "II", minXp: 2500, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
-	3: { name: "III", minXp: 5000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
-	4: { name: "IV", minXp: 10000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
-	5: { name: "V", minXp: 25000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
-	6: { name: "VI", minXp: 50000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
+export const kitPrestiges: Record<number, KitPrestigeInfo> = {
+	0: { key: 0, name: "-", minXp: 0, color: "#808080", rewards: [] }, // Gray
+	1: { key: 1, name: "I", minXp: 1000, color: "#ffffff", rewards: ["§650,000 Coins", "§fSilver §7Particle Trail"] }, // Silver
+	2: { key: 2, name: "II", minXp: 2500, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
+	3: { key: 3, name: "III", minXp: 5000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
+	4: { key: 4, name: "IV", minXp: 10000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
+	5: { key: 5, name: "V", minXp: 25000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
+	6: { key: 6, name: "VI", minXp: 50000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
 	7: {
+		key: 7,
 		name: "VII",
 		minXp: 75000,
 		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
@@ -756,6 +759,10 @@ export function getKitPrestigeInfo(kitExp: number): KitPrestigeInfo {
 		}
 	}
 	return lastPrestige;
+}
+export function getKitPrestigeInfoByPrestige(prestige: number): KitPrestigeInfo {
+	const prestigeR = Math.floor(prestige);
+	return kitPrestiges[prestigeR] || kitPrestiges[0];
 }
 
 export const fetcher = <T = unknown>(...args: [RequestInfo, RequestInit?]): Promise<T> =>

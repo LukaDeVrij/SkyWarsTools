@@ -1,7 +1,6 @@
 "use client";
 import { LogIn, User } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 
