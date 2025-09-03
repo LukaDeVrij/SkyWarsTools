@@ -5,7 +5,7 @@ import { OverallResponse } from "@/app/types/OverallResponse";
 const Table: React.FC<OverallResponse> = (response) => {
 	const getWLR = (wins: number, losses: number) => {
 		if (losses === 0) return wins > 0 ? "∞" : "0.00";
-		return (wins / losses).toFixed(3);
+		return (wins / losses).toFixed(2);
 	};
 
 	return (

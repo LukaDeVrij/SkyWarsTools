@@ -7,28 +7,9 @@ import PlayerInputField from "./PlayerInputField";
 
 const TopNavBar = () => {
 	const content = [
-		{
-			name: "Tools",
-			dropdown: [
-				{ name: "Map Rotation", href: "/extra/map-rotation" },
-				{ name: "Montage Card", href: "/extra/montage-card" },
-			],
-		},
-		{
-			name: "Leaderboards",
-			// Could maybe just become one page with tabs or something
-			dropdown: [
-				{ name: "Kit", href: "/leaderboards/kit" },
-				{ name: "Overall", href: "/leaderboards/overall" },
-			],
-		},
-		{
-			name: "About",
-			dropdown: [
-				{ name: "About", href: "/about" },
-				{ name: "Help", href: "/help" },
-			],
-		},
+		{ name: "Tools", href: "/extra" },
+		{ name: "Leaderboards", href: "/leaderboards" },
+		{ name: "About", href: "/about" },
 	];
 	return (
 		<>
@@ -44,7 +25,7 @@ const TopNavBar = () => {
 
 					<div className="flex items-center justify-center lg:justify-start gap-2 lg:gap-4">
 						{content.map((item) => (
-							<NavDropdownMenu key={item.name} label={item.name} dropdown={item.dropdown} />
+							<NavDropdownMenu key={item.name} label={item.name} href={item.href} />
 						))}
 					</div>
 					<NavBarProfile />

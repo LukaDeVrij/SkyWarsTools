@@ -84,7 +84,7 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 	const explainText = linked
 		? "Your Minecraft account is currently linked"
 		: "Currently not linked to any Minecraft account - do so to access all features";
-	const value = linked && uuid ? uuid : "";
+	const value = linked && uuid ? `https://www.mc-heads.net/avatar/${uuid}` : "";
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -100,7 +100,9 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 				{linked ? (
 					<div className="flex justify-end gap-2 items-center">
 						<Button onClick={unlink}>Unlink</Button>
-						<div className="text-xl font-semibold">{value}</div>
+						<div className="text-xl font-semibold">
+							<img src={value} width={50} height={50} title={uuid} className="rounded-lg"></img>
+						</div>
 					</div>
 				) : (
 					<div className="flex justify-end gap-2 items-center">

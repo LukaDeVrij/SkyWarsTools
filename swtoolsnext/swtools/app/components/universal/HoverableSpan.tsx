@@ -4,8 +4,9 @@ import React from "react";
 interface HoverableSpanProps {
 	hoverText: string;
 	children: React.ReactNode;
+	className?: string;
 }
-const HoverableSpan: React.FC<HoverableSpanProps> = ({ children, hoverText }) => {
+const HoverableSpan: React.FC<HoverableSpanProps> = ({ children, hoverText, className }) => {
 	const [isHovered, setIsHovered] = React.useState(false);
 
 	return (
@@ -16,6 +17,7 @@ const HoverableSpan: React.FC<HoverableSpanProps> = ({ children, hoverText }) =>
 				textDecorationThickness: "3px",
 				cursor: "help",
 			}}
+			className={className}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
