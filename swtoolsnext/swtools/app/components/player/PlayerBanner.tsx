@@ -1,8 +1,11 @@
-"use client"; 
+"use client";
 import React from "react";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
+import { Info } from "lucide-react";
+import HoverableSpan from "../universal/HoverableSpan";
+import useSWR from "swr";
 
 interface PlayerBannerProps {
 	playerName: string;
@@ -13,21 +16,14 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 	type UserInfoResponse = {
 		user: UserProfile;
 	};
-	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
+	const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-	const [bg, setBG] = React.useState<string | null>(null);
+	const { data: typedUserInfo, error } = useSWR<UserInfoResponse>(
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${playerName}`,
+		fetcher
+	);
 
-	React.useEffect(() => {
-		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${playerName}`, {
-			method: "GET",
-		})
-			.then((res) => res.json())
-			.then((data: UserInfoResponse) => {
-				setTypedUserInfo(data);
-				setBG(data.user.profile_bg ?? null);
-			})
-			.catch(() => setTypedUserInfo(null));
-	});
+	const bg = typedUserInfo?.user.profile_bg ?? null;
 
 	return (
 		// In the future, make request to backend to get the banner for that player

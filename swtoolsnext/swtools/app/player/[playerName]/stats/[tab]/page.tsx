@@ -32,9 +32,6 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 		notFound();
 	}
 
-	// TODO I think this is unnecessary since its done in each tab component - When we do it here half the time its undefined in the tab component
-	// Not sure what the cause is but its cached so whatever, well just refetch in every tab component for now
-
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(playerName)}`, {
 		next: { revalidate: 300 },
 	});

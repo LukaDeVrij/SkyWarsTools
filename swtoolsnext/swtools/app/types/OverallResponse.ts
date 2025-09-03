@@ -31,7 +31,7 @@ export interface Stats {
 	active_emblem?: string;
 	activeKit_SOLO?: string;
 	activeKit_TEAM?: string;
-	activeKit_RANKED?: string;
+	activeKit_MINI?: string;
 	karma: number;
 	networkExp: number;
 	firstLogin: number;

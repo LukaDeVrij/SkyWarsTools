@@ -35,8 +35,8 @@ const Extended: React.FC<OverallResponse> = (response) => {
 						<tr className="border-b-1 border-white">
 							<td>Current Kit (Mini)</td>
 							<td>
-								{kitProcessing(response.stats.activeKit_RANKED ?? "None")}{" "}
-								{<KitPrestigeString kit={response.stats.activeKit_RANKED} response={response} />}
+								{kitProcessing(response.stats.activeKit_MINI ?? "None")}{" "}
+								{<KitPrestigeString kit={response.stats.activeKit_MINI} response={response} />}
 							</td>
 						</tr>
 						<tr className="border-b-1 border-white">

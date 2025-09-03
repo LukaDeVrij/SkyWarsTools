@@ -47,17 +47,16 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 
 	const opalsSpent = calculateOpalsSpent(combinedData);
 
-	// console.log(response);
 	return (
 		<>
 			<Tabs>
 				{/* TODO figure out how to get selected to work */}
 				<TabList
-					className={"bg-main h-12 w-full flex gap-2 items-center px-2 overflow-scroll lg:overflow-auto text-base lg:text-lg"}
+					className={"bg-main h-10 w-full flex gap-2 items-center px-4 overflow-scroll lg:overflow-auto text-base lg:text-lg"}
 				>
-					<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Descent</Tab>
-					<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Potions</Tab>
-					<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Heads</Tab>
+					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Descent</Tab>
+					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Potions</Tab>
+					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Heads</Tab>
 				</TabList>
 
 				<TabPanel>

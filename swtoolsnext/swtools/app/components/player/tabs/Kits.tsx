@@ -8,12 +8,13 @@ import KitsUniversalTable from "./kits/KitsUniversalTable";
 
 const Kits: React.FC<OverallResponse> = (response) => {
 	// fucking ts
-	let mini_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
-	let normal_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
-	let insane_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
-	let mythical_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const mini_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const normal_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const insane_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const mythical_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 
 	Object.keys(response.stats).forEach((key) => {
+		if (!key.includes("_kit_")) return;
 		if (key.includes("_mini_solo_")) {
 			mini_kits[key] = response.stats[key as keyof OverallResponse["stats"]];
 		} else if (key.includes("_team_")) {
@@ -28,9 +29,19 @@ const Kits: React.FC<OverallResponse> = (response) => {
 	return (
 		<Tabs>
 			{/* TODO figure out how to get selected to work */}
-			<TabList className={"bg-main h-12 w-full flex gap-2 items-center px-2 overflow-scroll lg:overflow-auto text-base lg:text-lg"}>
-				<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Prestiges</Tab>
-				<Tab className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Table</Tab>
+			<TabList className={"bg-main h-10 w-full flex gap-2 items-center px-4 overflow-scroll lg:overflow-auto text-base lg:text-lg"}>
+				<Tab
+					selectedClassName={"selected-tab"}
+					className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+				>
+					Prestiges
+				</Tab>
+				<Tab
+					selectedClassName={"selected-tab"}
+					className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+				>
+					Table
+				</Tab>
 			</TabList>
 
 			<TabPanel>
@@ -43,13 +54,33 @@ const Kits: React.FC<OverallResponse> = (response) => {
 					<Tabs>
 						<TabList
 							className={
-								"bg-main h-10 w-full flex gap-2 items-center px-2 overflow-scroll lg:overflow-auto text-base lg:text-lg rounded-xl"
+								"bg-main h-10 w-full flex gap-2 items-center overflow-scroll lg:overflow-auto text-base lg:text-lg rounded-xl"
 							}
 						>
-							<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}>Normal</Tab>
-							<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}>Insane</Tab>
-							<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}>Mini</Tab>
-							<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}>Mythical</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Normal
+							</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Insane
+							</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Mini
+							</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Mythical
+							</Tab>
 						</TabList>
 						<TabPanel>
 							<KitsUniversalTable kitData={normal_kits} />
