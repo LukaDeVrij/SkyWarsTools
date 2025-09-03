@@ -26,7 +26,7 @@ const PlayerStatsNavBar = () => {
 				<div
 					key={tab.value}
 					className={`whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press 
-		${currentTab == tab.value ? "bg-gray-700 text-white" : ""}`}
+		${currentTab == tab.value ? "selected-tab text-white" : ""}`}
 					onClick={() => {
 						if (currentTab === tab.value) return;
 						router.push(`/player/${playerName}/stats/${tab.value}`);

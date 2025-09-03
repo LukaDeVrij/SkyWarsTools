@@ -2,15 +2,9 @@ import { OverallResponse } from "@/app/types/OverallResponse";
 import React from "react";
 import KitPrestigeCard from "./KitPrestigeCard";
 import { getKitPrestigeInfo, getKitPrestigeInfoByPrestige, KitPrestigeInfo } from "@/app/utils/Utils";
+import { KitStats } from "@/app/types/KitStats";
 
-type KitStats = {
-	wins?: number;
-	losses?: number;
-	kills?: number;
-	deaths?: number;
-	timePlayed?: number;
-	xp?: number;
-};
+
 
 const KitPrestiges: React.FC<OverallResponse> = (response) => {
 	const { stats } = response;
@@ -24,6 +18,7 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 	const [order, setOrder] = React.useState<"xp" | "prestige">("xp");
 
 	const filteredKitNames = kitNames.filter((kit) => kit.toLowerCase().includes(search.toLowerCase()));
+	// const filteredKitNames = ["kit_mythical_end-lord"]
 	// TODO add search by mode properly (with 3rd party lib? this is what i did in the old site)
 
 	function closestPrestige(xp: number, nextPrestige: KitPrestigeInfo): number {
@@ -54,23 +49,24 @@ const KitPrestiges: React.FC<OverallResponse> = (response) => {
 			<div className="flex flex-wrap gap-2 lg:gap-3 justify-center lg:justify-start">
 				{filteredKitNames
 					.map((kit) => {
+						// console.log(kit);
 						const kitStats: KitStats = {
 							wins:
 								typeof stats[`wins_${kit}` as keyof typeof stats] === "number"
 									? (stats[`wins_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`wins_${kit}` as keyof typeof stats]),
+									: 0,
 							kills:
 								typeof stats[`kills_${kit}` as keyof typeof stats] === "number"
 									? (stats[`kills_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`kills_${kit}` as keyof typeof stats]),
+									: 0,
 							timePlayed:
 								typeof stats[`time_played_${kit}` as keyof typeof stats] === "number"
 									? (stats[`time_played_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`time_played_${kit}` as keyof typeof stats]),
+									: 0,
 							xp:
 								typeof stats[`xp_${kit}` as keyof typeof stats] === "number"
 									? (stats[`xp_${kit}` as keyof typeof stats] as number)
-									: Number(stats[`xp_${kit}` as keyof typeof stats]),
+									: 0,
 						};
 
 						const currentPrestige: KitPrestigeInfo = getKitPrestigeInfo(kitStats.xp ?? 0);
