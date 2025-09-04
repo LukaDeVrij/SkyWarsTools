@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.2",
+    "@mui/x-charts": "^8.11.1",
     "@twemoji/api": "^16.0.1",
     "axios": "^1.11.0",
     "firebase": "^12.1.0",

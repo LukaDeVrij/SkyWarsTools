@@ -33,7 +33,7 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 			<PlayerBanner playerName={playerName} />
 			<PlayerTitle playerName={playerName} response={overallData} />
 			<div className="h-fit w-full flex flex-col lg:flex-row">
-				<RankGraph playerName={playerName} />
+				<RankGraph uuid={overallData.uuid} />
 				<PlayerOverallStats response={overallData} />
 			</div>
 			<PlayerExtraInfo response={overallData} />
