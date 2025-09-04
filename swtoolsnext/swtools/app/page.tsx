@@ -38,7 +38,7 @@ export default function Home() {
 			</div>
 
 			<div className="">
-				<h2>Contributors</h2>
+				<h2 className="px-4 lg:px-8">Contributors</h2>
 			</div>
 		</div>
 	);

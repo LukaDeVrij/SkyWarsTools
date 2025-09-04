@@ -10,7 +10,7 @@ interface PlayerOverallStatsProps {
 const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = ({ response }) => {
 	const stats = response.stats;
 	return (
-		<div className="w-full lg:w-[40%] h-72 bg-content font-[600] flex justify-center items-center">
+		<div className="w-full lg:w-[40%] h-72 bg-content  font-[600] flex justify-center items-center">
 			<table className="w-[90%] h-[90%] text-[var(--foreground)] text-lg text-left">
 				<tbody>
 					<tr>
