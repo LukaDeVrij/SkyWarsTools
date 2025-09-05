@@ -23,13 +23,17 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 		fetcher
 	);
 
-	const bg = typedUserInfo?.user.profile_bg ?? null;
+	let bg = "Siege.png";
+	if (typedUserInfo?.user && typedUserInfo?.user.profile_bg) {
+		bg = typedUserInfo?.user.profile_bg;
+	}
+	// console.log(bg);
 
 	return (
 		// In the future, make request to backend to get the banner for that player
 		<div className="relative w-full">
 			<Image
-				src={authLoading ? "/maps/loading.png" : bg ? `/maps/${bg}` : "/maps/Siege.png"}
+				src={authLoading ? "/maps/loading.png" : "/maps/" + bg}
 				priority
 				width={1920}
 				height={1080}

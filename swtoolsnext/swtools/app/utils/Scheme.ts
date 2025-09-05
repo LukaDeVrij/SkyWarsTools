@@ -898,7 +898,7 @@ const schemes: Scheme[] = [
 		req: 100,
 	},
 	{
-		name: "Mythic_i_prestige",
+		name: "Mythic_ii_prestige",
 		rankColor: ["§6", "§e", "§a", "§d", "§c"],
 		iconColor: "§b",
 		req: 200,
@@ -1045,7 +1045,7 @@ export function formatScheme(level: number, overallResponse: OverallResponse, ov
 	} else {
 		schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
 	}
-
+	// console.log(schemeName);
 	const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
 	const demigod: boolean = overallResponse.stats.active_scheme == "scheme_demigod";
 	const levelStr: string = Math.floor(level).toString();

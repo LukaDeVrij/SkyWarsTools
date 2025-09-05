@@ -19,8 +19,10 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.539.0",
     "next": "^15.5.2",
+    "plotly.js": "^3.1.0",
     "react": "19.1.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-plotly.js": "^2.6.0",
     "react-tabs": "^6.1.0",
     "react-widgets": "^5.8.6",
     "swr": "^2.3.6"
@@ -32,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-plotly.js": "^2.6.3",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "sass": "^1.91.0",

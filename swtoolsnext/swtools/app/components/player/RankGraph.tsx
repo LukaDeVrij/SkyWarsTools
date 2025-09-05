@@ -1,7 +1,7 @@
 "use client";
-import { LineChart } from "@mui/x-charts/LineChart";
 import React from "react";
 import useSWR from "swr";
+import HoverableSpan from "../universal/HoverableSpan";
 
 interface RankGraphProps {
 	uuid: string;
@@ -16,80 +16,85 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		fetcher
 	);
 	// console.log(data);
+	const {
+		data: ranking,
+		error: rankingError,
+		isLoading: rankingIsLoading,
+	} = useSWR<GetRankResponse>(
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRank/skywars_experience?uuid=${encodeURIComponent(uuid)}`,
+		fetcher
+	);
 
-	function formattedWeekToDate(weekString: string): Date {
-		const [yearStr, weekStr] = weekString.split("-W");
-		const year = parseInt(yearStr, 10);
-		const week = parseInt(weekStr, 10);
+	type GetRankResponse = {
+		stat: string;
+		uuid: string;
+		rank: number;
+		score: number;
+		info: {
+			player: string;
+			display: {
+				levelFormattedWithBrackets?: string;
+				levelFormatted?: string;
+				newPackageRank?: string;
+				monthlyPackageRank?: string;
+				rankPlusColor?: string;
+				monthlyRankColor?: string;
+				active_scheme?: string;
+				rank?: string;
+				prefix?: string;
+			};
+			queried: number;
+		};
+	};
 
-		// ISO week: Monday is the first day of the week
-		const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
-		const dayOfWeek = simple.getUTCDay();
-		const isoMonday = simple;
-		if (dayOfWeek <= 4) {
-			isoMonday.setUTCDate(simple.getUTCDate() - dayOfWeek + 1);
-		} else {
-			isoMonday.setUTCDate(simple.getUTCDate() + 8 - dayOfWeek);
+	let delta = "~";
+	if (data && ranking && data.rankHistory) {
+		const rankHistory = data.rankHistory;
+
+		const dates = Object.keys(rankHistory);
+		let previousRank = rankHistory[dates[0]];
+
+		let currentRank = ranking.rank;
+
+		delta = (previousRank - currentRank).toString();
+		if (delta[0] !== "-") {
+			delta = "+" + delta;
 		}
-		return isoMonday;
-	
 	}
+
+	console.log(data?.rankHistory); // This is a perfect example of the rankHistory, might be large in the future tho
 
 	return (
 		<div className="w-full h-50 lg:h-72  lg:w-[60%] bg-content p-4">
 			<div className="w-full h-full flex flex-col justify-between bg-layer rounded-2xl p-4 gap-2">
 				<div className="h-[25%] flex flex-row justify-start items-start">
 					<div className="w-[25%] flex flex-col mx-4 font-semibold">
-						<span>Global Ranking</span>
-						<span className="text-4xl">#32</span>
+						<span>
+							<HoverableSpan hoverText="Only within known playerbase, can be innacurate">Level Ranking</HoverableSpan>
+						</span>
+						<span className="text-4xl">#{ranking?.rank ?? "?"}</span>
 					</div>
 					<div className="w-[25%] flex flex-col mx-4 font-semibold">
-						<span>Delta</span>
-						<span className="text-4xl text-red-500">-4</span>
+						<span>
+							<HoverableSpan hoverText="Difference with your position from previous week">Delta</HoverableSpan>
+						</span>
+						<span className={`text-4xl ${delta[0] === "+" ? "text-green-500" : delta[0] === "-" ? "text-red-500" : ""}`}>
+							{delta}
+						</span>
 					</div>
 				</div>
-				{/* Desktop */}
-				<div className="h-[75%] w-full px-2 hidden lg:block">
-					<LineChart
-						xAxis={[
-							{
-								data: Object.keys(data?.rankHistory || {}).map((key) => formattedWeekToDate(key)),
-								labelStyle: { fill: "#fff" },
-								tickLabelStyle: { fill: "#fff" },
-								scaleType: "time",
-							},
-						]}
-						yAxis={[
-							{
-								labelStyle: { fill: "#fff" },
-								tickLabelStyle: { fill: "#fff" },
-							},
-						]}
-						series={[
-							{
-								data: [2, 5.5, 2, 8.5, 1.5, 5],
-								color: "#FFD600", // yellow
-							},
-						]}
-						margin={{ left: -20, bottom: 0 }}
-						height={170}
-						className="w-full h-full"
-					/>
-				</div>
-				{/* Mobile */}
-				<div className="h-[75%] w-full px-2 block lg:hidden">
-					{/* <LineChart
-						xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-						series={[
-							{
-								data: [2, 5.5, 2, 8.5, 1.5, 5],
-							},
-						]}
-						margin={{ left: -20, bottom: 0 }}
-						height={170}
-						className="w-full h-full"
-					/> */}
-				</div>
+				{error && <div className="text-red-500 font-semibold">Failed to load data</div>}
+				{isLoading && <div className="font-semibold">Loading...</div>}
+				{data && (
+					<>
+						{/* Desktop */}
+						<div className="h-[75%] w-full px-2 hidden lg:block">
+							{/* TODO use a chart  */}
+						</div>
+						{/* Mobile */}
+						<div className="h-[75%] w-full px-2 block lg:hidden"></div>
+					</>
+				)}
 			</div>
 		</div>
 	);
