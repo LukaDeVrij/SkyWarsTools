@@ -6,7 +6,7 @@ import HoverableSpan from "./components/universal/HoverableSpan";
 
 export default function Home() {
 	return (
-		<div className="flex h-200 flex-col bg-main w-full rounded-xl">
+		<div className="flex h-fit flex-col bg-main w-full rounded-xl">
 			<div className="w-full flex flex-col lg:flex-row items-center justify-between h-fit p-5 lg:p-8 gap-2">
 				<div className="flex flex-col gap-3 lg:gap-5 w-3/4">
 					<h1 className="text-5xl font-semibold text-center lg:text-left ">Welcome</h1>
@@ -35,10 +35,15 @@ export default function Home() {
 					<h2 className="text-2xl font-bold mb-1">Popular Players</h2>
 					<FreqPlayerList></FreqPlayerList>
 				</div>
-			</div>
-
-			<div className="">
-				<h2 className="px-4 lg:px-8">Contributors</h2>
+				<div className="rounded-lg px-4 lg:px-8 w-full flex flex-col mb-5">
+					<h2 className="text-2xl font-bold">Contributors</h2>
+					<span className="font-semibold mb-1">Special thanks to these people for contributing to the project!</span>
+					<div className="flex flex-col">
+						<span>LifelessNerd</span>
+						<span>Forums_</span>
+						<span>abald</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

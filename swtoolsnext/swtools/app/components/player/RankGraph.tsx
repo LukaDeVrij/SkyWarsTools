@@ -52,9 +52,9 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		const rankHistory = data.rankHistory;
 
 		const dates = Object.keys(rankHistory);
-		let previousRank = rankHistory[dates[0]];
+		const previousRank = rankHistory[dates[0]];
 
-		let currentRank = ranking.rank;
+		const currentRank = ranking.rank;
 
 		delta = (previousRank - currentRank).toString();
 		if (delta[0] !== "-") {

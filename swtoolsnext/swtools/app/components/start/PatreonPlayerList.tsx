@@ -7,13 +7,13 @@ import { fetcher } from "@/app/utils/Utils";
 type PatreonSupporter = {
 	mc_account?: string;
 	emoji?: string;
-	name? : string;
+	name?: string;
 };
 
 type PatreonResponse = {
 	success: boolean;
 	supporters: PatreonSupporter[];
-    cache?: boolean;
+	cache?: boolean;
 };
 
 const PatreonPlayerList = () => {
@@ -31,7 +31,8 @@ const PatreonPlayerList = () => {
 					!error &&
 					data &&
 					data.supporters.map((supporter, index) => (
-						<div
+						<a
+							href={`/player/${supporter.name}/stats`}
 							key={index}
 							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted"
 						>
@@ -50,11 +51,10 @@ const PatreonPlayerList = () => {
 							)}
 							<div className="min-w-0">
 								<div className="font-semibold truncate max-w-[225px]">
-									{supporter.name ?? "Unknown"}{" "}
-									{supporter.emoji && <span className="mr-1">{supporter.emoji}</span>}
+									{supporter.name ?? "Unknown"} {supporter.emoji && <span className="mr-1">{supporter.emoji}</span>}
 								</div>
 							</div>
-						</div>
+						</a>
 					))}
 			</div>
 		</>
