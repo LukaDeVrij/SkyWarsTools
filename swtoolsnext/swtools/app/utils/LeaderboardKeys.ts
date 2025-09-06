@@ -157,9 +157,14 @@ export const keys = [
 		kits.flatMap((kit) =>
 			["wins", "losses", "kills", "deaths", "time_played", "xp"].map((stat) => {
 				const value = `${stat}_kit_${type}${mode ? `_${mode}` : ""}_${kit}`;
-				const name = `${toCamelCase(stat)}${
-					mode ? ` ${toCamelCase(mode === "solo" ? "normal" : mode === "team" ? "insane" : mode)}` : ""
-				} ${toCamelCase(kit.replace(/-/g, " "))}`;
+				let name;
+				if (type == "mini") {
+					name = `${toCamelCase(stat)}${type ? ` ${toCamelCase(type)}` : ""} ${toCamelCase(kit.replace(/-/g, " "))}`;
+				} else {
+					name = `${toCamelCase(stat)}${
+						mode ? ` ${toCamelCase(mode === "solo" ? "normal" : mode === "team" ? "insane" : mode)}` : ""
+					} ${toCamelCase(kit.replace(/-/g, " "))}`;
+				}
 				return { name, value };
 			})
 		)

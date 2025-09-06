@@ -6,7 +6,7 @@ import { calcLevel, fetcher, shortenUUID } from "@/app/utils/Utils";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { formatScheme } from "@/app/utils/Scheme";
-import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, LoaderCircle, LucideRefrigerator, Search } from "lucide-react";
 import { keys } from "@/app/utils/LeaderboardKeys";
 
 type LBResponse = {
@@ -37,7 +37,8 @@ type LBEntry = {
 const Page = () => {
 	const params = useParams();
 	const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
-	const page = searchParams?.get("page") ? parseInt(searchParams?.get("page")!) : 1;
+	const pageParam = searchParams?.get("page");
+	const page = pageParam ? parseInt(pageParam) : 1;
 	const highlightParam = searchParams?.get("highlight") || "";
 	const [highlight, setHighlight] = React.useState<string>(highlightParam);
 	const awaitedParams = params;
@@ -66,8 +67,12 @@ const Page = () => {
 			</div>
 		);
 	}
-	if (error) {
-		return <div className="w-full lg:w-3/4 mx-auto">Error loading data</div>;
+	if (error || !data?.entries) {
+		return (
+			<div className="w-full lg:w-3/4 mx-auto flex justify-center align-center mt-10">
+				<span>No such leaderboard!</span>
+			</div>
+		);
 	}
 
 	console.log(data);
@@ -134,7 +139,7 @@ const Page = () => {
 							disabled={page <= 1}
 							onClick={() => {
 								const prevPage = page - 1;
-								window.location.search = `?page=${prevPage}${highlight ? `&highlight=${highlight}` : ""}`;
+								window.location.search = `?page=${prevPage}`;
 							}}
 						>
 							<ArrowBigLeft></ArrowBigLeft>
@@ -145,7 +150,7 @@ const Page = () => {
 							disabled={!data || data.entries.length < 50}
 							onClick={() => {
 								const nextPage = page + 1;
-								window.location.search = `?page=${nextPage}${highlight ? `&highlight=${highlight}` : ""}`;
+								window.location.search = `?page=${nextPage}`;
 							}}
 						>
 							<ArrowBigRight></ArrowBigRight>
