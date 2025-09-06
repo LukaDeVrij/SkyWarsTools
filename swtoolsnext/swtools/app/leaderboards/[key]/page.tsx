@@ -37,17 +37,27 @@ type LBEntry = {
 const Page = () => {
 	const params = useParams();
 	const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
-	const page = searchParams?.get("page") ? parseInt(searchParams.get("page")!) : 1;
+	const page = searchParams?.get("page") ? parseInt(searchParams?.get("page")!) : 1;
 	const highlightParam = searchParams?.get("highlight") || "";
 	const [highlight, setHighlight] = React.useState<string>(highlightParam);
 	const awaitedParams = params;
 
 	const [errorMsg, setError] = React.useState<string | null>(null);
 
+	// Ref for highlighted row
+	const highlightedRowRef = React.useRef<HTMLTableRowElement | null>(null);
+
 	const { data, error, isLoading } = useSWR<LBResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getLB/${awaitedParams.key}?page=${page}`,
 		fetcher
 	);
+
+	// Scroll to highlighted row after render
+	React.useEffect(() => {
+		if (highlightedRowRef.current) {
+			highlightedRowRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	}, [data, highlight]);
 
 	if (isLoading) {
 		return (
@@ -154,13 +164,13 @@ const Page = () => {
 					</thead>
 					<tbody>
 						{data?.entries?.map((entry: LBEntry, index: number) => {
-							/* eslint-disable  @typescript-eslint/no-explicit-any */
 							const mockOverallResponse = {
 								...entry.info,
 								uuid: entry.uuid,
 								stats: {},
 								guild: undefined,
 								took: 0,
+								// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 							} as any;
 
 							const highlighted = highlight === entry.uuid;
@@ -175,6 +185,7 @@ const Page = () => {
 							return (
 								<tr
 									key={entry.uuid}
+									ref={highlighted ? highlightedRowRef : undefined}
 									className={`border-b last:border-b-0 hover:bg-accent/10 transition-colors relative ${
 										isStale ? "opacity-50" : ""
 									} ${highlighted ? "bg-yellow-300/10 animate-pulse" : ""}`}
