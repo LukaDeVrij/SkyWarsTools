@@ -88,9 +88,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 				{data && (
 					<>
 						{/* Desktop */}
-						<div className="h-[75%] w-full px-2 hidden lg:block">
-							{/* TODO use a chart  */}
-						</div>
+						<div className="h-[75%] w-full px-2 hidden lg:block">{/* TODO use a chart  */}</div>
 						{/* Mobile */}
 						<div className="h-[75%] w-full px-2 block lg:hidden"></div>
 					</>

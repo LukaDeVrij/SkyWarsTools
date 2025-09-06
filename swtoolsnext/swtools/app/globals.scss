@@ -1,11 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+@use "../node_modules/react-widgets/styles.css"; // stupid
+@use "tailwindcss" as *;
 
 body {
 	font-family: "Montserrat", system-ui, sans-serif;
 }
-
-@import "tailwindcss";
-@import "react-widgets/styles.css";
 
 :root {
 	--background: #0c0c0c;
@@ -99,7 +97,7 @@ body {
 	left: -200%;
 	width: 500%;
 	height: 500%;
-	background: linear-gradient(120deg, rgba(5, 5, 5, 0.1) 0%, rgba(90, 100, 0, 0.3) 50%, rgba(120, 0, 255, 0.1) 100%);
+	background: linear-gradient(120deg, rgba(5, 5, 5, 0.2) 0%, rgba(90, 100, 0, 0.5) 50%, rgba(120, 0, 255, 0.2) 100%);
 	mix-blend-mode: lighten;
 	animation: enchanted-shine 2s alternate infinite;
 	pointer-events: none;

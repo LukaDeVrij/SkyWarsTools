@@ -57,7 +57,7 @@ export function toCamelCase(input: string): string {
 
 	// Combine the words into camel case
 	return words
-		.map((word, index) => {
+		.map((word) => {
 			// Capitalize the first letter of each word
 			return word.charAt(0).toUpperCase() + word.slice(1);
 		})
@@ -773,3 +773,11 @@ export function getKitPrestigeInfoByPrestige(prestige: number): KitPrestigeInfo 
 export const fetcher = <T = unknown>(...args: [RequestInfo, RequestInit?]): Promise<T> =>
 	fetch(...args).then((res) => res.json() as Promise<T>);
 // no explicit any, this is some AI typescript magic
+
+export function shortenUUID(uuid: string): string {
+	return uuid.replace(/-/g, "").toLowerCase();
+}
+
+export function unshortenUUID(uuid: string): string {
+	return uuid.slice(0, 8) + "-" + uuid.slice(8, 12) + "-" + uuid.slice(12, 16) + "-" + uuid.slice(16, 20) + "-" + uuid.slice(20, 32);
+}
