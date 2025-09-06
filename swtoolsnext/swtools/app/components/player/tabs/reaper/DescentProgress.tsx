@@ -12,7 +12,7 @@ const DescentProgress: React.FC<{ response: OverallResponse; opalsSpent: number 
 				<tbody>
 					<tr>
 						<td>Current Opals</td>
-						<td className="">{response.stats.opals}</td>
+						<td className="">{response.stats.opals ?? 0}</td>
 						<td></td>
 					</tr>
 					<tr>

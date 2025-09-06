@@ -13,7 +13,7 @@ const SoulUpgrades: React.FC<{ response: OverallResponse }> = ({ response }) => 
 						<td>
 							<HoverableSpan hoverText={"Gain Souls for wins"}>Grand Slam</HoverableSpan>
 						</td>
-						<td className={`pr-4 ${response.stats.grand_slam == 3 ? "text-green-600" : ""}`}>{response.stats.grand_slam}/3</td>
+						<td className={`pr-4 ${response.stats.grand_slam == 3 ? "text-green-600" : ""}`}>{response.stats.grand_slam ?? 0}/3</td>
 						<td>+{2 * (response.stats.grand_slam ?? 0)}</td>
 					</tr>
 					<tr>
@@ -21,7 +21,7 @@ const SoulUpgrades: React.FC<{ response: OverallResponse }> = ({ response }) => 
 							<HoverableSpan hoverText={"Earn souls at the end of the game"}>Soul Seeker</HoverableSpan>
 						</td>
 						<td className={`pr-4 ${response.stats.shard_seeker == 5 ? "text-green-600" : ""}`}>
-							{response.stats.shard_seeker}/5
+							{response.stats.shard_seeker ?? 0}/5
 						</td>
 						<td>+{2 * (response.stats.shard_seeker ?? 0)}%</td>
 					</tr>

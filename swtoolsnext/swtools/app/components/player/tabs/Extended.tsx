@@ -125,7 +125,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Mob Kills</td>
-							<td>{response.stats.mob_kills?.toLocaleString()}</td>
+							<td>{response.stats.mob_kills?.toLocaleString() ?? 0}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Bow Kills</td>

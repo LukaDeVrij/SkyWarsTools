@@ -275,6 +275,9 @@ export function getPlayerRank(playerOverall: OverallResponse, onlyPackages = fal
 		if (out.priority === PlayerRanks.SUPERSTAR) {
 			out.prefix = `${customRankColor ?? "§6"}[MVP${customPlusColor ?? "§c"}++${customRankColor ?? "§6"}]`;
 		}
+		if (out.priority === PlayerRanks.MVP_PLUS) { // hacky fix
+			out.prefix = `${"§b"}[MVP${customPlusColor ?? "§c"}+${"§b"}]`;
+		}
 	}
 	return out;
 }

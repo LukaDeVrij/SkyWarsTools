@@ -142,7 +142,7 @@ const schemes: Scheme[] = [
 		req: 210,
 	},
 	{
-		name: "Blood God_prestige",
+		name: "Blood_God_prestige",
 		rankColor: ["§d", "§b", "§b", "§b", "§d"],
 		iconColor: "§b",
 		req: 230,

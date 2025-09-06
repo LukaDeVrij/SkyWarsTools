@@ -3,15 +3,14 @@ import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
 
 const Equips: React.FC<OverallResponse> = (response) => {
-
-    const renderPerkName = (perk: string | null | undefined) => {
-        if (!perk) return "None";
-        return perk
-            .replace(/_/g, ' ')
-            .replace(/\bsolo\b/gi, '')
-            .replace(/\bteam\b/gi, '')
-            .replace(/\b\w/g, char => char.toUpperCase());
-    };
+	const renderPerkName = (perk: string | null | undefined) => {
+		if (!perk) return "None";
+		return perk
+			.replace(/_/g, " ")
+			.replace(/\bsolo\b/gi, "")
+			.replace(/\bteam\b/gi, "")
+			.replace(/\b\w/g, (char) => char.toUpperCase());
+	};
 	return (
 		<TabContent>
 			<div className="extended-table w-full text-left bg-content font-bold font flex flex-col lg:text-lg justify-center items-center">
@@ -21,43 +20,43 @@ const Equips: React.FC<OverallResponse> = (response) => {
 					<tbody>
 						<tr className="border-b-1 border-white">
 							<td>Balloon</td>
-							<td>{response.stats.active_balloon}</td>
+							<td>{response.stats.active_balloon ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Cage</td>
-							<td>{response.stats.active_cage}</td>
+							<td>{response.stats.active_cage ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Death Cry</td>
-							<td>{response.stats.active_deathcry}</td>
+							<td>{response.stats.active_deathcry ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Emblem</td>
-							<td>{response.stats.active_emblem}</td>
+							<td>{response.stats.active_emblem ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Kill Effect</td>
-							<td>{response.stats.active_killeffect}</td>
+							<td>{response.stats.active_killeffect ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Kill Message</td>
-							<td>{response.stats.active_killmessages}</td>
+							<td>{response.stats.active_killmessages ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Projectile Trail</td>
-							<td>{response.stats.active_projectiletrail}</td>
+							<td>{response.stats.active_projectiletrail ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Scheme</td>
-							<td>{response.stats.active_scheme}</td>
+							<td>{response.stats.active_scheme ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Spray</td>
-							<td>{response.stats.active_sprays}</td>
+							<td>{response.stats.active_sprays ?? "-"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Victory Dance</td>
-							<td>{response.stats.active_victorydance}</td>
+							<td>{response.stats.active_victorydance ?? "-"}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -94,7 +93,7 @@ const Equips: React.FC<OverallResponse> = (response) => {
 									Object.entries(response.stats.perkslot.insane).map(([slot, perk]) => (
 										<tr className="border-b-1 border-white" key={slot}>
 											<td className="capitalize">Slot {slot}</td>
-                                            <td className="capitalize">{renderPerkName(perk)}</td>
+											<td className="capitalize">{renderPerkName(perk)}</td>
 										</tr>
 									))
 								) : (
