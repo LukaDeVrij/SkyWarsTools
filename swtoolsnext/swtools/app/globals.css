@@ -1,5 +1,5 @@
-@use "../node_modules/react-widgets/styles.css"; // stupid
-@use "tailwindcss" as *;
+@import "../node_modules/react-widgets/styles.css";
+@import "tailwindcss";
 
 body {
 	font-family: "Montserrat", system-ui, sans-serif;
@@ -10,8 +10,8 @@ body {
 	--background-nav: #1a1a1a;
 	--background-layer: #1e2434;
 	--background-content: #31394c;
-	--background-button: #6d1c70;
-	--background-button-hover: #88148b;
+	--background-button: #1c7031;
+	--background-button-hover: #23570f;
 	--foreground: #ededed;
 	--accent: #ffcd22;
 }
@@ -120,4 +120,27 @@ body {
 
 .selected-tab {
 	background: #31394c;
+}
+
+/* Modern transparent scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	display: hidden;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+html {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
 }

@@ -52,7 +52,8 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	// Status
 	let bgColor = "bg-red-500";
 	let title = "(Appears) Offline";
-	if (data && data.session.online) {
+	if (error) title = "Error fetching status";
+	if (data && data.session.online && !error) {
 		if (data.session.gameType === "SKYWARS") {
 			bgColor = "bg-green-500";
 			title = `Player is in SkyWars! (${data.session.gameType} - ${data.session.mode})`;

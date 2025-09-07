@@ -8,16 +8,15 @@ interface PlayerNavBarProps {
 }
 
 const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
-
 	const pathname = usePathname();
 	// Normalize path for matching
 	const normalizedPath = pathname.toLowerCase();
 
 	const navItems = [
-		{ label: "Stats", href: "/stats" },
-		{ label: "Session", href: "/session" },
-		{ label: "Compare", href: "/compare" },
-		{ label: "Calculate", href: "/calculate" },
+		{ label: "Stats", href: `/player/${playerName}/stats` },
+		{ label: "Session", href: `/player/${playerName}/session` },
+		{ label: "Compare", href: `/player/${playerName}/compare` },
+		{ label: "Calculate", href: `/player/${playerName}/calculate` },
 	];
 
 	return (
@@ -28,18 +27,13 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 				<div className="bg-yellow-300 h-0.5 lg:h-[2px] w-full" />
 			</div>
 			{navItems.map((item, idx) => {
-				// Map label to path for matching
-				let itemPath = item.href;
-				if (item.label.toLowerCase() === "stats") itemPath = "/stats";
-				if (item.label.toLowerCase() === "session") itemPath = "/session";
-				if (item.label.toLowerCase() === "compare") itemPath = "/compare";
-				if (item.label.toLowerCase() === "calculate") itemPath = "/calculate";
-				const isActive = normalizedPath.endsWith(itemPath);
+				// console.log(normalizedPath)
+				const isActive = normalizedPath.includes(item.href.toLowerCase());
 				return (
 					<React.Fragment key={item.label}>
 						<div className="flex flex-col items-center">
 							<a
-								href={itemPath}
+								href={item.href}
 								className="text-lg lg:text-2xl text-[var(--foreground)] font-[700] animate-press border-[var(--accent)] hover:border-b-2 "
 							>
 								{item.label}

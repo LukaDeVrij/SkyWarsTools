@@ -3,7 +3,7 @@ import React from "react";
 
 import { usePathname } from "next/navigation";
 
-const PlayerNavBar: React.FC = () => {
+const AuthNavBar: React.FC = () => {
 	const pathname = usePathname();
 	// Normalize path for matching
 	const normalizedPath = pathname.toLowerCase();
@@ -62,4 +62,4 @@ const PlayerNavBar: React.FC = () => {
 	);
 };
 
-export default PlayerNavBar;
+export default AuthNavBar;
