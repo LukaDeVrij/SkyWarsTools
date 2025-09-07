@@ -1,7 +1,11 @@
 import SnapshotSelection from "@/app/components/player/selection/SnapshotSelection";
 import React from "react";
 
-const SessionPage = async ({ params }: { params: { playerName: string } }) => {
+interface SessionPageParams {
+	params: Promise<{ playerName: string }>;
+}
+
+const SessionPage = async ({ params }: SessionPageParams) => {
 	const awaitedParams = await params;
 	const playerName = awaitedParams.playerName;
 	return (

@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Promise<{ playerName: s
 		return (
 			<div className="flex flex-col items-center justify-center h-full">
 				<h1 className="text-2xl font-bold mb-4">Player not found</h1>
-				<p className="text-lg">The player "{awaitedParams.playerName}" does not exist.</p>
+				<p className="text-lg">The player &quot;{awaitedParams.playerName}&quot; does not exist.</p>
 			</div>
 		);
 	}

@@ -1,7 +1,7 @@
 import SnapshotSelection from "@/app/components/player/selection/SnapshotSelection";
 import React from "react";
 
-const ComparePage = async ({ params }: { params: { playerName: string } }) => {
+export default async function ComparePage({ params }: { params: Promise<{ playerName: string }> }) {
 	const awaitedParams = await params;
 	const playerName = awaitedParams.playerName;
 	return (
@@ -10,6 +10,4 @@ const ComparePage = async ({ params }: { params: { playerName: string } }) => {
 			<SnapshotSelection playerName={playerName} pageType="compare" />
 		</div>
 	);
-};
-
-export default ComparePage;
+}

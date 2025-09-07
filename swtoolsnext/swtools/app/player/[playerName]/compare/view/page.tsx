@@ -1,10 +1,10 @@
-import { timeAgo, toCamelCase } from "@/app/utils/Utils";
+import { timeAgo } from "@/app/utils/Utils";
 import { Tooltip } from "@mui/material";
 import React from "react";
 
 interface CompareViewPageProps {
-	params: { playerName: string };
-	searchParams?: { [key: string]: string | string[] | undefined };
+	params: Promise<{ playerName: string }>;
+	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 type SnapshotsResponse = {
@@ -144,9 +144,9 @@ const statsNames: Record<keyof Snapshot["stats"], string> = {
 	games_mini: "Mini Games",
 };
 
-const CompareViewPage = async ({ params, searchParams }: CompareViewPageProps) => {
+const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps) => {
 	const awaitedParams = await params;
-	const awaitedSearchParams = await searchParams;
+	const awaitedSearchParams = searchParams ? await searchParams : undefined;
 	const playerName = awaitedParams.playerName;
 	const k = awaitedSearchParams ? awaitedSearchParams.k : undefined;
 
@@ -258,5 +258,4 @@ const CompareViewPage = async ({ params, searchParams }: CompareViewPageProps) =
 		</div>
 	);
 };
-
-export default CompareViewPage;
+export default PlayerStatsLayout;

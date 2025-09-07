@@ -1,4 +1,4 @@
-import PlayerNavBar from "@/app/components/player/PlayerNavBar";
+
 import PlayerBanner from "@/app/components/player/PlayerBanner";
 import PlayerTitle from "@/app/components/player/PlayerTitle";
 import RankGraph from "@/app/components/player/RankGraph";
