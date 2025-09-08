@@ -4,7 +4,9 @@ const Footer = () => {
 	return (
 		<div className="bottom-0 bg-nav w-full mt-2 lg:font-semibold">
 			<div className="w-[100vw] lg:w-[1000px] m-auto p-4 text-center text-sm text-gray-400 select-none flex justify-between items-center">
-				<div className="w-30 lg:w-50">Made by LifelessNerd</div>
+				<div className="w-30 lg:w-50">
+					Made by <br></br>LifelessNerd // Luka
+				</div>
 				<div className="w-30 lg:w-50">
 					<span>Not affiliated with Hypixel, Mojang or Microsoft</span>
 				</div>

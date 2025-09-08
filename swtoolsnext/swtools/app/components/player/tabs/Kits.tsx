@@ -28,7 +28,6 @@ const Kits: React.FC<OverallResponse> = (response) => {
 
 	return (
 		<Tabs>
-			{/* TODO figure out how to get selected to work */}
 			<TabList className={"bg-main h-10 w-full flex gap-2 items-center px-4 overflow-scroll lg:overflow-auto text-base lg:text-lg"}>
 				<Tab
 					selectedClassName={"selected-tab"}
