@@ -1032,56 +1032,60 @@ export function getSchemeByReq(req: string | number): Scheme | undefined {
 }
 
 export function formatScheme(level: number, overallResponse: OverallResponse, overwriteScheme: boolean): string {
-	// console.log(overallResponse);
-	if (!overallResponse.display?.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
-		// Fallback for legacy players who havent logged on since update
-		return overallResponse.display?.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
-	}
-
-	const icon: string = extractIcon(overallResponse.display.levelFormattedWithBrackets);
-	let schemeName: string;
-	if (!overwriteScheme) {
-		schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
-	} else {
-		schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
-	}
-	// console.log(schemeName);
-	const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
-	const demigod: boolean = overallResponse.stats.active_scheme == "scheme_demigod";
-	const levelStr: string = Math.floor(level).toString();
-
-	let rankColor: string[] | string = scheme.rankColor;
-	const iconColor: string = scheme.iconColor;
-
-	let formattedScheme: string = "";
-
-	if (Array.isArray(rankColor)) {
-		// Scheme is not just 1 color, its an array
-		formattedScheme = scheme.rankColor[0];
-		// If below level 100, the array has 1 too many colors - we get rid of the color on index 1, which is 1st number after the bracket basically
-		if (level < 100) rankColor = Array.isArray(scheme.rankColor) ? scheme.rankColor.filter((_, i) => i !== 1) : scheme.rankColor;
-
-		// Color for the first bracket, along with the actual bracket itself
-		formattedScheme += rankColor[0];
-		formattedScheme += demigod ? "{" : "[";
-
-		// We go over every digit in the level, and prepend the color from the array for that position
-		for (let index = 0; index < levelStr.length; index++) {
-			const char = levelStr.charAt(index);
-			formattedScheme += rankColor[index + 1] + char;
+	console.log(overallResponse);
+	try {
+		if (!overallResponse.display?.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
+			// Fallback for legacy players who havent logged on since update
+			return overallResponse.display?.levelFormatted.slice(0, 2) + "[" + Math.floor(level) + "✯]";
 		}
 
-		// Icon and its color
-		formattedScheme += iconColor + icon;
-		// We end with the last color from the array, which is for the closing bracket
-		formattedScheme += rankColor[rankColor.length - 1];
-		formattedScheme += demigod ? "}" : "]";
-	} else {
-		// Color is a single § code string -> '§2'
-		formattedScheme += rankColor + "[" + levelStr + iconColor + icon + "]";
-	}
+		const icon: string = extractIcon(overallResponse.display.levelFormattedWithBrackets);
+		let schemeName: string;
+		if (!overwriteScheme) {
+			schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
+		} else {
+			schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
+		}
+		// console.log(schemeName);
+		const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
+		const demigod: boolean = overallResponse.stats.active_scheme == "scheme_demigod";
+		const levelStr: string = Math.floor(level).toString();
 
-	return formattedScheme;
+		let rankColor: string[] | string = scheme.rankColor;
+		const iconColor: string = scheme.iconColor;
+
+		let formattedScheme: string = "";
+
+		if (Array.isArray(rankColor)) {
+			// Scheme is not just 1 color, its an array
+			formattedScheme = scheme.rankColor[0];
+			// If below level 100, the array has 1 too many colors - we get rid of the color on index 1, which is 1st number after the bracket basically
+			if (level < 100) rankColor = Array.isArray(scheme.rankColor) ? scheme.rankColor.filter((_, i) => i !== 1) : scheme.rankColor;
+
+			// Color for the first bracket, along with the actual bracket itself
+			formattedScheme += rankColor[0];
+			formattedScheme += demigod ? "{" : "[";
+
+			// We go over every digit in the level, and prepend the color from the array for that position
+			for (let index = 0; index < levelStr.length; index++) {
+				const char = levelStr.charAt(index);
+				formattedScheme += rankColor[index + 1] + char;
+			}
+
+			// Icon and its color
+			formattedScheme += iconColor + icon;
+			// We end with the last color from the array, which is for the closing bracket
+			formattedScheme += rankColor[rankColor.length - 1];
+			formattedScheme += demigod ? "}" : "]";
+		} else {
+			// Color is a single § code string -> '§2'
+			formattedScheme += rankColor + "[" + levelStr + iconColor + icon + "]";
+		}
+		return formattedScheme;
+	} catch (e) {
+		return "§7[1✯]";
+	}
+	
 }
 
 function extractIcon(levelFormattedWithBrackets: string): string {

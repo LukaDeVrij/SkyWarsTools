@@ -1,8 +1,6 @@
 import React, { useRef } from "react";
 
-interface SessionCanvasProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {}
-
-const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
+const SessionCanvas: React.FC<React.CanvasHTMLAttributes<HTMLCanvasElement>> = (props) => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	React.useEffect(() => {
