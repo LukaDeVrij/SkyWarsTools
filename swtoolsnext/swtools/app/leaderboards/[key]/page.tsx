@@ -181,6 +181,7 @@ const Page = () => {
 							const highlighted = highlight === entry.uuid;
 
 							const level = calcLevel(entry.info.exp ?? 0);
+							
 							const scheme = formatScheme(level, mockOverallResponse, false);
 
 							const rank = getPlayerRank(mockOverallResponse);

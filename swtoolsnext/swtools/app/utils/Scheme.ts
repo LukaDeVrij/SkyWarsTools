@@ -1032,7 +1032,6 @@ export function getSchemeByReq(req: string | number): Scheme | undefined {
 }
 
 export function formatScheme(level: number, overallResponse: OverallResponse, overwriteScheme: boolean): string {
-	console.log(overallResponse);
 	try {
 		if (!overallResponse.display?.active_scheme || !overallResponse.display.levelFormattedWithBrackets) {
 			// Fallback for legacy players who havent logged on since update

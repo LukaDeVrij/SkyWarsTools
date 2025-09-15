@@ -1,60 +1,24 @@
 "use client";
 import SessionCanvas from "@/app/components/player/selection/SessionCanvas";
-import React from "react";
+import { fetcher } from "@/app/utils/Utils";
+import { useParams, useSearchParams } from "next/navigation";
+import React, { use } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import useSWR from "swr";
 
 type SnapshotsResponse = {
 	[key: string]: Snapshot;
 };
-type Snapshot = {
-	player: string;
-	uuid: string;
-	stats: {
-		skywars_experience: number;
-		coins: number;
-		opals: number;
-		heads: number;
-		souls: number;
-		kills: number;
-		deaths: number;
-		wins: number;
-		losses: number;
-		time_played: number;
-		wins_solo: number;
-		losses_solo: number;
-		kills_solo: number;
-		deaths_solo: number;
-		time_played_solo: number;
-		wins_solo_normal: number;
-		losses_solo_normal: number;
-		kills_solo_normal: number;
-		deaths_solo_normal: number;
-		wins_solo_insane: number;
-		losses_solo_insane: number;
-		kills_solo_insane: number;
-		deaths_solo_insane: number;
-		wins_team: number;
-		losses_team: number;
-		kills_team: number;
-		deaths_team: number;
-		wins_team_normal: number;
-		losses_team_normal: number;
-		kills_team_normal: number;
-		deaths_team_normal: number;
-		wins_team_insane: number;
-		losses_team_insane: number;
-		kills_team_insane: number;
-		deaths_team_insane: number;
-		time_played_team: number;
-		wins_mini: number;
-		kills_mini: number;
-		time_played_mini: number;
-		games_mini: number;
-	};
-	statsVersion: number;
-	queried: number;
-};
-const PlayerStatsLayout = () => {
+const PlayerSessionViewPage = () => {
+	const { playerName } = useParams() as { playerName: string };
+	const params = useSearchParams();
+	const keys = params.get("k");
+
+	const { data, isLoading } = useSWR<SnapshotsResponse>(
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`,
+		fetcher
+	);
+
 	return (
 		<div className="bg-content h-200 p-2 lg:p-8">
 			<Tabs>
@@ -89,20 +53,20 @@ const PlayerStatsLayout = () => {
 					</Tab>
 				</TabList>
 				<TabPanel>
-					<SessionCanvas />
+					<SessionCanvas data={data} mode={"overall"} />
 				</TabPanel>
 				<TabPanel>
-					<SessionCanvas />
+					<SessionCanvas data={data} mode={"solo"} />
 				</TabPanel>
 				<TabPanel>
-					<SessionCanvas />
+					<SessionCanvas data={data} mode={"team"} />
 				</TabPanel>
 				<TabPanel>
-					<SessionCanvas />
+					<SessionCanvas data={data} mode={"mini"} />
 				</TabPanel>
 			</Tabs>
 		</div>
 	);
 };
 
-export default PlayerStatsLayout;
+export default PlayerSessionViewPage;

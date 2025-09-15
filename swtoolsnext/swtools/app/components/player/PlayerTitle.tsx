@@ -37,17 +37,17 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 
 	const [nationality, setNationality] = React.useState<string | null>(null);
 
+	const { data: userInfoData } = useSWR<UserInfoResponse>(
+		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`,
+		fetcher
+	);
+
 	React.useEffect(() => {
-		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`, {
-			method: "GET",
-		})
-			.then((res) => res.json())
-			.then((data: UserInfoResponse) => {
-				setTypedUserInfo(data);
-				setNationality(data.user.nationality ?? null);
-			})
-			.catch(() => setTypedUserInfo(null));
-	});
+		if (userInfoData) {
+			setTypedUserInfo(userInfoData);
+			setNationality(userInfoData.user.nationality ?? null);
+		}
+	}, [userInfoData]);
 
 	// Status
 	let bgColor = "bg-red-500";
