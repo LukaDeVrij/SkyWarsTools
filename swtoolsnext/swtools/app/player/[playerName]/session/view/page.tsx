@@ -2,7 +2,7 @@
 import SessionCanvas from "@/app/components/player/selection/SessionCanvas";
 import { fetcher } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
-import React, { use } from "react";
+import React from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import useSWR from "swr";
 

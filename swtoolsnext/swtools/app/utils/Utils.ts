@@ -63,6 +63,19 @@ export function toCamelCase(input: string): string {
 		})
 		.join(" ");
 }
+export function timeDiff(later: number, earlier: number): string {
+
+	let diff = later - earlier; // difference in seconds
+	diff = diff / 1000;
+	if (diff < 0) return "in the future";
+	const days = Math.floor(diff / (24 * 3600));
+	diff %= 24 * 3600;
+	const hours = Math.floor(diff / 3600);
+	diff %= 3600;
+	const minutes = Math.floor(diff / 60);
+
+	return `${days}d ${hours}h ${minutes}m`;
+}
 
 export function parseKitStatsKey(key: string): {
 	original: string;

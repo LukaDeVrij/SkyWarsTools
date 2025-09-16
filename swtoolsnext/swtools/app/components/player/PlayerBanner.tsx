@@ -3,8 +3,6 @@ import React from "react";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-import { Info } from "lucide-react";
-import HoverableSpan from "../universal/HoverableSpan";
 import useSWR from "swr";
 
 interface PlayerBannerProps {

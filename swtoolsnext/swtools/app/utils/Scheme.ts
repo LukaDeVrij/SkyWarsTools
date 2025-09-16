@@ -1081,10 +1081,9 @@ export function formatScheme(level: number, overallResponse: OverallResponse, ov
 			formattedScheme += rankColor + "[" + levelStr + iconColor + icon + "]";
 		}
 		return formattedScheme;
-	} catch (e) {
+	} catch {
 		return "§7[1✯]";
 	}
-	
 }
 
 function extractIcon(levelFormattedWithBrackets: string): string {

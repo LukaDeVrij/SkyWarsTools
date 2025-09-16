@@ -6,7 +6,7 @@ import { calcLevel, fetcher, shortenUUID } from "@/app/utils/Utils";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { formatScheme } from "@/app/utils/Scheme";
-import { ArrowBigLeft, ArrowBigRight, LoaderCircle, LucideRefrigerator, Search } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react";
 import { keys } from "@/app/utils/LeaderboardKeys";
 
 type LBResponse = {
