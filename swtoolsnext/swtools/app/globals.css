@@ -80,6 +80,22 @@ body {
 	transform: scale(0.92);
 }
 
+.animate-scale {
+	animation: pulse-scale 1.5s infinite;
+}
+
+@keyframes pulse-scale {
+	0% {
+		transform: scale(0.9);
+	}
+	50% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0.9);
+	}
+}
+
 .extended-table > table > tbody > tr > td {
 	padding-left: 5px;
 	padding-right: 5px;
@@ -143,4 +159,9 @@ body {
 html {
 	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+& .MuiTooltip-tooltip {
+	font-size: 16px;
+	background-color: rgba(0, 0, 0, 0.842);
+	font-family: "Montserrat", system-ui, sans-serif;
 }

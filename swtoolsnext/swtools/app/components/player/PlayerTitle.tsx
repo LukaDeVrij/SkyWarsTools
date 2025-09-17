@@ -45,7 +45,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	React.useEffect(() => {
 		if (userInfoData) {
 			setTypedUserInfo(userInfoData);
-			setNationality(userInfoData.user.nationality ?? null);
+			setNationality(userInfoData.user?.nationality ?? null);
 		}
 	}, [userInfoData]);
 
@@ -55,7 +55,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	if (error) title = "Error fetching status";
 	if (data && data.session.online && !error) {
 		if (data.session.gameType === "SKYWARS") {
-			bgColor = "bg-green-500";
+			bgColor = "bg-green-500 animate-scale";
 			title = `Player is in SkyWars! (${data.session.gameType} - ${data.session.mode})`;
 		} else {
 			bgColor = "bg-yellow-400";

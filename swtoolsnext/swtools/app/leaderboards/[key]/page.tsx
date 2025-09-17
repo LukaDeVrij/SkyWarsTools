@@ -181,7 +181,7 @@ const Page = () => {
 							const highlighted = highlight === entry.uuid;
 
 							const level = calcLevel(entry.info.exp ?? 0);
-							
+
 							const scheme = formatScheme(level, mockOverallResponse, false);
 
 							const rank = getPlayerRank(mockOverallResponse);
@@ -217,6 +217,29 @@ const Page = () => {
 						})}
 					</tbody>
 				</table>
+				<div className="flex items-center gap-3 bg-content p-1 px-2 m-3 rounded-xl">
+					<button
+						className="px-1 rounded bg-layer text-content font-bold disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+						disabled={page <= 1}
+						onClick={() => {
+							const prevPage = page - 1;
+							window.location.search = `?page=${prevPage}`;
+						}}
+					>
+						<ArrowBigLeft></ArrowBigLeft>
+					</button>
+					<span className="font-semibold text-lg bg-layer px-3 rounded-xl">{page}</span>
+					<button
+						className="px-1 rounded bg-layer text-content font-bold disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+						disabled={!data || data.entries.length < 50}
+						onClick={() => {
+							const nextPage = page + 1;
+							window.location.search = `?page=${nextPage}`;
+						}}
+					>
+						<ArrowBigRight></ArrowBigRight>
+					</button>
+				</div>
 			</div>
 		</>
 	);

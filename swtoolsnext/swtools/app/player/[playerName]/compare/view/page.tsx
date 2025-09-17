@@ -204,13 +204,13 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 	return (
 		<div className="overflow-x-auto p-2 lg:p-4 bg-content">
 			{hasDifferentStatsVersion && (
-				<div className="bg-yellow-500 text-black font-bold p-2 rounded-xl flex flex-col">
+				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
 					<span className="w-fit">Warning: Snapshots have different stats versions!</span>
 					<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
 				</div>
 			)}
 			{hasOldStatsVersion && (
-				<div className="bg-yellow-500 text-black font-bold p-2 rounded-xl flex flex-col">
+				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
 					<span>Warning: Some snapshots are outdated.</span>
 					<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
 				</div>

@@ -64,7 +64,6 @@ export function toCamelCase(input: string): string {
 		.join(" ");
 }
 export function timeDiff(later: number, earlier: number): string {
-
 	let diff = later - earlier; // difference in seconds
 	diff = diff / 1000;
 	if (diff < 0) return "in the future";
@@ -181,7 +180,7 @@ export function formatTimestampToVerboseDate(timestamp: number): string {
 }
 
 export function calcKitPrestigeLevel(xp: number): number {
-	const perLevelXp = [1000, 2500, 5000, 10000, 25000, 50000, 75000];
+	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 30000];
 
 	if (xp > perLevelXp[perLevelXp.length - 1]) {
 		return 7;
@@ -197,7 +196,7 @@ export function calcKitPrestigeLevel(xp: number): number {
 	return 0; // shouldnt be hit - this keeps typescript happy
 }
 export function calcKitPrestigeExp(level: number): number {
-	const perLevelXp = [1000, 2500, 5000, 10000, 25000, 50000, 75000];
+	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 30000];
 	return perLevelXp[level - 1] || 0; // Return 0 if level is out of bounds
 }
 
@@ -752,12 +751,12 @@ export const kitPrestiges: Record<number, KitPrestigeInfo> = {
 	2: { key: 2, name: "II", minXp: 2500, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
 	3: { key: 3, name: "III", minXp: 5000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
 	4: { key: 4, name: "IV", minXp: 10000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
-	5: { key: 5, name: "V", minXp: 25000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
-	6: { key: 6, name: "VI", minXp: 50000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
+	5: { key: 5, name: "V", minXp: 15000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
+	6: { key: 6, name: "VI", minXp: 20000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
 	7: {
 		key: 7,
 		name: "VII",
-		minXp: 75000,
+		minXp: 30000,
 		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
 		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail", "§bPrestige Scheme"],
 	}, // Rainbow Gradient

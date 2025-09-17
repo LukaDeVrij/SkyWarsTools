@@ -20,6 +20,8 @@ type Snapshot = {
 	player: string;
 	queried: number;
 	stats: Record<string, number>;
+	uuid: string;
+	statsVersion: number;
 };
 
 type SnapshotsResponse = {
@@ -541,6 +543,9 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		},
 	};
 
+	const [hasDifferentStatsVersion, setHasDifferentStatsVersion] = React.useState(false);
+	const [hasOldStatsVersion, setHasOldStatsVersion] = React.useState(false);
+
 	React.useEffect(() => {
 		const canvas = canvasRef.current;
 		if (!canvas) return;
@@ -561,7 +566,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				// addTextWarning("More than 2 keys provided, session will be from earliest to latest snapshot.", 1);
 			}
 			// Validate mode and set canvasBoxes
-			console.log(mode);
+
 			if (Object.keys(canvasBoxesConfig).includes(mode || "") == false) {
 				// addTextError("Invalid mode provided! Please provide a valid mode! (all, solo, team, mini)", 1);
 				return;
@@ -579,6 +584,12 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 					newStats = obj;
 				}
 			});
+
+			console.log(oldStats, newStats);
+
+			setHasDifferentStatsVersion(newStats.statsVersion != oldStats.statsVersion);
+			setHasOldStatsVersion(newStats.statsVersion < 4 || oldStats.statsVersion < 4);
+			// console.log(hasDifferentStatsVersion, hasOldStatsVersion);
 
 			context.fillStyle = "#00000099";
 			Object.keys(canvasBoxes).forEach((stat) => {
@@ -759,7 +770,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				const deltaDeaths =
 					parseInt(String(newStats.stats["deaths" + modePrefix] ?? "0")) -
 					parseInt(String(oldStats.stats["deaths" + modePrefix] ?? "0"));
-				console.log(deltaKills, deltaDeaths);
+				// console.log(deltaKills, deltaDeaths);
 				if (deltaDeaths == 0) {
 					text = "Infinity";
 				} else {
@@ -773,7 +784,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				const deltaLosses =
 					parseInt(String(newStats.stats["losses" + modePrefix] ?? "0")) -
 					parseInt(String(oldStats.stats["losses" + modePrefix] ?? "0"));
-				console.log(deltaWins, deltaLosses);
+				// console.log(deltaWins, deltaLosses);
 				if (deltaLosses == 0) {
 					text = "Infinity";
 				} else {
@@ -806,7 +817,6 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		ctx.fillText(Math.round(timeplayed + Number.EPSILON) + "m", textX, textY);
 	}
 	function sessionFillProgress(ctx: CanvasRenderingContext2D, entry: Entry, oldStats: Snapshot, newStats: Snapshot) {
-		console.log(newStats);
 		const newExp = newStats.stats["skywars_experience"];
 		const oldExp = oldStats.stats["skywars_experience"];
 
@@ -834,7 +844,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 
 		const totalEXPNeeded = nextLevelEXP - currentLevelEXP;
 		const formattedExp = `${(currentLevelProgress / 1000).toFixed(1)}k/${(totalEXPNeeded / 1000).toFixed(1)}k`;
-		console.log(formattedExp);
+		// console.log(formattedExp);
 
 		ctx.font = `${entry.contentSize} MinecraftReg`;
 		fillMCColorText(ctx, finalString, entry.box);
@@ -898,6 +908,20 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 			>
 				Copy Image
 			</button>
+			<div className="m-5">
+				{hasDifferentStatsVersion && (
+					<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
+						<span className="w-fit">Warning: Snapshots have different stats versions!</span>
+						<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
+					</div>
+				)}
+				{hasOldStatsVersion && (
+					<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
+						<span>Warning: Some snapshots are outdated.</span>
+						<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import FreqPlayerList from "./components/start/FreqPlayerList";
 import PatreonPlayerList from "./components/start/PatreonPlayerList";
-import HoverableSpan from "./components/universal/HoverableSpan";
+import { Tooltip } from "@mui/material";
 
 export default function Home() {
 	return (
@@ -22,12 +22,9 @@ export default function Home() {
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1">
 						Patreon Supporters{" "}
-						<HoverableSpan
-							hoverText="Subscribe to Patreon to get a custom background, emoji and a spot right here!"
-							className="text-sm mx-2"
-						>
-							Learn more
-						</HoverableSpan>
+						<Tooltip title="Subscribe to Patreon to get a custom background, emoji and a spot right here!">
+							<span className="text-sm underline decoration-dotted cursor-help decoration-white/50">Learn more</span>
+						</Tooltip>
 					</h2>
 					<PatreonPlayerList></PatreonPlayerList>
 				</div>
