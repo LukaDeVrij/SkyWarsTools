@@ -870,16 +870,13 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 	}
 
 	return (
-		<div className="bg-layer w-full h-150 rounded-b-xl" style={{ position: "relative" }}>
+		<div className="bg-layer w-full h-auto rounded-b-xl flex flex-col" style={{ position: "relative" }}>
 			<canvas
 				ref={canvasRef}
 				{...canvasProps}
 				style={{
-					position: "absolute",
-					top: 0,
-					left: 0,
 					width: "100%",
-					height: "100%",
+					aspectRatio: "2000 / 1285",
 					display: "block",
 					borderRadius: "0 0 15px 15px",
 					backgroundImage: 'url("/maps/Aegis.png")',
@@ -887,6 +884,20 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 					...canvasProps.style,
 				}}
 			/>
+			<button
+				className="p-2 m-auto my-4 w-50 bg-button font-semibold text-xl rounded transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 animate-press "
+				onClick={() => {
+					const canvas = canvasRef.current;
+					if (!canvas) return;
+					canvas.toBlob((blob) => {
+						if (!blob) return;
+						navigator.clipboard.write([new window.ClipboardItem({ "image/png": blob })]);
+					});
+				}}
+				type="button"
+			>
+				Copy Image
+			</button>
 		</div>
 	);
 };

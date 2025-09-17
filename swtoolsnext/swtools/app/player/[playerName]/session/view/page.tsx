@@ -20,7 +20,7 @@ const PlayerSessionViewPage = () => {
 	);
 
 	return (
-		<div className="bg-content h-200 p-2 lg:p-8">
+		<div className="bg-content h-auto p-2 lg:p-8 lg:rounded-b-xl">
 			<Tabs>
 				<TabList
 					className={
