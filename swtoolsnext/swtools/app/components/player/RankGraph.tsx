@@ -68,16 +68,16 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 	};
 
 	return (
-		<div className="w-full h-50 lg:h-72  lg:w-[60%] bg-content p-4">
+		<div className="w-full h-72  lg:w-[60%] bg-content p-4">
 			<div className="w-full h-full flex flex-col justify-between bg-layer rounded-2xl gap-2">
 				<div className="h-[25%] flex flex-row justify-start items-start m-4 mb-0">
-					<div className="w-[25%] flex flex-col mx-4 font-semibold">
+					<div className="w-[50%] lg:w-[25%] flex flex-col mx-4 font-semibold">
 						<span>
 							<HoverableSpan hoverText="Only within known playerbase, can be innacurate">Level Ranking</HoverableSpan>
 						</span>
 						<span className="text-4xl">#{ranking?.rank ?? "?"}</span>
 					</div>
-					<div className="w-[25%] flex flex-col mx-4 font-semibold">
+					<div className="w-[50%] lg:w-[25%] flex flex-col mx-4 font-semibold">
 						<span>
 							<HoverableSpan hoverText="Difference with your position from previous week">Delta</HoverableSpan>
 						</span>
@@ -91,8 +91,8 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 					{isLoading && <LineChart loading {...emptySeries} />}
 					{data && data.rankHistory && (
 						<>
-							{/* Desktop */}
-							<div className="h-[75%] w-full px-2 hidden lg:block">
+							{/* Desktop AND mobile */}
+							<div className="h-[75%] w-full px-2 block">
 								<LineChart
 									xAxis={[
 										{
@@ -114,8 +114,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 									style={{ marginLeft: "-25px" }}
 								/>
 							</div>
-							{/* Mobile */}
-							<div className="h-[75%] w-full px-2 block lg:hidden"></div>
 						</>
 					)}
 				</ThemeProvider>
