@@ -766,7 +766,6 @@ export interface Brewery {
 	robinhoods_concoction?: number;
 	brawlers_refreshment?: number;
 	level_up_energy?: number;
-	//TODO EXPAND
 }
 
 export interface Perkslot {

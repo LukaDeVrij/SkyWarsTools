@@ -5,29 +5,12 @@ import CustomDatePicker from "@/app/components/player/selection/CustomDatePicker
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/Utils";
 import { useParams } from "next/navigation";
+import { auth } from "@/app/firebase/config";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { compareMap } from "@/app/utils/CompareStatsMap";
 
-const statOptions = [
-	"SkyWars Level",
-	"SkyWars Experience",
-	"Kills",
-	"Deaths",
-	"Wins",
-	"Losses",
-	"Coins",
-	"Heads",
-	"Opals",
-	"Souls",
-	"Solo Kills",
-	"Solo Deaths",
-	"Solo Wins",
-	"Solo Losses",
-	"Team Kills",
-	"Team Deaths",
-	"Team Wins",
-	"Team Losses",
-	"Mini Kills",
-	"Mini Wins",
-];
+const statOptions = Object.keys(compareMap).map((key) => compareMap[key].label);
+const statKeys = Object.keys(compareMap);
 
 const goalOptions = [
 	{ value: "statGoal", label: "To statistic goal" },
@@ -45,6 +28,8 @@ type SnapshotKeysResponse = {
 };
 
 export default function CalculatePage() {
+	const [user, loading, authError] = useAuthState(auth);
+
 	const playerName = useParams().playerName as string;
 
 	const { data, error, isLoading } = useSWR<SnapshotKeysResponse>(
@@ -58,14 +43,55 @@ export default function CalculatePage() {
 	const allSnapshots = data?.data;
 
 	const [step, setStep] = useState(1);
-	const [selectedStat, setSelectedStat] = useState(statOptions[0]);
-	const [selectedSnapshots, setSelectedSnapshots] = useState<number[]>([]);
+	const [selectedStat, setSelectedStat] = useState(statKeys[0]);
+
+	const [selectedSnapshots, setSelectedSnapshots] = useState<number[]>(() => {
+		if (typeof window !== "undefined") {
+			const saved = localStorage.getItem("selectedSnapshots");
+			if (saved) {
+				try {
+					return JSON.parse(saved);
+				} catch {
+					return [];
+				}
+			}
+		}
+		return [];
+	});
+
+	React.useEffect(() => {
+		if (typeof window !== "undefined") {
+			localStorage.setItem("selectedSnapshots", JSON.stringify(selectedSnapshots));
+		}
+	}, [selectedSnapshots]);
+
 	const [customDatePickerOpen, setCustomDatePickerOpen] = useState(false);
 	const [goalType, setGoalType] = useState("statGoal");
 	const [statGoal, setStatGoal] = useState<number | undefined>();
 	const [dateGoal, setDateGoal] = useState<string>("");
 
-	console.log(selectedSnapshots);
+	const [selectionErrors, setSelectionErrors] = useState<string[]>([]);
+	console.log(selectionErrors);
+	function meetsRequirements(): boolean {
+		setSelectionErrors([]);
+		const errors: string[] = [];
+		if (selectedSnapshots.length < 2) {
+			errors.push("Please select at least two snapshots.");
+		}
+		if (goalType === "statGoal" && (!statGoal || statGoal <= 0)) {
+			errors.push("Please enter a valid statistic goal.");
+		}
+		if (goalType === "dateGoal" && !dateGoal) {
+			errors.push("Please enter a valid date goal.");
+		}
+		setSelectionErrors(errors);
+
+		if (errors.length > 0) return false;
+
+		// All checks passed
+		return true;
+	}
+	const disabled = !user;
 
 	return (
 		<div className="bg-content w-full flex flex-col justify-center align-center p-4 rounded-b-xl">
@@ -102,9 +128,9 @@ export default function CalculatePage() {
 								value={selectedStat}
 								onChange={(e) => setSelectedStat(e.target.value)}
 							>
-								{statOptions.map((stat) => (
+								{statKeys.map((stat, idx) => (
 									<option key={stat} value={stat}>
-										{stat}
+										{statOptions[idx]}
 									</option>
 								))}
 							</select>
@@ -133,7 +159,7 @@ export default function CalculatePage() {
 								{[
 									{ label: "Last 7", value: 7 },
 									{ label: "Last 14", value: 14 },
-									{ label: "Last 21", value: 21, disabled: true },
+									{ label: "Last 21", value: 21, disabled: disabled },
 									{ label: "Past 7 days", value: "past7days" },
 									{ label: "Past 14 days", value: "past14days" },
 								].map((opt) => (
@@ -265,15 +291,33 @@ export default function CalculatePage() {
 								</div>
 							)}
 						</fieldset>
-						<div
+
+						<button
 							className="mt-4 py-2 px-6 bg-button font-semibold text-3xl rounded transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 animate-press text-white"
 							onClick={() => {
-								/* implement redirectToCalculate logic */
+								if (meetsRequirements() == false) {
+									console.log("Requirements not met");
+									return;
+								}
+								let url = `/player/${playerName}/calculate/view?stat=${encodeURIComponent(
+									selectedStat
+								)}&k=${selectedSnapshots}`;
+								if (goalType === "statGoal" && statGoal) {
+									url += `&goalType=statGoal&statGoal=${statGoal}`;
+								} else if (goalType === "dateGoal" && dateGoal) {
+									url += `&goalType=dateGoal&dateGoal=${encodeURIComponent(dateGoal)}`;
+								}
+								window.open(url, "_blank", "noopener,noreferrer");
 							}}
 						>
 							Calculate
+						</button>
+						{/* TODO fix unstateful state selectionErrors - then we can only show thius when selectionErrors > 0*/}
+						<div className={"errors mt-6 rounded-xl bg-red-300 p-2 text-red-900 font-semibold"}>
+							{selectionErrors.map((err, idx) => (
+								<p key={idx}>{err}</p>
+							))}
 						</div>
-						<div className="errors mt-2 text-red-500"></div>
 					</div>
 				)}
 			</div>

@@ -1,5 +1,6 @@
 "use client";
 import SessionCanvas from "@/app/components/player/selection/SessionCanvas";
+import { Snapshot } from "@/app/types/Snapshot";
 import { fetcher } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";

@@ -143,9 +143,15 @@ const Extended: React.FC<OverallResponse> = (response) => {
 							<td>Arrows Hit/Miss</td>
 							<td>
 								{/* 	TODO Refactor this bs */}
-								{response.stats.arrows_shot && response.stats.arrows_shot > 0
-									? `${(((response.stats.arrows_hit ?? 0) / response.stats.arrows_shot) * 100).toFixed(2)}%`
-									: "N/A"}
+								{(() => {
+									const arrowsShot = response.stats.arrows_shot ?? 0;
+									const arrowsHit = response.stats.arrows_hit ?? 0;
+									if (arrowsShot > 0) {
+										const hitMissRatio = ((arrowsHit / arrowsShot) * 100).toFixed(2);
+										return `${hitMissRatio}%`;
+									}
+									return "N/A";
+								})()}
 							</td>
 						</tr>
 						<tr>

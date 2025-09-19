@@ -46,3 +46,5 @@ type Snapshot = {
 	statsVersion: number;
 	queried: number;
 };
+
+export type { Snapshot };

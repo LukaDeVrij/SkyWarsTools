@@ -1,6 +1,7 @@
 // This component is ported from the old SkyWarsTools codebase, which was vanilla JS + HTML based.
 // This is why its hella long, and not very React-y. Also many Typescript hacks
 
+import { Snapshot } from "@/app/types/Snapshot";
 import { calcEXPFromLevel, calcLevel, calcPrestigeTag, timeDiff } from "@/app/utils/Utils";
 import React, { useRef } from "react";
 
@@ -15,13 +16,6 @@ type Entry = {
 	color?: string;
 	content?: (ctx: CanvasRenderingContext2D, entry: Entry, oldStats: Snapshot, newStats: Snapshot) => void;
 	contentSize: string;
-};
-type Snapshot = {
-	player: string;
-	queried: number;
-	stats: Record<string, number>;
-	uuid: string;
-	statsVersion: number;
 };
 
 type SnapshotsResponse = {
@@ -765,11 +759,11 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		switch (WLorKD) {
 			case "K/D":
 				const deltaKills =
-					parseInt(String(newStats.stats["kills" + modePrefix] ?? "0")) -
-					parseInt(String(oldStats.stats["kills" + modePrefix] ?? "0"));
+					parseInt(String(newStats.stats[("kills" + modePrefix) as keyof typeof newStats.stats] ?? "0")) -
+					parseInt(String(oldStats.stats[("kills" + modePrefix) as keyof typeof oldStats.stats] ?? "0"));
 				const deltaDeaths =
-					parseInt(String(newStats.stats["deaths" + modePrefix] ?? "0")) -
-					parseInt(String(oldStats.stats["deaths" + modePrefix] ?? "0"));
+					parseInt(String(newStats.stats[("deaths" + modePrefix) as keyof typeof newStats.stats] ?? "0")) -
+					parseInt(String(oldStats.stats[("deaths" + modePrefix) as keyof typeof oldStats.stats] ?? "0"));
 				// console.log(deltaKills, deltaDeaths);
 				if (deltaDeaths == 0) {
 					text = "Infinity";
@@ -779,11 +773,11 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				break;
 			case "W/L":
 				const deltaWins =
-					parseInt(String(newStats.stats["wins" + modePrefix] ?? "0")) -
-					parseInt(String(oldStats.stats["wins" + modePrefix] ?? "0"));
+					parseInt(String(newStats.stats[("wins" + modePrefix) as keyof typeof newStats.stats] ?? "0")) -
+					parseInt(String(oldStats.stats[("wins" + modePrefix) as keyof typeof oldStats.stats] ?? "0"));
 				const deltaLosses =
-					parseInt(String(newStats.stats["losses" + modePrefix] ?? "0")) -
-					parseInt(String(oldStats.stats["losses" + modePrefix] ?? "0"));
+					parseInt(String(newStats.stats[("losses" + modePrefix) as keyof typeof newStats.stats] ?? "0")) -
+					parseInt(String(oldStats.stats[("losses" + modePrefix) as keyof typeof oldStats.stats] ?? "0"));
 				// console.log(deltaWins, deltaLosses);
 				if (deltaLosses == 0) {
 					text = "Infinity";
