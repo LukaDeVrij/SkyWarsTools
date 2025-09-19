@@ -1,5 +1,6 @@
 "use client";
 import { fetcher } from "@/app/utils/Utils";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import useSWR from "swr";
@@ -46,29 +47,33 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ allSnapshots, selec
 	};
 
 	return (
-		<div className="w-full max-w-xl mx-auto p-4 bg-gray-800 rounded-lg">
-			<div className="flex items-start gap-4 mb-4">
+		<div className="w-full max-w-xl mx-auto p-3 rounded-lg">
+			<div className="flex items-start gap-4 mb-2">
 				<button
-					className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600"
+					className="px-3 py-1 bg-content rounded animate-press cursor-pointer"
 					onClick={() => setSelectedYear(selectedYear - 1)}
 				>
-					{"<"}
+					<ArrowLeft size={16} />
 				</button>
-				<span className="text-lg font-bold text-white">{selectedYear}</span>
+				<span className="text-lg font-bold ">{selectedYear}</span>
 				<button
-					className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600"
+					className="px-3 py-1 bg-content  rounded animate-press cursor-pointer"
 					onClick={() => setSelectedYear(selectedYear + 1)}
 				>
-					{">"}
+					<ArrowRight size={16} />
+				</button>
+
+				<button className="ml-auto text-base bg-content px-3 py-1 rounded font-semibold animate-press cursor-pointer" onClick={() => onChange([])}>
+					Reset
 				</button>
 			</div>
 			<div className="flex items-center mb-4 gap-2 ">
-				<div className="flex gap-1 text-xs ">
+				<div className="flex text-xs w-full flex-wrap gap-1 ">
 					{months.map((m, idx) => (
 						<button
 							key={m}
-							className={`px-2 py-1 rounded ${
-								selectedMonth === idx ? "bg-green-500 text-white" : "bg-gray-700 text-gray-200 hover:bg-gray-600"
+							className={`px-2 py-1 rounded animate-press cursor-pointer ${
+								selectedMonth === idx ? "bg-button text-white" : "bg-content"
 							}`}
 							onClick={() => setSelectedMonth(idx)}
 						>
@@ -85,8 +90,15 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ allSnapshots, selec
 					return (
 						<div key={day} className="relative">
 							<button
-								className={`w-full h-14 rounded flex items-center justify-center font-bold
-									${hasSnapshots ? "bg-gray-900 text-white border-2 border-white hover:border-green-400" : "bg-gray-700 text-gray-400"}
+								className={`w-full aspect-square rounded flex items-center justify-center font-bold text-base lg:text-xl 
+									${hasSnapshots ? "bg-nav text-white border-2 animate-press cursor-pointer" : "bg-gray-700 text-gray-400"}
+									${
+										hasSnapshots && snapshotsByDay[key].some((snap) => selectedSnapshots.includes(snap.queried))
+											? "border-green-400"
+											: hasSnapshots
+											? "border-white hover:border-green-400"
+											: ""
+									}
 									${openDay === day ? "ring-2 ring-green-400" : ""}
 								`}
 								onClick={() => hasSnapshots && handleDayClick(day)}
@@ -95,12 +107,14 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ allSnapshots, selec
 								{day}
 							</button>
 							{openDay === day && hasSnapshots && (
-								<div className="absolute z-10 top-0 left-0 w-40 bg-gray-900 border border-gray-700 rounded shadow-lg p-2">
-									<div className="text-xs text-gray-400 mb-2">Select snapshot:</div>
+								<div className="absolute z-10 top-0 left-0 w-40 bg-nav rounded shadow-lg p-2">
+									<button className="text-sm mb-2 text-center text-gray-400 hover:text-white w-full flex justify-center" onClick={() => setOpenDay(null)}>
+											<X />
+									</button>
 									{snapshotsByDay[key].map((snap) => (
 										<button
 											key={snap.queried}
-											className={`block w-full text-left px-2 py-1 rounded mb-1
+											className={`block w-full text-center px-2 py-1 rounded mb-1 animate-press cursor-pointer font-semibold text-lg
 												${selectedSnapshots.includes(snap.queried) ? "bg-green-500 text-white" : "bg-gray-800 text-gray-200 hover:bg-gray-700"}
 											`}
 											onClick={() => handleSnapshotSelect(snap.queried)}
@@ -108,9 +122,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ allSnapshots, selec
 											{new Date(snap.queried).toLocaleTimeString()}
 										</button>
 									))}
-									<button className="mt-2 text-xs text-gray-400 hover:text-white" onClick={() => setOpenDay(null)}>
-										Close
-									</button>
+									
 								</div>
 							)}
 						</div>

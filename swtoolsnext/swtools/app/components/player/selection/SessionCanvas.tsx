@@ -917,7 +917,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				)}
 				{hasOldStatsVersion && (
 					<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
-						<span>Warning: Some snapshots are outdated.</span>
+						<span>Warning: Some snapshots have an older version.</span>
 						<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
 					</div>
 				)}

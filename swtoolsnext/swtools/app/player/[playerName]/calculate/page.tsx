@@ -129,11 +129,13 @@ export default function CalculatePage() {
 							</p>
 						</div>
 						<div id="selectionOptions" className="flex flex-col gap-2 mb-4">
-							<div className="flex gap-2 justify-center mb-2">
+							<div className="flex gap-2 justify-center mb-2 flex-wrap w-100">
 								{[
 									{ label: "Last 7", value: 7 },
 									{ label: "Last 14", value: 14 },
 									{ label: "Last 21", value: 21, disabled: true },
+									{ label: "Past 7 days", value: "past7days" },
+									{ label: "Past 14 days", value: "past14days" },
 								].map((opt) => (
 									<Tooltip key={opt.value} title={opt.disabled ? "Log in to be able to use more than 14 snapshots!" : ""}>
 										<span>
@@ -146,7 +148,21 @@ export default function CalculatePage() {
 												disabled={opt.disabled}
 												onClick={() => {
 													if (!opt.disabled) {
-														setSelectedSnapshots(allSnapshots?.slice(0, opt.value).map((s) => s.queried) ?? []);
+														if (opt.value === "past7days" || opt.value === "past14days") {
+															const now = Date.now();
+															const daysAgo =
+																opt.value === "past7days"
+																	? now - 7 * 24 * 60 * 60 * 1000
+																	: now - 14 * 24 * 60 * 60 * 1000;
+															const filtered =
+																allSnapshots?.filter((s) => s.queried >= daysAgo).map((s) => s.queried) ??
+																[];
+															setSelectedSnapshots(filtered);
+														} else {
+															setSelectedSnapshots(
+																allSnapshots?.slice(0, Number(opt.value)).map((s) => s.queried) ?? []
+															);
+														}
 													}
 												}}
 											>
