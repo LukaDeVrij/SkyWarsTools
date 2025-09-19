@@ -5,8 +5,8 @@ export type CompareStatsMap = {
 	[key: string]: {
 		label: string;
 		hypixelKey?: string;
-		format?: (stats: any) => string;
-		calculate?: (stats: any) => number | undefined;
+		format?: (stats: Snapshot["stats"]) => string;
+		calculate?: (stats: Snapshot["stats"]) => number | undefined;
 	};
 };
 
@@ -320,7 +320,7 @@ export const compareMap: CompareStatsMap = {
 	},
 };
 
-export function createCompareStatsMapFromSnapshot(snapshot: Snapshot): Record<string, any> {
+export function createCompareStatsMapFromSnapshot(snapshot: Snapshot): Record<string, number | string | undefined> {
 	const result: Record<string, number | string | undefined> = {};
 
 	for (const key in compareMap) {
