@@ -24,7 +24,7 @@ const Page = () => {
 						onChange={(e) => setSearchValue(e.target.value)}
 					/>
 					{["Main", "Kit", "Ranked"].map((category) => {
-						let categoryKeys = filteredKeys.filter((k) => {
+						const categoryKeys = filteredKeys.filter((k) => {
 							if (category === "Ranked") return k.value.toLowerCase().includes("skywars_skywars_rating");
 							if (category === "Kit") return k.value.toLowerCase().includes("kit");
 							return !k.value.toLowerCase().includes("skywars_skywars_rating") && !k.value.toLowerCase().includes("kit");

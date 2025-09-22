@@ -89,9 +89,9 @@ const CalculateViewPage = () => {
 	const yMin = Math.min(...regressionResult.points.map((p) => p.y)) * 0.995;
 	const yMax = !isNaN(goal.y) ? goal.y : Math.max(...regressionResult.points.map((p) => p.y)) * 1.005;
 
-	let xAxisData = [...regressionResult.points.map((p) => p.x * 1000).reverse()];
-	let trendLineData = [...regressionResult.points.map((p) => regressionResult.m * p.x + regressionResult.b).reverse()];
-	let goalLineData = regressionResult.points.map(() => goal.y);
+	const xAxisData = [...regressionResult.points.map((p) => p.x * 1000).reverse()];
+	const trendLineData = [...regressionResult.points.map((p) => regressionResult.m * p.x + regressionResult.b).reverse()];
+	const goalLineData = regressionResult.points.map(() => goal.y);
 	if (goalType) xAxisData.push(goal.x);
 	if (goalType) trendLineData.push(goal.y);
 	if (goalType) goalLineData.push(goal.y);

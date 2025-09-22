@@ -12,7 +12,7 @@ export default function DiscordRedirectPage() {
 		<main className="p-10 flex flex-col items-center justify-center text-4xl font-semibold">
 			<p>Redirecting to Discord...</p>
             <br></br>
-            <a className="text-sm" href="https://discord.gg/jQwMmDvgZS">Didn't work? Click here.</a>
+            <a className="text-sm" href="https://discord.gg/jQwMmDvgZS">Didn&apos;t work? Click here.</a>
 		</main>
 	);
 }
