@@ -1,7 +1,7 @@
 "use client";
 import { auth } from "@/app/firebase/config";
 import { Snapshot } from "@/app/types/Snapshot";
-import { fetcher } from "@/app/utils/Utils";
+import { fetcher, toCamelCase } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -95,7 +95,7 @@ const CalculateViewPage = () => {
 							<LineChart
 								xAxis={[
 									{
-										data: regressionResult.points.map((p) => p.x * 1000), // Convert to ms for JS Date
+										data: regressionResult.points.map((p) => p.x * 1000).reverse(), // Convert to ms for JS Date
 										scaleType: "time",
 										label: "Time",
 										valueFormatter: (ts) => new Date(ts / 1000).toLocaleDateString(),
@@ -103,33 +103,25 @@ const CalculateViewPage = () => {
 								]}
 								yAxis={[
 									{
-										label: stat,
-										min: 89,
-										max: 90
+										label: toCamelCase(stat),
+										min: Math.min(...regressionResult.points.map((p) => p.y)) * 0.995,
+										max: Math.max(...regressionResult.points.map((p) => p.y)) * 1.005,
 									},
 								]}
 								series={[
 									// Known data points (white)
 									{
-										data: regressionResult.points.map((p) => p.y),
+										data: regressionResult.points.map((p) => p.y).reverse(),
 										type: "line",
 										color: "#fff",
 										showMark: true,
 										label: "Data",
-										connectNulls: false,
+										connectNulls: true,
 										area: false,
-									},
-									// Grey lines between points
-									{
-										data: regressionResult.points.map((p) => p.y),
-										type: "line",
-										color: "#888",
-										showMark: false,
-										label: "Data Line",
 									},
 									// Green trend line (regression)
 									{
-										data: regressionResult.points.map((p) => regressionResult.slope * p.x + regressionResult.intercept),
+										data: regressionResult.points.map((p) => regressionResult.slope * p.x + regressionResult.intercept).reverse(),
 										type: "line",
 										color: "#4ade80",
 										showMark: false,
