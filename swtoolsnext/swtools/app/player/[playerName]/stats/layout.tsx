@@ -1,4 +1,3 @@
-
 import PlayerBanner from "@/app/components/player/PlayerBanner";
 import PlayerTitle from "@/app/components/player/PlayerTitle";
 import RankGraph from "@/app/components/player/RankGraph";
@@ -7,6 +6,7 @@ import PlayerExtraInfo from "@/app/components/player/PlayerExtraInfo";
 import React from "react";
 import PlayerStatsNavBar from "@/app/components/player/PlayerStatsNavBar";
 import { type ReactNode } from "react";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -15,21 +15,21 @@ interface LayoutProps {
 
 const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	const awaitedParams = await params;
-	const playerName = awaitedParams.playerName;
+	let playerName = awaitedParams.playerName;
 
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(playerName)}`, {
 		next: { revalidate: 300 },
 	});
 	if (!res.ok) {
 		console.log(res.statusText);
-		throw new Error("Failed to fetch player data");
+		return <ErrorView statusText={res.statusText} statusCode={res.status} />;
 	}
 	const overallData = await res.json();
 	console.log(overallData);
+	playerName = overallData.player;
 
 	return (
 		<>
-			
 			<PlayerBanner playerName={playerName} />
 			<PlayerTitle playerName={playerName} response={overallData} />
 			<div className="h-fit w-full flex flex-col lg:flex-row">
@@ -39,8 +39,6 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 			<PlayerExtraInfo response={overallData} />
 			<PlayerStatsNavBar />
 			{children}
-
-			
 		</>
 	);
 };

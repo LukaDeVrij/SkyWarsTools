@@ -3,7 +3,7 @@ import React from "react";
 import useSWR from "swr";
 import HoverableSpan from "../universal/HoverableSpan";
 import { LineChart } from "@mui/x-charts";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 import { fetcher } from "@/app/utils/Utils";
 
 interface RankGraphProps {
@@ -103,7 +103,8 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 									yAxis={[
 										{
 											reverse: true,
-											min: 1,
+											// min: 1, // Start ticks at 1
+											position: "left",
 										},
 									]}
 									series={[

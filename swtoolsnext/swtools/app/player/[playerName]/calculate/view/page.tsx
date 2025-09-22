@@ -47,31 +47,54 @@ const CalculateViewPage = () => {
 		};
 	});
 
-	console.log(compareStats);
+	// console.log(compareStats);
 
-	function linearRegression(data: { queried: number; stat?: number | string | undefined }[]): {
-		slope: number;
-		intercept: number;
-		points: { x: number; y: number }[];
-	} {
-		// Filter out points with undefined or non-numeric stat
-		const points = data.filter((d) => typeof d.stat === "number" && !isNaN(d.stat)).map((d) => ({ x: d.queried, y: d.stat as number }));
-
+	function linearRegression(points: { x: number; y: number }[]): { m: number; b: number } {
 		const n = points.length;
-		if (n < 2) return { slope: 0, intercept: 0, points };
+		if (n < 2) return { m: 0, b: 0 };
 
 		const sumX = points.reduce((acc, p) => acc + p.x, 0);
 		const sumY = points.reduce((acc, p) => acc + p.y, 0);
 		const sumXY = points.reduce((acc, p) => acc + p.x * p.y, 0);
 		const sumXX = points.reduce((acc, p) => acc + p.x * p.x, 0);
 
-		const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-		const intercept = (sumY - slope * sumX) / n;
+		const m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+		const b = (sumY - m * sumX) / n;
 
-		return { slope, intercept, points };
+		return { m, b };
+	}
+	const regressionResult = {
+		points: compareStats.filter((s) => typeof s.stat === "number").map((s) => ({ x: s.queried, y: s.stat as number })),
+		...linearRegression(compareStats.filter((s) => typeof s.stat === "number").map((s) => ({ x: s.queried, y: s.stat as number }))),
+	};
+
+	// Goal calculations
+	let goal = { x: NaN, y: NaN };
+	if (goalType === "statGoal" && statGoal && regressionResult.m !== 0) {
+		const targetStat = parseFloat(statGoal);
+		if (!isNaN(targetStat)) {
+			const targetTimestamp = (targetStat - regressionResult.b) / regressionResult.m;
+			goal = { x: targetTimestamp * 1000, y: targetStat };
+		}
 	}
 
-	const regressionResult = linearRegression(compareStats);
+	if (goalType === "dateGoal" && dateGoal && regressionResult.m !== 0) {
+		const targetDate = new Date(dateGoal).getTime();
+		if (!isNaN(targetDate)) {
+			const targetStatValue = regressionResult.m * targetDate + regressionResult.b;
+			goal = { x: targetDate * 1000, y: targetStatValue };
+		}
+	}
+
+	const yMin = Math.min(...regressionResult.points.map((p) => p.y)) * 0.995;
+	const yMax = !isNaN(goal.y) ? goal.y : Math.max(...regressionResult.points.map((p) => p.y)) * 1.005;
+
+	let xAxisData = [...regressionResult.points.map((p) => p.x * 1000).reverse()];
+	let trendLineData = [...regressionResult.points.map((p) => regressionResult.m * p.x + regressionResult.b).reverse()];
+	let goalLineData = regressionResult.points.map(() => goal.y);
+	if (goalType) xAxisData.push(goal.x);
+	if (goalType) trendLineData.push(goal.y);
+	if (goalType) goalLineData.push(goal.y);
 
 	return (
 		<div className="overflow-x-auto p-2 lg:p-4 bg-content">
@@ -91,11 +114,11 @@ const CalculateViewPage = () => {
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
 					{(error || isLoading) && <LineChart loading {...emptySeries} />}
 					{!error && !isLoading && regressionResult.points.length > 0 && (
-						<div className="h-200 w-full px-2 block">
+						<div className="h-180 w-full px-2 block">
 							<LineChart
 								xAxis={[
 									{
-										data: regressionResult.points.map((p) => p.x * 1000).reverse(), // Convert to ms for JS Date
+										data: xAxisData, // Convert to ms for JS Date
 										scaleType: "time",
 										label: "Time",
 										valueFormatter: (ts) => new Date(ts / 1000).toLocaleDateString(),
@@ -104,8 +127,8 @@ const CalculateViewPage = () => {
 								yAxis={[
 									{
 										label: toCamelCase(stat),
-										min: Math.min(...regressionResult.points.map((p) => p.y)) * 0.995,
-										max: Math.max(...regressionResult.points.map((p) => p.y)) * 1.005,
+										min: yMin,
+										max: yMax,
 									},
 								]}
 								series={[
@@ -121,12 +144,24 @@ const CalculateViewPage = () => {
 									},
 									// Green trend line (regression)
 									{
-										data: regressionResult.points.map((p) => regressionResult.slope * p.x + regressionResult.intercept).reverse(),
+										data: trendLineData,
 										type: "line",
 										color: "#4ade80",
 										showMark: false,
 										label: "Trend",
 									},
+									// Red goal line (only if goalType is defined)
+									...(goalType
+										? [
+												{
+													data: goalLineData,
+													type: "line" as const,
+													color: "#f87171",
+													showMark: false,
+													label: "Goal",
+												},
+										  ]
+										: []),
 								]}
 								style={{ marginLeft: "-25px" }}
 							/>

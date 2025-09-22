@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Tooltip } from "@mui/material";
 import HelpCard from "../components/HelpCard";
+import { Mail } from "lucide-react";
 
 export default function AboutPage() {
 	return (
@@ -18,27 +19,34 @@ export default function AboutPage() {
 
 			<div className="flex flex-col gap-4">
 				<div className="rounded-lg px-4 lg:px-8">
-					<h2 className="text-2xl font-bold mb-1">Help</h2>
-					<div className="flex flex-col lg:flex-row gap-4 justify-between">
+					<div className="flex flex-col lg:flex-row gap-2 justify-between flex-wrap">
 						<HelpCard title="Snapshots">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique odio at quis iste dolorem quibusdam, quod
-							impedit! Commodi, tenetur? Tempore cum perspiciatis saepe distinctio voluptatibus cumque quis expedita magnam
-							quibusdam!
+							SkyWarsTools uses snapshots. Every time a player is searched for, a snapshot of their stats is saved. This
+							allows us to track progress over time, and display graphs. Snapshots are taken at most once every 16 hours per
+							player to reduce load on the Hypixel API.
 						</HelpCard>
 						<HelpCard title="Compare & Session">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique odio at quis iste dolorem quibusdam, quod
-							impedit! Commodi, tenetur? Tempore cum perspiciatis saepe distinctio voluptatibus cumque quis expedita magnam
-							quibusdam!
+							Use these snapshots to compare, or to see how you did in a single session between two snapshots. This works best
+							by looking up your stats at the start of a session, and then creating a session using that snapshot and your
+							most recent stats.
 						</HelpCard>
 						<HelpCard title="Leaderboards">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique odio at quis iste dolorem quibusdam, quod
-							impedit! Commodi, tenetur? Tempore cum perspiciatis saepe distinctio voluptatibus cumque quis expedita magnam
-							quibusdam!
+							Infinite leaderboards are generated using the snapshots. Only players who have been searched for are included,
+							so the more people use the site, the better the leaderboards will be! The Level leaderboard is updated
+							automatically every 24 hours, others are generated on command, and cached.
+						</HelpCard>
+						<HelpCard title="Calculate">
+							You can use snapshots to calculate your progress over time, and predict when you will reach a certain goal.
+						</HelpCard>
+						<HelpCard title="Tools">Various other tools, non-specific to players, are available in the Tools section!</HelpCard>
+						<HelpCard title="Other Questions?">
+							Have more questions, a feature request, or found a bug? Contact me using the links below, or join the{" "}
+							<a className="underline" href="/discord">
+								Discord
+							</a>
+							!
 						</HelpCard>
 					</div>
-				</div>
-				<div className="rounded-lg px-4 lg:px-8">
-					<h2 className="text-2xl font-bold mb-1">FAQ</h2>
 				</div>
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1">Contact</h2>
@@ -51,55 +59,55 @@ export default function AboutPage() {
 						>
 							<Tooltip title="Email">
 								<span>
-									<Image src="/icons/email.png" alt="Email" width={32} height={32} />
+									<Mail width={42} height={42}></Mail>
 								</span>
 							</Tooltip>
 						</a>
 						<a
-							href="https://discord.gg/yourdiscord"
+							href="/discord"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="bg-content rounded-lg shadow-md flex items-center justify-center w-16 h-16 cursor-pointer animate-press transition"
 						>
 							<Tooltip title="Discord">
 								<span>
-									<Image src="/icons/discord.png" alt="Discord" width={32} height={32} />
+									<Image src="/icons/discord.png" alt="Discord" width={42} height={42} />
 								</span>
 							</Tooltip>
 						</a>
 						<a
-							href="https://github.com/LifelessNerd/SkyWarsTools"
+							href="https://github.com/LukaDeVrij/SkyWarsTools"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="bg-content rounded-lg shadow-md flex items-center justify-center w-16 h-16 cursor-pointer animate-press transition"
 						>
 							<Tooltip title="GitHub">
 								<span>
-									<Image src="/icons/github.png" alt="GitHub" width={32} height={32} />
+									<Image src="/icons/github.png" alt="GitHub" width={42} height={42} />
 								</span>
 							</Tooltip>
 						</a>
 						<a
-							href="https://twitter.com/yourtwitter"
+							href="https://twitter.com/NerdLifeless"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="bg-content rounded-lg shadow-md flex items-center justify-center w-16 h-16 cursor-pointer animate-press transition"
 						>
 							<Tooltip title="Twitter">
 								<span>
-									<Image src="/icons/twitter.png" alt="Twitter" width={32} height={32} />
+									<Image src="/icons/twitter.png" alt="Twitter" width={42} height={42} />
 								</span>
 							</Tooltip>
 						</a>
 						<a
-							href="https://patreon.com/yourpatreon"
+							href="/patreon"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="bg-content rounded-lg shadow-md flex items-center justify-center w-16 h-16 cursor-pointer animate-press transition"
 						>
 							<Tooltip title="Patreon">
 								<span>
-									<Image src="/icons/patreon.png" alt="Patreon" width={32} height={32} />
+									<Image src="/icons/patreon.png" alt="Patreon" width={42} height={42} />
 								</span>
 							</Tooltip>
 						</a>

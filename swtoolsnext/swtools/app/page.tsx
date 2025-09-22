@@ -3,6 +3,7 @@ import Image from "next/image";
 import FreqPlayerList from "./components/start/FreqPlayerList";
 import PatreonPlayerList from "./components/start/PatreonPlayerList";
 import { Tooltip } from "@mui/material";
+import { CircleQuestionMark } from "lucide-react";
 
 export default function Home() {
 	return (
@@ -20,10 +21,21 @@ export default function Home() {
 
 			<div className="flex flex-col gap-4">
 				<div className="rounded-lg px-4 lg:px-8">
-					<h2 className="text-2xl font-bold mb-1">
-						Patreon Supporters{" "}
+					<h2 className="text-2xl font-bold mb-1">News</h2>
+					<p className="font-semibold text-red-400">
+						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Did I get
+						rid of a feature you used? Let me know on the{" "}
+						<a href="/discord" className="underline">
+							Discord server
+						</a>
+						!
+					</p>
+				</div>
+				<div className="rounded-lg px-4 lg:px-8">
+					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">
+						Patreon Supporters
 						<Tooltip title="Subscribe to Patreon to get a custom background, emoji and a spot right here!">
-							<span className="text-sm underline decoration-dotted cursor-help decoration-white/50">Learn more</span>
+							<CircleQuestionMark className="cursor-help" />
 						</Tooltip>
 					</h2>
 					<PatreonPlayerList></PatreonPlayerList>

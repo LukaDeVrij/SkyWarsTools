@@ -6,6 +6,8 @@ import PropertyCombobox from "@/app/components/settings/PropertyCombobox";
 import { LoaderCircle } from "lucide-react";
 import Button from "@/app/components/universal/Button";
 import { useProfile } from "@/app/hooks/useProfile";
+import PropertyStatic from "@/app/components/settings/PropertyStatic";
+import PropertyInput from "@/app/components/settings/PropertyInput";
 
 const ProfileSettingsPage = () => {
 	const [user, loading, error] = useAuthState(auth);
@@ -31,6 +33,7 @@ const ProfileSettingsPage = () => {
 			setTypedUserInfo({ user: profileUser });
 			setNationality(profileUser.nationality ?? null);
 			setBackground(profileUser.profile_bg ?? null);
+			setEmoji(profileUser.emoji ?? null);
 		} else {
 			setTypedUserInfo(null);
 		}
@@ -186,6 +189,7 @@ const ProfileSettingsPage = () => {
 
 	const [background, setBackground] = React.useState<string | null>(null);
 	const [nationality, setNationality] = React.useState<string | null>(null);
+	const [emoji, setEmoji] = React.useState<string | null>(null);
 
 	function updateProfile() {
 		if (!user) return;
@@ -193,7 +197,10 @@ const ProfileSettingsPage = () => {
 		const newUserProfile = {
 			profile_bg: background,
 			nationality: nationality,
+			emoji: emoji,
 		};
+
+		console.log(newUserProfile);
 
 		fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/updateUserInfo`, {
 			method: "POST",
@@ -222,34 +229,43 @@ const ProfileSettingsPage = () => {
 			)}
 			{error && <div>Error: {error.message}</div>}
 			{!loading && !error && !user && <div>You are not logged in.</div>}
-			{!loading &&
-				!error &&
-				user &&
-				(typedUserInfo && typedUserInfo.user ? (
-					<>
-						<div className="p-5 w-full flex flex-col gap-2">
-							<PropertyCombobox
-								title={"Profile Background"}
-								explainText="The image shown on your MC account page"
-								options={maps}
-								initialValue={background ?? undefined}
-								onChange={(value) => setBackground(value)}
-							></PropertyCombobox>
-							<PropertyCombobox
-								title={"Nationality"}
-								explainText="The country/flag shown on your MC account page"
-								options={nats}
-								initialValue={nationality ?? undefined}
-								onChange={(value) => setNationality(value)}
-							></PropertyCombobox>
-							<div className="w-full flex justify-center">
-								<Button onClick={updateProfile}>Save</Button>
-							</div>
+			{!loading && !error && user && typedUserInfo && (
+				<>
+					<div className="p-5 w-full flex flex-col gap-2">
+						<PropertyCombobox
+							title={"Profile Background"}
+							explainText="The image shown on your MC account page"
+							options={maps}
+							initialValue={background ?? undefined}
+							onChange={(value) => setBackground(value)}
+						></PropertyCombobox>
+						<PropertyCombobox
+							title={"Nationality"}
+							explainText="The country/flag shown on your MC account page"
+							options={nats}
+							initialValue={nationality ?? undefined}
+							onChange={(value) => setNationality(value)}
+						></PropertyCombobox>
+						<PropertyStatic
+							title="Patreon Status"
+							explainText={"Whether this account has Patreon benefits"}
+							value={profileUser?.patreon == true ? "Yes" : "No"}
+						/>
+						<PropertyInput
+							title="Emoji"
+							explainText={"Emoji to show on start page (Patreon only)"}
+							placeholder={emoji ?? "None"}
+							onChange={(value) => {
+								setEmoji(value);
+							}}
+						/>
+
+						<div className="w-full flex justify-center">
+							<Button onClick={updateProfile}>Save</Button>
 						</div>
-					</>
-				) : (
-					<p>Something went wrong.</p>
-				))}
+					</div>
+				</>
+			)}
 		</>
 	);
 };

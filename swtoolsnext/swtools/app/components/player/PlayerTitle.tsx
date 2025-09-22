@@ -36,6 +36,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
 
 	const [nationality, setNationality] = React.useState<string | null>(null);
+	const [emoji, setEmoji] = React.useState<string | null>(null);
 
 	const { data: userInfoData } = useSWR<UserInfoResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`,
@@ -46,6 +47,9 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 		if (userInfoData) {
 			setTypedUserInfo(userInfoData);
 			setNationality(userInfoData.user?.nationality ?? null);
+			if (userInfoData.user?.patreon && userInfoData.user?.emoji) {
+				setEmoji(userInfoData.user.emoji);
+			}
 		}
 	}, [userInfoData]);
 
@@ -110,12 +114,24 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 				{/* Online status indicator overlay */}
 				<span
 					title={title}
-					className={`absolute top-[-12px] right-[-25px] lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 block ${bgColor}`}
+					className={`absolute top-[-12px] right-[-25px] lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 hidden lg:block ${bgColor}`}
 				></span>
 			</div>
 
-			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-4 text-center lg:text-left">
-				<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
+			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-2 lg:px-4 text-center lg:text-left">
+				<div className="flex flex-row gap-2 lg:gap-5 items-center">
+					<span
+						title={title}
+						className={`border-2 border-black rounded-full w-5 aspect-square block lg:hidden ${bgColor}`}
+					></span>
+					<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
+					<span
+						dangerouslySetInnerHTML={{
+							__html: twemoji.parse(emoji ?? "", { folder: "svg", ext: ".svg" }),
+						}}
+						style={{ width: 42, height: 42, display: "inline-block" }}
+					/>
+				</div>
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="flex items-center gap-2 text-sm lg:text-lg">
 						<span className="text-2xl hidden lg:inline" title={nationality?.split(" ")[0]}>

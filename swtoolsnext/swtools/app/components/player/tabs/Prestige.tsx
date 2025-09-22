@@ -6,6 +6,8 @@ import ProgressBar from "../../universal/ProgressBar";
 import { formatScheme } from "@/app/utils/Scheme";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
+import { notFound } from "next/navigation";
+
 
 const Prestige: React.FC<OverallResponse> = async (response) => {
 	// hacky fix
@@ -16,7 +18,7 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 	// I mean its not that big a deal since its cached and all but still
 	if (!res.ok) {
 		console.log(res.statusText);
-		throw new Error("Failed to fetch player data");
+		notFound();
 	}
 	const overallData = await res.json();
 	response = overallData;

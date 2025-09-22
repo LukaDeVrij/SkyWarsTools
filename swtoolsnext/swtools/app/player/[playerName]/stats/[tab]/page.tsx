@@ -37,7 +37,7 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 	});
 	if (!res.ok) {
 		console.log(res.statusText);
-		throw new Error("Failed to fetch player data");
+		return <div>Error: {res.statusText}</div>;
 	}
 	const overallData: OverallResponse = await res.json();
 

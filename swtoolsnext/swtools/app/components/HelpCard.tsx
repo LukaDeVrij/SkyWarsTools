@@ -12,7 +12,7 @@ export default function HelpCard({ title, children }: HelpCardProps) {
 
 	return (
 		<div
-			className={`bg-content rounded-xl shadow-md transition-all duration-300 cursor-pointer w-70 my-2 p-4`}
+			className={`bg-content rounded-xl shadow-md transition-all duration-300 w-75 my-1 p-4`}
 			tabIndex={0}
 			role="button"
 			style={{ minWidth: "250px" }}

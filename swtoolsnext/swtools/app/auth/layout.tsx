@@ -10,7 +10,7 @@ const ProfileLayout = async ({ children }: LayoutProps) => {
 	return (
 		<>
 			<AuthNavBar />
-			<div className="flex h-fit flex-col items-center justify-center bg-content w-full lg:w-[1000px]">{children}</div>
+			<div className="flex h-fit flex-col items-center justify-center bg-content w-full lg:w-[1000px] rounded-b-xl">{children}</div>
 		</>
 	);
 };

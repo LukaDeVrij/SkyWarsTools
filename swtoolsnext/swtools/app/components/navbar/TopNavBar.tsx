@@ -31,12 +31,12 @@ const TopNavBar = () => {
 					<NavBarProfile />
 				</div>
 			</nav>
-			<div
+			{/* <div
 				className="lg:absolute z-[-10] w-full h-4"
 				style={{
 					background: "linear-gradient(to bottom, var(--background-nav), transparent)",
 				}}
-			></div>
+			></div> */}
 		</>
 	);
 };

@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import Tooltip from "@mui/material/Tooltip";
 
 const PlayerInputField = () => {
 	const [input, setInput] = useState("");
@@ -26,7 +27,7 @@ const PlayerInputField = () => {
 			if (res.ok && data.name) {
 				console.log("Player found, redirecting...");
 
-				router.push(`/player/${encodeURIComponent(input.trim())}/stats/table`);
+				router.push(`/player/${encodeURIComponent(input.trim())}/stats`);
 			} else {
 				console.warn("Player not found:", data);
 				setError("Player not found.");
@@ -63,12 +64,14 @@ const PlayerInputField = () => {
 							<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
 						</svg>
 					) : error ? (
-						<div title={error}>
-							<svg className="h-6 w-6 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-								<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" />
-								<line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" />
-							</svg>
-						</div>
+						<Tooltip title="Player not found">
+							<div>
+								<svg className="h-6 w-6 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+									<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" />
+									<line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" />
+								</svg>
+							</div>
+						</Tooltip>
 					) : (
 						<Search className="h-[20px] w-[20px] animate-press-hard" />
 					)}
