@@ -50,6 +50,7 @@ export default function Home() {
 					<div className="flex flex-col">
 						<span>LifelessNerd</span>
 						<span>Forums_</span>
+						<span>SMED</span>
 						<span>abald</span>
 					</div>
 				</div>
