@@ -40,7 +40,7 @@ const DescentGUI: React.FC<{ combinedData: DescentMap }> = ({ combinedData }) =>
 		}
 
 		if (tiered) {
-			if (tier === maxTier) {
+			if (tier >= maxTier) {
 				explainText = item.maxText;
 			} else if (tier !== 0) {
 				explainText = item.tiers[tier]?.text;
@@ -73,7 +73,7 @@ const DescentGUI: React.FC<{ combinedData: DescentMap }> = ({ combinedData }) =>
 		}
 
 		if (tiered) {
-			if (tier === maxTier) {
+			if (tier >= maxTier) {
 				costText = "§aUNLOCKED";
 			} else if (tier !== 0) {
 				costText = `§7Cost: ${item.tiers[tier]?.cost} §9Opals`;
