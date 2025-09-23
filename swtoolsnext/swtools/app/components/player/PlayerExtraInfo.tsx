@@ -46,15 +46,21 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				)}
 			</div>
 			<div className="w-full bg-content p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
-				<span>Network Level: {calcHypixelLevel(response.stats.networkExp)}</span>
+				<span>
+					<span className="text-gray-400 font-normal">Network Level:</span> {calcHypixelLevel(response.stats.networkExp)}
+				</span>
 				<span title={timeAgo(response.stats.firstLogin / 1000)}>
-					First Login: {formatTimestampToVerboseDate(response.stats.firstLogin)}
+					<span className="text-gray-400 font-normal">First Login:</span> {formatTimestampToVerboseDate(response.stats.firstLogin)}
 				</span>
 				<span title={formatTimestampToVerboseDate(response.stats.lastLogin)}>
-					Last Login: {timeAgo(response.stats.lastLogin / 1000)}
+					<span className="text-gray-400 font-normal">Last Login:</span> {timeAgo(response.stats.lastLogin / 1000)}
 				</span>
-				<span>AP: {response.stats.achievementPoints.toLocaleString()}</span>
-				<span>Karma: {response.stats.karma.toLocaleString()}</span>
+				<span>
+					<span className="text-gray-400 font-normal">AP:</span> {response.stats.achievementPoints.toLocaleString()}
+				</span>
+				<span>
+					<span className="text-gray-400 font-normal">Karma:</span> {response.stats.karma.toLocaleString()}
+				</span>
 			</div>
 		</>
 	);
