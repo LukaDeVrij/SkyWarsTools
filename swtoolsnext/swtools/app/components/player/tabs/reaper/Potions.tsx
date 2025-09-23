@@ -2,6 +2,7 @@ import { Brewery, OverallResponse } from "@/app/types/OverallResponse";
 import React from "react";
 import { calcLevel } from "@/app/utils/Utils";
 import MinecraftText from "@/app/utils/MinecraftText";
+import { Check, X } from "lucide-react";
 
 const Potions: React.FC<{ response: OverallResponse }> = ({ response }) => {
 	const brewery: Brewery = response.stats.brewery as Brewery;
@@ -144,7 +145,9 @@ const Potions: React.FC<{ response: OverallResponse }> = ({ response }) => {
 	return (
 		<>
 			<span className="text-2xl text-red-500">Angel&apos;s Brewery</span>
-			<span>Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)</span>
+			<span className="flex flex-row gap-2">Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
+			{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? <Check className="text-green-500" /> : <X className="text-red-500" />}
+			</span>
 			<div className="w-full h-fit flex flex-row flex-wrap justify-center gap-4 py-4">
 				{Object.keys(potions).map((key) => {
 					const potion = potions[key as keyof typeof potions];
