@@ -592,7 +592,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 			context.fill();
 
 			// Load and use custom font
-			const myFont = new FontFace("MinecraftReg", "url(/fonts/MinecraftWOFF.woff)");
+			const myFont = new FontFace("MinecraftReg", "url(/fonts/MinecraftRegular.ttf)");
 			myFont.load().then((font) => {
 				document.fonts.add(font);
 				context.font = `40px MinecraftReg`;

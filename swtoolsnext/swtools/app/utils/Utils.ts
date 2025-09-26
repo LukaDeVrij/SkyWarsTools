@@ -793,3 +793,55 @@ export function shortenUUID(uuid: string): string {
 export function unshortenUUID(uuid: string): string {
 	return uuid.slice(0, 8) + "-" + uuid.slice(8, 12) + "-" + uuid.slice(12, 16) + "-" + uuid.slice(16, 20) + "-" + uuid.slice(20, 32);
 }
+
+export function fillMCColorText(ctx: CanvasRenderingContext2D, str: string, box: number[]) {
+	ctx.textAlign = "left";
+	let x = 0;
+	const y = box[1] + box[3] / 2;
+	const colorMap: Record<string, string> = {
+		"0": "#000000",
+		"1": "#0000AA",
+		"2": "#00AA00",
+		"3": "#00AAAA",
+		"4": "#AA0000",
+		"5": "#AA00AA",
+		"6": "#FFAA00",
+		"7": "#AAAAAA",
+		"8": "#555555",
+		"9": "#5555FF",
+		a: "#55FF55",
+		b: "#55FFFF",
+		c: "#FF5555",
+		d: "#FF55FF",
+		e: "#FFFF55",
+		f: "#FFFFFF",
+		r: "#FFFFFF", // reset to white
+	};
+	let currentColor = "#AAAAAA";
+	const segments = str.split(/(§[0-9a-fk-or])/g).filter(Boolean);
+	let totalWidth = 0;
+	segments.forEach((segment) => {
+		if (segment.startsWith("§")) {
+			currentColor = colorMap[segment[1]] || currentColor;
+		} else {
+			ctx.fillStyle = currentColor;
+			const width = ctx.measureText(segment).width;
+			totalWidth += width;
+		}
+	});
+
+	x = box[0] + box[2] - totalWidth / 2 - box[2] / 2; // heck me
+	segments.forEach((segment) => {
+		if (segment.startsWith("§")) {
+			currentColor = colorMap[segment[1]] || currentColor;
+		} else {
+			ctx.fillStyle = currentColor;
+			ctx.fillText(segment, x, y);
+			const width = ctx.measureText(segment).width;
+			x += width;
+			totalWidth += width;
+		}
+	});
+
+	ctx.textAlign = "center";
+}

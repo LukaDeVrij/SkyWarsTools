@@ -7,7 +7,7 @@ import PlayerInputField from "./PlayerInputField";
 
 const TopNavBar = () => {
 	const content = [
-		{ name: "Tools", href: "/extra" },
+		{ name: "Tools", href: "/tools" },
 		{ name: "Leaderboards", href: "/leaderboards" },
 		{ name: "About", href: "/about" },
 	];

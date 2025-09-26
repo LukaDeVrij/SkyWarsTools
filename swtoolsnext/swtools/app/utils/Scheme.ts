@@ -1,4 +1,5 @@
 import { OverallResponse } from "../types/OverallResponse";
+import { calcPrestigeObj, PrestigeObject } from "./Utils";
 
 type Scheme = {
 	name: string;
@@ -1043,7 +1044,8 @@ export function formatScheme(level: number, overallResponse: OverallResponse, ov
 		if (!overwriteScheme) {
 			schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
 		} else {
-			schemeName = getSchemeByReq(level)?.name ?? "stone_prestige";
+			const [prestige, presLevel] = calcPrestigeObj(level);
+			schemeName = getSchemeByReq(presLevel)?.name ?? "stone_prestige";
 		}
 		// console.log(schemeName);
 		const scheme: Scheme = getSchemeByName(schemeName) as Scheme; // schemeName will always be either an existing one from the API or stone_prestige
