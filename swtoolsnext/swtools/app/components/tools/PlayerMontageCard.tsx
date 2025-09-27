@@ -1,3 +1,4 @@
+"use client";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { calcLevel, fillMCColorText } from "@/app/utils/Utils";
 import React from "react";
