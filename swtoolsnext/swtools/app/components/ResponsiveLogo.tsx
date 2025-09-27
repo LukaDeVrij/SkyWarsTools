@@ -1,12 +1,13 @@
-import React from 'react'
+import React from "react";
+import Image from "next/image";
 
 const ResponsiveLogo = () => {
-  return (
-    <div className="flex items-center">
-      <img src="/title_750.png" alt="Title" className="h-12 hidden lg:block" />
-      <img src="/logo_200.png" alt="Logo" className="h-10 lg:hidden" />
-    </div>
-  )
-}
+	return (
+		<div className="flex items-center">
+			<Image src="/title.png" alt="Title card with logo and name" height={20} width={105} className="hidden lg:block" priority />
+			<Image src="/logo.png" alt="Logo" height={40} width={40} className="h-10 lg:hidden" priority />
+		</div>
+	);
+};
 
-export default ResponsiveLogo
+export default ResponsiveLogo;

@@ -16,15 +16,15 @@ export default function Home() {
 						session tracking, leaderboards and more!
 					</p>
 				</div>
-				<Image className={"hidden lg:block"} src={"/title_750.png"} alt={"SkyWarsTools title logo"} width={200} height={60}></Image>
+				<Image className={"hidden lg:block"} src={"/title.png"} alt={"SkyWarsTools title logo"} width={300} height={60}></Image>
 			</div>
 
 			<div className="flex flex-col gap-4">
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1">News</h2>
 					<p className="font-semibold text-red-400">
-						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Did I get
-						rid of a feature you used? Let me know on the{" "}
+						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Is a feature
+						you used missing? Let me know on the{" "}
 						<a href="/discord" className="underline">
 							Discord server
 						</a>

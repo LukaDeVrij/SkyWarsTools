@@ -16,6 +16,13 @@ interface LayoutProps {
 const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	const awaitedParams = await params;
 	let playerName = awaitedParams.playerName;
+	if (playerName.length > 20) {
+		// This is a UUID 
+		// This means we are about to get redirected to the actual name.
+		// We dont fetch anything
+		playerName = ""; // fuck you
+		return <div>Redirecting...</div>;
+	}
 
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(playerName)}`, {
 		next: { revalidate: 300 },

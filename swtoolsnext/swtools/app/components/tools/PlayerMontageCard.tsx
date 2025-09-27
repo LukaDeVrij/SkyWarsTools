@@ -66,8 +66,21 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 	}, [data.display.levelFormattedWithBrackets]);
 
 	return (
-		<div className="flex flex-col items-center gap-4 py-8">
-			<canvas ref={canvasRef} width={900} height={60} style={{ border: "3px solid #ffffff22", borderRadius: "10px" }} />
+		<div className="flex flex-col items-center gap-4 py-8 overflow-hidden">
+			<div className="w-full max-w-full overflow-x-auto">
+				<canvas
+					ref={canvasRef}
+					width={900}
+					height={60}
+					style={{
+						border: "3px solid #ffffff22",
+						borderRadius: "10px",
+						display: "block",
+						minWidth: "600px",
+						maxWidth: "100%",
+					}}
+				/>
+			</div>
 			<div className="flex gap-2">
 				<Button onClick={handleSave}>Save</Button>
 				<Button onClick={handleCopy}>Copy</Button>

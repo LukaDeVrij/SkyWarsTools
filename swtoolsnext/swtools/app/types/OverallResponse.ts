@@ -36,7 +36,7 @@ export interface Stats {
 	networkExp: number;
 	firstLogin: number;
 	lastLogin: number;
-	achievementPoints: number;
+	achievementPoints?: number;
 	socialMedia?: SocialMedia;
 	angel_of_death_level?: number;
 	packages: string[];

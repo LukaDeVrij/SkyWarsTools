@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 	title: "SkyWarsTools",
 	description: "A set of tools for SkyWars",
 	icons: {
-		icon: "/logo_200.png",
+		icon: "/logo.png",
 	},
 };
 
@@ -24,10 +24,11 @@ export default function RootLayout({
 			</head>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+			{/* TODO maybe get rid of scrollbar on overall body and put it on content instead */}
 			<body className="antialiased">
 				<TopNavBar />
 
-				<div className="w-[100vw] lg:w-[1000px] bg-[var(--background-layer)] m-auto mb-2 lg:mt-2 lg:rounded-xl ">{children}</div>
+				<div className="w-[100vw] lg:w-[1000px] bg-[var(--background-layer)] m-auto mb-2 lg:mt-2 lg:rounded-xl">{children}</div>
 
 				{/* <Footer /> */}
 			</body>

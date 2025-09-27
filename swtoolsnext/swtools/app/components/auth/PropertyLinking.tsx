@@ -2,6 +2,7 @@
 
 import React from "react";
 import Button from "../universal/Button";
+import Image from "next/image";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -101,7 +102,16 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 					<div className="flex justify-end gap-2 items-center">
 						<Button onClick={unlink}>Unlink</Button>
 						<div className="text-xl font-semibold">
-							<img src={value} width={50} height={50} title={uuid} className="rounded-lg"></img>
+							{uuid && (
+								<Image
+									src={`https://www.mc-heads.net/avatar/${uuid}`}
+									width={50}
+									height={50}
+									title={uuid}
+									className="rounded-lg"
+									alt="Minecraft Avatar"
+								/>
+							)}
 						</div>
 					</div>
 				) : (

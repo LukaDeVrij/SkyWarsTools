@@ -205,7 +205,7 @@ const Page = () => {
 										<MinecraftText>{scheme}</MinecraftText>
 									</td>
 									<td className="p-1 lg:py-2 lg:px-r font-semibold text-l lg:text-xl relative z-2">
-										<a href={`/player/${entry.uuid}/stats`}>
+										<a href={`/redirect?uuid=${entry.uuid}`}>
 											<MinecraftText>{`${rank.prefix} ${entry.info.player}`}</MinecraftText>
 										</a>
 									</td>

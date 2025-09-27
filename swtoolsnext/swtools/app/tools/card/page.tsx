@@ -1,6 +1,7 @@
 "use client";
 import MontageCard from "@/app/components/tools/PlayerMontageCard";
 import ErrorView from "@/app/components/universal/ErrorView";
+import Loading from "@/app/components/universal/Loading";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { fetcher } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
@@ -25,9 +26,7 @@ const SuspenseMontageCardPage = () => {
 	);
 	if (isLoading)
 		return (
-			<div className="flex h-full w-full items-center justify-center">
-				<LoaderCircle className="animate-spin" />
-			</div>
+			<Loading></Loading>
 		);
 	if (!data) return <ErrorView statusText="No data found" />;
 	if (!data.player) return <ErrorView statusText={error?.message || "No such player!"} />;

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 const MontageCardCard = () => {
 	const [player, setPlayer] = React.useState("");
@@ -29,9 +30,11 @@ const MontageCardCard = () => {
 					Go
 				</button>
 			</form>
-			<img src="/LifelessNerd_card.png" alt="Example Montage Card" className="mt-4 py-2 rounded" />
-			<img src="/FluffyFoxNoodle_card.png" alt="Example Montage Card" className="mt-4  py-2 rounded" />
-			<img src="/Beazinga_card.png" alt="Example Montage Card" className="mt-4 rounded  py-2" />
+			<div className="mt-4 space-y-2">
+				<Image src="/LifelessNerd_card.png" alt="Example Montage Card" width={400} height={200} className="py-2 rounded" />
+				<Image src="/FluffyFoxNoodle_card.png" alt="Example Montage Card" width={400} height={200} className="py-2 rounded" />
+				<Image src="/Beazinga_card.png" alt="Example Montage Card" width={400} height={200} className="rounded py-2" />
+			</div>
 		</div>
 	);
 };

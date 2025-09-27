@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import ErrorViewBack from "./ErrorViewBack";
 interface ErrorProps {
 	statusText?: string;
 	statusCode?: number;
@@ -7,13 +8,12 @@ interface ErrorProps {
 
 const Error: React.FC<ErrorProps> = ({ statusText, statusCode }) => {
 	return (
-		<div className="w-full h-full bg-content flex flex-col justify-center items-center text-center p-4 text-red-300 font-semibold">
-			{statusCode && <div>Status Code: {statusCode}</div>}
-			{statusText && <div>Status Text: {statusText}</div>}
+		<div className="w-full h-full bg-content flex flex-col justify-center items-center text-center p-4 text-red-300 font-semibold rounded-xl">
+			{statusCode && <div className="text-8xl">{statusCode}</div>}
+			{statusText && <div className="text-3xl">{statusText}</div>}
 			<br />
-			<Link className="text-white underline" href="/">
-				Back to home
-			</Link>
+
+			<ErrorViewBack></ErrorViewBack>
 		</div>
 	);
 };

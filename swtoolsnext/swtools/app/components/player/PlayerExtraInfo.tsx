@@ -50,13 +50,14 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					<span className="text-gray-400 font-normal">Network Level:</span> {calcHypixelLevel(response.stats.networkExp)}
 				</span>
 				<span title={timeAgo(response.stats.firstLogin / 1000)}>
-					<span className="text-gray-400 font-normal">First Login:</span> {formatTimestampToVerboseDate(response.stats.firstLogin)}
+					<span className="text-gray-400 font-normal">First Login:</span>{" "}
+					{formatTimestampToVerboseDate(response.stats.firstLogin)}
 				</span>
 				<span title={formatTimestampToVerboseDate(response.stats.lastLogin)}>
 					<span className="text-gray-400 font-normal">Last Login:</span> {timeAgo(response.stats.lastLogin / 1000)}
 				</span>
 				<span>
-					<span className="text-gray-400 font-normal">AP:</span> {response.stats.achievementPoints.toLocaleString()}
+					<span className="text-gray-400 font-normal">AP:</span> {(response.stats.achievementPoints ?? 0).toLocaleString()}
 				</span>
 				<span>
 					<span className="text-gray-400 font-normal">Karma:</span> {response.stats.karma.toLocaleString()}

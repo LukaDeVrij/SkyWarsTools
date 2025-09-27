@@ -3,6 +3,7 @@ import { fetcher } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
 import React from "react";
 import useSWR from "swr";
+import Image from "next/image";
 
 interface SnapshotSelectionProps {
 	playerName: string;
@@ -69,7 +70,17 @@ const SnapshotSelection: React.FC<SnapshotSelectionProps> = ({ playerName, pageT
 					onClick={() => setSelected((prev) => (prev.includes("now") ? prev.filter((q) => q !== "now") : [...prev, "now"]))}
 					type="button"
 				>
-					<img src={`https://www.mc-heads.net/avatar/${playerName}/64`} alt={playerName} className="w-10 h-10 rounded" />
+					<div className="w-10 h-10 relative">
+						<Image
+							src={`https://www.mc-heads.net/avatar/${playerName}/64`}
+							alt={playerName}
+							fill
+							className="rounded"
+							sizes="40px"
+							style={{ objectFit: "cover" }}
+							priority
+						/>
+					</div>
 					<div className="flex flex-col text-left">
 						<span className="font-semibold">{playerName}</span>
 						<span className="text-sm text-green-400">Now</span>
@@ -84,7 +95,17 @@ const SnapshotSelection: React.FC<SnapshotSelectionProps> = ({ playerName, pageT
 						onClick={() => handleSelect(snap.queried)}
 						type="button"
 					>
-						<img src={`https://www.mc-heads.net/avatar/${snap.player}/64`} alt={snap.player} className="w-10 h-10 rounded" />
+						<div className="w-10 h-10 relative">
+							<Image
+								src={`https://www.mc-heads.net/avatar/${snap.player}/64`}
+								alt={snap.player}
+								fill
+								className="rounded"
+								sizes="40px"
+								style={{ objectFit: "cover" }}
+								priority={false}
+							/>
+						</div>
 						<div className="flex flex-col text-left">
 							<span className="font-semibold">{snap.player}</span>
 							<span className="text-sm text-gray-100">{new Date(snap.queried).toLocaleString()}</span>
