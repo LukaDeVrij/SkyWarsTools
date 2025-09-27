@@ -99,7 +99,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	}
 
 	// Final assembled title
-	const playerTitle = `${scheme} ${rank.prefix} ${response.player} ${guildTagFormatted}`;
+	const playerTitle = `${scheme} ${rank.prefix} ${response.player}`;
 
 	return (
 		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
@@ -145,8 +145,8 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 							</span>
 						)}
 						{response.guild.guild && (
-							<span className="font-semibold hidden lg:inline">
-								{response.guild.guild} ({response.guild.guildRank})
+							<span className="font-semibold hidden lg:flex flex-row gap-2 items-center">
+								{response.guild.guild} ({response.guild.guildRank}) <MinecraftText>{guildTagFormatted}</MinecraftText>
 							</span>
 						)}
 					</div>

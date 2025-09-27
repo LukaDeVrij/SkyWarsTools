@@ -29,9 +29,9 @@ const MontageCardCard = () => {
 					Go
 				</button>
 			</form>
-			<img src="/LifelessNerd_card.png" alt="Example Montage Card" className="mt-4 rounded shadow-lg" />
-			<img src="/FluffyFoxNoodle_card.png" alt="Example Montage Card" className="mt-4 rounded shadow-lg" />
-			<img src="/Beazinga_card.png" alt="Example Montage Card" className="mt-4 rounded shadow-lg" />
+			<img src="/LifelessNerd_card.png" alt="Example Montage Card" className="mt-4 py-2 rounded" />
+			<img src="/FluffyFoxNoodle_card.png" alt="Example Montage Card" className="mt-4  py-2 rounded" />
+			<img src="/Beazinga_card.png" alt="Example Montage Card" className="mt-4 rounded  py-2" />
 		</div>
 	);
 };

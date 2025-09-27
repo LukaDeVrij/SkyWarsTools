@@ -212,8 +212,12 @@ const ProfileSettingsPage = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				alert("Profile updated!");
-				console.log(data);
+				if (data.success !== true) {
+					alert("Failed to update profile: " + (data.cause || "Unknown error"));
+					throw new Error(data.cause || "Failed to update profile");
+				} else {
+					alert("Profile updated!");
+				}
 			})
 			.catch((err) => {
 				console.error("Failed to update profile:", err);

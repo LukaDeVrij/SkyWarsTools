@@ -29,7 +29,7 @@ const FreqPlayerList = () => {
 						<a
 							key={index}
 							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press"
-							href={`/player/${entry.value}/stats`}
+							href={`/player/${entry.value}/stats/table`}
 							id={entry.score.toString()}
 						>
 							<Image

@@ -27,7 +27,7 @@ const PlayerInputField = () => {
 			if (res.ok && data.name) {
 				console.log("Player found, redirecting...");
 
-				router.push(`/player/${encodeURIComponent(input.trim())}/stats`);
+				router.push(`/player/${encodeURIComponent(input.trim())}/stats/table`);
 			} else {
 				console.warn("Player not found:", data);
 				setError("Player not found.");

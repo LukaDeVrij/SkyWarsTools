@@ -32,7 +32,7 @@ const PatreonPlayerList = () => {
 					data &&
 					data.supporters.map((supporter, index) => (
 						<a
-							href={`/player/${supporter.name}/stats`}
+							href={`/player/${supporter.name}/stats/table`}
 							key={index}
 							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted"
 						>

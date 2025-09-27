@@ -1,8 +1,16 @@
-import { redirect } from "next/navigation";
+"use client";
+import { redirect, useParams } from "next/navigation";
+import React from "react";
 
-export default async function Page({ params }: { params: Promise<{ playerName: string }> }) {
-	const awaitedParams = await params;
+export default function Page() {
+	const params = useParams();
+	const playerName = params.playerName;
 
-
-	redirect(`/player/${awaitedParams.playerName}/stats/table`);
+	return (
+		<>
+			<div className="flex justify-center font-semibold py-4 text-center">
+				How did you get here?<br></br>Click a tab!
+			</div>
+		</>
+	);
 }
