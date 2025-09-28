@@ -192,7 +192,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				box: [258 * scalingFactorX, 70 * scalingFactorY, 732 * scalingFactorX, 120 * scalingFactorY],
 				color: undefined,
 				content: sessionFillPlayerName,
-				contentSize: "92pxr",
+				contentSize: "92px",
 			},
 			mode: {
 				title: undefined,

@@ -62,14 +62,14 @@ const Extended: React.FC<OverallResponse> = (response) => {
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Favour of the Angel</td>
-							<td>{response.stats.packages.includes("favor_of_the_angel") ? "Yes" : "No"}</td>
+							<td>{response.stats.packages?.includes("favor_of_the_angel") ? "Yes" : "No"}</td>
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Total Corruption Chance</td>
 							<td>
 								{(response.stats.angel_of_death_level ?? 0) +
 									(response.stats.angels_offering ?? 0) +
-									(response.stats.packages.includes("favor_of_the_angel") ? 1 : 0)}{" "}
+									(response.stats.packages?.includes("favor_of_the_angel") ? 1 : 0)}{" "}
 								%
 							</td>
 						</tr>

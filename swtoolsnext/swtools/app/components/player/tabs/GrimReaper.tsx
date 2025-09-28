@@ -1,12 +1,9 @@
 "use client";
-// Have to use client for Tabs to work properly - this also means everything else is client side -
-// TODO - consider if this is the best approach for performance
-// If we want to use server components, we must use URL params I think (does this work with fetching? - Ideally we dont want to fetch all data again)
 import React, { useEffect, useState } from "react";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DescentGUI from "./reaper/DescentGUI";
-import { calculateOpalsSpent, combineDescentData } from "@/app/utils/Utils";
+import { calculateOpalsSpent, combineDescentData, fetcher } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
 import { DescentMap } from "@/app/types/DescentMap";
 import Title from "../../universal/Title";
@@ -17,35 +14,30 @@ import Heads from "./reaper/Heads";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import Potions from "./reaper/Potions";
 import TabContent from "./TabContent";
+import useSWR from "swr";
 
 const GrimReaper: React.FC<OverallResponse> = (response) => {
-	// console.log(response);
-	const [descentData, setDescentData] = useState<DescentMap | null>(null);
 	const [combinedData, setCombinedData] = useState<DescentMap | null>(null);
 
+	// TODO somewhere here, scroll is reset for some reason
+	// start
+	const { data: descentData, error } = useSWR<DescentMap>("/json/descent.json", fetcher);
+
 	useEffect(() => {
-		fetch("/json/descent.json")
-			.then((res) => res.json())
-			.then((json) => {
-				setDescentData(json);
-				try {
-					const result = combineDescentData(response, json);
-					setCombinedData(result);
-				} catch {
-					setCombinedData(null);
-				}
-			})
-			.catch(() => {
-				setDescentData(null);
+		if (descentData) {
+			try {
+				const result = combineDescentData(response, descentData);
+				setCombinedData(result);
+			} catch {
 				setCombinedData(null);
-			});
-	}, [response]);
+			}
+		}
+	}, [response, descentData]);
 
-	if (!descentData || !combinedData) {
-		return <LoaderCircle className="animate-spin"></LoaderCircle>;
+	let opalsSpent = 0;
+	if (combinedData) {
+		opalsSpent = calculateOpalsSpent(combinedData);
 	}
-
-	const opalsSpent = calculateOpalsSpent(combinedData);
 
 	return (
 		<>
@@ -53,9 +45,24 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 				<TabList
 					className={"bg-main h-10 w-full flex gap-2 items-center px-4 overflow-scroll lg:overflow-auto text-base lg:text-lg"}
 				>
-					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Descent</Tab>
-					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Potions</Tab>
-					<Tab selectedClassName={"selected-tab"} className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}>Heads</Tab>
+					<Tab
+						selectedClassName={"selected-tab"}
+						className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+					>
+						Descent
+					</Tab>
+					<Tab
+						selectedClassName={"selected-tab"}
+						className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+					>
+						Potions
+					</Tab>
+					<Tab
+						selectedClassName={"selected-tab"}
+						className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+					>
+						Heads
+					</Tab>
 				</TabList>
 
 				<TabPanel>
@@ -69,7 +76,11 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 								<span className="text-red-500 text-base">Use desktop for the best experience</span>
 							</h2>
 
-							<DescentGUI combinedData={combinedData}></DescentGUI>
+							{error || !descentData || !combinedData ? (
+								<LoaderCircle className="animate-spin w-20 h-20"></LoaderCircle>
+							) : (
+								<DescentGUI combinedData={combinedData}></DescentGUI>
+							)}
 						</div>
 						<div className="w-full lg:w-1/2 h-full p-0 flex lg:gap-4 flex-col justify-between ">
 							<SoulUpgrades response={response}></SoulUpgrades>

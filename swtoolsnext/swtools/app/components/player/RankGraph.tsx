@@ -48,7 +48,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 	);
 
 	let delta = "~";
-	if (data && ranking && data.rankHistory) {
+	if (data && ranking && data.rankHistory && Object.keys(data.rankHistory).length >= 2) {
 		const rankHistory = data.rankHistory;
 
 		const dates = Object.keys(rankHistory);

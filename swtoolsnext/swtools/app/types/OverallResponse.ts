@@ -35,11 +35,11 @@ export interface Stats {
 	karma: number;
 	networkExp: number;
 	firstLogin: number;
-	lastLogin: number;
+	lastLogin?: number;
 	achievementPoints?: number;
 	socialMedia?: SocialMedia;
 	angel_of_death_level?: number;
-	packages: string[];
+	packages?: string[];
 	grand_slam?: number;
 	tenacity?: number;
 	shard_seeker?: number;

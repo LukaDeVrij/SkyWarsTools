@@ -623,19 +623,23 @@ export function calcPrestigeTag(level: number): string {
 
 	const prestigeData = prestigeColors[prestigeLevelKey];
 
-	if (Array.isArray(prestigeData?.rank)) {
-		prestigeTag = prestigeTag
-			.split("")
-			.map((char, index) => {
-				return prestigeData.rank[index] + char;
-			})
-			.join("");
-	} else {
-		prestigeTag = prestigeData.rank + prestigeTag;
-		// TODO
-	}
+	try {
+		if (Array.isArray(prestigeData?.rank)) {
+			prestigeTag = prestigeTag
+				.split("")
+				.map((char, index) => {
+					return prestigeData.rank[index] + char;
+				})
+				.join("");
+		} else {
+			prestigeTag = prestigeTag;
+		}
 
-	prestigeTag = prestigeTag.slice(0, -1) + prestigeData.emblem + "✯" + prestigeTag.slice(-1);
+		prestigeTag = prestigeTag.slice(0, -1) + (prestigeData.emblem ?? "") + "✯" + prestigeTag.slice(-1);
+	} catch (e) {
+		// In case of error, return a default prestige tag
+		prestigeTag = `[${level}]✯`;
+	}
 	return prestigeTag;
 }
 
@@ -686,7 +690,7 @@ export function combineDescentData(overall: OverallResponse, descentData: Descen
 			const typedKey = key as keyof DescentMap;
 			let owns;
 			if (overall.stats[key as keyof OverallResponse["stats"]] === undefined) {
-				owns = overall.stats.packages.includes(key) ? true : false;
+				owns = overall.stats.packages?.includes(key) ? true : false;
 			} else {
 				owns = overall.stats[key as keyof OverallResponse["stats"]];
 			}

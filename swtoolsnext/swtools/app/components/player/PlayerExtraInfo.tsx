@@ -45,7 +45,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					<p className="text-gray-400">No socials linked</p>
 				)}
 			</div>
-			<div className="w-full bg-content p-4 justify-center font-bold gap-2 hidden lg:flex flex-nowrap">
+			<div className="w-full bg-content p-4 justify-around font-bold hidden lg:flex flex-nowrap">
 				<span>
 					<span className="text-gray-400 font-normal">Network Level:</span> {calcHypixelLevel(response.stats.networkExp)}
 				</span>
@@ -53,8 +53,9 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					<span className="text-gray-400 font-normal">First Login:</span>{" "}
 					{formatTimestampToVerboseDate(response.stats.firstLogin)}
 				</span>
-				<span title={formatTimestampToVerboseDate(response.stats.lastLogin)}>
-					<span className="text-gray-400 font-normal">Last Login:</span> {timeAgo(response.stats.lastLogin / 1000)}
+				<span title={response.stats.lastLogin ? formatTimestampToVerboseDate(response.stats.lastLogin) : undefined}>
+					<span className="text-gray-400 font-normal">Last Login:</span>{" "}
+					{response.stats.lastLogin ? timeAgo(response.stats.lastLogin / 1000) : "Never"}
 				</span>
 				<span>
 					<span className="text-gray-400 font-normal">AP:</span> {(response.stats.achievementPoints ?? 0).toLocaleString()}

@@ -58,15 +58,15 @@ const AngelProgress: React.FC<{ response: OverallResponse }> = ({ response }) =>
 					</tr>
 					<tr>
 						<td>Favour of the Angel (+1%)</td>
-						<td className={` ${response.stats.packages.includes("favor_of_the_angel") ? "text-green-600" : ""}`}>
-							{response.stats.packages.includes("favor_of_the_angel") ? "Unlocked" : "Locked"}
+						<td className={` ${response.stats.packages?.includes("favor_of_the_angel") ? "text-green-600" : ""}`}>
+							{response.stats.packages?.includes("favor_of_the_angel") ? "Unlocked" : "Locked"}
 						</td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>Total Corruption Chance</td>
 						<td className="text-pink-500">
-							{playerAod + (response.stats.angels_offering ?? 0) + (response.stats.packages.includes("favor_of_the_angel") ? 1 : 0)}%
+							{playerAod + (response.stats.angels_offering ?? 0) + (response.stats.packages?.includes("favor_of_the_angel") ? 1 : 0)}%
 						</td>
 					</tr>
 					{playerAod < 12 && (

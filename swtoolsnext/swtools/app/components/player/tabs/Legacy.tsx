@@ -11,7 +11,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 					<h2>Ranked Rewards</h2>
 
 					<p>Guardians</p>
-					<p>{response.stats.packages.includes("victorydance_guardians") ? "Yes" : "No"}</p>
+					<p>{response.stats.packages?.includes("victorydance_guardians") ? "Yes" : "No"}</p>
 				</div>
 			</div>
 		</TabContent>
