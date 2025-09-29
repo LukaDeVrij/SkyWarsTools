@@ -22,7 +22,7 @@ export default function HelpCard({ title, children }: HelpCardProps) {
 			<span className="text-xl font-semibold">{title}</span>
 			<div
 				ref={contentRef}
-				className="overflow-hidden transition-[max-height] duration-300 text-base text-neutral-700 dark:text-neutral-200"
+				className="overflow-hidden transition-[max-height] duration-300 text-base text-white"
 				style={{
 					maxHeight: open ? "400px" : "400px",
 				}}
