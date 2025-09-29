@@ -34,7 +34,7 @@ export default function Home() {
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">
 						Patreon Supporters
-						<Tooltip title="Subscribe to Patreon to get a custom background, emoji and a spot right here!">
+						<Tooltip title="Subscribe to Patreon to get an emoji and a spot right here!">
 							<CircleQuestionMark className="cursor-help" />
 						</Tooltip>
 					</h2>

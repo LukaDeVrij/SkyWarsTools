@@ -1,5 +1,7 @@
 import MinecraftText from "@/app/utils/MinecraftText";
 import { getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey } from "@/app/utils/Utils";
+import Tooltip from "@mui/material/Tooltip";
+import { MessageCircleWarning } from "lucide-react";
 import React from "react";
 type KitStats = {
 	wins?: number;
@@ -36,6 +38,14 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 
 	const initialXpPerHour = stats.xp && stats.timePlayed ? Math.round(stats.xp / (stats.timePlayed / 3600)) : 0;
 	const [customXpPerHour, setCustomXpPerHour] = React.useState(initialXpPerHour);
+
+	let glitched = false;
+	// TODO find a better way at detecting glitched kits via lucky blocks
+	if (kitName.includes("team")) {
+		if (initialXpPerHour > 15000) {
+			glitched = true;
+		}
+	}
 
 	const percent = stats.xp ? Math.round((stats.xp / prestigeGoal.minXp) * 100) : 0;
 
@@ -82,13 +92,18 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		<div
 			className={
 				`bg-gray-900 rounded-xl p-4 w-75 h-${maxHeight} overflow-hidden  cursor-pointer shadow-lg border ` +
-				(maxed ? "enchanted border-amber-400" : "border-gray-700")
+				(maxed ? "enchanted border-amber-400" : glitched ? "border-red-500 bg-red-900/50" : "border-gray-700")
 			}
 			onClick={() => toggleHeight()}
 		>
 			<div className="flex justify-between items-center mb-2">
-				<span className="text-lg font-se</div>mibold">
+				<span className="text-lg font-semibold flex gap-2">
 					{kitObject.kit} - {modeFixer(kitObject.mode)}
+					{glitched ? (
+						<Tooltip title="This kit was leveled up suspiciously fast, and is likely glitched using a lab mode.">
+							<MessageCircleWarning className="inline cursor-help text-white w-4 h-4" />
+						</Tooltip>
+					) : null}
 				</span>
 				<span className="text-xl font-semibold">{currentPrestige.name}</span>
 			</div>

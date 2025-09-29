@@ -21,13 +21,12 @@ const Table: React.FC<OverallResponse> = (response) => {
 						</tr>
 					</thead>
 					<tbody>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td>Overall</td>
 							<td>{response.stats.wins?.toLocaleString()}</td>
 							<td>{response.stats.losses?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.wins ?? 0, response.stats.losses ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td>Solo</td>
 							<td>{response.stats.wins_solo?.toLocaleString()}</td>
@@ -40,13 +39,12 @@ const Table: React.FC<OverallResponse> = (response) => {
 							<td>{response.stats.losses_solo_normal?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.wins_solo_normal ?? 0, response.stats.losses_solo_normal ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td>Solo Insane</td>
 							<td>{response.stats.wins_solo_insane?.toLocaleString()}</td>
 							<td>{response.stats.losses_solo_insane?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.wins_solo_insane ?? 0, response.stats.losses_solo_insane ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td>Teams</td>
 							<td>{response.stats.wins_team?.toLocaleString()}</td>
@@ -59,19 +57,26 @@ const Table: React.FC<OverallResponse> = (response) => {
 							<td>{response.stats.losses_team_normal?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.wins_team_normal ?? 0, response.stats.losses_team_normal ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td>Teams Insane</td>
 							<td>{response.stats.wins_team_insane?.toLocaleString()}</td>
 							<td>{response.stats.losses_team_insane?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.wins_team_insane ?? 0, response.stats.losses_team_insane ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td>Mini</td>
 							<td>{(response.stats.wins_mini ?? 0).toLocaleString()}</td>
 							<td>{(response.stats.games_mini ?? 0) - (response.stats.wins_mini ?? 0)}</td>
 							<td>
 								{getWLR(response.stats.wins_mini ?? 0, (response.stats.games_mini ?? 0) - (response.stats.wins_mini ?? 0))}
+							</td>
+						</tr>
+						<tr className="border-b-1 border-white">
+							<td>Lab</td>
+							<td>{(response.stats.wins_lab ?? 0).toLocaleString()}</td>
+							<td>{(response.stats.losses_lab)}</td>
+							<td>
+								{getWLR(response.stats.wins_lab ?? 0, response.stats.losses_lab ?? 0).toLocaleString()}
 							</td>
 						</tr>
 					</tbody>
@@ -87,13 +92,12 @@ const Table: React.FC<OverallResponse> = (response) => {
 						</tr>
 					</thead>
 					<tbody>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td className="inline lg:hidden">Overall</td>
 							<td>{response.stats.kills?.toLocaleString()}</td>
 							<td>{response.stats.deaths?.toLocaleString()}</td>
 							<td>{getWLR(response.stats.kills ?? 0, response.stats.deaths ?? 0).toLocaleString()}</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td className="inline lg:hidden">Solo</td>
 							<td>{response.stats.kills_solo?.toLocaleString()}</td>
@@ -108,7 +112,7 @@ const Table: React.FC<OverallResponse> = (response) => {
 								{getWLR(response.stats.kills_solo_normal ?? 0, response.stats.deaths_solo_normal ?? 0).toLocaleString()}
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td className="inline lg:hidden">Solo Insane</td>
 							<td>{response.stats.kills_solo_insane?.toLocaleString()}</td>
 							<td>{response.stats.deaths_solo_insane?.toLocaleString()}</td>
@@ -116,7 +120,6 @@ const Table: React.FC<OverallResponse> = (response) => {
 								{getWLR(response.stats.kills_solo_insane ?? 0, response.stats.deaths_solo_insane ?? 0).toLocaleString()}
 							</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td className="inline lg:hidden">Teams</td>
 							<td>{response.stats.kills_team?.toLocaleString()}</td>
@@ -131,7 +134,7 @@ const Table: React.FC<OverallResponse> = (response) => {
 								{getWLR(response.stats.kills_team_normal ?? 0, response.stats.deaths_team_normal ?? 0).toLocaleString()}
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b-2 border-white">
 							<td className="inline lg:hidden">Teams Insane</td>
 							<td>{response.stats.kills_team_insane?.toLocaleString()}</td>
 							<td>{response.stats.deaths_team_insane?.toLocaleString()}</td>
@@ -139,13 +142,20 @@ const Table: React.FC<OverallResponse> = (response) => {
 								{getWLR(response.stats.kills_team_insane ?? 0, response.stats.deaths_team_insane ?? 0).toLocaleString()}
 							</td>
 						</tr>
-						<tr className="h-2"></tr>
 						<tr className="border-b-1 border-white">
 							<td className="inline lg:hidden">Mini</td>
 							<td>{response.stats.kills_mini ?? "0".toLocaleString()}</td>
 							<td>{(response.stats.games_mini ?? 0) - (response.stats.wins_mini ?? 0)}</td>
 							<td>
 								{getWLR(response.stats.kills_mini ?? 0, (response.stats.games_mini ?? 0) - (response.stats.wins_mini ?? 0))}
+							</td>
+						</tr>
+						<tr className="border-b-1 border-white">
+							<td className="inline lg:hidden">Lab</td>
+							<td>{response.stats.kills_lab?.toLocaleString()}</td>
+							<td>{response.stats.deaths_lab?.toLocaleString()}</td>
+							<td>
+								{getWLR(response.stats.kills_lab ?? 0, response.stats.deaths_lab ?? 0).toLocaleString()}
 							</td>
 						</tr>
 					</tbody>

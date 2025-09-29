@@ -756,6 +756,10 @@ export interface Stats {
 	wins_mini?: number;
 	kills_mini?: number;
 	games_mini?: number;
+	wins_lab?: number;
+	losses_lab?: number;
+	kills_lab?: number;
+	deaths_lab?: number;
 }
 
 export interface Brewery {

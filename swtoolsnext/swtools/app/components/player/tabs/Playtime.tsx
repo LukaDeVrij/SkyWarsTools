@@ -38,11 +38,17 @@ const Playtime: React.FC<OverallResponse> = (response) => {
 								<td>{calcRatio(response.stats.wins_team ?? 0, response.stats.time_played_team ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
-							<tr>
+							<tr className="border-b-1 border-white">
 								<td>Mini</td>
 								<td>{(response.stats.wins_mini ?? 0).toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
+							</tr>
+							<tr className="border-b-1 border-white">
+								<td>Lab</td>
+								<td>{response.stats.wins_lab?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.wins_lab ?? 0, response.stats.time_played_lab ?? 0)}</td>
+								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_lab ?? 0)}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -75,11 +81,17 @@ const Playtime: React.FC<OverallResponse> = (response) => {
 								<td>{calcRatio(response.stats.kills_team ?? 0, response.stats.time_played_team ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
-							<tr>
+							<tr className="border-b-1 border-white">
 								<td className="inline lg:hidden">Mini</td>
 								<td>{(response.stats.kills_mini ?? 0).toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
+							</tr>
+							<tr className="border-b-1 border-white">
+								<td className="inline lg:hidden">Lab</td>
+								<td>{response.stats.kills_lab?.toLocaleString()}</td>
+								<td>{calcRatio(response.stats.kills_lab ?? 0, response.stats.time_played_lab ?? 0)}</td>
+								<td>{formatPlaytime(response.stats.time_played_lab ?? 0)}</td>
 							</tr>
 						</tbody>
 					</table>

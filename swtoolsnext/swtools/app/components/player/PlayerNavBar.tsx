@@ -13,7 +13,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 	const normalizedPath = pathname.toLowerCase();
 
 	const navItems = [
-		{ label: "Stats", href: `/player/${playerName}/stats` },
+		{ label: "Stats", href: `/player/${playerName}/stats/table` },
 		{ label: "Session", href: `/player/${playerName}/session` },
 		{ label: "Compare", href: `/player/${playerName}/compare` },
 		{ label: "Calculate", href: `/player/${playerName}/calculate` },

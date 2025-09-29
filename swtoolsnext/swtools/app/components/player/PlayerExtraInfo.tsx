@@ -21,7 +21,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 	const links = response.stats.socialMedia?.links;
 	return (
 		<>
-			<div className="bg-content p-4 font-bold flex gap-4">
+			<div className="bg-content p-4 px-6 font-bold flex gap-4">
 				{links && Object.entries(links).length > 0 ? (
 					<>
 						{Object.entries(links).map(([social]) => {
@@ -55,7 +55,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				</span>
 				<span title={response.stats.lastLogin ? formatTimestampToVerboseDate(response.stats.lastLogin) : undefined}>
 					<span className="text-gray-400 font-normal">Last Login:</span>{" "}
-					{response.stats.lastLogin ? timeAgo(response.stats.lastLogin / 1000) : "Never"}
+					{response.stats.lastLogin ? timeAgo(response.stats.lastLogin / 1000) : "Unknown"}
 				</span>
 				<span>
 					<span className="text-gray-400 font-normal">AP:</span> {(response.stats.achievementPoints ?? 0).toLocaleString()}

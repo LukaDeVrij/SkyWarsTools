@@ -3,6 +3,7 @@ import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/Utils";
+import twemoji from "@twemoji/api";
 
 type PatreonSupporter = {
 	mc_account?: string;
@@ -50,8 +51,16 @@ const PatreonPlayerList = () => {
 								</div>
 							)}
 							<div className="min-w-0">
-								<div className="font-semibold truncate max-w-[225px]">
-									{supporter.name ?? "Unknown"} {supporter.emoji && <span className="mr-1">{supporter.emoji}</span>}
+								<div className="font-semibold truncate max-w-[225px] flex gap-2 items-center">
+									<span className="truncate max-w-[190px]">{supporter.name ?? "Unknown"}</span>
+									{
+										<span
+											dangerouslySetInnerHTML={{
+												__html: twemoji.parse(supporter.emoji ?? "", { folder: "svg", ext: ".svg" }),
+											}}
+											style={{ width: 28, height: 28, display: "inline-block" }}
+										/>
+									}
 								</div>
 							</div>
 						</a>
