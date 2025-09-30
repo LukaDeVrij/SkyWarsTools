@@ -323,7 +323,7 @@ const schemes: Scheme[] = [
 		req: "§5§o§cUnlocked at Troll Normal Kit Prestige VII!",
 	},
 	{
-		name: "Level-conic",
+		name: "Level_conic",
 		rankColor: ["§0", "§f", "§f", "§f", "§0"],
 		iconColor: "§0",
 		req: "§5§o§cUnlocked at Troll Insane Kit Prestige VII!",
