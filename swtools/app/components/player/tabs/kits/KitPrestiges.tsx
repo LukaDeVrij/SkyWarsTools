@@ -3,8 +3,6 @@ import KitPrestigeCard from "./KitPrestigeCard";
 import { getKitPrestigeInfo, getKitPrestigeInfoByPrestige, KitPrestigeInfo } from "@/app/utils/Utils";
 import { KitStats } from "@/app/types/KitStats";
 
-
-
 const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 
 	// Extract kit names - every kit should have time_played, if not theres no stats anyway
@@ -25,6 +23,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 		return (xp / nextPrestige.minXp) % 1;
 	}
 	function closestToOpal(xp: number, nextPrestige: KitPrestigeInfo): number {
+		if (nextPrestige.minXp === 0) return -1;
 		if (nextPrestige.key < 5) return -1;
 		return (xp / nextPrestige.minXp) % 1;
 
@@ -32,19 +31,18 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 
 	return (
 		<div className="min-h-160">
-			<div className="flex flex-col lg:flex-row lg:justify-between gap-4 items-center mb-4">
+			<div className="flex flex-row lg:justify-between gap-4 items-center mb-4">
 				<input
 					type="text"
 					placeholder="Search kits..."
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					className="bg-layer rounded-xl h-12 p-3"
+					className="w-2/5 lg:w-[200px] bg-layer rounded-xl h-12 p-3 "
 				/>
-				<p className="text-center"></p>
 				<select
 					id="kitPrestigeSortMode"
 					title="Sort by"
-					className="w-200px rounded-xl bg-layer p-3  h-12"
+					className="w-3/5 lg:w-[200px] rounded-xl bg-layer p-3  h-12"
 					onChange={(e) => setOrder(e.target.value as "xp" | "prestige" | "opal")}
 				>
 					<option value="xp">Highest EXP</option>
@@ -52,7 +50,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 					<option value="opal">Closest Opal</option>
 				</select>
 			</div>
-			<div className="flex flex-wrap gap-2 lg:gap-3 justify-center lg:justify-start">
+			<div className="flex flex-wrap gap-2 lg:gap-3 justify-center">
 				{filteredKitNames
 					.map((kit) => {
 						// console.log(kit);

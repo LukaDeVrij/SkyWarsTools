@@ -35,7 +35,7 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 	});
 
 	const [sortKey, setSortKey] = useState<keyof KitStats | "kit" | "wlr" | "kdr">("kit");
-	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
 	const handleSort = (key: keyof KitStats | "kit" | "wlr" | "kdr") => {
 		if (sortKey === key) {
