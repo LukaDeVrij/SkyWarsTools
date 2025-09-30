@@ -1,0 +1,755 @@
+{
+    "avarice": {
+        "title": "Avarice§r",
+        "slot": 4,
+        "image": "gold_nugget.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§8+0%➜§a+5% §7SkyWars Coins.",
+                "cost": 1
+            },
+            {
+                "text": "§8+5%➜§a+10% §7SkyWars Coins.",
+                "cost": 1
+            },
+            {
+                "text": "§8+10%➜§a+15% §7SkyWars Coins.",
+                "cost": 1
+            },
+            {
+                "text": "§8+15%➜§a+20% §7SkyWars Coins.",
+                "cost": 1
+            },
+            {
+                "text": "§8+20%➜§a+25% §7SkyWars Coins.",
+                "cost": 1
+            }
+        ],
+        "maxText": "§6+25% §7SkyWars Coins."
+    },
+    "projectiletrail_kings": {
+        "title": "King's Projectile Trail§r",
+        "slot": 11,
+        "image": "gold_helmet.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Show off like a true king with this\n§5§7amazing Projectile Trail.",
+                "cost": 1
+            }
+        ]
+    },
+    "grand_slam": {
+        "title": "Grand Slam§r",
+        "subtitle": "§5§8Permanent Upgrade",
+        "slot": 10,
+        "image": "dye_powder_brown.png",
+        "tiers": [
+            {
+                "text": "§5§7§7Earn §8+0➜§a+2 §bSouls §7from wins.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+2➜§a+4 §bSouls §7from wins.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+4➜§a+6 §bSouls §7from wins.",
+                "cost": 1
+            }
+        ],
+        "maxText": "§5§7§7Earn §b+6 §bSouls §7from wins."
+    },
+    "tenacity": {
+        "title": "Tenacity§r",
+        "slot": 9,
+        "image": "magma_cream.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Heal §c1❤ §7after each kill.",
+                "cost": 1
+            }
+        ]
+    },
+    "shard_seeker": {
+        "title": "Soul Seeker§r",
+        "slot": 12,
+        "image": "prismarine_crystals.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Earn §8+0%➜§a+2% §bSouls §7at the end of the\n§5§7game.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+2%➜§a+4% §bSouls §7at the end of the\n§5§7game.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+4%➜§a+6% §bSouls §7at the end of the\n§5§7game.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+6%➜§a+8% §bSouls §7at the end of the\n§5§7game.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§7Earn §8+8%➜§a+10% §bSouls §7at the end of the\n§5§7game.",
+                "cost": 1
+            }
+        ],
+        "maxText": "§5§7§7Earn §b+10% §bSouls §7at the end of the\n§5§7game."
+    },
+    "emblem_sigma_icon": {
+        "title": "Sigma Emblem§r",
+        "image": "book_writable.png",
+        "slot": 13,
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Show off your Angel's Descent\n§5§7progress with this cool looking,\n§5§7Greek inspired emblem.",
+                "cost": 2
+            }
+        ]
+    },
+    "meticulous_miner": {
+        "title": "Meticulous Miner§r",
+        "slot": 19,
+        "image": "iron_pickaxe.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §8+0%➜§a+2% §7chance to\n§5§7get double drops from ores.",
+                "cost": 1
+            },
+            {
+                "text": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §8+2%➜§a+4% §7chance to\n§5§7get double drops from ores.",
+                "cost": 1
+            },
+            {
+                "text": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §8+4%➜§a+6% §7chance to\n§5§7get double drops from ores.",
+                "cost": 1
+            },
+            {
+                "text": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §8+6%➜§a+8% §7chance to\n§5§7get double drops from ores.",
+                "cost": 1
+            },
+            {
+                "text": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §8+8%➜§a+10% §7chance to\n§5§7get double drops from ores.",
+                "cost": 1
+            }
+        ],
+        "maxText": "§5§eUpgrades Mining Expertise\n§5§7§7Grants an additional §a+10% §7chance to\n§5§7get double drops from ores."
+    },
+    "hide_and_seek": {
+        "title": "Hide and Seek§r",
+        "slot": 26,
+        "image": "compass.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Earn a Tracking Compass §a30s §7before\n§5§7chests refill.",
+                "cost": 2
+            }
+        ]
+    },
+    "killeffect_vaporized": {
+        "title": "Vaporized Kill Effect§r",
+        "slot": 27,
+        "image": "glass_white.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7When killing a player they will\n§5§7vaporize leaving behind a cloud that\n§5§7is the same color as your prestige.",
+                "cost": 3
+            }
+        ]
+    },
+    "midas_gift": {
+        "title": "Midas' Gift§r",
+        "slot": 25,
+        "image": "gold_ingot.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§6§lLUCKY KILLS §7give §8+0➜§a+20 Coins\n§5§6§7and §b+1 Soul§7.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§6§lLUCKY KILLS §7give §8+20➜§a+40 Coins\n§5§6§7and §b+1 Soul§7.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§6§lLUCKY KILLS §7give §8+40➜§a+60 Coins\n§5§6§7and §b+1 Soul§7.",
+                "cost": 1
+            },
+            {
+                "text": "§5§7§6§lLUCKY KILLS §7give §8+60➜§a+80 Coins\n§5§6§7and §b+1 Soul§7.",
+                "cost": 1
+            }
+        ],
+        "maxText": "§5§7§6§lLUCKY KILLS §7give §8+80 Coins\n§5§6§7and §b+1 Soul§7."
+    },
+    "angels_offering": {
+        "title": "Angel's Offering§r",
+        "slot": 24,
+        "image": "wither_skull.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§5+1% §5Corruption Chance.",
+                "cost": 5
+            }
+        ]
+    },
+    "killmessages_flex": {
+        "title": "Flex Kill Messages§r",
+        "slot": 23,
+        "image": "gold_sword.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Flex your might with these\n§5§7braggadocious kill messages!",
+                "cost": 4
+            }
+        ]
+    },
+    "first_blood": {
+        "title": "First Blood§r",
+        "slot": 31,
+        "image": "redstone_dust.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Your first kill in each game gives §6x2\n§5§6Coins§7.",
+                "cost": 1
+            }
+        ]
+    },
+    "fortune_teller": {
+        "title": "Fortune Teller§r",
+        "slot": 38,
+        "image": "enchanting_table_side.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Level 2 enchants are guaranteed to\n§5§7include §dSharpness I §7or §dProtection I\n§5§d§7for Swords and Armor respectively.",
+                "cost": 2
+            }
+        ]
+    },
+    "fireproof": {
+        "title": "Steel Quiver§r",
+        "slot": 45,
+        "image": "flint_and_steel.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§80%➜§a2% §7chance to light on fire.",
+                "cost": 3
+            },
+            {
+                "text": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§82%➜§a4% §7chance to light on fire.",
+                "cost": 3
+            },
+            {
+                "text": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§84%➜§a6% §7chance to light on fire.",
+                "cost": 3
+            },
+            {
+                "text": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§86%➜§a8% §7chance to light on fire.",
+                "cost": 3
+            },
+            {
+                "text": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§88%➜§a10% §7chance to light on fire.",
+                "cost": 3
+            }
+        ],
+        "maxText": "§5§eUpgrades Blazing Arrows\n§5§7§7Arrows you shoot have an additional\n§5§7§a10% §7chance to light on fire."
+    },
+    "cage_piston": {
+        "title": "Piston Cage§r",
+        "slot": 44,
+        "image": "piston_side.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Show off your redstone prowess\n§5§7with this crazy cage!",
+                "cost": 5
+            }
+        ]
+    },
+    "corrupted_coinage": {
+        "title": "Corrupted Coinage§r",
+        "subtitle": "§5§8Permanent Upgrade",
+        "image": "spider_eye.png",
+        "slot": 52,
+        "tiers": [
+            {
+                "text": "§5§7§5Corrupted Games §7give §8x1➜§ax2 Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§5Corrupted Games §7give §8x2➜§ax3 Coins§7.",
+                "cost": 3
+            }
+        ],
+        "maxText": "§5§7§5Corrupted Games §7give §6x3 Coins§7."
+    },
+    "librarian": {
+        "title": "Librarian§r",
+        "slot": 53,
+        "image": "bookshelf.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Earn a §dSharpness I§7, §dProtection I§7, or\n§5§7§dPower I §7book every §a3 §7kills.",
+                "cost": 10
+            }
+        ]
+    },
+    "luckier_charm": {
+        "title": "Luckier Charm§r",
+        "slot": 54,
+        "image": "apple_golden.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Lucky Charm\n§5§7§7Kills have an additional §80%➜§a1%\n§5§a§7chance to earn you a §6Golden Apple§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Lucky Charm\n§5§7§7Kills have an additional §81%➜§a2%\n§5§a§7chance to earn you a §6Golden Apple§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Lucky Charm\n§5§7§7Kills have an additional §82%➜§a3%\n§5§a§7chance to earn you a §6Golden Apple§7.",
+                "cost": 2
+            }
+        ],
+        "maxText": "§5§eUpgrades Lucky Charm\n§5§7§7Kills have an additional §a3% §7chance to\n§5§7earn you a §6Golden Apple§7."
+    },
+    "apothecary": {
+        "title": "Apothecary§r",
+        "slot": 55,
+        "image": "brewing_stand.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Positive potion effects have a §a30%\n§5§a§7longer duration.",
+                "cost": 4
+            }
+        ]
+    },
+    "victorydance_super_sheep": {
+        "title": "Super Sheep Victory Dance§r",
+        "slot": 48,
+        "image": "wool_colored_pink.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7A §dSuper Sheep §7will spawn and carry\n§5§7you across the map when you win a\n§5§7game.",
+                "cost": 6
+            }
+        ]
+    },
+    "cloak_falling_angel": {
+        "title": "Falling Angel Cloak§r",
+        "slot": 41,
+        "image": "ender_eye.png",
+        "subtitle": "§5§8New Lobby Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Showcase your Level and Prestige\n§5§7with this awesome Cloak, available in\n§5§7all lobbies.",
+                "cost": 7
+            }
+        ]
+    },
+    "killeffect_purple_tornado": {
+        "title": "Purple Tornado Kill Effect§r",
+        "slot": 40,
+        "image": "dye_powder_purple.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7A Purple Tornado will appear when\n§5§7you kill a player.",
+                "cost": 8
+            }
+        ]
+    },
+    "sorcerers_spell": {
+        "title": "Sorcerer's Spell§r",
+        "slot": 62,
+        "image": "ender_pearl.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §80%➜§a1%\n§5§a§7chance to earn you an §3Ender Pearl§7.",
+                "cost": 4
+            },
+            {
+                "text": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §81%➜§a2%\n§5§a§7chance to earn you an §3Ender Pearl§7.",
+                "cost": 4
+            },
+            {
+                "text": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §82%➜§a3%\n§5§a§7chance to earn you an §3Ender Pearl§7.",
+                "cost": 4
+            },
+            {
+                "text": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §83%➜§a4%\n§5§a§7chance to earn you an §3Ender Pearl§7.",
+                "cost": 4
+            },
+            {
+                "text": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §84%➜§a5%\n§5§a§7chance to earn you an §3Ender Pearl§7.",
+                "cost": 4
+            }
+        ],
+        "maxText": "§5§eUpgrades Black Magic\n§5§7§7Void kills have an additional §a5% §7chance to\n§5§7earn you an §3Ender Pearl§7."
+    },
+    "fruit_finder": {
+        "title": "Fruit Finder§r",
+        "slot": 69,
+        "image": "nether_star.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7The first mid chest you open is\n§5§7guaranteed to have a §6Golden Apple§7.",
+                "cost": 10
+            }
+        ]
+    },
+    "ender_end_game": {
+        "title": "Ender End Game§r",
+        "slot": 68,
+        "image": "ender_chest.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Refilled chests are §a§a10% §7more likely\n§5§7to contain an §3Ender Pearl§7.",
+                "cost": 5
+            }
+        ]
+    },
+    "smarty_pants": {
+        "title": "Big Brain§r",
+        "slot": 67,
+        "image": "dye_powder_pink.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Knowledge\n§5§7§7Kills grant an additional §a+2 §7EXP\n§5§7Levels.",
+                "cost": 2
+            }
+        ]
+    },
+    "killmessages_rainbow": {
+        "title": "Rainbow Kill Messages§r",
+        "slot": 66,
+        "image": "wool_colored_yellow.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§cD§6O§eU§aB§bL§dE§5 §cR§6A§eI§aN§bB§dO§5W§r§7 ALL THE WAY!",
+                "cost": 9
+            }
+        ]
+    },
+    "diamond_in_the_rough": {
+        "title": "Diamond In The Rough§r",
+        "slot": 74,
+        "image": "diamond.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Grants a §80%➜§a5% §7chance to earn a\n§5§7§bDiamond §7on kill.",
+                "cost": 2
+            },
+            {
+                "text": "§5§7§7Grants a §85%➜§a10% §7chance to earn a\n§5§7§bDiamond §7on kill.",
+                "cost": 2
+            },
+            {
+                "text": "§5§7§7Grants a §810%➜§a15% §7chance to earn a\n§5§7§bDiamond §7on kill.",
+                "cost": 2
+            },
+            {
+                "text": "§5§7§7Grants a §815%➜§a20% §7chance to earn a\n§5§7§bDiamond §7on kill.",
+                "cost": 2
+            },
+            {
+                "text": "§5§7§7Grants a §820%➜§a25% §7chance to earn a\n§5§7§bDiamond §7on kill.",
+                "cost": 2
+            }
+        ],
+        "maxText": "§5§7§7Grants a §a25% §7chance to earn a\n§5§7§bDiamond §7on kill."
+    },
+    "telekinesis": {
+        "title": "Adrenaline§r",
+        "slot": 81,
+        "image": "sugar.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Speed Boost\n§5§7§7Gain §a7s §7of §9Speed I §7at the start of\n§5§7the game.",
+                "cost": 5
+            }
+        ]
+    },
+    "cage_balancing_act": {
+        "title": "Balancing Act Cage§r",
+        "slot": 80,
+        "image": "hardened_clay_stained_orange.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Dominate the skies with a powerful\n§5§7tower of colourful blocks!",
+                "cost": 10
+            }
+        ]
+    },
+    "distillery_discount": {
+        "title": "Distillery Discount§r",
+        "slot": 82,
+        "image": "potion_bottle_drinkable.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Potions in the §cAngel's Brewery §7cost\n§8-0%➜§a-5% §6Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§7Potions in the §cAngel's Brewery §7cost\n§8-5%➜§a-10% §6Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§7Potions in the §cAngel's Brewery §7cost\n§8-10%➜§a-15% §6Coins§7.",
+                "cost": 3
+            }
+        ],
+        "maxText": "§5§7§7Potions in the §cAngel's Brewery §7cost\n§5§7§6-15% §6Coins§7."
+    },
+    "chilled_quiver": {
+        "title": "Chilled Quiver§r",
+        "slot": 83,
+        "image": "ice_packed.png",
+        "subtitle": "§5§8Perk Upgrade",
+        "tiers": [
+            {
+                "text": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §8+0%➜§a+2%\n§5§a§7chance to inflict §9Slowness I §7for §a3s§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §8+2%➜§a+4%\n§5§a§7chance to inflict §9Slowness I §7for §a3s§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §8+4%➜§a+6%\n§5§a§7chance to inflict §9Slowness I §7for §a3s§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §8+6%➜§a+8%\n§5§a§7chance to inflict §9Slowness I §7for §a3s§7.",
+                "cost": 2
+            },
+            {
+                "text": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §8+8%➜§a+10%\n§5§a§7chance to inflict §9Slowness I §7for §a3s§7.",
+                "cost": 2
+            }
+        ],
+        "maxText": "§5§eUpgrades Frost\n§5§7Bow crits have an additional §a+10% §7chance to\n§5§7inflict §9Slowness I §7for §a3s§7."
+    },
+    "archeologist_kit_opal": {
+        "title": "Archeologist Kit§r",
+        "slot": 88,
+        "image": "gold_pickaxe.png",
+        "subtitle": "§5§8New Kit",
+        "tiers": [
+            {
+                "text": "§5§7§7Pay homage to 9 years of SkyWars\n§5§7by rocking this awesome kit!",
+                "cost": 13
+            }
+        ]
+    },
+    "opalsmith": {
+        "title": "Opalsmith§r",
+        "slot": 95,
+        "image": "opal_head.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§9Opals §7only cost §b1,250 §bSouls §7to forge.",
+                "cost": 7
+            }
+        ]
+    },
+    "double_edged_sword": {
+        "title": "Double-Edged Sword§r",
+        "slot": 102,
+        "image": "wood_sword.png",
+        "subtitle": "§5§8New Perk",
+        "tiers": [
+            {
+                "text": "§5§7§7Your first §a3 §7Sword kills put a\n§5§7§dSharpness §7level on your Sword but\n§5§7inflict §c-2 Max ❤§7.",
+                "cost": 9
+            }
+        ]
+    },
+    "quest_masters_friend": {
+        "title": "Quest Master's Best Friend§r",
+        "slot": 103,
+        "image": "emerald.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Quests reward §8+0%➜§a+5% §6Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§7Quests reward §8+5%➜§a+10% §6Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§7Quests reward §8+10%➜§a+15% §6Coins§7.",
+                "cost": 3
+            },
+            {
+                "text": "§5§7§7Quests reward §8+15%➜§a+20% §6Coins§7.",
+                "cost": 3
+            }
+        ],
+        "maxText": "§5§7§7Quests reward §6+20% §6Coins§7."
+    },
+    "dragons_pledge": {
+        "title": "Dragon's Pledge§r",
+        "subtitle": "§5§8New Perk",
+        "slot": 104,
+        "image": "end_stone.png",
+        "tiers": [
+            {
+                "text": "§5§7§7An §3Ender Pearl §7replaces the loot in\n§5§7one of your island chests. You start\n§5§7with only §c7 Max ❤§7.",
+                "cost": 10
+            }
+        ]
+    },
+    "balloon_dual_dragon": {
+        "title": "Dual Dragon Balloon§r",
+        "slot": 97,
+        "image": "bedrock.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7Double the dragon, double the flex!",
+                "cost": 12
+            }
+        ]
+    },
+    "deathcry_eponymous_dragon": {
+        "title": "Eponymous Dragon Death Cry§r",
+        "slot": 111,
+        "image": "bedrock.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7It's in the name!",
+                "cost": 12
+            }
+        ]
+    },
+    "kill_xp_boost": {
+        "title": "Kill XP Boost§r",
+        "slot": 109,
+        "image": "experience_bottle.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Kills and Assists each give an\n§5§7additional §b+1 XP§7.",
+                "cost": 10
+            }
+        ]
+    },
+    "perk_slot": {
+        "title": "7th Perk Slot§r",
+        "slot": 116,
+        "image": "diamond_block.png",
+        "subtitle": "§5§8Permanent Upgrade",
+        "tiers": [
+            {
+                "text": "§5§7§7Unlocks a final §a7th Perk Slot §7in\n§5§7Normal and Mega Skywars.",
+                "cost": 20
+            }
+        ]
+    },
+    "projectiletrail_descent_dragon": {
+        "title": "Descent Dragon Projectile Trail§r",
+        "slot": 115,
+        "image": "arrow.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7Prestige-ified version of the §6Double\n§5§6Dragon Projectile Trail§7.",
+                "cost": 12
+            }
+        ]
+    },
+    "emblem_delta_icon": {
+        "title": "Delta Emblem§r",
+        "slot": 114,
+        "image": "deadbush.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Go against the flow with this dead\n§5§7bush-inspired emblem.",
+                "cost": 14
+            }
+        ]
+    },
+    "victorydance_double_dragons_descent": {
+        "title": "Double Dragon's Descent Victory Dance§r",
+        "slot": 107,
+        "image": "hopper.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7Call upon not one, not three, not\n§5§7four, but TWO Dragons to descend\n§5§7through the map.",
+                "cost": 16
+            }
+        ]
+    },
+    "cloak_angels_prestige": {
+        "title": "Angel's Prestige Cloak§r",
+        "slot": 100,
+        "image": "ender_eye.png",
+        "subtitle": "§5§8New Lobby Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7§7Show off how many max §dKit Prestiges\n§5§d§7you have with this tubular Cloak,\n§5§7available in all lobbies.",
+                "cost": 18
+            }
+        ]
+    },
+    "scheme_demigod": {
+        "title": "Demigod Prestige Scheme§r",
+        "slot": 93,
+        "image": "feather.png",
+        "subtitle": "§5§8New Cosmetic",
+        "tiers": [
+            {
+                "text": "§5§7Fallen from grace.",
+                "cost": 20
+            }
+        ]
+    },
+    "fallen_angel_kit": {
+        "title": "Fallen Angel Kit§r",
+        "slot": 123,
+        "image": "diamond_hoe.png",
+        "subtitle": "§5§8New Kit",
+        "tiers": [
+            {
+                "text": "§5§7Commemorate your fall from grace\n§5§7with this totally tubular kit!",
+                "cost": 25
+            }
+        ]
+    }
+}

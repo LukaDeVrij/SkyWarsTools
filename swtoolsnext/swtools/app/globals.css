@@ -1,0 +1,181 @@
+@import "../node_modules/react-widgets/styles.css";
+@import "tailwindcss";
+
+body {
+	font-family: "Montserrat", system-ui, sans-serif;
+}
+
+:root {
+	--background: #0c0c0c;
+	--background-nav: #1a1a1a;
+	--background-layer: #1e2434;
+	--background-content: #31394c;
+	--background-button: #1c7031;
+	--background-button-hover: #23570f;
+	--foreground: #ededed;
+	--accent: #ffcd22;
+}
+/*  for the two navbars at the top */
+.bg-nav {
+	background: var(--background-nav);
+}
+.bg-main {
+	background: var(--background-layer);
+}
+.bg-content {
+	background: var(--background-content);
+}
+.bg-layer {
+	background: var(--background-layer);
+}
+.bg-accent {
+	background: var(--accent);
+}
+.bg-button {
+	background: var(--background-button);
+}
+.bg-button:hover {
+	background: var(--background-button-hover);
+}
+.text-accent {
+	color: var(--accent);
+}
+
+body {
+	background: var(--background);
+	color: var(--foreground);
+	overflow-y: scroll;
+}
+
+@font-face {
+	font-family: "Minecraft";
+	src: url("/fonts/MinecraftRegular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "MinecraftWOFF";
+	src: url("/fonts/MinecraftWOFF.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.font-minecraft {
+	font-family: "Minecraft", system-ui, sans-serif;
+}
+
+.animate-press {
+	transition: transform 0.1s;
+}
+
+.animate-press:active {
+	transform: scale(0.98);
+}
+
+.animate-press-hard {
+	transition: transform 0.1s;
+}
+
+.animate-press-hard:active {
+	transform: scale(0.92);
+}
+
+.animate-scale {
+	animation: pulse-scale 1.5s infinite;
+}
+
+@keyframes pulse-scale {
+	0% {
+		transform: scale(0.9);
+	}
+	50% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0.9);
+	}
+}
+
+.extended-table > table > tbody > tr > td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.enchanted {
+	position: relative;
+	overflow: hidden;
+}
+
+.enchanted::before {
+	content: "";
+	position: absolute;
+	top: -200%;
+	left: -200%;
+	width: 500%;
+	height: 500%;
+	background: linear-gradient(120deg, rgba(5, 5, 5, 0.2) 0%, rgba(90, 100, 0, 0.5) 50%, rgba(120, 0, 255, 0.2) 100%);
+	mix-blend-mode: lighten;
+	animation: enchanted-shine 2s alternate infinite;
+	pointer-events: none;
+}
+
+@keyframes enchanted-shine {
+	0% {
+		transform: rotate(0deg) translateX(-20%) scale(1.1);
+		opacity: 0.7;
+	}
+	50% {
+		transform: rotate(10deg) translateX(20%) scale(1.1);
+		opacity: 1;
+	}
+	100% {
+		transform: rotate(0deg) translateX(-20%) scale(1.1);
+		opacity: 0.7;
+	}
+}
+
+.selected-tab {
+	background: #31394c;
+}
+
+
+/* Modern transparent scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	display: hidden;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	appearance: textfield;
+	-moz-appearance: textfield;
+}
+
+html {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+& .MuiTooltip-tooltip {
+	font-size: 16px;
+	background-color: rgba(0, 0, 0, 0.842);
+	font-family: "Montserrat", system-ui, sans-serif;
+}
