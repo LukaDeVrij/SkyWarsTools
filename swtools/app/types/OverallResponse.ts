@@ -698,9 +698,19 @@ export interface Stats {
 	"deaths_kit_mythical_nether-lord"?: number;
 	"time_played_kit_mythical_nether-lord"?: number;
 	"xp_kit_mythical_nether-lord"?: number;
+
+	wins_kit_mini_solo_athlete?: number;
 	kills_kit_mini_solo_athlete?: number;
 	time_played_kit_mini_solo_athlete?: number;
 	xp_kit_mini_solo_athlete?: number;
+	wins_kit_mini_solo_blacksmith?: number;
+	kills_kit_mini_solo_blacksmith?: number;
+	time_played_kit_mini_solo_blacksmith?: number;
+	xp_kit_mini_solo_blacksmith?: number;
+	wins_kit_mini_solo_bowman?: number;
+	kills_kit_mini_solo_bowman?: number;
+	time_played_kit_mini_solo_bowman?: number;
+	xp_kit_mini_solo_bowman?: number;
 	wins_kit_mini_solo_champion?: number;
 	kills_kit_mini_solo_champion?: number;
 	time_played_kit_mini_solo_champion?: number;
@@ -709,6 +719,10 @@ export interface Stats {
 	kills_kit_mini_solo_healer?: number;
 	time_played_kit_mini_solo_healer?: number;
 	xp_kit_mini_solo_healer?: number;
+	wins_kit_mini_solo_hound?: number;
+	kills_kit_mini_solo_hound?: number;
+	time_played_kit_mini_solo_hound?: number;
+	xp_kit_mini_solo_hound?: number;
 	wins_kit_mini_solo_magician?: number;
 	kills_kit_mini_solo_magician?: number;
 	time_played_kit_mini_solo_magician?: number;
@@ -717,6 +731,10 @@ export interface Stats {
 	kills_kit_mini_solo_paladin?: number;
 	time_played_kit_mini_solo_paladin?: number;
 	xp_kit_mini_solo_paladin?: number;
+	wins_kit_mini_solo_pyromancer?: number;
+	kills_kit_mini_solo_pyromancer?: number;
+	time_played_kit_mini_solo_pyromancer?: number;
+	xp_kit_mini_solo_pyromancer?: number;
 	wins_kit_mini_solo_scout?: number;
 	kills_kit_mini_solo_scout?: number;
 	time_played_kit_mini_solo_scout?: number;

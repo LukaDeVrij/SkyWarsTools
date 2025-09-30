@@ -152,7 +152,7 @@ export const keys = [
 			mode: "",
 			kits: ["end-lord", "thundermeister", "cryomancer", "fishmonger", "chronobreaker", "monster-trainer", "nether-lord"],
 		},
-		{ type: "mini", mode: "solo", kits: ["athlete", "champion", "healer", "magician", "paladin", "scout"] },
+		{ type: "mini", mode: "solo", kits: ["armorer","athlete","blacksmith", "bowman", "champion", "healer", "hound", "magician", "paladin", "pyromancer", "scout"] },
 	].flatMap(({ type, mode, kits }) =>
 		kits.flatMap((kit) =>
 			["wins", "losses", "kills", "deaths", "time_played", "xp"].map((stat) => {
