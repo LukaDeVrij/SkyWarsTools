@@ -138,6 +138,7 @@ export const keys = [
 				"enderman",
 				"energix",
 				"fallen-angel",
+        "engineer",
 				"fisherman",
 				"grenade",
 				"hunter",
