@@ -65,6 +65,7 @@ export const keys = [
 				"enchanter",
 				"enderman",
 				"farmer",
+				"guardian",
 				"hunter",
 				"jester",
 				"knight",
@@ -91,6 +92,7 @@ export const keys = [
 				"disco",
 				"ecologist",
 				"energix",
+				"fallen-angel",
 				"fisherman",
 				"frog",
 				"grenade",
@@ -132,9 +134,11 @@ export const keys = [
 			type: "attacking",
 			mode: "team",
 			kits: [
+				"archeologist",
 				"enderman",
 				"energix",
-   "engineer",
+				"fallen-angel",
+        "engineer",
 				"fisherman",
 				"grenade",
 				"hunter",
@@ -144,6 +148,7 @@ export const keys = [
 				"salmon",
 				"scout",
 				"slime",
+				"sloth",
 				"snowman",
 			],
 		},
@@ -153,7 +158,7 @@ export const keys = [
 			mode: "",
 			kits: ["end-lord", "thundermeister", "cryomancer", "fishmonger", "chronobreaker", "monster-trainer", "nether-lord"],
 		},
-		{ type: "mini", mode: "solo", kits: ["athlete", "champion", "healer", "magician", "paladin", "scout"] },
+		{ type: "mini", mode: "solo", kits: ["armorer","athlete","blacksmith", "bowman", "champion", "healer", "hound", "magician", "paladin", "pyromancer", "scout"] },
 	].flatMap(({ type, mode, kits }) =>
 		kits.flatMap((kit) =>
 			["wins", "losses", "kills", "deaths", "time_played", "xp"].map((stat) => {
@@ -180,7 +185,7 @@ export const keys = [
 	{ name: "Losses", value: "losses" },
 	{ name: "Time Played", value: "time_played" },
 	// Game mode stats
-	...["solo", "team", "mini"].flatMap((mode) => [
+	...["solo", "team", "mini", "lab"].flatMap((mode) => [
 		{ name: `Wins ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `wins_${mode}` },
 		{ name: `Losses ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `losses_${mode}` },
 		{ name: `Kills ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `kills_${mode}` },

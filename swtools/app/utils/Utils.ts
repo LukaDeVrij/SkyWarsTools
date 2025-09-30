@@ -632,7 +632,7 @@ export function calcPrestigeTag(level: number): string {
 				})
 				.join("");
 		} else {
-			prestigeTag = prestigeTag;
+			prestigeTag = prestigeData.rank + prestigeTag;
 		}
 
 		prestigeTag = prestigeTag.slice(0, -1) + (prestigeData.emblem ?? "") + "✯" + prestigeTag.slice(-1);

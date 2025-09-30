@@ -12,17 +12,17 @@ import { notFound } from "next/navigation";
 const Prestige: React.FC<OverallResponse> = async (response) => {
 	// hacky fix
 	// TODO fucking bs bug cost me 2 hours - for some reason we need to refetch the data here, otherwise its undefined half the time??? some SSR bs
-	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(response.player)}`, {
-		next: { revalidate: 300 },
-	});
-	// I mean its not that big a deal since its cached and all but still
-	if (!res.ok) {
-		console.log(res.statusText);
-		notFound();
-	}
-	const overallData = await res.json();
-	response = overallData;
-	// hacky fix over
+	// const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(response.player)}`, {
+	// 	next: { revalidate: 300 },
+	// });
+	// // I mean its not that big a deal since its cached and all but still
+	// if (!res.ok) {
+	// 	console.log(res.statusText);
+	// 	notFound();
+	// }
+	// const overallData = await res.json();
+	// response = overallData;
+	// // hacky fix over
 
 	const rank = getPlayerRank(response);
 
@@ -117,13 +117,13 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 								<td className="flex gap-2 items-center">
 									Wins at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td className="text-right">{(response.stats.wins ?? 0 + winsNeeded).toLocaleString()}</td>
+								<td className="text-right">{((response.stats.wins ?? 0) + winsNeeded).toLocaleString()}</td>
 							</tr>
 							<tr>
 								<td className="flex gap-2 items-center">
 									Kills at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td className="text-right">{(response.stats.kills ?? 0 + killsNeeded).toLocaleString()}</td>
+								<td className="text-right">{((response.stats.kills ?? 0) + killsNeeded).toLocaleString()}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -190,13 +190,13 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 								<td className="flex gap-3">
 									Wins at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td>{(response.stats.wins ?? 0 + winsNeeded).toLocaleString()}</td>
+								<td>{((response.stats.wins ?? 0) + winsNeeded).toLocaleString()}</td>
 							</tr>
 							<tr>
 								<td className="flex gap-3">
 									Kills at <MinecraftText>{nextPrestigeString}</MinecraftText> ≈
 								</td>
-								<td>{(response.stats.kills ?? 0 + killsNeeded).toLocaleString()}</td>
+								<td>{((response.stats.kills ?? 0) + killsNeeded).toLocaleString()}</td>
 							</tr>
 						</tbody>
 					</table>

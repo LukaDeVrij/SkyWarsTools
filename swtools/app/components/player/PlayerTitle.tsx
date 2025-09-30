@@ -135,14 +135,13 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="flex items-center gap-2 text-sm lg:text-lg">
 						{nationality && (
-							<span className="text-2xl hidden lg:inline" title={nationality.split(" ")[0]}>
-								<span
-									dangerouslySetInnerHTML={{
-										__html: twemoji.parse(nationality.split(" ")[1] ?? "", { folder: "svg", ext: ".svg" }),
-									}}
-									style={{ width: 28, height: 28, display: "inline-block" }}
-								/>
-							</span>
+							<span
+								dangerouslySetInnerHTML={{
+									__html: twemoji.parse(nationality.split(" ")[1] ?? "", { folder: "svg", ext: ".svg" }),
+								}}
+								style={{ width: 28, height: 28, display: "inline-block" }}
+								title={nationality.split(" ")[0] ?? ""}
+							/>
 						)}
 						{response.guild.guild && (
 							<span className="font-semibold hidden lg:flex flex-row gap-2 items-center">

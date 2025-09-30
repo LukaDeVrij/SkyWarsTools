@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import TopNavBar from "./components/navbar/TopNavBar";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
 	title: "SkyWarsTools",

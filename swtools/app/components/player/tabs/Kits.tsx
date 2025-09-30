@@ -5,26 +5,32 @@ import TabContent from "./TabContent";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import KitPrestiges from "./kits/KitPrestiges";
 import KitsUniversalTable from "./kits/KitsUniversalTable";
+import { keys } from "@/app/utils/LeaderboardKeys";
 
 const Kits: React.FC<OverallResponse> = (response) => {
+
+	const allKeys = keys;
+
 	// fucking ts
 	const mini_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 	const normal_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 	const insane_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 	const mythical_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 
-	Object.keys(response.stats).forEach((key) => {
+	allKeys.forEach((kv) => {
+		const key = kv.value;
 		if (!key.includes("_kit_")) return;
 		if (key.includes("_mini_solo_")) {
-			mini_kits[key] = response.stats[key as keyof OverallResponse["stats"]];
+			mini_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		} else if (key.includes("_team_")) {
-			insane_kits[key] = response.stats[key as keyof OverallResponse["stats"]];
+			insane_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		} else if (key.includes("_mythical_")) {
-			mythical_kits[key] = response.stats[key as keyof OverallResponse["stats"]];
+			mythical_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		} else if (key.includes("_solo_")) {
-			normal_kits[key] = response.stats[key as keyof OverallResponse["stats"]];
+			normal_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		}
 	});
+
 
 	return (
 		<Tabs>
@@ -45,7 +51,7 @@ const Kits: React.FC<OverallResponse> = (response) => {
 
 			<TabPanel>
 				<TabContent>
-					<KitPrestiges {...response} />
+					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits }} />
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
