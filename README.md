@@ -3,7 +3,7 @@
 >Open source front end, issue and patch notes tracker for https://skywarstools.com
 
 ## Open source front-end
-I am working on a new front end with optimized UI that actually makes use of a framework instead of plain HTML/CSS/JS. Bare with me while I get the basics of React and NextJS. 
+The front end is open source and can be contributed to in this github repo. Any questions? Join the Discord.
 
 ## What is SkyWarsTools?
 SkyWarsTools is a stats website, similar to Plancke, Shmeado or Skycrypt. It specializes in tools for SkyWars. Similarly to the other tools, stats can be looked up for any player. But, every time someone does, these stats are also saved. This allows for stats progression through time.
@@ -12,7 +12,7 @@ Using these so-called 'snapshots' of stats, you can compare a snapshots with one
 
 ## Where do I use this tool?
 The tool can be found at the following URL:
->https://lukatools.nl/hypixeltools
+> https://skywarstools.com
 
 ## How do I use this tool?
 Please refer to the GitHub wiki pages for explanations of specific pages and features.
