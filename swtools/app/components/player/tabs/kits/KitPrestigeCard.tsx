@@ -40,9 +40,10 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 	const [customXpPerHour, setCustomXpPerHour] = React.useState(initialXpPerHour);
 
 	let glitched = false;
-	// TODO find a better way at detecting glitched kits via lucky blocks
 	if (kitName.includes("team")) {
-		if (initialXpPerHour > 15000) {
+		let xp = stats.xp ?? 0;
+		let kills = stats.kills ?? 0;
+		if (kills * 25 < xp) {
 			glitched = true;
 		}
 	}
@@ -92,7 +93,11 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		<div
 			className={
 				`bg-gray-900 rounded-xl p-4 w-75 h-${maxHeight} overflow-hidden  cursor-pointer shadow-lg border ` +
-				(maxed ? "enchanted border-amber-400" : glitched ? "border-red-500 bg-red-900/50" : "border-gray-700")
+				(glitched
+					? "border-red-500 bg-red-900/50"
+					: maxed
+					? "enchanted border-amber-400"
+					: "border-gray-700")
 			}
 			onClick={() => toggleHeight()}
 		>
