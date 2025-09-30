@@ -134,6 +134,7 @@ export const keys = [
 			kits: [
 				"enderman",
 				"energix",
+   "engineer",
 				"fisherman",
 				"grenade",
 				"hunter",
