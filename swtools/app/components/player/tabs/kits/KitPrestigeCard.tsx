@@ -41,8 +41,8 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 
 	let glitched = false;
 	if (kitName.includes("team")) {
-		let xp = stats.xp ?? 0;
-		let kills = stats.kills ?? 0;
+		const xp = stats.xp ?? 0;
+		const kills = stats.kills ?? 0;
 		if (kills * 25 < xp) {
 			glitched = true;
 		}
