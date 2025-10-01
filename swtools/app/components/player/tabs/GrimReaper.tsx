@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import DescentGUI from "./reaper/DescentGUI";
-import { calculateOpalsSpent, combineDescentData, fetcher } from "@/app/utils/Utils";
-import { LoaderCircle } from "lucide-react";
+import { calcLevel, calculateOpalsSpent, combineDescentData, fetcher } from "@/app/utils/Utils";
+import { Check, LoaderCircle, X } from "lucide-react";
 import { DescentMap } from "@/app/types/DescentMap";
 import Title from "../../universal/Title";
 import SoulUpgrades from "./reaper/SoulUpgrades";
@@ -70,6 +70,9 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 						<div className="w-full lg:w-1/2 h-100rem bg-content py-3 px-4 flex flex-col gap-2 items-center rounded-2xl">
 							<h2 className="font-semibold flex items-center flex-col justify-center text-center">
 								<Title color="text-blue-400">Angel&apos;s Descent</Title>
+								<span className="flex flex-row gap-2">Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
+									{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? <Check className="text-green-500" /> : <X className="text-red-500" />}
+								</span>
 								<span className="text-base">
 									Hover over upgrades for details<br></br> Descent is as it appears on Hypixel
 								</span>

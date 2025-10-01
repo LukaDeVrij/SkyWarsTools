@@ -17,6 +17,17 @@ const socials = {
 	HYPIXEL: "/icons/hypixel.png",
 };
 
+const linkPrefixes = {
+	TWITTER: "https://twitter.com/",
+	YOUTUBE: "",
+	INSTAGRAM: "https://www.instagram.com/",
+	TIKTOK: "https://www.tiktok.com/@",
+	TWITCH: "https://www.twitch.tv/",
+	DISCORD: "https://discord.com/users/",
+	HYPIXEL: "",
+
+}
+
 const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => {
 	const links = response.stats.socialMedia?.links;
 	return (
@@ -29,7 +40,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
 							return (
-								<a key={social} href={links[socialKey]}>
+								<a key={social} href={linkPrefixes[socialKey] + links[socialKey]}>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
