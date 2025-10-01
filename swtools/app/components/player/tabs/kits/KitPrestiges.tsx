@@ -23,8 +23,8 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 		return (xp / nextPrestige.minXp) % 1;
 	}
 	function closestToOpal(xp: number, nextPrestige: KitPrestigeInfo): number {
-		if (nextPrestige.minXp === 0) return -1;
-		if (nextPrestige.key < 5) return -1;
+		if (nextPrestige.minXp === 0) return -99;
+		if (nextPrestige.key < 4) return -((7 - nextPrestige.key) - (1 / (nextPrestige.minXp / xp))); // wow this is stupid but it works
 		return (xp / nextPrestige.minXp) % 1;
 
 	}

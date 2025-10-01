@@ -31,40 +31,37 @@ const PatreonPlayerList = () => {
 				{!isLoading &&
 					!error &&
 					data &&
-					data.supporters.map((supporter, index) => (
-						<a
-							href={`/player/${supporter.name}/stats/table`}
-							key={index}
-							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted"
-						>
-							{supporter.mc_account ? (
+					data.supporters.map((supporter, index) => {
+						if (!supporter.mc_account) return null;
+						return (
+							<a
+								href={`/player/${supporter.name}/stats/table`}
+								key={index}
+								className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted"
+							>
 								<Image
 									src={`https://www.mc-heads.net/avatar/${supporter.mc_account}`}
-									alt={supporter.mc_account}
+									alt={supporter.mc_account ?? "Minecraft avatar"}
 									width={40}
 									height={40}
 									className="rounded"
 								/>
-							) : (
-								<div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded">
-									<span className="text-xl">?</span>
+								<div className="min-w-0">
+									<div className="font-semibold truncate max-w-[225px] flex gap-2 items-center">
+										<span className="truncate max-w-[190px]">{supporter.name ?? "Unknown"}</span>
+										{
+											<span
+												dangerouslySetInnerHTML={{
+													__html: twemoji.parse(supporter.emoji ?? "", { folder: "svg", ext: ".svg" }),
+												}}
+												style={{ width: 28, height: 28, display: "inline-block" }}
+											/>
+										}
+									</div>
 								</div>
-							)}
-							<div className="min-w-0">
-								<div className="font-semibold truncate max-w-[225px] flex gap-2 items-center">
-									<span className="truncate max-w-[190px]">{supporter.name ?? "Unknown"}</span>
-									{
-										<span
-											dangerouslySetInnerHTML={{
-												__html: twemoji.parse(supporter.emoji ?? "", { folder: "svg", ext: ".svg" }),
-											}}
-											style={{ width: 28, height: 28, display: "inline-block" }}
-										/>
-									}
-								</div>
-							</div>
-						</a>
-					))}
+							</a>
+						);
+					})}
 			</div>
 		</>
 	);

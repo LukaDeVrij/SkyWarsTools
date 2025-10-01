@@ -133,7 +133,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 					/>
 				</div>
 				<div className="text-xl font-montserrat justify-between lg:flex">
-					<div className="flex items-center gap-2 text-sm lg:text-lg">
+					<div className="items-center gap-2 text-lg hidden lg:flex">
 						{nationality && (
 							<span
 								dangerouslySetInnerHTML={{

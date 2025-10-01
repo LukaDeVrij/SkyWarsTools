@@ -157,13 +157,23 @@ export default function CalculatePage() {
 						<div id="selectionOptions" className="flex flex-col gap-2 mb-4">
 							<div className="flex gap-2 justify-center mb-2 flex-wrap w-100">
 								{[
-									{ label: "Last 7", value: 7 },
-									{ label: "Last 14", value: 14 },
-									{ label: "Last 21", value: 21, disabled: disabled },
-									{ label: "Past 7 days", value: "past7days" },
-									{ label: "Past 14 days", value: "past14days" },
+									{ label: "Last 7", value: 7, title: "Auto-select the latest 7 snapshots" },
+									{ label: "Last 14", value: 14, title: "Auto-select the latest 14 snapshots" },
+									{
+										label: "Last 21",
+										value: 21,
+										disabled: disabled,
+										title: "Auto-select the latest 21 snapshots. Only available when logged in.",
+									},
+									{ label: "Past 7 days", value: "past7days", title: "Select all snapshots of the past 7 days" },
+									{ label: "Past 14 days", value: "past14days", title: "Select all snapshots of the past 14 days" },
+									{
+										label: "14 overall spread",
+										value: "overall14",
+										title: "Select 14 snapshots, spread from the first ever to most recent",
+									},
 								].map((opt) => (
-									<Tooltip key={opt.value} title={opt.disabled ? "Log in to be able to use more than 14 snapshots!" : ""}>
+									<Tooltip key={opt.value} title={opt.title} placement="top">
 										<span>
 											<button
 												className={`px-4 py-2 rounded-xl font-semibold border animate-press ${
@@ -184,6 +194,17 @@ export default function CalculatePage() {
 																allSnapshots?.filter((s) => s.queried >= daysAgo).map((s) => s.queried) ??
 																[];
 															setSelectedSnapshots(filtered);
+														} else if (opt.value === "overall14") {
+															if (allSnapshots && allSnapshots.length >= 14) {
+																const step = (allSnapshots.length - 1) / 13;
+																const spread = Array.from(
+																	{ length: 14 },
+																	(_, i) => allSnapshots[Math.round(i * step)].queried
+																);
+																setSelectedSnapshots(spread);
+															} else {
+																setSelectedSnapshots(allSnapshots?.map((s) => s.queried) ?? []);
+															}
 														} else {
 															setSelectedSnapshots(
 																allSnapshots?.slice(0, Number(opt.value)).map((s) => s.queried) ?? []
@@ -204,7 +225,7 @@ export default function CalculatePage() {
 									setCustomDatePickerOpen(!customDatePickerOpen);
 								}}
 							>
-								Open custom picker
+								{customDatePickerOpen ? "Close Custom Date Picker" : "Open Custom Date Picker"}
 							</div>
 						</div>
 						{customDatePickerOpen && (
@@ -219,7 +240,7 @@ export default function CalculatePage() {
 							</>
 						)}
 						<div className="mb-2 underline">
-							<Tooltip title={selectedSnapshots.map((s) => new Date(s).toLocaleDateString()).join(", ")}>
+							<Tooltip title={selectedSnapshots.map((s) => new Date(s).toLocaleDateString()).join(", ")} placement="top">
 								<strong>
 									{selectedSnapshots.length === 0
 										? "No snapshots selected"
@@ -313,11 +334,13 @@ export default function CalculatePage() {
 							Calculate
 						</button>
 						{/* TODO fix unstateful state selectionErrors - then we can only show thius when selectionErrors > 0*/}
-						<div className={"errors mt-6 rounded-xl bg-red-300 p-2 text-red-900 font-semibold"}>
-							{selectionErrors.map((err, idx) => (
-								<p key={idx}>{err}</p>
-							))}
-						</div>
+						{selectionErrors.length >= 1 && (
+							<div className="errors mt-6 rounded-xl bg-red-300 p-2 text-red-900 font-semibold">
+								{selectionErrors.map((err, idx) => (
+									<p key={idx}>{err}</p>
+								))}
+							</div>
+						)}
 					</div>
 				)}
 			</div>

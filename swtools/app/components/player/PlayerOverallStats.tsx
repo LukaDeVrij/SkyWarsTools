@@ -30,7 +30,15 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = ({ response }) => 
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>WLR</td>
-						<td>{stats.losses === 0 ? "∞" : ((stats.wins ?? 0) / (stats.losses ?? 0)).toFixed(3)}</td>
+						<td>
+							{stats.losses === 0 ? (
+								"∞"
+							) : (
+								<span className={((stats.wins ?? 0) / (stats.losses ?? 0)) > 1 ? "text-green-600" : ""}>
+									{((stats.wins ?? 0) / (stats.losses ?? 0)).toFixed(3)}
+								</span>
+							)}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>Kills</td>
@@ -42,7 +50,15 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = ({ response }) => 
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>KDR</td>
-						<td>{stats.deaths === 0 ? "∞" : ((stats.kills ?? 0) / (stats.deaths ?? 0)).toFixed(3)}</td>
+						<td>
+							{stats.deaths === 0 ? (
+								"∞"
+							) : (
+								<span className={((stats.kills ?? 0) / (stats.deaths ?? 0)) > 5 ? "text-green-600" : ""}>
+									{((stats.kills ?? 0) / (stats.deaths ?? 0)).toFixed(3)}
+								</span>
+							)}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>Heads</td>
