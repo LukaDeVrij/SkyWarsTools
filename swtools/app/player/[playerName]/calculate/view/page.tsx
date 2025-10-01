@@ -1,14 +1,15 @@
 "use client";
 import { auth } from "@/app/firebase/config";
 import { Snapshot } from "@/app/types/Snapshot";
-import { fetcher, toCamelCase } from "@/app/utils/Utils";
+import { fetcher, formatPlaytime, toCamelCase } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import useSWR from "swr";
 import { createCompareStatsMapFromSnapshot } from "@/app/utils/CompareStatsMap";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, Tooltip } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
+import Loading from "@/app/components/universal/Loading";
 
 type SnapshotsResponse = {
 	[key: string]: Snapshot;
@@ -37,6 +38,15 @@ const CalculateViewPage = () => {
 			revalidateOnReconnect: false,
 		}
 	);
+
+	if (!data) return <Loading />;
+
+	const snapshots: Snapshot[] = Object.values(data);
+	const hasDifferentStatsVersion = snapshots.some((s: Snapshot) =>
+		snapshots.some((other: Snapshot) => other.statsVersion !== s.statsVersion)
+	);
+	const hasOldStatsVersion = snapshots.some((s: Snapshot) => s.statsVersion < 4);
+
 	const compareStats: { queried: number; stat?: number | string | undefined }[] = Object.keys(data || {}).map((key) => {
 		const snapshot = data ? data[key] : null;
 		if (!snapshot) return { queried: parseInt(key) };
@@ -46,8 +56,6 @@ const CalculateViewPage = () => {
 			stat: stat ? allStats[stat] : undefined,
 		};
 	});
-
-	// console.log(compareStats);
 
 	function linearRegression(points: { x: number; y: number }[]): { m: number; b: number } {
 		const n = points.length;
@@ -98,13 +106,13 @@ const CalculateViewPage = () => {
 
 	return (
 		<div className="overflow-x-auto p-2 lg:p-4 bg-content">
-			{true && (
+			{hasDifferentStatsVersion && (
 				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
 					<span className="w-fit">Warning: Snapshots have different stats versions!</span>
 					<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
 				</div>
 			)}
-			{true && (
+			{hasOldStatsVersion && (
 				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
 					<span>Warning: Some snapshots have an older version.</span>
 					<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
@@ -169,6 +177,90 @@ const CalculateViewPage = () => {
 					)}
 				</ThemeProvider>
 			</div>
+			<table className="min-w-[40%] mx-auto mt-4 rounded-lg bg-layer text-white text-lg font-semibold">
+				<tbody>
+					{[
+						{
+							label: "Stat gain per day",
+							title: "The amount of '" + stat + "' you gain per day on average.",
+							value: (regressionResult.m * 86400 * 1000).toFixed(2),
+						},
+						{
+							label: "Current stat value",
+							title: "The most recent known value of '" + stat + "'.",
+							value:
+								regressionResult.points.length > 0
+									? regressionResult.points[regressionResult.points.length - 1].y.toFixed(2)
+									: "-",
+						},
+						{
+							label: "Predicted stat goal",
+							title:
+								"The predicted value of '" + stat + "' at the time you reach your goal. It is possible you set this goal.",
+							value:
+								goalType === "statGoal"
+									? statGoal
+										? parseFloat(statGoal).toFixed(2)
+										: "-"
+									: !isNaN(goal.y)
+									? goal.y.toFixed(2)
+									: "-",
+						},
+						{
+							label: "Predicted date goal",
+							title: "The predicted date you will reach your goal. It is possible you set this goal.",
+							value:
+								goalType === "dateGoal" && !isNaN(goal.x)
+									? new Date(goal.x / 1000).toLocaleString()
+									: goalType === "statGoal" && !isNaN(goal.x)
+									? new Date(goal.x / 1000).toLocaleString()
+									: "-",
+						},
+						{
+							label: "Stat gain needed",
+							title: "The amount of '" + stat + "' you still need to gain to reach your goal.",
+							value:
+								regressionResult.points.length > 0 && !isNaN(goal.y)
+									? (goal.y - regressionResult.points[regressionResult.points.length - 1].y).toFixed(2)
+									: "-",
+						},
+						{
+							label: "Predicted time needed",
+							title: "The predicted time you will need to reach your goal.",
+							value:
+								regressionResult.points.length > 0 && !isNaN(goal.x)
+									? (() => {
+											const goalDate = new Date(goal.x / 1000);
+											const now = new Date();
+											const diffMs = goalDate.getTime() - now.getTime();
+											if (isNaN(diffMs) || diffMs < 0) return "-";
+											return formatPlaytime(diffMs / 1000);
+									  })()
+									: "-",
+						},
+						{
+							label: "Mean Squared Error",
+							title: "The mean squared error of the linear regression. A lower value indicates a better fit. This is not really important, but can be used to gauge the accuracy of the predictions.",
+							value:
+								regressionResult.points.length > 0
+									? (
+											regressionResult.points.reduce(
+												(acc, p) => acc + Math.pow(p.y - (regressionResult.m * p.x + regressionResult.b), 2),
+												0
+											) / regressionResult.points.length
+									  ).toFixed(5)
+									: "-",
+						},
+					].map((row, idx, arr) => (
+						<Tooltip key={row.label} title={row.title || ""} placement="left">
+							<tr key={row.label} className={idx < arr.length - 1 ? "border-b-2 border-white" : ""}>
+								<td className="px-2 py-1">{row.label}</td>
+								<td className="px-2 py-1">{row.value}</td>
+							</tr>
+						</Tooltip>
+					))}
+				</tbody>
+			</table>
 		</div>
 	);
 };
