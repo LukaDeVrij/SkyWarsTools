@@ -37,7 +37,7 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 		<div className={`relative float-right ml-auto ${mobile ? "block lg:hidden" : "hidden lg:block"}`} ref={dropdownRef}>
 			<button
 				type="button"
-				className="p-2 rounded-md text-[var(--foreground)] font-montserrat font-[700] animate-press focus:outline-none"
+				className="p-2 rounded-md text-[var(--foreground)] font-montserrat font-[700] animate-press focus:outline-none cursor-pointer"
 				onClick={() => setOpen((prev) => !prev)}
 				aria-haspopup="true"
 				aria-expanded={open}
@@ -58,7 +58,7 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 				)}
 			</button>
 			{open && (
-				<div className="absolute right-0 w-48 bg-content rounded shadow-lg z-50">
+				<div className="absolute right-0 w-48 bg-content rounded shadow-lg z-50 cursor-pointer">
 					{user ? (
 						<Link href="/auth/profile" className="block px-4 py-2 text-white" onClick={() => setOpen(false)}>
 							Profile
