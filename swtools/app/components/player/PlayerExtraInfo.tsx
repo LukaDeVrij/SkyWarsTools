@@ -18,12 +18,12 @@ const socials = {
 };
 
 const linkPrefixes = {
-	TWITTER: "https://twitter.com/",
+	TWITTER: "",
 	YOUTUBE: "",
 	INSTAGRAM: "https://www.instagram.com/",
 	TIKTOK: "https://www.tiktok.com/@",
-	TWITCH: "https://www.twitch.tv/",
-	DISCORD: "https://discord.com/users/",
+	TWITCH: "",
+	DISCORD: "/discord/",
 	HYPIXEL: "",
 
 }
@@ -40,7 +40,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
 							return (
-								<a key={social} href={linkPrefixes[socialKey] + links[socialKey]}>
+								<a key={social} href={linkPrefixes[socialKey] + links[socialKey]} target="_blank" rel="noopener noreferrer" title={socialKey}>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
