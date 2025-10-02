@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import React from "react";
 
-const page = () => {
+const DiscordPage = () => {
 	const params = useParams();
 	const name = params.playerName;
 
@@ -25,4 +25,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default DiscordPage;
