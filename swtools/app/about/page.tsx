@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Tooltip } from "@mui/material";
 import HelpCard from "../components/HelpCard";
 import { Mail } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
 	return (
@@ -41,9 +42,9 @@ export default function AboutPage() {
 						<HelpCard title="Tools">Various other tools, non-specific to players, are available in the Tools section!</HelpCard>
 						<HelpCard title="Other Questions?">
 							Have more questions, a feature request, or found a bug? Contact me using the links below, or join the{" "}
-							<a className="underline" href="/discord">
-								Discord
-							</a>
+							<Link href="/discord" className="underline">
+								Discord server
+							</Link>
 							!
 						</HelpCard>
 					</div>
