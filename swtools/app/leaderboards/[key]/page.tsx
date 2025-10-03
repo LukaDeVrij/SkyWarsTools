@@ -203,6 +203,7 @@ const Page = () => {
 									stats: {},
 									guild: undefined,
 									took: 0,
+									// eslint-disable-next-line @typescript-eslint/no-explicit-any
 								} as any;
 
 								const highlighted = highlight === entry.uuid;

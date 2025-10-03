@@ -35,9 +35,9 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 		);
 	}
 
-	let snapshots = Object.values(data).sort((a, b) => a.queried - b.queried); // chronological order
+	const snapshots = Object.values(data).sort((a, b) => a.queried - b.queried); // chronological order
 
-	let compareStats: Snapshot[] = [];
+	const compareStats: Snapshot[] = [];
 	snapshots.forEach((snapshot) => {
 		const updatedSnapshot = createCompareStatsMapFromSnapshot(snapshot, true) as Snapshot["stats"];
 		compareStats.push({ ...snapshot, stats: updatedSnapshot });

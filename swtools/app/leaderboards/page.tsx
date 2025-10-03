@@ -2,13 +2,17 @@
 import React, { useState } from "react";
 import { keys } from "@/app/utils/LeaderboardKeys";
 
+type LBKeyValueEntry = {
+	name: string;
+	value: string;
+};
 const categories = [
 	{
 		name: "Main",
-		filter: (k: any) => !k.value.toLowerCase().includes("skywars_skywars_rating") && !k.value.toLowerCase().includes("kit"),
+		filter: (k: LBKeyValueEntry) => !k.value.toLowerCase().includes("skywars_skywars_rating") && !k.value.toLowerCase().includes("kit"),
 	},
-	{ name: "Kit", filter: (k: any) => k.value.toLowerCase().includes("kit") },
-	{ name: "Ranked", filter: (k: any) => k.value.toLowerCase().includes("skywars_skywars_rating") },
+	{ name: "Kit", filter: (k: LBKeyValueEntry) => k.value.toLowerCase().includes("kit") },
+	{ name: "Ranked", filter: (k: LBKeyValueEntry) => k.value.toLowerCase().includes("skywars_skywars_rating") },
 ];
 
 const Page = () => {
