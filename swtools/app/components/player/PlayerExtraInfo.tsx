@@ -32,7 +32,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 	const links = response.stats.socialMedia?.links;
 	return (
 		<>
-			<div className="bg-content p-4 px-6 font-bold flex gap-4">
+			<div className="bg-content p-4 px-6 font-bold flex gap-4 flex-row items-center">
 				{links && Object.entries(links).length > 0 ? (
 					<>
 						{Object.entries(links).map(([social]) => {
@@ -55,6 +55,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				) : (
 					<p className="text-gray-400">No socials linked</p>
 				)}
+				<span className="ml-auto w-10 h-10 bg-green-100"></span>
 			</div>
 			<div className="w-full bg-content p-4 justify-around font-bold hidden lg:flex flex-nowrap">
 				<span>

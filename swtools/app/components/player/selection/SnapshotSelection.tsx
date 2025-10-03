@@ -1,5 +1,5 @@
 "use client";
-import { fetcher } from "@/app/utils/Utils";
+import { fetcher, timeAgo } from "@/app/utils/Utils";
 import { LoaderCircle } from "lucide-react";
 import React from "react";
 import useSWR from "swr";
@@ -110,6 +110,7 @@ const SnapshotSelection: React.FC<SnapshotSelectionProps> = ({ playerName, pageT
 							<span className="font-semibold">{snap.player}</span>
 							<span className="text-sm text-gray-100">{new Date(snap.queried).toLocaleString()}</span>
 						</div>
+						<div className="ml-auto text-sm">{timeAgo(snap.queried / 1000)}</div>
 					</button>
 				))}
 				{isLoading && <LoaderCircle className="animate-spin mx-auto w-15 h-15"></LoaderCircle>}
