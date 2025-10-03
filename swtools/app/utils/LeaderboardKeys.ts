@@ -4,15 +4,15 @@ export const keys = [
 	// Ratings pattern: SkyWars_skywars_rating_{season}_{year}_{type}
 	...[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].flatMap((season) =>
 		[18, 19, 20, 21, 22].flatMap((year) => [
-			{ name: `Ranked S${season} 20${year} Position`, value: `SkyWars_skywars_rating_${season}_${year}_position` },
-			{ name: `Ranked S${season} 20${year} Rating`, value: `SkyWars_skywars_rating_${season}_${year}_rating` },
+			{ name: `Position Ranked S${season} 20${year}`, value: `SkyWars_skywars_rating_${season}_${year}_position` },
+			{ name: `Rating Ranked S${season} 20${year}`, value: `SkyWars_skywars_rating_${season}_${year}_rating` },
 		])
 	),
 	...[1, 2]
 		.flatMap((season) =>
 			[19, 20, 21, 22].map((year) => [
-				{ name: `Ranked S${season} 20${year} Position`, value: `SkyWars_skywars_rating_${season}_${year}_position` },
-				{ name: `Ranked S${season} 20${year} Rating`, value: `SkyWars_skywars_rating_${season}_${year}_rating` },
+				{ name: `Position Ranked S${season} 20${year}`, value: `SkyWars_skywars_rating_${season}_${year}_position` },
+				{ name: `Rating Ranked S${season} 20${year}`, value: `SkyWars_skywars_rating_${season}_${year}_rating` },
 			])
 		)
 		.flat(),
@@ -164,7 +164,7 @@ export const keys = [
 	{ name: "Losses", value: "losses" },
 	{ name: "Time Played", value: "time_played" },
 	// Game mode stats
-	...["solo", "team", "mini", "lab"].flatMap((mode) => [
+	...["solo", "team", "lab"].flatMap((mode) => [
 		{ name: `Wins ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `wins_${mode}` },
 		{ name: `Losses ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `losses_${mode}` },
 		{ name: `Kills ${mode.charAt(0).toUpperCase() + mode.slice(1)}`, value: `kills_${mode}` },
@@ -176,6 +176,9 @@ export const keys = [
 		{ name: `Kills ${mode.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())}`, value: `kills_${mode}` },
 		{ name: `Deaths ${mode.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())}`, value: `deaths_${mode}` },
 	]),
+	// Mini mode only has wins and kills
+	{ name: "Wins Mini", value: "wins_mini" },
+	{ name: "Kills Mini", value: "kills_mini" },
 	{ name: "Games Mini", value: "games_mini" },
 
 	//
