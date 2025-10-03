@@ -67,7 +67,7 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 
 	return (
 		<div className="flex flex-col items-center gap-4 py-8 overflow-hidden">
-			<div className="w-full max-w-full overflow-x-auto">
+			<div className="w-full max-w-full overflow-x-auto lg:justify-center flex">
 				<canvas
 					ref={canvasRef}
 					width={900}
