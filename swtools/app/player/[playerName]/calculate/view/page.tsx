@@ -50,12 +50,14 @@ const CalculateViewPage = () => {
 	const compareStats: { queried: number; stat?: number | string | undefined }[] = Object.keys(data || {}).map((key) => {
 		const snapshot = data ? data[key] : null;
 		if (!snapshot) return { queried: parseInt(key) };
-		const allStats = createCompareStatsMapFromSnapshot(snapshot);
+		const allStats = createCompareStatsMapFromSnapshot(snapshot, false);
 		return {
 			queried: parseInt(key),
 			stat: stat ? allStats[stat] : undefined,
 		};
 	});
+
+	console.log(compareStats);
 
 	function linearRegression(points: { x: number; y: number }[]): { m: number; b: number } {
 		const n = points.length;

@@ -320,17 +320,18 @@ export const compareMap: CompareStatsMap = {
 	},
 };
 
-export function createCompareStatsMapFromSnapshot(snapshot: Snapshot): Record<string, number | string | undefined> {
+export function createCompareStatsMapFromSnapshot(snapshot: Snapshot, transformKey: boolean): Record<string, number | string | undefined> {
 	const result: Record<string, number | string | undefined> = {};
 
 	for (const key in compareMap) {
 		const entry = compareMap[key];
+		const newKey = transformKey ? entry.label : key;
 		if (entry.calculate) {
-			result[key] = entry.calculate(snapshot.stats);
+			result[newKey] = entry.calculate(snapshot.stats);
 		} else if (entry.hypixelKey) {
-			result[key] = snapshot.stats[entry.hypixelKey as keyof typeof snapshot.stats];
+			result[newKey] = snapshot.stats[entry.hypixelKey as keyof typeof snapshot.stats];
 		} else {
-			result[key] = undefined;
+			result[newKey] = undefined;
 		}
 	}
 

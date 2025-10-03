@@ -2,17 +2,19 @@
 import React from "react";
 import useSWR from "swr";
 import { useParams } from "next/navigation";
-import { calcLevel, fetcher, shortenUUID } from "@/app/utils/Utils";
+import { calcLevel, fetcher, formatPlaytime, shortenUUID } from "@/app/utils/Utils";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { formatScheme } from "@/app/utils/Scheme";
 import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react";
 import { keys } from "@/app/utils/LeaderboardKeys";
+import Tooltip from "@mui/material/Tooltip";
 
 type LBResponse = {
 	stat: string;
 	page: number;
 	entries: LBEntry[];
+	siblingKeys: string[];
 };
 
 type LBEntry = {
@@ -32,6 +34,7 @@ type LBEntry = {
 		queried: number;
 		exp: number;
 	};
+	siblings: Record<string, number>;
 };
 
 const Page = () => {
@@ -62,8 +65,11 @@ const Page = () => {
 
 	if (isLoading) {
 		return (
-			<div className="w-full lg:w-3/4 mx-auto flex justify-center align-center mt-10">
+			<div className="w-full lg:w-3/4 mx-auto flex flex-col items-center justify-center align-center mt-10">
 				<LoaderCircle className="animate-spin w-50 h-50"></LoaderCircle>
+				<p className="font-semibold px-4 text-center">
+					Generating leaderboards.<br></br>This might take a bit.
+				</p>
 			</div>
 		);
 	}
@@ -79,6 +85,15 @@ const Page = () => {
 
 	const statKey = data?.stat;
 	const statInfo = statKey ? keys.find((k) => k.value === statKey) : undefined;
+	const siblingKeyNames: Record<string, string> = {};
+	if (data?.siblingKeys?.length) {
+		data.siblingKeys.forEach((key) => {
+			const found = keys.find((k) => k.value === key);
+			siblingKeyNames[key] = found?.name ?? key;
+		});
+	}
+
+	const makeGlitchCheck: boolean = !!statInfo && statInfo.value.includes("_team_") && statInfo.value.includes("_kit_");
 
 	return (
 		<>
@@ -127,10 +142,15 @@ const Page = () => {
 					}}
 				/>
 			</div>
-			<div className="flex items-center rounded-lg mx-auto mb-2 p-1">
+			<div className="flex items-center rounded-lg mx-auto p-1">
 				{errorMsg && <span className="text-red-500 font-semibold">{errorMsg}</span>}
 			</div>
-			<div className="w-full lg:w-3/4 mx-auto flex flex-col items-center justify-center gap-0">
+			<div className="flex items-center rounded-lg mx-auto p-1 mb-1 lg:hidden">
+				<span className="text-orange-400 font-semibold text-base text-center">
+					You can horizontally scroll the table!<br></br>Use desktop for the best experience.
+				</span>
+			</div>
+			<div className="w-full mx-auto flex flex-col items-center justify-center gap-0">
 				<div className="w-full flex flex-row items-end justify-between">
 					<h2 className="text-2xl font-bold text-center text-accent pt-2 px-6 rounded-t-xl bg-content w-fit">{statInfo?.name}</h2>
 					<div className="flex items-center gap-3 bg-content p-1 px-2 rounded-t-xl">
@@ -158,65 +178,122 @@ const Page = () => {
 					</div>
 				</div>
 
-				<table className="w-full bg-content rounded-b-lg overflow-hidden">
-					<thead className="text-left text-accent border-b-2">
-						<tr>
-							<th className="p-1 lg:py-2 lg:px-3 text-l lg:text-xl">#</th>
-							<th className="p-1 lg:py-2 lg:px-0 text-l lg:text-xl">Level</th>
-							<th className="p-1 lg:py-2 lg:pr-3 text-l lg:text-xl">Player</th>
-							<th className="p-1 lg:py-2 lg:px-3 text-l lg:text-xl">Value</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data?.entries?.map((entry: LBEntry, index: number) => {
-							const mockOverallResponse = {
-								...entry.info,
-								uuid: entry.uuid,
-								stats: {},
-								guild: undefined,
-								took: 0,
-								// eslint-disable-next-line  @typescript-eslint/no-explicit-any
-							} as any;
-
-							const highlighted = highlight === entry.uuid;
-
-							const level = calcLevel(entry.info.exp ?? 0);
-
-							const scheme = formatScheme(level, mockOverallResponse, false);
-
-							const rank = getPlayerRank(mockOverallResponse);
-
-							const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
-							const isStale = Date.now() - entry.info.queried > THIRTY_DAYS_MS;
-							return (
-								<tr
-									key={entry.uuid}
-									ref={highlighted ? highlightedRowRef : undefined}
-									className={`border-b last:border-b-0 hover:bg-accent/10 transition-colors relative ${
-										isStale ? "opacity-50" : ""
-									} ${highlighted ? "bg-yellow-300/10 animate-pulse" : ""}`}
-									style={isStale ? { backgroundColor: "rgba(128,128,128,0.2)" } : undefined}
-								>
-									{isStale && <td colSpan={4} className="absolute inset-0 bg-gray-500 bg-opacity-30 z-1"></td>}
-									<td className="p-1 lg:py-2 lg:px-3 font-semibold text-l lg:text-xl relative z-2">
-										{index + (page - 1) * 50 + 1}
-									</td>
-									<td className="p-1 lg:py-2 lg:px-0 font-semibold text-l lg:text-xl relative z-2">
-										<MinecraftText>{scheme}</MinecraftText>
-									</td>
-									<td className="p-1 lg:py-2 lg:px-r font-semibold text-l lg:text-xl relative z-2">
-										<a href={`/redirect?uuid=${entry.uuid}`}>
-											<MinecraftText>{`${rank.prefix} ${entry.info.player}`}</MinecraftText>
+				<div className="w-full overflow-x-auto rounded-b-lg">
+					<table className="min-w-full w-190 lg:w-full bg-content rounded-b-lg">
+						<thead className="text-left text-accent border-b-2">
+							<tr>
+								<th className="p-2 lg:py-2 text-l lg:text-xl">#</th>
+								<th className="p-1 lg:py-2 text-l lg:text-xl">Level</th>
+								<th className="p-1 lg:py-2 text-l lg:text-xl">Player</th>
+								<th className="p-1 lg:py-2 text-l lg:text-xl">{statInfo?.name.split(" ")[0]}</th>
+								{data?.siblingKeys?.map((key) => (
+									<th key={key} className="p-1 lg:py-2 text-l lg:text-xl animate-press">
+										<a href={`/leaderboards/${key}`} className="text-accent hover:underline">
+											{siblingKeyNames[key].split(" ")[0]}
 										</a>
-									</td>
-									<td className="p-1 lg:py-2 lg:px-3 font-semibold text-l lg:text-xl relative z-2">
-										{entry.score.toLocaleString()}
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+									</th>
+								))}
+							</tr>
+						</thead>
+						<tbody>
+							{data?.entries?.map((entry: LBEntry, index: number) => {
+								const mockOverallResponse = {
+									...entry.info,
+									uuid: entry.uuid,
+									stats: {},
+									guild: undefined,
+									took: 0,
+								} as any;
+
+								const highlighted = highlight === entry.uuid;
+								const level = calcLevel(entry.info.exp ?? 0);
+								const scheme = formatScheme(level, mockOverallResponse, false);
+								const rank = getPlayerRank(mockOverallResponse);
+
+								const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+								const isStale = Date.now() - entry.info.queried > THIRTY_DAYS_MS;
+								// const isStale = true;
+
+								const siblingValues = Object.values(entry.siblings);
+
+								let glitched = false;
+								if (makeGlitchCheck) {
+									const statSuffix = statInfo?.value.replace(/^.*?_kit/, "_kit");
+									let xp;
+									if (statInfo?.value.includes("xp_")) {
+										xp = entry.score;
+									} else {
+										xp = entry.siblings["xp" + statSuffix];
+									}
+									let kills;
+									if (statInfo?.value.includes("kills_")) {
+										kills = entry.score;
+									} else {
+										kills = entry.siblings["kills" + statSuffix];
+									}
+									if (kills * 25 < xp) {
+										glitched = true;
+									}
+								}
+
+								return (
+									<tr
+										key={entry.uuid}
+										ref={highlighted ? highlightedRowRef : undefined}
+										className={[
+											"border-b last:border-b-0 hover:bg-accent/10 transition-colors relative",
+											isStale ? "opacity-50" : "",
+											highlighted ? "bg-yellow-300/10 animate-pulse" : "",
+										].join(" ")}
+										style={
+											isStale
+												? { backgroundColor: "rgba(128,128,128,0.2)" }
+												: glitched
+												? { backgroundColor: "rgba(255,0,0,0.1)" }
+												: undefined
+										}
+									>
+										{/* Rank */}
+										<td className="p-2 lg:py-2 font-semibold text-l lg:text-xl relative z-2">
+											{index + (page - 1) * 50 + 1}
+										</td>
+
+										{/* Level */}
+										<td className="p-1 lg:py-2 lg:px-0 font-semibold text-l lg:text-xl relative z-2">
+											<MinecraftText>{scheme}</MinecraftText>
+										</td>
+
+										{/* Player */}
+										<td className="p-1 lg:py-2 lg:px-r font-semibold text-l lg:text-xl relative z-2">
+											<a href={`/redirect?uuid=${entry.uuid}`}>
+												<MinecraftText>{`${rank.prefix} ${entry.info.player}`}</MinecraftText>
+											</a>
+										</td>
+
+										{/* Score */}
+										<td className="p-1 lg:py-2 font-semibold text-l lg:text-xl relative z-2">
+											<Tooltip title={statInfo?.value.includes("time_played") ? formatPlaytime(entry.score) : ""}>
+												<span>{entry.score.toLocaleString()}</span>
+											</Tooltip>
+										</td>
+
+										{Object.keys(siblingKeyNames).map((key, idx) => {
+											const value = siblingValues[idx]?.toLocaleString() ?? 0;
+											return (
+												<Tooltip
+													title={key.includes("time_played") ? formatPlaytime(siblingValues[idx]) : ""}
+													key={key + entry.uuid}
+												>
+													<td className="p-1 lg:py-2 font-semibold text-l lg:text-xl relative z-2">{value}</td>
+												</Tooltip>
+											);
+										})}
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
 				<div className="flex items-center gap-3 bg-content p-1 px-2 m-3 rounded-xl">
 					<button
 						className="px-1 rounded bg-layer text-content font-bold disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
@@ -239,6 +316,16 @@ const Page = () => {
 					>
 						<ArrowBigRight></ArrowBigRight>
 					</button>
+				</div>
+				<div className="flex flex-col gap-2 bg-content p-2 px-4 rounded-xl w-fit mx-auto">
+					<span className="flex items-center gap-2">
+						<span className="inline-block w-4 h-4 rounded" style={{ backgroundColor: "rgba(255,0,0,1)" }}></span>
+						<span className="font-semibold text-sm lg:text-base text-white">Stats gained with lucky blocks</span>
+					</span>
+					<span className="flex items-center gap-2">
+						<span className="inline-block w-4 h-4 rounded" style={{ backgroundColor: "rgba(128,128,128,1)" }}></span>
+						<span className="font-semibold text-sm lg:text-base text-white">Stale data queried over 30 days ago</span>
+					</span>
 				</div>
 			</div>
 		</>

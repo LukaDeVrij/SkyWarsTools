@@ -292,7 +292,10 @@ export default function CalculatePage() {
 										name="statGoalInput"
 										className="rounded-xl px-2 py-1 text-xl bg-content font-semibold w-30"
 										value={statGoal ?? ""}
-										onChange={(e) => setStatGoal(Number(e.target.value))}
+										onChange={(e) => {
+											const val = e.target.value;
+											setStatGoal(val === "" ? undefined : Number(val));
+										}}
 									/>
 								</div>
 							)}

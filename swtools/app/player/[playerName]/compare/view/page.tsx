@@ -1,6 +1,6 @@
 import { timeAgo } from "@/app/utils/Utils";
 import { Tooltip } from "@mui/material";
-import { Snapshot} from "@/app/types/Snapshot";
+import { Snapshot } from "@/app/types/Snapshot";
 import React from "react";
 
 interface CompareViewPageProps {
@@ -11,91 +11,7 @@ interface CompareViewPageProps {
 type SnapshotsResponse = {
 	[key: string]: Snapshot;
 };
-const statsKeys: (keyof Snapshot["stats"])[] = [
-	"skywars_experience",
-	"coins",
-	"opals",
-	"heads",
-	"souls",
-	"kills",
-	"deaths",
-	"wins",
-	"losses",
-	"time_played",
-	"wins_solo",
-	"losses_solo",
-	"kills_solo",
-	"deaths_solo",
-	"time_played_solo",
-	"wins_solo_normal",
-	"losses_solo_normal",
-	"kills_solo_normal",
-	"deaths_solo_normal",
-	"wins_solo_insane",
-	"losses_solo_insane",
-	"kills_solo_insane",
-	"deaths_solo_insane",
-	"wins_team",
-	"losses_team",
-	"kills_team",
-	"deaths_team",
-	"wins_team_normal",
-	"losses_team_normal",
-	"kills_team_normal",
-	"deaths_team_normal",
-	"wins_team_insane",
-	"losses_team_insane",
-	"kills_team_insane",
-	"deaths_team_insane",
-	"time_played_team",
-	"wins_mini",
-	"kills_mini",
-	"time_played_mini",
-	"games_mini",
-];
-
-const statsNames: Record<keyof Snapshot["stats"], string> = {
-	skywars_experience: "SkyWars Experience",
-	coins: "Coins",
-	opals: "Opals",
-	heads: "Heads",
-	souls: "Souls",
-	kills: "Kills",
-	deaths: "Deaths",
-	wins: "Wins",
-	losses: "Losses",
-	time_played: "Time Played",
-	wins_solo: "Solo Wins",
-	losses_solo: "Solo Losses",
-	kills_solo: "Solo Kills",
-	deaths_solo: "Solo Deaths",
-	time_played_solo: "Solo Time Played",
-	wins_solo_normal: "Solo Normal Wins",
-	losses_solo_normal: "Solo Normal Losses",
-	kills_solo_normal: "Solo Normal Kills",
-	deaths_solo_normal: "Solo Normal Deaths",
-	wins_solo_insane: "Solo Insane Wins",
-	losses_solo_insane: "Solo Insane Losses",
-	kills_solo_insane: "Solo Insane Kills",
-	deaths_solo_insane: "Solo Insane Deaths",
-	wins_team: "Team Wins",
-	losses_team: "Team Losses",
-	kills_team: "Team Kills",
-	deaths_team: "Team Deaths",
-	wins_team_normal: "Team Normal Wins",
-	losses_team_normal: "Team Normal Losses",
-	kills_team_normal: "Team Normal Kills",
-	deaths_team_normal: "Team Normal Deaths",
-	wins_team_insane: "Team Insane Wins",
-	losses_team_insane: "Team Insane Losses",
-	kills_team_insane: "Team Insane Kills",
-	deaths_team_insane: "Team Insane Deaths",
-	time_played_team: "Team Time Played",
-	wins_mini: "Mini Wins",
-	kills_mini: "Mini Kills",
-	time_played_mini: "Mini Time Played",
-	games_mini: "Mini Games",
-};
+import { compareMap, createCompareStatsMapFromSnapshot } from "@/app/utils/CompareStatsMap";
 
 const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps) => {
 	const awaitedParams = await params;
@@ -119,8 +35,14 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 		);
 	}
 
-	const snapshots = Object.values(data).sort((a, b) => a.queried - b.queried); // chronological order
-	console.log(snapshots);
+	let snapshots = Object.values(data).sort((a, b) => a.queried - b.queried); // chronological order
+
+	let compareStats: Snapshot[] = [];
+	snapshots.forEach((snapshot) => {
+		const updatedSnapshot = createCompareStatsMapFromSnapshot(snapshot, true) as Snapshot["stats"];
+		compareStats.push({ ...snapshot, stats: updatedSnapshot });
+	});
+	const keys = Object.keys(compareStats[compareStats.length - 1].stats);
 
 	const hasDifferentStatsVersion = snapshots.some((s, i, arr) => arr.some((other) => other.statsVersion !== s.statsVersion));
 	const hasOldStatsVersion = snapshots.some((s) => s.statsVersion < 4); // Example threshold
@@ -191,17 +113,53 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 					</tr>
 				</thead>
 				<tbody>
-					{statsKeys.map((key) => (
+					{Object.keys(compareStats[compareStats.length - 1].stats).map((key) => (
 						<tr key={key} className="border-b last:border-b-0">
-							<td className="p-1 lg:py-2 lg:px-3 font-semibold text-l lg:text-xl">{statsNames[key]}</td>
-							{snapshots.map((snap, idx) => (
-								<React.Fragment key={snap.queried + key}>
+							<td className="p-1 lg:py-2 lg:px-3 font-semibold text-l lg:text-xl">{key}</td>
+							{compareStats.map((snap, idx) => (
+								<React.Fragment key={snap.queried}>
 									{idx > 0 && (
 										<td className="p-1 lg:py-2 lg:px-3 text-l lg:text-xl">
-											{getDiff(snap.stats[key] ?? 0, snapshots[idx - 1].stats[key] ?? 0).toLocaleString()}
+											{typeof snap.stats[key as keyof typeof snap.stats] === "number" &&
+											typeof compareStats[idx - 1].stats[key as keyof typeof snap.stats] === "number" ? (
+												<span
+													className={
+														getDiff(
+															snap.stats[key as keyof typeof snap.stats] as number,
+															compareStats[idx - 1].stats[key as keyof typeof snap.stats] as number
+														) > 0
+															? "text-green-500"
+															: getDiff(
+																	snap.stats[key as keyof typeof snap.stats] as number,
+																	compareStats[idx - 1].stats[key as keyof typeof snap.stats] as number
+															  ) < 0
+															? "text-red-500"
+															: ""
+													}
+												>
+													{getDiff(
+														snap.stats[key as keyof typeof snap.stats] as number,
+														compareStats[idx - 1].stats[key as keyof typeof snap.stats] as number
+													) > 0 && "+"}
+													{getDiff(
+														snap.stats[key as keyof typeof snap.stats] as number,
+														compareStats[idx - 1].stats[key as keyof typeof snap.stats] as number
+													).toLocaleString()}
+												</span>
+											) : (
+												<span>-</span>
+											)}
 										</td>
 									)}
-									<td className="p-1 lg:py-2 lg:px-3 text-l lg:text-xl">{snap.stats[key]?.toLocaleString() ?? "-"}</td>
+									<td className="p-1 lg:py-2 lg:px-3 text-l lg:text-xl">
+										{typeof snap.stats[key as keyof typeof snap.stats] === "number" ? (
+											<span>{(snap.stats[key as keyof typeof snap.stats] as number).toLocaleString()}</span>
+										) : typeof snap.stats[key as keyof typeof snap.stats] === "string" ? (
+											<span>{snap.stats[key as keyof typeof snap.stats]}</span>
+										) : (
+											<span>-</span>
+										)}
+									</td>
 								</React.Fragment>
 							))}
 						</tr>
