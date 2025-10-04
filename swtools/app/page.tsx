@@ -4,6 +4,7 @@ import FreqPlayerList from "./components/start/FreqPlayerList";
 import PatreonPlayerList from "./components/start/PatreonPlayerList";
 import { Tooltip } from "@mui/material";
 import { CircleQuestionMark } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
 	return (
@@ -25,9 +26,9 @@ export default function Home() {
 					<p className="font-semibold text-red-400">
 						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Is a feature
 						you used missing? Let me know on the{" "}
-						<a href="/discord" className="underline">
+						<Link href="/discord" className="underline">
 							Discord server
-						</a>
+						</Link>
 						!
 					</p>
 				</div>

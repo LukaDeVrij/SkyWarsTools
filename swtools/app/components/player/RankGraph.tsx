@@ -52,8 +52,8 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		const rankHistory = data.rankHistory;
 
 		const dates = Object.keys(rankHistory);
-		const previousRank = rankHistory[dates[dates.length - 2]];
-
+		const previousRank = rankHistory[dates[dates.length - 1]];
+		// console.log(previousRank);
 		const currentRank = ranking.rank;
 
 		delta = (previousRank - currentRank).toString();
@@ -89,7 +89,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
 					{error && <LineChart loading {...emptySeries} />}
 					{isLoading && <LineChart loading {...emptySeries} />}
-					{data && data.rankHistory && (
+					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 ? (
 						<>
 							{/* Desktop AND mobile */}
 							<div className="h-[75%] w-full px-2 block">
@@ -116,6 +116,10 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 								/>
 							</div>
 						</>
+					) : (
+						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
+							<p className="text-center text-gray-400">No rank history data available<br></br>Check again next week!</p>
+						</div>
 					)}
 				</ThemeProvider>
 			</div>
