@@ -89,7 +89,13 @@ const Page = () => {
 	if (data?.siblingKeys?.length) {
 		data.siblingKeys.forEach((key) => {
 			const found = keys.find((k) => k.value === key);
-			siblingKeyNames[key] = found?.name ?? key;
+			const short = found?.short;
+			if (!short) {
+				siblingKeyNames[key] = found?.name ?? key;
+			} else {
+				siblingKeyNames[key] = short;
+			}
+			
 		});
 	}
 
@@ -185,7 +191,7 @@ const Page = () => {
 								<th className="p-2 lg:py-2 text-l lg:text-xl">#</th>
 								<th className="p-1 lg:py-2 text-l lg:text-xl">Level</th>
 								<th className="p-1 lg:py-2 text-l lg:text-xl">Player</th>
-								<th className="p-1 lg:py-2 text-l lg:text-xl">{statInfo?.name.split(" ")[0]}</th>
+								<th className="p-1 lg:py-2 text-l lg:text-xl">{statInfo?.short || statInfo?.name}</th>
 								{data?.siblingKeys?.map((key) => (
 									<th key={key} className="p-1 lg:py-2 text-l lg:text-xl animate-press">
 										<a href={`/leaderboards/${key}`} className="text-accent hover:underline">
@@ -255,7 +261,18 @@ const Page = () => {
 										}
 									>
 										{/* Rank */}
-										<td className="p-2 lg:py-2 font-semibold text-l lg:text-xl relative z-2">
+										<td
+											className={[
+												"p-2 lg:py-2 font-semibold text-l lg:text-xl relative z-2",
+												index + (page - 1) * 50 + 1 === 1
+													? "text-yellow-400"
+													: index + (page - 1) * 50 + 1 === 2
+													? "text-gray-300"
+													: index + (page - 1) * 50 + 1 === 3
+													? "text-orange-700"
+													: "",
+											].join(" ")}
+										>
 											{index + (page - 1) * 50 + 1}
 										</td>
 

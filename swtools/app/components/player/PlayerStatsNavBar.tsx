@@ -11,6 +11,7 @@ const tabs = [
 	{ label: "Kits", value: "kits" },
 	// { label: "Legacy", value: "legacy" },
 	{ label: "Equips", value: "equips" },
+	{ label: "Tools", value: "tools" },
 ];
 
 const PlayerStatsNavBar = () => {

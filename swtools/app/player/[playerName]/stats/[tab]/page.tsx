@@ -8,6 +8,7 @@ import Playtime from "@/app/components/player/tabs/Playtime";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import Equips from "@/app/components/player/tabs/Equips";
 import Kits from "@/app/components/player/tabs/Kits";
+import Tools from "@/app/components/player/tabs/Tools";
 
 const tabs = [
 	{ label: "Table", value: "table" },
@@ -18,6 +19,7 @@ const tabs = [
 	{ label: "Kits", value: "kits" },
 	// { label: "Legacy", value: "legacy" },
 	{ label: "Equips", value: "equips" },
+	{ label: "Tools", value: "tools" },
 ];
 
 interface PageProps {
@@ -52,6 +54,7 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 			{currentTab.value === "kits" && <Kits {...overallData} />}
 			{/* {currentTab.value === "legacy" && <Legacy {...overallData}></Legacy>} */}
 			{currentTab.value === "equips" && <Equips {...overallData}></Equips>}
+			{currentTab.value === "tools" && <Tools {...overallData}></Tools>}
 		</>
 	);
 }

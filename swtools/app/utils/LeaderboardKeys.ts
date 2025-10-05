@@ -1,6 +1,11 @@
 import { toCamelCase } from "./Utils";
 
-export const keys = [
+type LeaderboardKey = {
+	name: string;
+	value: string;
+	short?: string;
+};
+export const keys: LeaderboardKey[] = [
 	// Ratings pattern: SkyWars_skywars_rating_{season}_{year}_{type}
 	...[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].flatMap((season) =>
 		[18, 19, 20, 21, 22].flatMap((year) => [
@@ -154,7 +159,7 @@ export const keys = [
 		)
 	),
 	// Misc stats
-	{ name: "SkyWars Experience", value: "skywars_experience" },
+	{ name: "SkyWars Experience", value: "skywars_experience", short: "XP" },
 	// { name: "SkyWars Level", value: "skywars_experience" },
 	{ name: "Coins", value: "coins" },
 	{ name: "Heads", value: "heads" },

@@ -1,7 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate } from "@/app/utils/Utils"; // Assuming you have a utility function for this
-import { OverallResponse } from "@/app/types/OverallResponse";
+import { NextSave, OverallResponse } from "@/app/types/OverallResponse";
+import { Tooltip } from "@mui/material";
+import { Clock, CloudCheck } from "lucide-react";
 
 interface PlayerExtraInfoProps {
 	response: OverallResponse;
@@ -25,14 +27,26 @@ const linkPrefixes = {
 	TWITCH: "",
 	DISCORD: "/discord/",
 	HYPIXEL: "",
-
-}
+};
 
 const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => {
 	const links = response.stats.socialMedia?.links;
+
+	const nextSave: NextSave = response.nextSave;
+	const saveTime = new Date(nextSave.lastSaved);
+
+	let savedTheseStats = false;
+	let nextSaveTime;
+	if (new Date().getTime() - saveTime.getTime() < 5 * 60 * 1000) {
+		savedTheseStats = true;
+	} else {
+		savedTheseStats = false;
+		nextSaveTime = new Date(saveTime.getTime() + 16 * 60 * 60 * 1000);
+	}
+	// console.log(savedTheseStats);
 	return (
 		<>
-			<div className="bg-content p-4 px-6 font-bold flex gap-4">
+			<div className="bg-content p-4 px-6 font-bold flex gap-4 flex-row items-center">
 				{links && Object.entries(links).length > 0 ? (
 					<>
 						{Object.entries(links).map(([social]) => {
@@ -40,7 +54,13 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
 							return (
-								<a key={social} href={linkPrefixes[socialKey] + links[socialKey]} target="_blank" rel="noopener noreferrer" title={socialKey}>
+								<a
+									key={social}
+									href={linkPrefixes[socialKey] + links[socialKey]}
+									target="_blank"
+									rel="noopener noreferrer"
+									title={socialKey}
+								>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
@@ -55,6 +75,24 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				) : (
 					<p className="text-gray-400">No socials linked</p>
 				)}
+				{savedTheseStats ? (
+					<Tooltip className="ml-auto text-green-500" title="A snapshot of your main stats has been saved!">
+						<CloudCheck />
+					</Tooltip>
+				) : null}
+				{savedTheseStats == false ? (
+					<Tooltip
+						className="ml-auto text-red-500"
+						title={
+							"Snapshot save is on cooldown. Previous save was " +
+							saveTime?.toLocaleTimeString() +
+							". Next save available: " +
+							nextSaveTime?.toLocaleTimeString()
+						}
+					>
+						<Clock />
+					</Tooltip>
+				) : null}
 			</div>
 			<div className="w-full bg-content p-4 justify-around font-bold hidden lg:flex flex-nowrap">
 				<span>
