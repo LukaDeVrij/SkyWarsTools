@@ -5,6 +5,7 @@ import PatreonPlayerList from "./components/start/PatreonPlayerList";
 import { Tooltip } from "@mui/material";
 import { CircleQuestionMark } from "lucide-react";
 import Link from "next/link";
+import Contributors from "./components/start/Contributors";
 
 export default function Home() {
 	return (
@@ -21,15 +22,19 @@ export default function Home() {
 			</div>
 
 			<div className="flex flex-col gap-4">
-				<div className="rounded-lg px-4 lg:px-8">
+				<div className="rounded-lg px-4 lg:px-8 font-semibold">
 					<h2 className="text-2xl font-bold mb-1">News</h2>
 					<p className="font-semibold text-red-400">
 						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Is a feature
 						you used missing? Let me know on the{" "}
-						<Link href="/discord" className="underline">
-							Discord server
-						</Link>
-						!
+						<Link href="/discord" className="underline text-blue-400">
+							Discord
+						</Link>{" "}
+						server! Here you may also report bugs, or request new features. Want to support the project? Join the{" "}
+						<Link href="/patreon" className="underline text-yellow-600">
+							Patreon
+						</Link>{" "}
+						for special perks!
 					</p>
 				</div>
 				<div className="rounded-lg px-4 lg:px-8">
@@ -45,16 +50,7 @@ export default function Home() {
 					<h2 className="text-2xl font-bold mb-1">Popular Players</h2>
 					<FreqPlayerList></FreqPlayerList>
 				</div>
-				<div className="rounded-lg px-4 lg:px-8 w-full flex flex-col mb-5">
-					<h2 className="text-2xl font-bold">Contributors</h2>
-					<span className="font-semibold mb-1">Special thanks to these people for contributing to the project!</span>
-					<div className="flex flex-col">
-						<span>LifelessNerd</span>
-						<span>Forums_</span>
-						<span>SMED</span>
-						<span>abald</span>
-					</div>
-				</div>
+				<Contributors></Contributors>
 			</div>
 		</div>
 	);

@@ -32,7 +32,7 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 		return <ErrorView statusText={res.statusText} statusCode={res.status} />;
 	}
 	const overallData = await res.json();
-	console.log(overallData);
+	// console.log(overallData);
 	playerName = overallData.player;
 
 	return (

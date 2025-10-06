@@ -1,4 +1,5 @@
 import PlayerNavBar from "@/app/components/player/PlayerNavBar";
+import ErrorView from "@/app/components/universal/ErrorView";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 
@@ -22,7 +23,7 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 
 	if (!data || !data.name) {
 		// Player doesn't exist
-		return <div>Player not found</div>;
+		return <ErrorView statusText="Player not found"></ErrorView>;
 	}
 
 	correctedName = data.name;

@@ -1,9 +1,6 @@
 "use client";
-import { fetcher } from "@/app/utils/Utils";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
-import { useParams } from "next/navigation";
 import React from "react";
-import useSWR from "swr";
 
 interface CustomDatePickerProps {
 	allSnapshots?: { queried: number; player: string }[];

@@ -9,6 +9,7 @@ import { calcLevel, fetcher } from "@/app/utils/Utils";
 import { formatScheme } from "@/app/utils/Scheme";
 import useSWR from "swr";
 import { OverallResponse } from "@/app/types/OverallResponse";
+import Tooltip from "@mui/material/Tooltip";
 
 interface PlayerTitleProps {
 	playerName: string;
@@ -101,6 +102,15 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 	// Final assembled title
 	const playerTitle = `${scheme} ${rank.prefix} ${response.player}`;
 
+	// Emoji and nationality
+	let countryName = "";
+	let countryEmoji = "";
+	if (nationality) {
+		const countryParts = nationality.split(" ");
+		countryName = countryParts.slice(0, -1).join(" ");
+		countryEmoji = countryParts[countryParts.length - 1];
+	}
+
 	return (
 		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
 			<div className="z-10 relative">
@@ -125,23 +135,29 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 						className={`border-2 border-black rounded-full w-5 aspect-square block lg:hidden ${bgColor}`}
 					></span>
 					<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
-					<span
-						dangerouslySetInnerHTML={{
-							__html: twemoji.parse(emoji ?? "", { folder: "svg", ext: ".svg" }),
-						}}
-						style={{ width: 42, height: 42, display: "inline-block" }}
-					/>
+					{emoji && (
+						<span
+							dangerouslySetInnerHTML={{
+								__html: twemoji.parse(emoji ?? "", { folder: "svg", ext: ".svg" }),
+							}}
+							style={{ width: 42, height: 42, display: "inline-block" }}
+						/>
+					)}
 				</div>
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="items-center gap-2 text-lg hidden lg:flex">
 						{nationality && (
-							<span
-								dangerouslySetInnerHTML={{
-									__html: twemoji.parse(nationality.split(" ")[1] ?? "", { folder: "svg", ext: ".svg" }),
-								}}
-								style={{ width: 28, height: 28, display: "inline-block" }}
-								title={nationality.split(" ")[0] ?? ""}
-							/>
+							<Tooltip title={countryName ?? ""}>
+								<span
+									dangerouslySetInnerHTML={{
+										__html: twemoji.parse(countryEmoji ?? "", {
+											folder: "svg",
+											ext: ".svg",
+										}),
+									}}
+									style={{ width: 28, height: 28, display: "inline-block" }}
+								/>
+							</Tooltip>
 						)}
 						{response.guild.guild && (
 							<span className="font-semibold hidden lg:flex flex-row gap-2 items-center">

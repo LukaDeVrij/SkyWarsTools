@@ -4,6 +4,7 @@ import { Tooltip } from "@mui/material";
 import HelpCard from "../components/HelpCard";
 import { Mail } from "lucide-react";
 import Link from "next/link";
+import Contributors from "../components/start/Contributors";
 
 export default function AboutPage() {
 	return (
@@ -116,16 +117,7 @@ export default function AboutPage() {
 						</div>
 					</div>
 				</div>
-				<div className="rounded-lg px-4 lg:px-8 w-full flex flex-col mb-5">
-					<h2 className="text-2xl font-bold">Contributors</h2>
-					<span className="font-semibold mb-1">Special thanks to these people for contributing to the project!</span>
-					<div className="flex flex-col">
-						<span>LifelessNerd</span>
-						<span>Forums_</span>
-						<span>SMED</span>
-						<span>abald</span>
-					</div>
-				</div>
+				<Contributors></Contributors>
 			</div>
 		</div>
 	);
