@@ -220,7 +220,7 @@ export default function CalculatePage() {
 								))}
 							</div>
 							<div
-								className="button bg-yellow-200/10 text-white px-3 py-2 font-semibold rounded-xl border cursor-pointer animate-press text-center"
+								className="button bg-yellow-200/10 text-white px-3 py-2 font-semibold rounded-xl border cursor-pointer animate-press text-center w-fit mx-auto"
 								onClick={() => {
 									setCustomDatePickerOpen(!customDatePickerOpen);
 								}}

@@ -786,8 +786,45 @@ export function getKitPrestigeInfoByPrestige(prestige: number): KitPrestigeInfo 
 	return kitPrestiges[prestigeR] || kitPrestiges[0];
 }
 
-export const fetcher = <T = unknown>(...args: [RequestInfo, RequestInit?]): Promise<T> =>
-	fetch(...args).then((res) => res.json() as Promise<T>);
+export async function fetcher<T = unknown>(url: string): Promise<T> {
+
+	console.log("Fetching without auth")
+	const res = await fetch(url);
+
+	if (!res.ok) {
+		const error: Error & { statusText?: unknown; statusCode?: number } = new Error("An error occurred while fetching the data.");
+		try {
+			error.statusText = await res.json().then((data) => data.cause);
+		} catch {
+			error.statusText = null;
+		}
+		error.statusCode = res.status;
+		throw error;
+	}
+
+	return res.json() as Promise<T>;
+}
+export async function fetcherWithAuth<T = unknown>(token: string, url: string): Promise<T> {
+	console.log("fet6ching with auth")
+	const res = await fetch(url, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+	if (!res.ok) {
+		const error: Error & { statusText?: unknown; statusCode?: number } = new Error("An error occurred while fetching the data.");
+		try {
+			error.statusText = await res.json().then((data) => data.cause);
+		} catch {
+			error.statusText = null;
+		}
+		error.statusCode = res.status;
+		throw error;
+	}
+
+	return res.json() as Promise<T>;
+}
 // no explicit any, this is some AI typescript magic
 
 export function shortenUUID(uuid: string): string {

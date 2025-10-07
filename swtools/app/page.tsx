@@ -22,20 +22,25 @@ export default function Home() {
 			</div>
 
 			<div className="flex flex-col gap-4">
-				<div className="rounded-lg px-4 lg:px-8 font-semibold">
-					<h2 className="text-2xl font-bold mb-1">News</h2>
-					<p className="font-semibold text-red-400">
-						SkyWarsTools 2.0 is in active development. Some features might be incomplete, or not be present at all. Is a feature
-						you used missing? Let me know on the{" "}
-						<Link href="/discord" className="underline text-blue-400">
-							Discord
-						</Link>{" "}
-						server! Here you may also report bugs, or request new features. Want to support the project? Join the{" "}
-						<Link href="/patreon" className="underline text-yellow-600">
-							Patreon
-						</Link>{" "}
-						for special perks!
-					</p>
+				<div className="rounded-lg px-4 lg:px-8 font-semibold flex flex-col lg:flex-row gap-2 lg:gap-4">
+					<Link
+						href="/patreon"
+						className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<p className="w-[80%]">Support the project on Patreon and get special perks!</p>
+						<Image src="/icons/patreon.png" alt="Patreon" width={50} height={50} />
+					</Link>
+					<Link
+						href="/discord"
+						className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<p className="w-[80%]">Feature ideas? Bugs or problems found? Join the Discord!</p>
+						<Image src="/icons/discord.png" alt="Patreon" width={50} height={50} />
+					</Link>
 				</div>
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">

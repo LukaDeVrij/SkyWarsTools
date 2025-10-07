@@ -1,15 +1,17 @@
 "use client";
 import { auth } from "@/app/firebase/config";
 import { Snapshot } from "@/app/types/Snapshot";
-import { fetcher, formatPlaytime, toCamelCase } from "@/app/utils/Utils";
+import { fetcher, fetcherWithAuth, formatPlaytime, toCamelCase } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import type { BareFetcher } from "swr";
 import useSWR from "swr";
 import { createCompareStatsMapFromSnapshot } from "@/app/utils/CompareStatsMap";
 import { createTheme, ThemeProvider, Tooltip } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 import Loading from "@/app/components/universal/Loading";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 type SnapshotsResponse = {
 	[key: string]: Snapshot;
@@ -17,7 +19,6 @@ type SnapshotsResponse = {
 
 const CalculateViewPage = () => {
 	const [user, loading, authError] = useAuthState(auth);
-
 	const playerName = useParams().playerName as string;
 	const keys = useSearchParams().get("k") as string;
 	const stat = useSearchParams().get("stat") as string;
@@ -30,15 +31,33 @@ const CalculateViewPage = () => {
 		height: 400,
 	};
 
-	const { data, error, isLoading } = useSWR<SnapshotsResponse>(
-		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`,
-		fetcher,
-		{
-			revalidateOnFocus: false,
-			revalidateOnReconnect: false,
-		}
-	);
+	// userToken: undefined = loading, string = token, null = not logged in
+	const [userToken, setUserToken] = React.useState<string | null | undefined>(undefined);
 
+	React.useEffect(() => {
+		if (loading) return; // still loading
+		if (user == null) {
+			// We are not logged in
+			setUserToken(null);
+			return;
+		} else {
+			// we are DEF logged in
+			user.getIdToken().then((token: string) => setUserToken(token));
+		}
+	}, [user, loading]);
+
+	const url = `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`;
+
+	// Only trigger SWR when userToken is not undefined (loading),
+	// so fetch when userToken is string (logged in) OR null (not logged in)
+	const shouldFetch = userToken !== undefined;
+	const fetchSnapshots: BareFetcher<SnapshotsResponse> | null =
+		typeof userToken === "string"
+			? (url: string) => fetcherWithAuth<SnapshotsResponse>(userToken, url)
+			: (url: string) => fetcher<SnapshotsResponse>(url);
+	const { data, error, isLoading } = useSWR<SnapshotsResponse>(shouldFetch ? url : null, shouldFetch ? fetchSnapshots : null);
+
+	if (error) return <ErrorView statusText={error.statusText} statusCode={error.statusCode}></ErrorView>;
 	if (!data) return <Loading />;
 
 	const snapshots: Snapshot[] = Object.values(data);
@@ -56,8 +75,6 @@ const CalculateViewPage = () => {
 			stat: stat ? allStats[stat] : undefined,
 		};
 	});
-
-	console.log(compareStats);
 
 	function linearRegression(points: { x: number; y: number }[]): { m: number; b: number } {
 		const n = points.length;

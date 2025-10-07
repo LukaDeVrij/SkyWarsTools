@@ -24,33 +24,30 @@ type StatusResponse = {
 		mode?: string;
 	};
 };
+type UserProfileResponse = {
+	success: boolean;
+	user?: UserProfile;
+	cause?: string;
+};
 
 const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
-	const { data, error, isLoading } = useSWR<StatusResponse>(
+	const { data, error } = useSWR<StatusResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${response.player}`,
 		fetcher
 	);
 
-	type UserInfoResponse = {
-		user: UserProfile;
-	};
-	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
-
 	const [nationality, setNationality] = React.useState<string | null>(null);
 	const [emoji, setEmoji] = React.useState<string | null>(null);
 
-	const { data: userInfoData } = useSWR<UserInfoResponse>(
+	const { data: userInfoData } = useSWR<UserProfileResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`,
 		fetcher
 	);
 
 	React.useEffect(() => {
-		if (userInfoData) {
-			setTypedUserInfo(userInfoData);
-			setNationality(userInfoData.user?.nationality ?? null);
-			if (userInfoData.user?.patreon && userInfoData.user?.emoji) {
-				setEmoji(userInfoData.user.emoji);
-			}
+		if (userInfoData && userInfoData.success && userInfoData.user) {
+			setNationality(userInfoData.user.nationality ?? null);
+			setEmoji(userInfoData.user.patreon && userInfoData.user.emoji ? userInfoData.user.emoji : null);
 		}
 	}, [userInfoData]);
 
