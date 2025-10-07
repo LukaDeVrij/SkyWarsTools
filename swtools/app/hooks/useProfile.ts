@@ -5,7 +5,7 @@ type UserInfoResponse = {
 	user: UserProfile;
 };
 
-const fetcher = (url: string, token: string) =>
+const withAuthFetcher = (url: string, token: string) =>
 	axios
 		.get<UserInfoResponse>(url, {
 			headers: {
@@ -18,7 +18,7 @@ export function useProfile(token: string | null) {
 	const shouldFetch = Boolean(token);
 	const { data, error, isLoading } = useSWR(
 		shouldFetch ? [`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserInfo`, token] : null,
-		([url, t]: [string, string]) => fetcher(url, t)
+		([url, t]: [string, string]) => withAuthFetcher(url, t)
 	);
 
 	return {

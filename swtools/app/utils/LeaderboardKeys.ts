@@ -154,7 +154,28 @@ export const keys: LeaderboardKey[] = [
 						mode ? ` ${toCamelCase(mode === "solo" ? "normal" : mode === "team" ? "insane" : mode)}` : ""
 					} ${toCamelCase(kit.replace(/-/g, " "))}`;
 				}
-				return { name, value };
+				let short: string | undefined;
+				switch (stat) {
+					case "wins":
+						short = "Wins";
+						break;
+					case "losses":
+						short = "Losses";
+						break;
+					case "kills":
+						short = "Kills";
+						break;
+					case "deaths":
+						short = "Deaths";
+						break;
+					case "xp":
+						short = "XP";
+						break;
+					case "time_played":
+						short = "Playtime";
+						break;
+				}
+				return { name, value, short };
 			})
 		)
 	),
@@ -213,6 +234,16 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Time Played Ranked", value: "time_played_ranked" },
 	{ name: "Time Played Lab", value: "time_played_lab" },
 	{ name: "Time Played Mini", value: "time_played_mini" },
+	{ name: "Kills Lab Solo", value: "kills_lab_solo" },
+	{ name: "Deaths Lab Solo", value: "deaths_lab_solo" },
+	{ name: "Wins Lab Solo", value: "wins_lab_solo" },
+	{ name: "Losses Lab Solo", value: "losses_lab_solo" },
+	{ name: "Time Played Lab Solo", value: "time_played_lab_solo" },
+	{ name: "Kills Lab Team", value: "kills_lab_team" },
+	{ name: "Deaths Lab Team", value: "deaths_lab_team" },
+	{ name: "Wins Lab Team", value: "wins_lab_team" },
+	{ name: "Losses Lab Team", value: "losses_lab_team" },
+	{ name: "Time Played Lab Team", value: "time_played_lab_team" },
 	{ name: "Heads Eww", value: "heads_eww" },
 	{ name: "Heads Yucky", value: "heads_yucky" },
 	{ name: "Heads Meh", value: "heads_meh" },

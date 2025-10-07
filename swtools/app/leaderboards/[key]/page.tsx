@@ -2,7 +2,7 @@
 import React from "react";
 import useSWR from "swr";
 import { useParams } from "next/navigation";
-import { calcLevel, fetcher, formatPlaytime, shortenUUID } from "@/app/utils/Utils";
+import { calcKitPrestigeLevel, calcLevel, fetcher, formatPlaytime, romanize, shortenUUID } from "@/app/utils/Utils";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { formatScheme } from "@/app/utils/Scheme";
@@ -213,9 +213,10 @@ const Page = () => {
 								} as any;
 
 								const highlighted = highlight === entry.uuid;
-								const level = calcLevel(entry.info.exp ?? 0);
-								const scheme = formatScheme(level, mockOverallResponse, false);
 								const rank = getPlayerRank(mockOverallResponse);
+								const level = calcLevel(entry.info.exp ?? 0);
+							
+								const scheme = formatScheme(level, mockOverallResponse, false);
 
 								const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 								const isStale = Date.now() - entry.info.queried > THIRTY_DAYS_MS;
@@ -263,7 +264,7 @@ const Page = () => {
 										{/* Rank */}
 										<td
 											className={[
-												"p-2 lg:py-2 font-semibold text-l lg:text-xl relative z-2",
+												"p-2 lg:py-2 text-l lg:text-xl relative z-2",
 												index + (page - 1) * 50 + 1 === 1
 													? "text-yellow-400"
 													: index + (page - 1) * 50 + 1 === 2
@@ -277,20 +278,28 @@ const Page = () => {
 										</td>
 
 										{/* Level */}
-										<td className="p-1 lg:py-2 lg:px-0 font-semibold text-l lg:text-xl relative z-2">
+										<td className="p-1 lg:py-2 lg:px-0 text-l lg:text-xl relative z-2">
 											<MinecraftText>{scheme}</MinecraftText>
 										</td>
 
 										{/* Player */}
-										<td className="p-1 lg:py-2 lg:px-r font-semibold text-l lg:text-xl relative z-2">
+										<td className="p-1 lg:py-2 text-l lg:text-xl relative z-2">
 											<a href={`/redirect?uuid=${entry.uuid}`}>
 												<MinecraftText>{`${rank.prefix} ${entry.info.player}`}</MinecraftText>
 											</a>
 										</td>
 
 										{/* Score */}
-										<td className="p-1 lg:py-2 font-semibold text-l lg:text-xl relative z-2">
-											<Tooltip title={statInfo?.value.includes("time_played") ? formatPlaytime(entry.score) : ""}>
+										<td className="p-1 lg:py-2 text-l lg:text-xl relative z-2">
+											<Tooltip
+												title={
+													statInfo?.value.includes("time_played")
+														? formatPlaytime(entry.score)
+														: statInfo?.value.includes("xp")
+														? `Prestige ${romanize(calcKitPrestigeLevel(entry.score))}`
+														: ""
+												}
+											>
 												<span>{entry.score.toLocaleString()}</span>
 											</Tooltip>
 										</td>
@@ -299,10 +308,16 @@ const Page = () => {
 											const value = siblingValues[idx]?.toLocaleString() ?? 0;
 											return (
 												<Tooltip
-													title={key.includes("time_played") ? formatPlaytime(siblingValues[idx]) : ""}
+													title={
+														key.includes("time_played")
+															? formatPlaytime(siblingValues[idx])
+															: key.includes("xp")
+															? `Prestige ${romanize(calcKitPrestigeLevel(siblingValues[idx]))}`
+															: ""
+													}
 													key={key + entry.uuid}
 												>
-													<td className="p-1 lg:py-2 font-semibold text-l lg:text-xl relative z-2">{value}</td>
+													<td className="p-1 lg:py-2 text-l lg:text-xl relative z-2">{value}</td>
 												</Tooltip>
 											);
 										})}
