@@ -24,10 +24,21 @@ const PropertyStatic: React.FC<PropertyStaticProps> = ({ title, explainText, val
 
 const ToggleValue: React.FC<{ value: React.ReactNode }> = ({ value }) => {
 	const [visible, setVisible] = React.useState(false);
+
+	const handleToggle = () => {
+		setVisible((prev) => {
+			const next = !prev;
+			if (!prev && value !== undefined) {
+				console.log(value);
+			}
+			return next;
+		});
+	};
+
 	return (
 		<div className="flex items-center gap-2">
 			<div className="text-xl font-semibold">{visible ? value : "••••••••••••••••••••••••"}</div>
-			<button onClick={() => setVisible(!visible)} className="text-sm text-[var(--accent)] hover:underline cursor-pointer">
+			<button onClick={handleToggle} className="text-sm text-[var(--accent)] hover:underline cursor-pointer">
 				{visible ? <EyeOff /> : <Eye />}
 			</button>
 		</div>

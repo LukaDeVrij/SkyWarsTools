@@ -8,9 +8,21 @@ import { LoaderCircle } from "lucide-react";
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
 
+	const [token, setToken] = React.useState<string | null>(null);
+
+	React.useEffect(() => {
+		if (user) {
+			user.getIdToken().then((t) => setToken(t));
+		}
+	}, [user]);
+
 	return (
 		<>
-			{loading && <div className="w-full h-80 flex justify-center text-center items-center text-3xl"><LoaderCircle className="animate-spin"></LoaderCircle></div>}
+			{loading && (
+				<div className="w-full h-80 flex justify-center text-center items-center text-3xl">
+					<LoaderCircle className="animate-spin"></LoaderCircle>
+				</div>
+			)}
 			{error && <div>Error: {error.message}</div>}
 			{!loading && !error && !user && <div>You are not logged in.</div>}
 			{!loading && !error && user && (
@@ -31,6 +43,12 @@ export default function ProfilePage() {
 							title="UID"
 							explainText={"Profile unique ID, useful for development"}
 							value={user.uid}
+							hideValue={true}
+						/>
+						<PropertyStatic
+							title="Auth Token"
+							explainText={"DO NOT SHARE! Useful for development"}
+							value={token}
 							hideValue={true}
 						/>
 					</div>
