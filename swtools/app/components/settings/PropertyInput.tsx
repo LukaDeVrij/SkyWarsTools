@@ -1,4 +1,3 @@
-import { Eye, EyeOff } from "lucide-react";
 import React from "react";
 
 interface PropertyInputProps {

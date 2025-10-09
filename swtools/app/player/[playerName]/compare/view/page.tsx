@@ -11,13 +11,20 @@ interface CompareViewPageProps {
 type SnapshotsResponse = {
 	[key: string]: Snapshot;
 };
-import { compareMap, createCompareStatsMapFromSnapshot } from "@/app/utils/CompareStatsMap";
+import { createCompareStatsMapFromSnapshot } from "@/app/utils/CompareStatsMap";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps) => {
 	const awaitedParams = await params;
 	const awaitedSearchParams = searchParams ? await searchParams : undefined;
 	const playerName = awaitedParams.playerName;
 	const k = awaitedSearchParams ? awaitedSearchParams.k : undefined;
+
+	if (k && Array.isArray(k) ? k.length > 20 : typeof k === "string" && k.split(",").length > 20) {
+		return (
+			<ErrorView statusCode={"Too many snapshots!"} statusText="You may select up to 20 snapshots for compare/session."></ErrorView>
+		);
+	}
 
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${k}`, {
 		method: "GET",
@@ -42,7 +49,6 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 		const updatedSnapshot = createCompareStatsMapFromSnapshot(snapshot, true) as Snapshot["stats"];
 		compareStats.push({ ...snapshot, stats: updatedSnapshot });
 	});
-	const keys = Object.keys(compareStats[compareStats.length - 1].stats);
 
 	const hasDifferentStatsVersion = snapshots.some((s, i, arr) => arr.some((other) => other.statsVersion !== s.statsVersion));
 	const hasOldStatsVersion = snapshots.some((s) => s.statsVersion < 4); // Example threshold

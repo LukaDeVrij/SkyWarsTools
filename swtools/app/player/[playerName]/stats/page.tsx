@@ -3,8 +3,6 @@ import { redirect, useParams } from "next/navigation";
 import React from "react";
 
 export default function Page() {
-	const params = useParams();
-	const playerName = params.playerName;
 
 	return (
 		<>

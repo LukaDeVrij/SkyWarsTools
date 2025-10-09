@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { keys } from "@/app/utils/LeaderboardKeys";
+import Head from "next/head";
 
 type LeaderboardKey = { name: string; value: string };
 
@@ -33,6 +34,9 @@ const Page = () => {
 
 	return (
 		<div className="flex h-fit flex-col bg-main w-full rounded-xl p-4 lg:p-8">
+			<Head>
+				<title>Leaderboards | SkyWarsTools</title>
+			</Head>
 			<h1 className="text-4xl font-bold text-center mb-2">Leaderboards</h1>
 			<span className="font-semibold text-center mb-5">
 				Please note these only consist of players that are known to this website.

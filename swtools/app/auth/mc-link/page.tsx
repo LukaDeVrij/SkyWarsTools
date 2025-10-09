@@ -4,16 +4,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useProfile } from "@/app/hooks/useProfile";
 import PropertyLinking from "@/app/components/auth/PropertyLinking";
-import { LoaderCircle } from "lucide-react";
+import Loading from "@/app/components/universal/Loading";
 
 const ProfileSettingsPage = () => {
 	const [user, loading, error] = useAuthState(auth);
-
-	type UserInfoResponse = {
-		user: UserProfile;
-	};
-
-	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
 	const [profileToken, setProfileToken] = React.useState<string | null>(null);
 
 	React.useEffect(() => {
@@ -26,48 +20,27 @@ const ProfileSettingsPage = () => {
 
 	const { user: profileUser, isLoading: profileLoading } = useProfile(profileToken);
 
-	React.useEffect(() => {
-		if (profileUser) {
-			setTypedUserInfo({ user: profileUser });
-		} else {
-			setTypedUserInfo(null);
-		}
-	}, [profileUser]);
+	// Show loader while either auth or profile is loading
+	if (loading || profileLoading) {
+		return <Loading></Loading>;
+	}
 
-	console.log(profileUser);
+	if (error) {
+		return <div>Error: {error.message}</div>;
+	}
 
+	if (!user) {
+		return <div>You are not logged in.</div>;
+	}
+
+	if (!profileUser) {
+		return <p>Something went wrong.</p>;
+	}
 
 	return (
-		<>
-			{loading && (
-				<div className="w-full h-80 flex justify-center text-center items-center text-3xl ">
-					<LoaderCircle className="animate-spin"></LoaderCircle>
-				</div>
-			)}
-			{error && <div>Error: {error.message}</div>}
-			{!loading && !error && !user && <div>You are not logged in.</div>}
-			{!loading &&
-				!error &&
-				user &&
-				(typedUserInfo && typedUserInfo.user ? (
-					<>
-						<div className="p-5 w-full flex flex-col gap-2">
-							<PropertyLinking
-								linked={!!typedUserInfo.user.mc_account}
-								uuid={typedUserInfo.user.mc_account ?? undefined}
-							></PropertyLinking>
-							{/* <PropertyCombobox
-								title={"Profile Background"}
-								explainText="The image shown on your MC account page"
-								options={maps}
-								initialValue="Siege.png"
-							></PropertyCombobox> */}
-						</div>
-					</>
-				) : (
-					<p>Something went wrong.</p>
-				))}
-		</>
+		<div className="p-5 w-full flex flex-col gap-2">
+			<PropertyLinking linked={!!profileUser.mc_account} uuid={profileUser.mc_account ?? undefined} />
+		</div>
 	);
 };
 

@@ -1,9 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import ErrorViewBack from "./ErrorViewBack";
 interface ErrorProps {
 	statusText?: string;
-	statusCode?: number;
+	statusCode?: number | string;
 }
 
 const Error: React.FC<ErrorProps> = ({ statusText, statusCode }) => {
@@ -18,8 +17,8 @@ const Error: React.FC<ErrorProps> = ({ statusText, statusCode }) => {
 				</>
 			) : (
 				<>
-					{statusCode && <div className="text-8xl">{statusCode}</div>}
-					{statusText && <div className="text-3xl">{statusText}</div>}
+					<div className={`mb-4 ${typeof statusCode === "number" ? "text-8xl" : "text-5xl"}`}>{statusCode}</div>
+					{statusText && <div className="text-2xl">{statusText}</div>}
 					<br />
 					<ErrorViewBack />
 				</>

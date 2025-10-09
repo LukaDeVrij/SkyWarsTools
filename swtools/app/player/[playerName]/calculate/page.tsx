@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { compareMap } from "@/app/utils/CompareStatsMap";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 const statOptions = Object.keys(compareMap).map((key) => compareMap[key].label);
 const statKeys = Object.keys(compareMap);
@@ -40,6 +41,7 @@ export default function CalculatePage() {
 			revalidateOnReconnect: false,
 		}
 	);
+
 	const allSnapshots = data?.data;
 
 	const [step, setStep] = useState(1);

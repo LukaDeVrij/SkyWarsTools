@@ -7,3 +7,4 @@ type UserProfile = {
 	custom_bg?: string | null;
 	emoji?: string | null;
 };
+// Linter says this isnt used but it is

@@ -1,5 +1,6 @@
 import PlayerNavBar from "@/app/components/player/PlayerNavBar";
 import ErrorView from "@/app/components/universal/ErrorView";
+import Head from "next/head";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 
@@ -12,18 +13,19 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 	const awaitedParams = await params;
 	const playerName = awaitedParams.playerName;
 
-	// Could have a check if playerName is an actual playername and not a UUID but this is also handled in the stats page.tsx
-	// Idk if you can get through *that* check, if so I can do it here too, and maybe check if the input is > 28 chars (shortened UUID)
 	let correctedName = playerName;
 
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${encodeURIComponent(awaitedParams.playerName)}`
-	);
+	let res;
+	try {
+		res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${encodeURIComponent(awaitedParams.playerName)}`);
+	} catch (error) {
+		return <ErrorView statusCode={500} statusText="Failed to fetch player data. Is the API down?"></ErrorView>;
+	}
 	const data = await res.json();
 
 	if (!data || !data.name) {
 		// Player doesn't exist
-		return <ErrorView statusText="Player not found"></ErrorView>;
+		return <ErrorView statusCode={404} statusText="Player not found"></ErrorView>;
 	}
 
 	correctedName = data.name;
@@ -34,6 +36,9 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 
 	return (
 		<>
+			<Head>
+				<title>{correctedName} | SkyWarsTools</title>
+			</Head>
 			<PlayerNavBar playerName={correctedName}></PlayerNavBar>
 			{children}
 		</>

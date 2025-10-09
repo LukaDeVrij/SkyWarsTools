@@ -10,8 +10,8 @@ const MontageCardCard: React.FC<MontageCardCardProps> = ({ addInput }) => {
 	const [player, setPlayer] = React.useState("");
 	return (
 		<div className="p-6 mx-auto">
-			<h2 className="text-2xl font-bold mb-4">Montage Card</h2>
-			<p className="mb-4">Killed a known player? Want them in your montage? Of course!</p>
+			<h2 className="text-2xl font-bold mb-4 text-center">Montage Card</h2>
+			<p className="mb-4 text-center">Killed a known player? Want them in your montage? Of course!</p>
 			{addInput && (
 				<form
 					onSubmit={(e) => {
@@ -27,7 +27,7 @@ const MontageCardCard: React.FC<MontageCardCardProps> = ({ addInput }) => {
 						type="text"
 						name="player"
 						placeholder="Player name"
-						className="p-2 flex-1 font-semibold rounded-l border border-gray-300 focus:outline-none"
+						className="p-2 flex-1 font-semibold rounded-l border border-gray-300 focus:outline-none "
 						onChange={(e) => setPlayer(e.target.value)}
 						value={player}
 					/>
