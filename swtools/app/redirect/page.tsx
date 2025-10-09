@@ -22,7 +22,7 @@ const Page = async ({ searchParams }: PageProps) => {
 	const data = await res.json();
 
 	if (!data || !data.name) {
-		return <ErrorView statusText="Player not found"></ErrorView>;
+		return <ErrorView statusCode={404} statusText="Player not found"></ErrorView>;
 	}
 
 	const actualName = data?.name;

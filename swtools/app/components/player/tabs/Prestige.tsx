@@ -6,7 +6,6 @@ import ProgressBar from "../../universal/ProgressBar";
 import { formatScheme } from "@/app/utils/Scheme";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
-import { notFound } from "next/navigation";
 
 
 const Prestige: React.FC<OverallResponse> = async (response) => {

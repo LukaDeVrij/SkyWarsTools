@@ -3,7 +3,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import React from "react";
 import PropertyStatic from "@/app/components/settings/PropertyStatic";
-import { LoaderCircle } from "lucide-react";
+import Loading from "@/app/components/universal/Loading";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
@@ -18,13 +19,9 @@ export default function ProfilePage() {
 
 	return (
 		<>
-			{loading && (
-				<div className="w-full h-80 flex justify-center text-center items-center text-3xl">
-					<LoaderCircle className="animate-spin"></LoaderCircle>
-				</div>
-			)}
-			{error && <div>Error: {error.message}</div>}
-			{!loading && !error && !user && <div>You are not logged in.</div>}
+			{loading && <Loading />}
+			{!loading && error && <ErrorView statusText={error.cause as string} />}
+			{!loading && !error && !user && <ErrorView statusText="You must be logged in to view this page" statusCode={401} />}
 			{!loading && !error && user && (
 				<>
 					<div className="p-5 w-full flex flex-col gap-2">

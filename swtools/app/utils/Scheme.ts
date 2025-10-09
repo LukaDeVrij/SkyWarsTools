@@ -1,5 +1,5 @@
 import { OverallResponse } from "../types/OverallResponse";
-import { calcPrestigeObj, PrestigeObject } from "./Utils";
+import { calcPrestigeObj } from "./Utils";
 
 type Scheme = {
 	name: string;

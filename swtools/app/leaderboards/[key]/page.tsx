@@ -9,6 +9,7 @@ import { formatScheme } from "@/app/utils/Scheme";
 import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react";
 import { keys } from "@/app/utils/LeaderboardKeys";
 import Tooltip from "@mui/material/Tooltip";
+import Head from "next/head";
 
 type LBResponse = {
 	stat: string;
@@ -99,11 +100,15 @@ const Page = () => {
 		});
 	}
 
+	// idk why !!
 	const makeGlitchCheck: boolean = !!statInfo && statInfo.value.includes("_team_") && statInfo.value.includes("_kit_");
 
 	return (
 		<>
 			<div className="flex items-center  border border-accent rounded-lg gap-3 mx-auto">
+				<Head>
+					<title>{statInfo?.name} Leaderboard | SkyWarsTools</title>
+				</Head>
 				<Search className="px-2 w-10 h-10"></Search>
 				<input
 					placeholder="Search a player..."

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
+
+import "./globals.css"; 
 import TopNavBar from "./components/navbar/TopNavBar";
-// import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-	title: "SkyWarsTools",
-	description: "A set of tools for SkyWars",
+	description: "SkyWarsTools 2.0 - A SkyWars Stats website with leaderboards, tracking and more!",
 	icons: {
 		icon: "/logo.png",
 	},
+	title: "SkyWarsTools",
 };
 
 export default function RootLayout({

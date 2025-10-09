@@ -1,5 +1,6 @@
 "use client";
 import SessionCanvas from "@/app/components/player/selection/SessionCanvas";
+import ErrorView from "@/app/components/universal/ErrorView";
 import { Snapshot } from "@/app/types/Snapshot";
 import { fetcher } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
@@ -15,10 +16,18 @@ const PlayerSessionViewPage = () => {
 	const params = useSearchParams();
 	const keys = params.get("k");
 
-	const { data, isLoading } = useSWR<SnapshotsResponse>(
-		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`,
+	const { data } = useSWR<SnapshotsResponse>(
+		keys && (Array.isArray(keys) ? keys.length <= 20 : typeof keys === "string" && keys.split(",").length <= 20)
+			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`
+			: null,
 		fetcher
 	);
+
+	if (keys && (Array.isArray(keys) ? keys.length > 20 : typeof keys === "string" && keys.split(",").length > 20)) {
+		return (
+			<ErrorView statusCode={"Too many snapshots!"} statusText="You may select up to 30 snapshots for compare/session."></ErrorView>
+		);
+	}
 
 	return (
 		<div className="bg-content h-auto p-2 lg:p-8 lg:rounded-b-xl">
