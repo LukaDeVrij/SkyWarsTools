@@ -20,7 +20,11 @@ type PatreonResponse = {
 const PatreonPlayerList = () => {
 	const { data, error, isLoading } = useSWR<PatreonResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/patreonSupporters`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	return (

@@ -18,7 +18,10 @@ type RecentGamesResponse = {
 
 const RecentGames: React.FC<{ uuid: string }> = ({ uuid }) => {
 	const [fetchUrl, setFetchUrl] = useState<string | null>(null);
-	const { data, error, isLoading } = useSWR<RecentGamesResponse>(fetchUrl, fetchUrl ? fetcher : null);
+	const { data, error, isLoading } = useSWR<RecentGamesResponse>(fetchUrl, fetchUrl ? fetcher : null, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	const handleFetch = () => {
 		setFetchUrl(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/recentGames?player=${uuid}`);
@@ -42,7 +45,8 @@ const RecentGames: React.FC<{ uuid: string }> = ({ uuid }) => {
 					) : data ? (
 						data.games.length === 0 ? (
 							<p className="text-center text-base text-red-400">
-								Nothing here? <br></br><br></br>Player has recent games disabled or hasn&apos;t played any games recently.
+								Nothing here? <br></br>
+								<br></br>Player has recent games disabled or hasn&apos;t played any games recently.
 							</p>
 						) : (
 							<table className="w-full text-sm mb-2">

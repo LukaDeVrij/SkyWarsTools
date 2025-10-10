@@ -63,7 +63,7 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 				}
 			});
 		}
-	}, [data.display.levelFormattedWithBrackets]);
+	});
 
 	return (
 		<div className="flex flex-col items-center gap-4 py-8 overflow-hidden">

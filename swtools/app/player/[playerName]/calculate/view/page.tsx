@@ -18,7 +18,7 @@ type SnapshotsResponse = {
 };
 
 const CalculateViewPage = () => {
-	const [user, loading, authError] = useAuthState(auth);
+	const [user, loading, ] = useAuthState(auth);
 	const playerName = useParams().playerName as string;
 	const keys = useSearchParams().get("k") as string;
 	const stat = useSearchParams().get("stat") as string;
@@ -55,17 +55,29 @@ const CalculateViewPage = () => {
 		typeof userToken === "string"
 			? (url: string) => fetcherWithAuth<SnapshotsResponse>(userToken, url)
 			: (url: string) => fetcher<SnapshotsResponse>(url);
-	const { data, error, isLoading } = useSWR<SnapshotsResponse>(shouldFetch ? url : null, shouldFetch ? fetchSnapshots : null);
+	const { data, error, isLoading } = useSWR<SnapshotsResponse>(shouldFetch ? url : null, shouldFetch ? fetchSnapshots : null, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	if (error) return <ErrorView statusText={error.statusText} statusCode={error.statusCode}></ErrorView>;
 	if (!data) return <Loading />;
 
+	// We check for warnings and errors on the data
 	const snapshots: Snapshot[] = Object.values(data);
 	const hasDifferentStatsVersion = snapshots.some((s: Snapshot) =>
 		snapshots.some((other: Snapshot) => other.statsVersion !== s.statsVersion)
 	);
 	const hasOldStatsVersion = snapshots.some((s: Snapshot) => s.statsVersion < 4);
+	const lostSnapshots = keys.split(",").filter((k) => !data[k]);
+	let lostSnapshotsText = "";
+	if (lostSnapshots.length > 0) {
+		lostSnapshotsText = `Could not find snapshots for keys: ${lostSnapshots.join(", ")} (requested ${
+			keys.split(",").length
+		}, got ${Object.keys(data).length})`;
+	}
 
+	// Prepare data for calculations - here we get the extra stats such as WL which can be calculated from the base stats
 	const compareStats: { queried: number; stat?: number | string | undefined }[] = Object.keys(data || {}).map((key) => {
 		const snapshot = data ? data[key] : null;
 		if (!snapshot) return { queried: parseInt(key) };
@@ -90,6 +102,7 @@ const CalculateViewPage = () => {
 
 		return { m, b };
 	}
+	// We do linear regression
 	const regressionResult = {
 		points: compareStats.filter((s) => typeof s.stat === "number").map((s) => ({ x: s.queried, y: s.stat as number })),
 		...linearRegression(compareStats.filter((s) => typeof s.stat === "number").map((s) => ({ x: s.queried, y: s.stat as number }))),
@@ -113,6 +126,7 @@ const CalculateViewPage = () => {
 		}
 	}
 
+	// Creation of arrays needed for the mui graph
 	const yMin = Math.min(...regressionResult.points.map((p) => p.y)) * 0.995;
 	const yMax = !isNaN(goal.y) ? goal.y : Math.max(...regressionResult.points.map((p) => p.y)) * 1.005;
 
@@ -137,6 +151,12 @@ const CalculateViewPage = () => {
 					<span className="text-[12px] text-yellow-900">This means some snapshots might not have all datapoints.</span>
 				</div>
 			)}
+			{lostSnapshots.length > 0 && (
+				<div className="bg-red-500 text-black font-bold p-3 rounded-xl flex flex-col">
+					<span>Error: Some queried snapshots were not found!</span>
+					<span className="text-[12px] text-red-900">{lostSnapshotsText}</span>
+				</div>
+			)}
 			<div className="mt-2 bg-layer p-2 rounded-2xl">
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
 					{(error || isLoading) && <LineChart loading {...emptySeries} />}
@@ -145,7 +165,7 @@ const CalculateViewPage = () => {
 							<LineChart
 								xAxis={[
 									{
-										data: xAxisData, // Convert to ms for JS Date
+										data: xAxisData,
 										scaleType: "time",
 										label: "Time",
 										valueFormatter: (ts) => new Date(ts / 1000).toLocaleDateString(),

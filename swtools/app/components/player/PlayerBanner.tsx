@@ -4,21 +4,25 @@ import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import useSWR from "swr";
+import { fetcher } from "@/app/utils/Utils";
 
 interface PlayerBannerProps {
 	playerName: string;
 }
 
 const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
-	const [user, authLoading, authError] = useAuthState(auth);
+	const [, authLoading, ] = useAuthState(auth);
 	type UserInfoResponse = {
 		user: UserProfile;
 	};
-	const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-	const { data: typedUserInfo, error } = useSWR<UserInfoResponse>(
+	const { data: typedUserInfo, } = useSWR<UserInfoResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${playerName}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	let bg = "Siege.png";
@@ -28,7 +32,7 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 	// console.log(bg);
 
 	return (
-		// In the future, make request to backend to get the banner for that player
+		
 		<div className="relative w-full">
 			<Image
 				src={authLoading ? "/maps/loading.png" : "/maps/" + bg}

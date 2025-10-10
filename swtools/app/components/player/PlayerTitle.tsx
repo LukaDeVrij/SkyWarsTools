@@ -30,10 +30,14 @@ type UserProfileResponse = {
 	cause?: string;
 };
 
-const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
+const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 	const { data, error } = useSWR<StatusResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/status?player=${response.player}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	const [nationality, setNationality] = React.useState<string | null>(null);
@@ -41,7 +45,11 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ playerName, response }) => {
 
 	const { data: userInfoData } = useSWR<UserProfileResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/getUserByMC?player=${response.player}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	React.useEffect(() => {

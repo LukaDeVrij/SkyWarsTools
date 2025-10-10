@@ -31,7 +31,11 @@ const SnapshotSelection: React.FC<SnapshotSelectionProps> = ({ playerName, pageT
 
 	const { data, isLoading } = useSWR<SnapshotKeysResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/snapshotKeys?player=${playerName}&page=${page}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	// Append new snapshots when data changes

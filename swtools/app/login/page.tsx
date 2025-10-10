@@ -8,7 +8,7 @@ import Image from "next/image";
 export default function LogoutPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+	const [signInWithEmailAndPassword,,, error] = useSignInWithEmailAndPassword(auth);
 	const [signInWithGoogle] = useSignInWithGoogle(auth);
 	const router = useRouter();
 

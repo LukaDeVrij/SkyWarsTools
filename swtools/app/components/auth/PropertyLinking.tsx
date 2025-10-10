@@ -5,6 +5,7 @@ import Button from "../universal/Button";
 import Image from "next/image";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Tooltip from "@mui/material/Tooltip";
 
 type PropertyLinkingProps = {
 	linked: boolean;
@@ -12,7 +13,7 @@ type PropertyLinkingProps = {
 };
 
 const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
-	const [user, loading, error] = useAuthState(auth);
+	const [user, ,] = useAuthState(auth);
 	const [dialogisOpen, setDialogIsOpen] = React.useState(false);
 	const [ign, setIgn] = React.useState("");
 	const [ignError, setIgnError] = React.useState(false);
@@ -85,7 +86,6 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 	const explainText = linked
 		? "Your Minecraft account is currently linked"
 		: "Currently not linked to any Minecraft account - do so to access all features";
-	const value = linked && uuid ? `https://www.mc-heads.net/avatar/${uuid}` : "";
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -103,14 +103,15 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 						<Button onClick={unlink}>Unlink</Button>
 						<div className="text-xl font-semibold">
 							{uuid && (
-								<Image
-									src={`https://www.mc-heads.net/avatar/${uuid}`}
-									width={50}
-									height={50}
-									title={uuid}
-									className="rounded-lg"
-									alt="Minecraft Avatar"
-								/>
+								<Tooltip title={uuid}>
+									<Image
+										src={`https://www.mc-heads.net/avatar/${uuid}`}
+										width={50}
+										height={50}
+										className="rounded-lg"
+										alt="Minecraft Avatar"
+									/>
+								</Tooltip>
 							)}
 						</div>
 					</div>
