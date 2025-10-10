@@ -20,7 +20,11 @@ const PlayerSessionViewPage = () => {
 		keys && (Array.isArray(keys) ? keys.length <= 20 : typeof keys === "string" && keys.split(",").length <= 20)
 			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${playerName}&keys=${keys}`
 			: null,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	if (keys && (Array.isArray(keys) ? keys.length > 20 : typeof keys === "string" && keys.split(",").length > 20)) {

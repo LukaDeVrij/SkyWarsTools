@@ -61,15 +61,15 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 				<div className="absolute right-0 w-48 bg-content rounded shadow-lg z-50 cursor-pointer">
 					{user ? (
 						<>
-							<Link href="/auth/profile" className="block px-4 py-2 text-white" onClick={() => setOpen(false)}>
+							<Link href="/auth/profile" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
 								Profile
 							</Link>
-							<Link href="/auth/log-out" className="block px-4 py-2 text-white" onClick={() => setOpen(false)}>
+							<Link href="/auth/log-out" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
 								Log out
 							</Link>
 						</>
 					) : (
-						<Link href="/login" className="block px-4 py-2 text-white" onClick={() => setOpen(false)}>
+						<Link href="/login" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
 							Login
 						</Link>
 					)}

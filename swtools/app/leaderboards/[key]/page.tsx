@@ -10,6 +10,7 @@ import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react"
 import { keys } from "@/app/utils/LeaderboardKeys";
 import Tooltip from "@mui/material/Tooltip";
 import Head from "next/head";
+import ErrorView from "@/app/components/universal/ErrorView";
 
 type LBResponse = {
 	stat: string;
@@ -54,7 +55,11 @@ const Page = () => {
 
 	const { data, error, isLoading } = useSWR<LBResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getLB/${awaitedParams.key}?page=${page}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+		}
 	);
 
 	// Scroll to highlighted row after render
@@ -74,12 +79,11 @@ const Page = () => {
 			</div>
 		);
 	}
-	if (error || !data?.entries) {
-		return (
-			<div className="w-full lg:w-3/4 mx-auto flex justify-center align-center mt-10">
-				<span>No such leaderboard!</span>
-			</div>
-		);
+	if (error) {
+		return <ErrorView statusCode={404} statusText="Could not get that leaderboard"></ErrorView>;
+	}
+	if (!data?.entries) {
+		return <ErrorView statusCode={400} statusText="Leaderboard has no players?!"></ErrorView>;
 	}
 
 	console.log(data);
@@ -96,7 +100,6 @@ const Page = () => {
 			} else {
 				siblingKeyNames[key] = short;
 			}
-			
 		});
 	}
 
@@ -220,7 +223,7 @@ const Page = () => {
 								const highlighted = highlight === entry.uuid;
 								const rank = getPlayerRank(mockOverallResponse);
 								const level = calcLevel(entry.info.exp ?? 0);
-							
+
 								const scheme = formatScheme(level, mockOverallResponse, false);
 
 								const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;

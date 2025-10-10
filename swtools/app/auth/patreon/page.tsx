@@ -15,9 +15,9 @@ export default function PatreonPage() {
 	};
 
 	const [profileToken, setProfileToken] = React.useState<string | null>(null);
-	const [typedUserInfo, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
+	const [, setTypedUserInfo] = React.useState<UserInfoResponse | null>(null);
 	const [patreonStatus, setPatreonStatus] = React.useState<boolean>(false);
-	const [emoji, setEmoji] = React.useState<string | null>(null);
+	const [, setEmoji] = React.useState<string | null>(null);
 
 	React.useEffect(() => {
 		if (user) {
@@ -27,7 +27,7 @@ export default function PatreonPage() {
 		}
 	}, [user]);
 
-	const { user: profileUser, isLoading: profileLoading } = useProfile(profileToken);
+	const { user: profileUser } = useProfile(profileToken);
 	console.log(profileUser);
 	React.useEffect(() => {
 		if (profileUser) {

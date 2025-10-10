@@ -18,7 +18,7 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 	let res;
 	try {
 		res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${encodeURIComponent(awaitedParams.playerName)}`);
-	} catch (error) {
+	} catch {
 		return <ErrorView statusCode={500} statusText="Failed to fetch player data. Is the API down?"></ErrorView>;
 	}
 	const data = await res.json();

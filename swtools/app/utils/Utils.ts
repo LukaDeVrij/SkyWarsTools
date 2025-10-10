@@ -636,7 +636,7 @@ export function calcPrestigeTag(level: number): string {
 		}
 
 		prestigeTag = prestigeTag.slice(0, -1) + (prestigeData.emblem ?? "") + "✯" + prestigeTag.slice(-1);
-	} catch (e) {
+	} catch {
 		// In case of error, return a default prestige tag
 		prestigeTag = `[${level}]✯`;
 	}

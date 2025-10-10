@@ -21,7 +21,10 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 
 	// TODO somewhere here, scroll is reset for some reason
 	// start
-	const { data: descentData, error } = useSWR<DescentMap>("/json/descent.json", fetcher);
+	const { data: descentData, error } = useSWR<DescentMap>("/json/descent.json", fetcher, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	useEffect(() => {
 		if (descentData) {
@@ -70,8 +73,13 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 						<div className="w-full lg:w-1/2 h-100rem bg-content py-3 px-4 flex flex-col gap-2 items-center rounded-2xl">
 							<h2 className="font-semibold flex items-center flex-col justify-center text-center">
 								<Title color="text-blue-400">Angel&apos;s Descent</Title>
-								<span className="flex flex-row gap-2">Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
-									{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? <Check className="text-green-500" /> : <X className="text-red-500" />}
+								<span className="flex flex-row gap-2">
+									Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
+									{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? (
+										<Check className="text-green-500" />
+									) : (
+										<X className="text-red-500" />
+									)}
 								</span>
 								<span className="text-base">
 									Hover over upgrades for details<br></br> Descent is as it appears on Hypixel

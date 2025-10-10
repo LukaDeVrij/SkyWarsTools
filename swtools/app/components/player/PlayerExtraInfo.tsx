@@ -98,13 +98,17 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				<span>
 					<span className="text-gray-400 font-normal">Network Level:</span> {calcHypixelLevel(response.stats.networkExp)}
 				</span>
-				<span title={timeAgo(response.stats.firstLogin / 1000)}>
+				<span>
 					<span className="text-gray-400 font-normal">First Login:</span>{" "}
-					{formatTimestampToVerboseDate(response.stats.firstLogin)}
+					<Tooltip title={timeAgo(response.stats.firstLogin / 1000)}>
+						<span>{formatTimestampToVerboseDate(response.stats.firstLogin)}</span>
+					</Tooltip>
 				</span>
-				<span title={response.stats.lastLogin ? formatTimestampToVerboseDate(response.stats.lastLogin) : undefined}>
+				<span>
 					<span className="text-gray-400 font-normal">Last Login:</span>{" "}
-					{response.stats.lastLogin ? timeAgo(response.stats.lastLogin / 1000) : "Unknown"}
+					<Tooltip title={response.stats.lastLogin ? formatTimestampToVerboseDate(response.stats.lastLogin) : undefined}>
+						<span>{response.stats.lastLogin ? timeAgo(response.stats.lastLogin / 1000) : "Unknown"}</span>
+					</Tooltip>
 				</span>
 				<span>
 					<span className="text-gray-400 font-normal">AP:</span> {(response.stats.achievementPoints ?? 0).toLocaleString()}

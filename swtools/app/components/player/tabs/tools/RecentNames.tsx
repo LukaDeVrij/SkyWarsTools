@@ -17,7 +17,10 @@ type SnapshotKeysResponse = {
 
 const RecentNames: React.FC<{ uuid: string }> = ({ uuid }) => {
 	const [fetchUrl, setFetchUrl] = useState<string | null>(null);
-	const { data, error, isLoading } = useSWR<SnapshotKeysResponse>(fetchUrl, fetchUrl ? fetcher : null);
+	const { data, error, isLoading } = useSWR<SnapshotKeysResponse>(fetchUrl, fetchUrl ? fetcher : null, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	const handleFetch = () => {
 		setFetchUrl(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/snapshotKeys?player=${uuid}`);
@@ -54,39 +57,41 @@ const RecentNames: React.FC<{ uuid: string }> = ({ uuid }) => {
 						<div>Failed to load recent names.</div>
 					) : (
 						data && (
-                            <div className="max-h-60 overflow-y-auto w-full">
-                                <table className="w-full text-sm mb-2">
-                                    <thead>
-                                        <tr className="border-b-2">
-                                            <th className="text-left px-2 py-1">Name</th>
-                                            <th className="text-left px-2 py-1">First Seen</th>
-                                            <th className="text-left px-2 py-1">Time Ago</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {getNameChanges(data.data)
-                                            .slice(-5)
-                                            .map((change, idx) => (
-                                                <tr key={idx} className="border-b">
-                                                    <td className="px-2 py-1">{change.player}</td>
-                                                    <td className="px-2 py-1">{new Date(change.queried).toLocaleDateString()}</td>
-                                                    <td className="px-2 py-1">
-                                                        {timeAgo(change.queried / 1000, {
-                                                            showSeconds: false,
-                                                            showMinutes: false,
-                                                            showHours: true,
-                                                            showDays: true,
-                                                            showYears: true,
-                                                        })}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                    </tbody>
-                                </table>
-                            </div>
+							<div className="max-h-60 overflow-y-auto w-full">
+								<table className="w-full text-sm mb-2">
+									<thead>
+										<tr className="border-b-2">
+											<th className="text-left px-2 py-1">Name</th>
+											<th className="text-left px-2 py-1">First Seen</th>
+											<th className="text-left px-2 py-1">Time Ago</th>
+										</tr>
+									</thead>
+									<tbody>
+										{getNameChanges(data.data)
+											.slice(-5)
+											.map((change, idx) => (
+												<tr key={idx} className="border-b">
+													<td className="px-2 py-1">{change.player}</td>
+													<td className="px-2 py-1">{new Date(change.queried).toLocaleDateString()}</td>
+													<td className="px-2 py-1">
+														{timeAgo(change.queried / 1000, {
+															showSeconds: false,
+															showMinutes: false,
+															showHours: true,
+															showDays: true,
+															showYears: true,
+														})}
+													</td>
+												</tr>
+											))}
+									</tbody>
+								</table>
+							</div>
 						)
 					)}
-                    <Tooltip title="Only includes names that occur in saved snapshots of this player (UUID)."><p className="text-sm text-center text-gray-400 mt-4">History might not be accurate.</p></Tooltip>
+					<Tooltip title="Only includes names that occur in saved snapshots of this player (UUID).">
+						<p className="text-sm text-center text-gray-400 mt-4">History might not be accurate.</p>
+					</Tooltip>
 				</>
 			)}
 		</div>

@@ -5,6 +5,7 @@ import HoverableSpan from "../universal/HoverableSpan";
 import { LineChart } from "@mui/x-charts";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { fetcher } from "@/app/utils/Utils";
+import Loading from "../universal/Loading";
 
 interface RankGraphProps {
 	uuid: string;
@@ -40,11 +41,21 @@ type GetRankResponse = {
 const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 	const { data, error, isLoading } = useSWR<RankHistoryResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRankHistory?uuid=${encodeURIComponent(uuid)}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+			refreshInterval: 0,
+		}
 	);
 	const { data: ranking } = useSWR<GetRankResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRank/skywars_experience?uuid=${encodeURIComponent(uuid)}`,
-		fetcher
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+			refreshInterval: 0,
+		}
 	);
 
 	let delta = "~";
@@ -62,10 +73,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		}
 	}
 
-	const emptySeries = {
-		series: [],
-		height: 150,
-	};
 
 	return (
 		<div className="w-full h-72  lg:w-[60%] bg-content p-4">
@@ -87,9 +94,22 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 					</div>
 				</div>
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
-					{error && <LineChart loading {...emptySeries} />}
-					{isLoading && <LineChart loading {...emptySeries} />}
-					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 ? (
+					{isLoading && <Loading height={50} />}
+					{error && (
+						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
+							<p className="text-center text-gray-400">
+								No rank history data available<br></br>Player will be included in the rankings next week!
+							</p>
+						</div>
+					)}
+					{!data && !isLoading && !error && (
+						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
+							<p className="text-center text-gray-400">
+								No rank history data available<br></br>Player will be included in the rankings next week!
+							</p>
+						</div>
+					)}
+					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 && (
 						<>
 							{/* Desktop AND mobile */}
 							<div className="h-[75%] w-full px-2 block">
@@ -116,10 +136,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 								/>
 							</div>
 						</>
-					) : (
-						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
-							<p className="text-center text-gray-400">No rank history data available<br></br>Check again next week!</p>
-						</div>
 					)}
 				</ThemeProvider>
 			</div>

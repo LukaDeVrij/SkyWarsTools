@@ -8,7 +8,6 @@ import { useParams } from "next/navigation";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { compareMap } from "@/app/utils/CompareStatsMap";
-import ErrorView from "@/app/components/universal/ErrorView";
 
 const statOptions = Object.keys(compareMap).map((key) => compareMap[key].label);
 const statKeys = Object.keys(compareMap);
@@ -29,11 +28,11 @@ type SnapshotKeysResponse = {
 };
 
 export default function CalculatePage() {
-	const [user, loading, authError] = useAuthState(auth);
+	const [user, , ] = useAuthState(auth);
 
 	const playerName = useParams().playerName as string;
 
-	const { data, error, isLoading } = useSWR<SnapshotKeysResponse>(
+	const { data } = useSWR<SnapshotKeysResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/snapshotKeys?player=${playerName}`,
 		fetcher,
 		{
@@ -52,7 +51,10 @@ export default function CalculatePage() {
 			const saved = localStorage.getItem("selectedSnapshots");
 			if (saved) {
 				try {
-					return JSON.parse(saved);
+					const ls = JSON.parse(saved);
+					if (ls.player == playerName) {
+						return ls.snapshots;
+					}
 				} catch {
 					return [];
 				}
@@ -63,9 +65,9 @@ export default function CalculatePage() {
 
 	React.useEffect(() => {
 		if (typeof window !== "undefined") {
-			localStorage.setItem("selectedSnapshots", JSON.stringify(selectedSnapshots));
+			localStorage.setItem("selectedSnapshots", JSON.stringify({ player: playerName, snapshots: selectedSnapshots }));
 		}
-	}, [selectedSnapshots]);
+	}, [selectedSnapshots, playerName]);
 
 	const [customDatePickerOpen, setCustomDatePickerOpen] = useState(false);
 	const [goalType, setGoalType] = useState("statGoal");
@@ -73,7 +75,7 @@ export default function CalculatePage() {
 	const [dateGoal, setDateGoal] = useState<string>("");
 
 	const [selectionErrors, setSelectionErrors] = useState<string[]>([]);
-	console.log(selectionErrors);
+	if (selectionErrors.length > 0) console.log(selectionErrors);
 	function meetsRequirements(): boolean {
 		setSelectionErrors([]);
 		const errors: string[] = [];

@@ -14,11 +14,13 @@ type StatEntry = {
 };
 
 const FreqPlayerList = () => {
-	const { data, error, isLoading } = useSWR<QueryStats>(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/queryStats`, fetcher);
+	const { data, error, isLoading } = useSWR<QueryStats>(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/queryStats`, fetcher, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	return (
 		<>
-			
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 				{isLoading && <LoaderCircle className="animate-spin"></LoaderCircle>}
 				{error && <div>Could not get popular players ):</div>}

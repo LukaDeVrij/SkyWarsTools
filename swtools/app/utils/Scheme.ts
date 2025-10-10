@@ -1044,7 +1044,7 @@ export function formatScheme(level: number, overallResponse: OverallResponse, ov
 		if (!overwriteScheme) {
 			schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
 		} else {
-			const [prestige, presLevel] = calcPrestigeObj(level);
+			const [, presLevel] = calcPrestigeObj(level);
 			schemeName = getSchemeByReq(presLevel)?.name ?? "stone_prestige";
 		}
 		// console.log(schemeName);
