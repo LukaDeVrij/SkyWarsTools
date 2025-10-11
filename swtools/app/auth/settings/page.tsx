@@ -144,7 +144,6 @@ const maps = [
 ];
 
 const fetchNationalities = async (): Promise<string[]> => {
-
 	const res = await fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/by-code.json");
 	const data = await res.json();
 	return Object.values(data).map((item) => {
@@ -230,7 +229,7 @@ const ProfileSettingsPage = () => {
 	if (isPageLoading) {
 		return (
 			<div className="w-full h-80 flex justify-center text-center items-center text-3xl ">
-				<Loading/>
+				<Loading />
 			</div>
 		);
 	}
@@ -249,14 +248,14 @@ const ProfileSettingsPage = () => {
 				title={"Profile Background"}
 				explainText="The image shown on your MC account page"
 				options={maps}
-				initialValue={background ?? undefined}
+				initialValue={profileUser?.profile_bg ?? undefined}
 				onChange={setBackground}
 			/>
 			<PropertyCombobox
 				title={"Nationality"}
 				explainText="The country/flag shown on your MC account page"
 				options={nationalities}
-				initialValue={nationality ?? undefined}
+				initialValue={profileUser?.nationality ?? undefined}
 				onChange={setNationality}
 			/>
 			<PropertyStatic
@@ -264,12 +263,16 @@ const ProfileSettingsPage = () => {
 				explainText={"Whether this account has Patreon benefits"}
 				value={profileUser?.patreon === true ? "Yes" : "No"}
 			/>
-			<PropertyInput
-				title="Emoji"
-				explainText={"Emoji to show on start page (Patreon only)"}
-				placeholder={emoji ?? "None"}
-				onChange={setEmoji}
-			/>
+			{profileUser?.patreon === true && (
+				<PropertyInput
+					title="Emoji"
+					explainText={"Emoji to show on start page (Patreon only)"}
+					placeholder={emoji ?? "None"}
+					onChange={setEmoji}
+					inputWidth={20}
+				/>
+			)}
+
 			<div className="w-full flex justify-center">
 				<Button onClick={updateProfile}>Save</Button>
 			</div>

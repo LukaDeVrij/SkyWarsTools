@@ -6,9 +6,10 @@ interface PropertyInputProps {
 	value?: string;
 	onChange: (value: string) => void;
 	placeholder?: string;
+	inputWidth?: number;
 }
 
-const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value, onChange, placeholder }) => {
+const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value, onChange, placeholder, inputWidth }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(e.target.value);
 	};
@@ -23,7 +24,7 @@ const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value
 			</div>
 			<div className="flex items-center gap-2">
 				<input
-					className="text-xl font-semibold px-2 py-1 rounded border"
+					className={`text-xl font-semibold px-2 py-1 rounded border w-` + inputWidth}
 					value={value}
 					onChange={handleInputChange}
 					placeholder={placeholder}

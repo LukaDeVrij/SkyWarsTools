@@ -22,7 +22,7 @@ const socials = {
 const linkPrefixes = {
 	TWITTER: "",
 	YOUTUBE: "",
-	INSTAGRAM: "https://www.instagram.com/",
+	INSTAGRAM: "",
 	TIKTOK: "https://www.tiktok.com/@",
 	TWITCH: "",
 	DISCORD: "/discord/",
@@ -53,14 +53,17 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 							const socialKey = social as keyof typeof links;
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
+
+							// console.log(links[socialKey]);
+
+							let finalSocialLink = linkPrefixes[socialKey] + links[socialKey];
+							if (!finalSocialLink.startsWith("http") && !finalSocialLink.startsWith("/")) {
+								finalSocialLink = "https://" + finalSocialLink;
+							}
+
+							// console.log(finalSocialLink);
 							return (
-								<a
-									key={social}
-									href={linkPrefixes[socialKey] + links[socialKey]}
-									target="_blank"
-									rel="noopener noreferrer"
-									title={socialKey}
-								>
+								<a key={social} href={finalSocialLink} target="_blank" rel="noopener noreferrer" title={socialKey}>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
@@ -76,7 +79,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					<p className="text-gray-400">No socials linked</p>
 				)}
 				{savedTheseStats ? (
-					<Tooltip className="ml-auto text-green-500" title="A snapshot of your main stats has been saved!">
+					<Tooltip className="ml-auto text-green-500" title="A snapshot of these main stats has been saved!">
 						<CloudCheck />
 					</Tooltip>
 				) : null}

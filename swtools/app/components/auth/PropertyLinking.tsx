@@ -6,6 +6,7 @@ import Image from "next/image";
 import { auth } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Tooltip from "@mui/material/Tooltip";
+import Link from "next/link";
 
 type PropertyLinkingProps = {
 	linked: boolean;
@@ -104,13 +105,15 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 						<div className="text-xl font-semibold">
 							{uuid && (
 								<Tooltip title={uuid}>
-									<Image
-										src={`https://www.mc-heads.net/avatar/${uuid}`}
-										width={50}
-										height={50}
-										className="rounded-lg"
-										alt="Minecraft Avatar"
-									/>
+									<Link href={`/redirect?uuid=${uuid}`}>
+										<Image
+											src={`https://www.mc-heads.net/avatar/${uuid}`}
+											width={50}
+											height={50}
+											className="rounded-lg"
+											alt="Minecraft Avatar"
+										/>
+									</Link>
 								</Tooltip>
 							)}
 						</div>

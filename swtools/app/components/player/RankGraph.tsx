@@ -45,7 +45,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-			refreshInterval: 0,
 		}
 	);
 	const { data: ranking } = useSWR<GetRankResponse>(
@@ -54,7 +53,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-			refreshInterval: 0,
 		}
 	);
 

@@ -35,7 +35,6 @@ export default async function PlayerStatsTabPage({ params }: PageProps) {
 	}
 
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(playerName)}`, {
-		next: { revalidate: 300 },
 	});
 	if (!res.ok) {
 		console.log(res.statusText);
