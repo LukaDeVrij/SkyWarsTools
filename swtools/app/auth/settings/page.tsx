@@ -263,15 +263,16 @@ const ProfileSettingsPage = () => {
 				explainText={"Whether this account has Patreon benefits"}
 				value={profileUser?.patreon === true ? "Yes" : "No"}
 			/>
-			{profileUser?.patreon === true && (
-				<PropertyInput
-					title="Emoji"
-					explainText={"Emoji to show on start page (Patreon only)"}
-					placeholder={emoji ?? "None"}
-					onChange={setEmoji}
-					inputWidth={20}
-				/>
-			)}
+			{profileUser?.patreon === true ||
+				(profileUser?.contrib === true && (
+					<PropertyInput
+						title="Emoji"
+						explainText={"Emoji to show on start page (Patreon only)"}
+						placeholder={emoji ?? "None"}
+						onChange={setEmoji}
+						inputWidth={20}
+					/>
+				))}
 
 			<div className="w-full flex justify-center">
 				<Button onClick={updateProfile}>Save</Button>

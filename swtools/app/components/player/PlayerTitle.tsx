@@ -55,7 +55,8 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 	React.useEffect(() => {
 		if (userInfoData && userInfoData.success && userInfoData.user) {
 			setNationality(userInfoData.user.nationality ?? null);
-			setEmoji(userInfoData.user.patreon && userInfoData.user.emoji ? userInfoData.user.emoji : null);
+			const allowedEmoji: boolean = (userInfoData.user.patreon || userInfoData.user.contrib) ?? false;
+			setEmoji(allowedEmoji ? userInfoData.user.emoji ?? null : null);
 		}
 	}, [userInfoData]);
 
