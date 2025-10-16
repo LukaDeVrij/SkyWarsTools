@@ -42,12 +42,12 @@ export default function ProfilePage() {
 							value={user.uid}
 							hideValue={true}
 						/>
-						<PropertyStatic
+						{/* <PropertyStatic
 							title="Auth Token"
 							explainText={"DO NOT SHARE! Useful for development"}
 							value={token}
 							hideValue={true}
-						/>
+						/> */}
 					</div>
 				</>
 			)}
