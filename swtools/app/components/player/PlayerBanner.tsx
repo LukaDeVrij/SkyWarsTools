@@ -5,7 +5,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/Utils";
-import { Tooltip } from "@mui/material";
 
 interface PlayerBannerProps {
 	playerName: string;
