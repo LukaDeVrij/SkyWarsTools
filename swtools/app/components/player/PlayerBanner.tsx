@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/Utils";
+import { Tooltip } from "@mui/material";
 
 interface PlayerBannerProps {
 	playerName: string;
@@ -42,6 +43,9 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 				className="w-full h-30 lg:h-45 object-cover"
 				alt="Player Banner"
 			/>
+			{/* {typedUserInfo?.user?.bio && <Tooltip title={'Supporter bio, get your own by subscribing to Patreon!'}>
+				<p className="text-gray-200 italic text-2xl  tracking-wide absolute bottom-1/2 left-1/2 transform -translate-x-1/2">"{typedUserInfo?.user?.bio}"</p>
+			</Tooltip>} */}
 			<Image
 				alt="player avatar"
 				width={100}
