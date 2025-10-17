@@ -9,7 +9,7 @@ import ErrorView from "@/app/components/universal/ErrorView";
 export default function ProfilePage() {
 	const [user, loading, error] = useAuthState(auth);
 
-	const [token, setToken] = React.useState<string | null>(null);
+	const [, setToken] = React.useState<string | null>(null);
 
 	React.useEffect(() => {
 		if (user) {
@@ -42,12 +42,12 @@ export default function ProfilePage() {
 							value={user.uid}
 							hideValue={true}
 						/>
-						<PropertyStatic
+						{/* <PropertyStatic
 							title="Auth Token"
 							explainText={"DO NOT SHARE! Useful for development"}
 							value={token}
 							hideValue={true}
-						/>
+						/> */}
 					</div>
 				</>
 			)}
