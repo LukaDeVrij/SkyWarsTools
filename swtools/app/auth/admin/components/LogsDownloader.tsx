@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchAdminData } from "../page";
+import { fetchAdminData } from "@/app/utils/Utils";
 
 interface LogsPanelProps {
 	profileToken: string | null;

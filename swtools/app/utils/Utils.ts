@@ -886,3 +886,23 @@ export function fillMCColorText(ctx: CanvasRenderingContext2D, str: string, box:
 
 	ctx.textAlign = "center";
 }
+
+// Fetch function for admin API
+export async function fetchAdminData(token: string | null, urlSuffix: string) {
+	if (!token) throw new Error("No auth token provided");
+
+	const url = `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/admin/${urlSuffix}`;
+
+	const res = await fetch(url, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	const data = await res.json();
+	if (data.success !== true) {
+		throw new Error(data.cause || "Unknown error");
+	}
+	return data;
+}

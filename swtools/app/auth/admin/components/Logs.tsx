@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchAdminData } from "../page";
+import { fetchAdminData } from "@/app/utils/Utils";
 
 interface LogsPanelProps {
 	profileToken: string | null;
@@ -9,11 +9,8 @@ type LogEntry = {
 	time: string;
 	metric: string;
 	value: number;
-	tags: {
-		origin: string;
-        /* eslint-disable  @typescript-eslint/no-explicit-any */
-		query?: Record<string, any>;
-	};
+	origin: string;
+	tags: Record<string, unknown>;
 };
 
 const LogsPanel: React.FC<LogsPanelProps> = ({ profileToken }) => {
@@ -38,6 +35,7 @@ const LogsPanel: React.FC<LogsPanelProps> = ({ profileToken }) => {
 			})
 			.finally(() => setLoading(false));
 	}, [profileToken]);
+	console.log(profileToken)
 
 	return (
 		<div className="w-full max-w bg-layer rounded-xl shadow p-4">
@@ -54,7 +52,7 @@ const LogsPanel: React.FC<LogsPanelProps> = ({ profileToken }) => {
 								<th className="py-1 px-2">Metric</th>
 								<th className="py-1 px-2">Value</th>
 								<th className="py-1 px-2">Origin</th>
-								<th className="py-1 px-2">Player</th>
+								<th className="py-1 px-2">Tags</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -63,8 +61,8 @@ const LogsPanel: React.FC<LogsPanelProps> = ({ profileToken }) => {
 									<td className="py-1 px-2">{new Date(log.time).toLocaleTimeString()}</td>
 									<td className="py-1 px-2">{log.metric}</td>
 									<td className="py-1 px-2">{log.value}</td>
-									<td className="py-1 px-2">{log.tags.origin}</td>
-									<td className="py-1 px-2">{log.tags.query?.player ?? "-"}</td>
+									<td className="py-1 px-2">{log.origin}</td>
+									<td className="py-1 px-2">{JSON.stringify(log.tags)}</td>
 								</tr>
 							))}
 						</tbody>
