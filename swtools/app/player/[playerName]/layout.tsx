@@ -14,14 +14,15 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 	const playerName = awaitedParams.playerName;
 
 	let correctedName = playerName;
-
+	
 	let res;
+	let data;
 	try {
 		res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${encodeURIComponent(awaitedParams.playerName)}`);
+		data = await res.json();
 	} catch {
 		return <ErrorView statusCode={500} statusText="Failed to fetch player data. Is the API down?"></ErrorView>;
 	}
-	const data = await res.json();
 
 	if (!data || !data.name) {
 		// Player doesn't exist

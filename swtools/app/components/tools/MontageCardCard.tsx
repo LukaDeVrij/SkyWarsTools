@@ -9,7 +9,7 @@ interface MontageCardCardProps {
 const MontageCardCard: React.FC<MontageCardCardProps> = ({ addInput }) => {
 	const [player, setPlayer] = React.useState("");
 	return (
-		<div className="p-6 mx-auto">
+		<div className="p-6">
 			<h2 className="text-2xl font-bold mb-4 text-center">Montage Card</h2>
 			<p className="mb-4 text-center">Killed a known player? Want them in your montage? Of course!</p>
 			{addInput && (

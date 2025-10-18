@@ -22,7 +22,7 @@ const PlayerStatsNavBar = () => {
 	const playerName = params.playerName as string;
 
 	return (
-		<nav className="bg-main h-12 w-full flex gap-2 items-center px-3 overflow-x-scroll lg:overflow-auto text-base lg:text-xl">
+		<nav className="bg-main h-12 w-full flex gap-2 items-center px-3 overflow-x-scroll lg:overflow-hidden text-base lg:text-xl">
 			{tabs.map((tab) => (
 				<div
 					key={tab.value}

@@ -92,7 +92,7 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 	return (
 		<div
 			className={
-				`bg-gray-900 rounded-xl p-4 w-75 h-${maxHeight} overflow-hidden  cursor-pointer shadow-lg border ` +
+				`bg-gray-900 rounded-xl p-4 w-85 h-${maxHeight} overflow-hidden cursor-pointer shadow-lg border ` +
 				(glitched
 					? "border-red-500 bg-red-900/50"
 					: maxed

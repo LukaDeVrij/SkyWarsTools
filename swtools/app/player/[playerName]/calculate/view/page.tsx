@@ -157,7 +157,7 @@ const CalculateViewPage = () => {
 					<span className="text-[12px] text-red-900">{lostSnapshotsText}</span>
 				</div>
 			)}
-			<div className="mt-2 bg-layer p-2 rounded-2xl">
+			<div className="mt-2 bg-layer p-2 rounded-2xl lg:w-[80%] mx-auto aspect-square lg:aspect-auto">
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
 					{(error || isLoading) && <LineChart loading {...emptySeries} />}
 					{!error && !isLoading && regressionResult.points.length > 0 && (
