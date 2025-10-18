@@ -135,20 +135,27 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 			</div>
 
 			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-2 lg:px-4 text-center lg:text-left">
-				<div className="flex flex-row gap-2 lg:gap-5 items-center">
-					<span
-						title={title}
-						className={`border-2 border-black rounded-full w-5 aspect-square block lg:hidden ${bgColor}`}
-					></span>
-					<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
-					{emoji && (
+				<div className="flex flex-row gap-2 lg:gap-5 items-center justify-between">
+					<div className="flex items-center gap-2 lg:gap-4">
 						<span
-							dangerouslySetInnerHTML={{
-								__html: twemoji.parse(emoji ?? "", { folder: "svg", ext: ".svg" }),
-							}}
-							style={{ width: 42, height: 42, display: "inline-block" }}
-						/>
-					)}
+							title={title}
+							className={`border-2 border-black rounded-full w-5 aspect-square block lg:hidden ${bgColor}`}
+						></span>
+						<MinecraftText>{playerTitle}</MinecraftText> {/* No space for guild tag on mobile*/}
+						{emoji && (
+							<span
+								dangerouslySetInnerHTML={{
+									__html: twemoji.parse(emoji ?? "", { folder: "svg", ext: ".svg" }),
+								}}
+								style={{ width: 42, height: 42, display: "inline-block" }}
+							/>
+						)}
+					</div>
+					<div className="hidden lg:block">
+						{userInfoData?.user?.bio && <Tooltip title={'Supporter bio, get your own by subscribing to Patreon!'}>
+							<div className="text-gray-400 italic text-xl">&quot;{userInfoData?.user?.bio}&quot;</div>
+						</Tooltip>}
+					</div>
 				</div>
 				<div className="text-xl font-montserrat justify-between lg:flex">
 					<div className="items-center gap-2 text-lg hidden lg:flex">

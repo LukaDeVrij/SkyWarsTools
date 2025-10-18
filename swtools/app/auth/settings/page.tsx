@@ -164,6 +164,7 @@ const ProfileSettingsPage = () => {
 	const [background, setBackground] = React.useState<string | null>(null);
 	const [nationality, setNationality] = React.useState<string | null>(null);
 	const [emoji, setEmoji] = React.useState<string | null>(null);
+	const [bio, setBio] = React.useState<string | null>(null);
 
 	// Fetch ID token
 	React.useEffect(() => {
@@ -199,6 +200,7 @@ const ProfileSettingsPage = () => {
 			setNationality(profileUser.nationality ?? null);
 			setBackground(profileUser.profile_bg ?? null);
 			setEmoji(profileUser.emoji ?? null);
+			setBio(profileUser.bio ?? null);
 		}
 	}, [profileUser]);
 
@@ -210,6 +212,7 @@ const ProfileSettingsPage = () => {
 			profile_bg: background,
 			nationality: nationality,
 			emoji: emoji,
+			bio: bio,
 		};
 		try {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/updateUserInfo`, {
@@ -270,13 +273,22 @@ const ProfileSettingsPage = () => {
 			/>
 			{profileUser?.patreon === true ||
 				(profileUser?.contrib === true && (
-					<PropertyInput
-						title="Emoji"
-						explainText={"Emoji to show on start page (Patreon only)"}
-						placeholder={emoji ?? "None"}
-						onChange={setEmoji}
-						inputWidth={20}
-					/>
+					<>
+            <PropertyInput
+              title="Emoji"
+              explainText={"Emoji to show on start page (Patreon only)"}
+              placeholder={emoji ?? "None"}
+              onChange={setEmoji}
+              inputWidth={20}
+            />
+            <PropertyInput
+              title="Bio"
+              explainText={"Bio to show on your account page (Patreon only)"}
+              placeholder={profileUser?.bio ?? "None"}
+              onChange={(value) => setBio(value)}
+              inputWidth={80}
+            />
+				  </>
 				))}
 
 			<div className="w-full flex justify-center">

@@ -35,7 +35,7 @@ const AuthNavBar: React.FC = () => {
 						<div className="flex flex-col items-center">
 							<a
 								href={itemPath}
-								className="text-lg lg:text-2xl text-[var(--foreground)] font-[700] animate-press border-[var(--accent)] hover:border-b-2 "
+								className={`text-lg lg:text-2xl text-[var(--foreground)] font-[700] animate-press border-[var(--accent)] hover:border-b-2 ${isActive ? "text-accent" : "font-normal"}`}
 							>
 								{item.label}
 							</a>
