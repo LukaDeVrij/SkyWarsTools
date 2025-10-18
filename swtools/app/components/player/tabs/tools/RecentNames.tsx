@@ -41,7 +41,7 @@ const RecentNames: React.FC<{ uuid: string }> = ({ uuid }) => {
 	};
 
 	return (
-		<div className="bg-layer rounded-xl p-6 m-0 flex flex-col items-center w-full lg:w-100 aspect-square">
+		<div className="bg-layer rounded-xl p-6 m-0 flex flex-col items-center w-full lg:w-90 aspect-square">
 			<div className="font-bold mb-2 text-2xl">Recent Names</div>
 			<button
 				className="bg-button text-white px-4 py-2 rounded mb-4 animate-press cursor-pointer"

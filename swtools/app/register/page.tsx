@@ -38,7 +38,7 @@ export default function LogoutPage() {
 	};
 
 	return (
-		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1000px] rounded-xl">
+		<div className="flex h-200 items-center justify-center bg-main w-full lg:w-[1150px] rounded-xl">
 			<div className="bg-content p-10 lg:rounded-lg shadow-xl w-full lg:w-120">
 				<h1 className="text-white text-2xl mb-5 font-semibold">Register</h1>
 				<p className="text-red-400 mb-2">{error?.message}</p>

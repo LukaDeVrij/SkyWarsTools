@@ -53,7 +53,7 @@ export default function AboutPage() {
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1">Contact</h2>
 					<div className="flex flex-row gap-4 mt-2 overflow-x-auto">
-						<div className="flex flex-row gap-4 min-w-max">
+						<div className="flex flex-row gap-2 lg:gap-4 min-w-max">
 							<a
 								href="/discord"
 								target="_blank"
