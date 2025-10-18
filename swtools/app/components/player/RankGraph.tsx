@@ -62,7 +62,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 
 		const dates = Object.keys(rankHistory);
 		const previousRank = rankHistory[dates[dates.length - 1]];
-		// console.log(previousRank);
 		const currentRank = ranking.rank;
 
 		delta = (previousRank - currentRank).toString();
@@ -70,7 +69,6 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 			delta = "+" + delta;
 		}
 	}
-
 
 	return (
 		<div className="w-full h-72  lg:w-[60%] bg-content p-4">
@@ -92,22 +90,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 					</div>
 				</div>
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
-					{isLoading && <Loading height={50} />}
-					{error && (
-						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
-							<p className="text-center text-gray-400">
-								No rank history data available<br></br>Player will be included in the rankings next week!
-							</p>
-						</div>
-					)}
-					{!data && !isLoading && !error && (
-						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
-							<p className="text-center text-gray-400">
-								No rank history data available<br></br>Player will be included in the rankings next week!
-							</p>
-						</div>
-					)}
-					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 && (
+					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 ? (
 						<>
 							{/* Desktop AND mobile */}
 							<div className="h-[75%] w-full px-2 block">
@@ -134,6 +117,18 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 								/>
 							</div>
 						</>
+					) : isLoading ? (
+						<div className="h-full flex justify-center items-center">
+							<Loading height={50} />
+						</div>
+					) : (
+						<div className="h-full bg-content m-4 rounded-xl flex justify-center items-center">
+							<p className="text-center text-gray-400 p-4">
+								No rank history data available
+								<br />
+								Player will be included in the rankings next week!
+							</p>
+						</div>
 					)}
 				</ThemeProvider>
 			</div>
