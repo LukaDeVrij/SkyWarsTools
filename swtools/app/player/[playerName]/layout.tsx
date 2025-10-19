@@ -3,7 +3,7 @@ import ErrorView from "@/app/components/universal/ErrorView";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 import type { Metadata } from "next";
-import { OverallResponse, Stats } from "@/app/types/OverallResponse";
+import { OverallResponse } from "@/app/types/OverallResponse";
 import { calcLevel } from "@/app/utils/Utils";
 import getMostPlayedKit from "@/app/utils/getMostPlayedKit";
 import { extractKitMaxPrestige } from "@/app/utils/extractMaxKitPrestiges";

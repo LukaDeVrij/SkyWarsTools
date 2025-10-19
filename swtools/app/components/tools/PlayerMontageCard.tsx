@@ -9,6 +9,9 @@ import { getPlayerRank } from "@/app/utils/RankTag";
 
 const MontageCard: React.FC<OverallResponse> = (data) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const [useLevelScheme, setUseLevelScheme] = React.useState(true);
+	const [useRank, setUseRank] = React.useState(true);
+	const [useCheaterSuffix, setUseCheaterSuffix] = React.useState(false);
 
 	const handleSave = () => {
 		const canvas = canvasRef.current;
@@ -36,7 +39,7 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 
 	// Scheme bits
 	const level = calcLevel(data.stats.skywars_experience ?? 0);
-	const scheme = formatScheme(level, data, true);
+	const scheme = formatScheme(level, data, useLevelScheme);
 
 	// Rank
 	const rank = getPlayerRank(data);
@@ -53,12 +56,16 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 					ctx.font = `40px MinecraftReg`;
 					let text = `${scheme}`;
-					if (rank.cleanPrefix) {
+					if (rank.cleanPrefix && useRank) {
 						text += " " + rank.prefix + " ";
 					} else {
 						text += "§7 ";
 					}
 					text += data.player;
+
+					if (useCheaterSuffix) {
+						text += " §c[CHEATING]";
+					}
 					fillMCColorText(ctx, text, box);
 				}
 			});
@@ -80,6 +87,39 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 						maxWidth: "100%",
 					}}
 				/>
+			</div>
+			<div className="flex flex-row gap-5">
+				<label className="flex items-center gap-2 text-base font-medium text-white">
+					<input
+						type="checkbox"
+						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+						checked={useLevelScheme}
+						onChange={(e) => setUseLevelScheme(e.target.checked)}
+					/>
+					<span>Use Level Scheme</span>
+				</label>
+				<label className="flex items-center gap-2 text-base font-medium text-white">
+					<input
+						type="checkbox"
+						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+						checked={useRank}
+						onChange={(e) => {
+							setUseRank(e.target.checked);
+						}}
+					/>
+					<span>Include Rank</span>
+				</label>
+				<label className="flex items-center gap-2 text-base font-medium text-white">
+					<input
+						type="checkbox"
+						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+						checked={useCheaterSuffix}
+						onChange={(e) => {
+							setUseCheaterSuffix(e.target.checked);
+						}}
+					/>
+					<span>Cheater Suffix</span>
+				</label>
 			</div>
 			<div className="flex gap-2">
 				<Button onClick={handleSave}>Save</Button>
