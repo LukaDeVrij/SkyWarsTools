@@ -1,15 +1,11 @@
 import React from "react";
-import { toCamelCase } from "@/app/utils/Utils";
+import { kitProcessing } from "@/app/utils/Utils";
 import KitPrestigeString from "../../universal/KitPrestigeString";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import MinecraftText from "@/app/utils/MinecraftText";
 
 const Extended: React.FC<OverallResponse> = (response) => {
-	function kitProcessing(value: string): string {
-		const parts = value.split("_");
-		return toCamelCase(parts[parts.length - 1]);
-	}
 
 	// response = useOverall(response.player); // Temp hook fix
 

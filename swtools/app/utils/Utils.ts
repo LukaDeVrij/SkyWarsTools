@@ -1,6 +1,11 @@
 import { DescentItem, DescentMap } from "../types/DescentMap";
 import { OverallResponse } from "../types/OverallResponse";
 
+export function kitProcessing(value: string): string {
+	const parts = value.split("_");
+	return toCamelCase(parts[parts.length - 1]);
+}
+
 export function calcLevel(xp: number): number {
 	const perLevelXp = [10, 25, 50, 75, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
 
