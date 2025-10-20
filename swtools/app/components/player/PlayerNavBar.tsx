@@ -34,7 +34,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 						<div className="flex flex-col items-center">
 							<a
 								href={item.href}
-								className={`text-lg lg:text-2xl text-[var(--foreground)] font-[700] animate-press border-[var(--accent)] hover:border-b-2 ${isActive ? "text-accent" : "font-normal"}`}
+								className={`text-lg lg:text-2xl text-[var(--foreground)] font-[700] font-semibold animate-press border-[var(--accent)] hover:border-b-2 ${isActive ? "text-accent" : "font-normal"}`}
 							>
 								{item.label}
 							</a>

@@ -229,7 +229,7 @@ const CalculateViewPage = () => {
 							title: "The most recent known value of '" + stat + "'.",
 							value:
 								regressionResult.points.length > 0
-									? regressionResult.points[regressionResult.points.length - 1].y.toFixed(2)
+									? regressionResult.points[0].y.toFixed(2)
 									: "-",
 						},
 						{
@@ -260,7 +260,7 @@ const CalculateViewPage = () => {
 							title: "The amount of '" + stat + "' you still need to gain to reach your goal.",
 							value:
 								regressionResult.points.length > 0 && !isNaN(goal.y)
-									? (goal.y - regressionResult.points[regressionResult.points.length - 1].y).toFixed(2)
+									? (goal.y - regressionResult.points[0].y).toFixed(2)
 									: "-",
 						},
 						{
