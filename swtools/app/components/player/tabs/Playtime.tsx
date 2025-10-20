@@ -97,7 +97,7 @@ const Playtime: React.FC<OverallResponse> = (response) => {
 					</table>
 				</div>
 				<span className="mt-2 text-sm text-gray-400 font-normal pt-4">
-					Playtime was added to the Hypixel later than the release of SkyWars. Because of this, OG players may have inaccurate
+					Playtime was added to Hypixel later than the release of SkyWars. Because of this, OG players may have inaccurate
 					playtime stats.
 				</span>
 			</div>

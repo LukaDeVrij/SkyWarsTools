@@ -20,6 +20,10 @@ const PlayerInputField = () => {
 		setError("");
 		const playerName = input.trim();
 		setInput("");
+		checkPlayerExists(playerName);
+	};
+
+	const checkPlayerExists = async (playerName: string): Promise<boolean> => {
 		try {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${encodeURIComponent(playerName)}`);
 			const data = await res.json();
@@ -27,7 +31,8 @@ const PlayerInputField = () => {
 			if (res.ok && data.name) {
 				console.log("Player found, redirecting...");
 
-				router.push(`/player/${encodeURIComponent(input.trim())}/stats/table`);
+				router.push(`/player/${encodeURIComponent(playerName)}/stats/table`);
+				return true;
 			} else {
 				console.warn("Player not found:", data);
 				setError("Player not found.");
@@ -36,9 +41,65 @@ const PlayerInputField = () => {
 			setError("Error checking player.");
 		} finally {
 			// This happens too quick...
+			// Ideally we would keep loading anim until navigation is complete
 			setLoading(false);
+			return false;
 		}
 	};
+
+	React.useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+				e.preventDefault();
+				const inputEl = document.getElementById("player-input-field");
+				inputEl?.focus();
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, []);
+
+	const [recentPlayers, setRecentPlayers] = useState<string[]>([]);
+
+	React.useEffect(() => {
+		const stored = localStorage.getItem("recentPlayers");
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored);
+				if (Array.isArray(parsed)) setRecentPlayers(parsed);
+			} catch {}
+		}
+	}, []);
+
+	const handleRecentPlayerClick = (name: string) => {
+		setInput(name);
+		setShowDropdown(false);
+		const playerExists = checkPlayerExists(name);
+		if (!playerExists) {
+			localStorage.setItem("recentPlayers", JSON.stringify(recentPlayers.filter((n) => n !== name)));
+			setRecentPlayers((prev) => prev.filter((n) => n !== name));
+		} else {
+			setInput("");
+		}
+	};
+
+	const inputRef = React.useRef<HTMLInputElement>(null);
+	const [showDropdown, setShowDropdown] = useState(false);
+	const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+	// Close dropdown when clicking outside
+	React.useEffect(() => {
+		if (!showDropdown) return;
+		const handleClickOutside = (event: MouseEvent) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+				setShowDropdown(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [showDropdown]);
 
 	return (
 		<>
@@ -47,6 +108,8 @@ const PlayerInputField = () => {
 				className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl"
 			>
 				<input
+					id="player-input-field"
+					ref={inputRef}
 					type="text"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
@@ -55,7 +118,9 @@ const PlayerInputField = () => {
 					}}
 					placeholder="Search a player..."
 					disabled={loading}
-					className="flex w-[140px] lg:w-[200px] outline-0" // Im gonna be honest, magic numbered this - looks good on mobile and desktop
+					className="flex w-[140px] lg:w-[200px] outline-0"
+					autoFocus
+					title="Press Ctrl+K or Cmd+K to focus"
 				/>
 				<button type="submit" disabled={loading || !input.trim()} className="flex items-center justify-center cursor-pointer">
 					{loading ? (
@@ -77,6 +142,48 @@ const PlayerInputField = () => {
 					)}
 				</button>
 			</form>
+			<div className="relative inline-block" ref={dropdownRef}>
+				<button
+					type="button"
+					className="flex items-center justify-center cursor-pointer p-2 ml-[-20px] rounded-xl bg-[var(--background)] animate-press-hard"
+					onClick={() => setShowDropdown((prev) => !prev)}
+					tabIndex={-1}
+					aria-label="Show recent players"
+				>
+					<svg
+						className="h-5 w-5 text-white "
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						viewBox="0 0 24 24"
+					>
+						<circle cx="12" cy="12" r="10" />
+						<path d="M12 6v6l4 2" />
+					</svg>
+				</button>
+				{showDropdown && recentPlayers.length > 0 && (
+					<div
+						className="absolute left-1/2 -translate-x-1/2 mt-4 w-48 bg-content rounded-lg shadow-lg z-50"
+						tabIndex={0}
+					>
+						{/* <span className="text-sm text-gray-500 p-2 font-semibold">Recent players</span> */}
+						<ul>
+							{recentPlayers.slice(0, 3).map((name) => (
+								<li
+									key={name}
+									className="px-4 py-2 cursor-pointer text-white rounded-xl font-semibold animate-press"
+									onClick={() => {
+										handleRecentPlayerClick(name);
+										setShowDropdown(false);
+									}}
+								>
+									{name}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+			</div>
 		</>
 	);
 };

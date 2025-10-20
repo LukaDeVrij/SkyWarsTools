@@ -3,7 +3,6 @@ import ErrorView from "@/app/components/universal/ErrorView";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 
-
 interface LayoutProps {
 	children: ReactNode;
 	params: Promise<{ playerName: string }>;
