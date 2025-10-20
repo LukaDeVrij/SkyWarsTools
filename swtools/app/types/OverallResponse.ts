@@ -32,7 +32,7 @@ export interface Stats {
 	activeKit_SOLO?: string;
 	activeKit_TEAM?: string;
 	activeKit_MINI?: string;
-	karma: number;
+	karma?: number;
 	networkExp: number;
 	firstLogin: number;
 	lastLogin?: number;
