@@ -117,7 +117,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					<span className="text-gray-400 font-normal">AP:</span> {(response.stats.achievementPoints ?? 0).toLocaleString()}
 				</span>
 				<span>
-					<span className="text-gray-400 font-normal">Karma:</span> {response.stats.karma.toLocaleString()}
+					<span className="text-gray-400 font-normal">Karma:</span> {(response.stats.karma ?? 0).toLocaleString()}
 				</span>
 			</div>
 		</>
