@@ -1,10 +1,11 @@
 "use client";
-
+import Image from "next/image";
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import Tooltip from "@mui/material/Tooltip";
+import { useRecentPlayersStore } from "@/app/stores/recentPlayersStore";
 
 const PlayerInputField = () => {
 	const [input, setInput] = useState("");
@@ -31,7 +32,7 @@ const PlayerInputField = () => {
 			if (res.ok && data.name) {
 				console.log("Player found, redirecting...");
 
-				router.push(`/player/${encodeURIComponent(playerName)}/stats/table`);
+				router.push(`/player/${encodeURIComponent(data.name)}/stats/table`);
 				return true;
 			} else {
 				console.warn("Player not found:", data);
@@ -47,6 +48,7 @@ const PlayerInputField = () => {
 		}
 	};
 
+	// Shortcut to focus input
 	React.useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -59,25 +61,19 @@ const PlayerInputField = () => {
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, []);
 
-	const [recentPlayers, setRecentPlayers] = useState<string[]>([]);
-
-	React.useEffect(() => {
-		const stored = localStorage.getItem("recentPlayers");
-		if (stored) {
-			try {
-				const parsed = JSON.parse(stored);
-				if (Array.isArray(parsed)) setRecentPlayers(parsed);
-			} catch {}
-		}
-	}, []);
+	// Recent players from zustand store
+	const recentPlayers = useRecentPlayersStore((state) => state.recentPlayers);
+	const setRecentPlayers = useRecentPlayersStore((state) => state.setRecentPlayers);
 
 	const handleRecentPlayerClick = (name: string) => {
 		setInput(name);
 		setShowDropdown(false);
 		const playerExists = checkPlayerExists(name);
 		if (!playerExists) {
-			localStorage.setItem("recentPlayers", JSON.stringify(recentPlayers.filter((n) => n !== name)));
-			setRecentPlayers((prev) => prev.filter((n) => n !== name));
+			const prev: string[] = useRecentPlayersStore.getState().recentPlayers;
+			// Remove from recent players in store
+			const updated = prev.filter((n) => n !== name);
+			setRecentPlayers(updated);
 		} else {
 			setInput("");
 		}
@@ -150,33 +146,31 @@ const PlayerInputField = () => {
 					tabIndex={-1}
 					aria-label="Show recent players"
 				>
-					<svg
-						className="h-5 w-5 text-white "
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						viewBox="0 0 24 24"
-					>
+					<svg className="h-5 w-5 text-white " fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
 						<circle cx="12" cy="12" r="10" />
 						<path d="M12 6v6l4 2" />
 					</svg>
 				</button>
 				{showDropdown && recentPlayers.length > 0 && (
-					<div
-						className="absolute left-1/2 -translate-x-1/2 mt-4 w-48 bg-content rounded-lg shadow-lg z-50"
-						tabIndex={0}
-					>
+					<div className="absolute left-1/2 -translate-x-1/2 mt-4 w-48 bg-content rounded-lg shadow-lg z-50" tabIndex={0}>
 						{/* <span className="text-sm text-gray-500 p-2 font-semibold">Recent players</span> */}
 						<ul>
 							{recentPlayers.slice(0, 3).map((name) => (
 								<li
 									key={name}
-									className="px-4 py-2 cursor-pointer text-white rounded-xl font-semibold animate-press"
+									className="p-2 cursor-pointer text-white rounded-xl font-semibold animate-press flex flex-row items-center gap-2 overflow-hidden"
 									onClick={() => {
 										handleRecentPlayerClick(name);
 										setShowDropdown(false);
 									}}
 								>
+									<Image
+										src={`https://www.mc-heads.net/avatar/${name}`}
+										width={25}
+										height={25}
+										className="rounded-lg"
+										alt="Minecraft Avatar"
+									/>
 									{name}
 								</li>
 							))}
