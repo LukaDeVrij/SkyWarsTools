@@ -41,6 +41,7 @@ const maps = [
 	"Deadland.png",
 	"Deserted Dunes.png",
 	"Desserted Islands.png",
+	"Desolate.png",
 	"Dire.png",
 	"Dwarven.png",
 	"Egg Isle.png",
@@ -138,6 +139,7 @@ const maps = [
 	"Tundra.png",
 	"Ukishima.png",
 	"Undead Isle.png",
+	"Undergrowth.png",
 	"Villa.png",
 	"Waititi.png",
 	"Waterways.png",
@@ -271,24 +273,25 @@ const ProfileSettingsPage = () => {
 				explainText={"Whether this account has Patreon benefits"}
 				value={profileUser?.patreon === true ? "Yes" : "No"}
 			/>
-			{(profileUser?.patreon === true || profileUser?.contrib === true) && (
-				<>
-					<PropertyInput
-						title="Emoji"
-						explainText={"Emoji to show on start page (Patreon only)"}
-						placeholder={emoji ?? "None"}
-						onChange={setEmoji}
-						inputWidth={20}
-					/>
-					<PropertyInput
-						title="Bio"
-						explainText={"Bio to show on your account page (Patreon only)"}
-						placeholder={profileUser?.bio ?? "None"}
-						onChange={(value) => setBio(value)}
-						inputWidth={50}
-					/>
-				</>
-			)}
+			{profileUser?.patreon === true ||
+				(profileUser?.contrib === true && (
+					<>
+						<PropertyInput
+							title="Emoji"
+							explainText={"Emoji to show on start page (Patreon only)"}
+							placeholder={emoji ?? "None"}
+							onChange={setEmoji}
+							inputWidth={20}
+						/>
+						<PropertyInput
+							title="Bio"
+							explainText={"Bio to show on your account page (Patreon only)"}
+							placeholder={profileUser?.bio ?? "None"}
+							onChange={(value) => setBio(value)}
+							inputWidth={80}
+						/>
+					</>
+				))}
 
 			<div className="w-full flex justify-center">
 				<Button onClick={updateProfile}>Save</Button>

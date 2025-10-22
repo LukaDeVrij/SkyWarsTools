@@ -309,7 +309,7 @@ export const compareMap: CompareStatsMap = {
 		format: undefined,
 	},
 	time_played_mini: {
-		label: "Playtime Time Played",
+		label: "Mini Time Played",
 		hypixelKey: "time_played_mini",
 		format: undefined,
 	},
