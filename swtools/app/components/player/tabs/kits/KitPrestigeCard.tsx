@@ -64,8 +64,8 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 
 	const winsInRequiredPlaytime = Math.ceil(winsPerHour * (playtimeRequiredSeconds / 3600));
 	const killsInRequiredPlaytime = Math.ceil(killsPerHour * (playtimeRequiredSeconds / 3600));
-	const WinsAtGoalPrestige = stats.wins ?? 0 + winsInRequiredPlaytime;
-	const killsAtGoalPrestige = stats.kills ?? 0 + killsInRequiredPlaytime;
+	const winsAtGoalPrestige = (stats.wins ?? 0) + winsInRequiredPlaytime;
+	const killsAtGoalPrestige = (stats.kills ?? 0) + killsInRequiredPlaytime;
 
 	const [maxHeight, setMaxHeight] = React.useState<number>(30);
 
@@ -93,11 +93,7 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		<div
 			className={
 				`bg-gray-900 rounded-xl p-4 w-85 h-${maxHeight} overflow-hidden cursor-pointer shadow-lg border ` +
-				(glitched
-					? "border-red-500 bg-red-900/50"
-					: maxed
-					? "enchanted border-amber-400"
-					: "border-gray-700")
+				(glitched ? "border-red-500 bg-red-900/50" : maxed ? "enchanted border-amber-400" : "border-gray-700")
 			}
 			onClick={() => toggleHeight()}
 		>
@@ -241,7 +237,7 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 							<td className="w-2/5 pl-2 align-middle">
 								<input
 									className="w-full text-lg rounded border border-gray-300 bg-content text-center"
-									value={WinsAtGoalPrestige > 0 ? WinsAtGoalPrestige : "N/A"}
+									value={winsAtGoalPrestige > 0 ? winsAtGoalPrestige : "N/A"}
 									disabled={true}
 								></input>
 							</td>
