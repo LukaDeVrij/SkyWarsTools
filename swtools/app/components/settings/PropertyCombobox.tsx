@@ -22,7 +22,7 @@ const PropertyCombobox: React.FC<PropertyComboboxProps> = ({
 	onChange,
 }) => {
 	return (
-		<div className="flex flex-row justify-between items-center rounded-lg w-full">
+		<div className="flex justify-between items-start lg:items-center gap-2 rounded-lg w-full flex-col lg:flex-row">
 			<div>
 				<div className="flex items-center">
 					<strong className="text-lg">{title}</strong>
