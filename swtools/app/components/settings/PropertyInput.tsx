@@ -7,15 +7,16 @@ interface PropertyInputProps {
 	onChange: (value: string) => void;
 	placeholder?: string;
 	inputWidth?: number;
+	disabled?: boolean;
 }
 
-const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value, onChange, placeholder, inputWidth }) => {
+const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value, onChange, placeholder, inputWidth, disabled }) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(e.target.value);
 	};
 
 	return (
-		<div className="flex justify-between items-center rounded-lg w-full">
+		<div className="flex justify-between items-start lg:items-center gap-2 mb-4 rounded-lg w-full flex-col lg:flex-row">
 			<div>
 				<div className="flex items-center">
 					<strong className="text-lg">{title}</strong>
@@ -28,6 +29,7 @@ const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value
 					value={value}
 					onChange={handleInputChange}
 					placeholder={placeholder}
+					disabled={disabled}
 				/>
 			</div>
 		</div>

@@ -110,7 +110,7 @@ const PropertyLinking: React.FC<PropertyLinkingProps> = ({ linked, uuid }) => {
 											src={`https://www.mc-heads.net/avatar/${uuid}`}
 											width={50}
 											height={50}
-											className="rounded-lg"
+											className="lg:rounded-lg w-30 lg:w-10"
 											alt="Minecraft Avatar"
 										/>
 									</Link>

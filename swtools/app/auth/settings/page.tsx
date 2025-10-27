@@ -9,6 +9,7 @@ import PropertyStatic from "@/app/components/settings/PropertyStatic";
 import PropertyInput from "@/app/components/settings/PropertyInput";
 import ErrorView from "@/app/components/universal/ErrorView";
 import Loading from "@/app/components/universal/Loading";
+import Link from "next/link";
 
 const maps = [
 	"Aegis.png",
@@ -273,26 +274,69 @@ const ProfileSettingsPage = () => {
 				explainText={"Whether this account has Patreon benefits"}
 				value={profileUser?.patreon === true ? "Yes" : "No"}
 			/>
-			{profileUser?.patreon === true ||
-				(profileUser?.contrib === true && (
-					<>
+			{profileUser?.patreon === true && (
+				<PropertyStatic
+					title="Patreon Pledge"
+					explainText={"If Patreon, cents per month donated (according to Patreon)"}
+					value={profileUser?.patreon_cents}
+				/>
+			)}
+			{profileUser?.contrib === true && (
+				<PropertyStatic
+					title="Contributor Status"
+					explainText={"Contributors have Patreon benefits too!"}
+					value={profileUser?.contrib === true ? "Yes" : "No"}
+				/>
+			)}
+			{profileUser?.patreon === true || profileUser?.contrib === true ? (
+				<>
+					<PropertyInput
+						title="Emoji"
+						explainText={"Emoji to show on start page (Patreon only)"}
+						placeholder={emoji ?? "None"}
+						onChange={setEmoji}
+						inputWidth={20}
+					/>
+					<PropertyInput
+						title="Bio"
+						explainText={"Bio to show on your account page (Patreon only)"}
+						placeholder={profileUser?.bio ?? "None"}
+						onChange={(value) => setBio(value)}
+						inputWidth={80}
+					/>
+				</>
+			) : (
+				<div className="relative">
+					<div className="opacity-50 pointer-events-none">
 						<PropertyInput
 							title="Emoji"
 							explainText={"Emoji to show on start page (Patreon only)"}
 							placeholder={emoji ?? "None"}
-							onChange={setEmoji}
+							onChange={() => {}}
 							inputWidth={20}
+							disabled={true}
 						/>
 						<PropertyInput
 							title="Bio"
 							explainText={"Bio to show on your account page (Patreon only)"}
 							placeholder={profileUser?.bio ?? "None"}
-							onChange={(value) => setBio(value)}
+							onChange={() => {}}
 							inputWidth={80}
+							disabled={true}
 						/>
-					</>
-				))}
-
+					</div>
+					<div className="absolute inset-0 flex flex-col items-center justify-center">
+						<div className="flex items-center gap-2 bg-gray-800 bg-opacity-80 rounded px-3 py-1 text-white text-sm">
+							<span role="img" aria-label="lock">
+								🔒
+							</span>
+							<Link href="/patreon" className="cursor-pointer">
+								Patreon Only!
+							</Link>
+						</div>
+					</div>
+				</div>
+			)}
 			<div className="w-full flex justify-center">
 				<Button onClick={updateProfile}>Save</Button>
 			</div>
