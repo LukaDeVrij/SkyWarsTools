@@ -1,5 +1,6 @@
 import MinecraftText from "@/app/utils/MinecraftText";
-import { getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey } from "@/app/utils/Utils";
+import { getSchemeByKit } from "@/app/utils/Scheme";
+import { getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey, toCamelCase } from "@/app/utils/Utils";
 import Tooltip from "@mui/material/Tooltip";
 import { MessageCircleWarning } from "lucide-react";
 import React from "react";
@@ -257,7 +258,16 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 			</div>
 			<div className="bg-gray-800 rounded p-2 text-sm text-center font-semibold text-white">
 				{maxed ? (
-					"Max Prestige Reached"
+					<>
+						<span>Max Prestige Reached</span>
+						<br></br>
+						<span className="flex flex-col text-lg items-center justify-center mt-2">
+							<span className="text-l">Obtained</span>
+							<MinecraftText>
+								{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
+							</MinecraftText>
+						</span>
+					</>
 				) : (
 					<>
 						Rewards for Prestige {prestigeGoal.name}
@@ -265,6 +275,12 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 							{prestigeGoal.rewards.map((reward, index) => (
 								<MinecraftText key={index}>{reward}</MinecraftText>
 							))}
+							{prestigeGoal.name == "VII" && (
+									
+									<MinecraftText>
+										{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
+									</MinecraftText>
+							)}
 						</div>
 					</>
 				)}
