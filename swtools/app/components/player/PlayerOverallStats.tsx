@@ -11,7 +11,9 @@ type RanksResponse = {
 	uuid: string;
 	ranks: {
 		kills: number;
+		deaths: number;
 		wins: number;
+		losses: number;
 		heads: number;
 		time_played: number;
 	};
@@ -47,7 +49,12 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = async ({ response 
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>Losses</td>
-						<td>{stats.losses?.toLocaleString()}</td>
+						<td>
+							<span>{stats.losses?.toLocaleString()}</span>
+							{data?.ranks && data.ranks.losses !== undefined && (
+								<span className="text-accent"> (#{data.ranks.losses ?? "?"})</span>
+							)}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>WLR</td>
@@ -78,7 +85,12 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = async ({ response 
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>Deaths</td>
-						<td>{stats.deaths?.toLocaleString()}</td>
+						<td>
+							<span>{stats.deaths?.toLocaleString()}</span>
+							{data?.ranks && data.ranks.deaths !== undefined && (
+								<span className="text-accent"> (#{data.ranks.deaths ?? "?"})</span>
+							)}
+						</td>
 					</tr>
 					<tr>
 						<td style={{ width: "50%" }}>KDR</td>
