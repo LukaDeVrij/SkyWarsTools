@@ -22,7 +22,7 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 	const expDiffNextPrestige = expTotalNextPrestige - experience;
 
 	let playtime = 0;
-	let modes = ["solo", "team", "ranked", "mega", "mini", "lab"];
+	const modes = ["solo", "team", "ranked", "mega", "mini", "lab"];
 	modes.forEach((element) => {
 		playtime += response.stats[("time_played_" + element) as keyof typeof response.stats] as number || 0;
 	});
