@@ -152,7 +152,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 						)}
 					</div>
 					<div className="hidden lg:block">
-						{userInfoData?.user?.bio && <Tooltip title={'Supporter bio, get your own by subscribing to Patreon!'}>
+						{userInfoData?.user?.bio && <Tooltip placement="top" title={'Supporter bio, get your own by subscribing to Patreon!'}>
 							<div className="text-gray-400 italic text-xl">&quot;{userInfoData?.user?.bio}&quot;</div>
 						</Tooltip>}
 					</div>

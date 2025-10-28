@@ -7,22 +7,7 @@ import { formatScheme } from "@/app/utils/Scheme";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
 
-
 const Prestige: React.FC<OverallResponse> = async (response) => {
-	// hacky fix
-	// TODO fucking bs bug cost me 2 hours - for some reason we need to refetch the data here, otherwise its undefined half the time??? some SSR bs
-	// const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${encodeURIComponent(response.player)}`, {
-	// 	next: { revalidate: 300 },
-	// });
-	// // I mean its not that big a deal since its cached and all but still
-	// if (!res.ok) {
-	// 	console.log(res.statusText);
-	// 	notFound();
-	// }
-	// const overallData = await res.json();
-	// response = overallData;
-	// // hacky fix over
-
 	const rank = getPlayerRank(response);
 
 	// Prestige calculations - lot of stuff
@@ -36,7 +21,12 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 	const expTotalNextPrestige = calcEXPFromLevel(nextPrestige);
 	const expDiffNextPrestige = expTotalNextPrestige - experience;
 
-	const playtime = response.stats.time_played || 0;
+	let playtime = 0;
+	let modes = ["solo", "team", "ranked", "mega", "mini", "lab"];
+	modes.forEach((element) => {
+		playtime += response.stats[("time_played_" + element) as keyof typeof response.stats] as number || 0;
+	});
+
 	const expPerHour = experience / (playtime / 60 / 60);
 
 	const nextPrestigePlaytime = expDiffNextPrestige / expPerHour;

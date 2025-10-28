@@ -141,7 +141,7 @@ const PlayerInputField = () => {
 			<div className="relative inline-block" ref={dropdownRef}>
 				<button
 					type="button"
-					className="flex items-center justify-center cursor-pointer p-2 ml-[-20px] rounded-xl bg-[var(--background)] animate-press-hard"
+					className="flex items-center justify-center cursor-pointer p-2 lg:-ml-4 rounded-xl bg-[var(--background)] animate-press-hard"
 					onClick={() => setShowDropdown((prev) => !prev)}
 					tabIndex={-1}
 					aria-label="Show recent players"
