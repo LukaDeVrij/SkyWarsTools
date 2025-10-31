@@ -118,7 +118,7 @@ export default function AboutPage() {
 					</div>
 				</div>
 				<Contributors></Contributors>
-				<span className="px-4 lg:px-8 py-2">This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
+				<span className="px-4 lg:px-8 py-2 text-gray-500 font-bold">This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
 			</div>
 		</div>
 	);

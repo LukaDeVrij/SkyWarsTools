@@ -31,7 +31,6 @@ const PlayerInputField = () => {
 			console.log("API response:", data);
 			if (res.ok && data.name) {
 				console.log("Player found, redirecting...");
-
 				router.push(`/player/${encodeURIComponent(data.name)}/stats/table`);
 				return true;
 			} else {

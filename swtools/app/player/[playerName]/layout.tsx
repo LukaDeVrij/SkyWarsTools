@@ -21,7 +21,6 @@ async function getPlayerData(playerName: string) {
 	if (!data || !data.name) {
 		throw new Error("Player not found");
 	}
-
 	return data;
 }
 

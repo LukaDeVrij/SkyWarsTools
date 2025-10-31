@@ -66,7 +66,7 @@ const SchemePreviews = () => {
 					</thead>
 					<tbody>
 						{/* Slice last one, that i made up for Prestige handyness */}
-						{rawSchemes.slice(0, -1).map((scheme, idx) => (
+						{rawSchemes.slice(0, -1).map((scheme) => (
 							<tr key={scheme.name}>
 								<td className="p-2 font-semibold text-lg">{toCamelCase(scheme.name)}</td>
 								<td className="p-2 font-mono text-xl">
