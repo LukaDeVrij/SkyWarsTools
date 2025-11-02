@@ -34,8 +34,8 @@ const PlayerOverallStats: React.FC<PlayerOverallStatsProps> = async ({ response 
 					<tr>
 						<td style={{ width: "50%" }}>Level</td>
 						<td>
-							<span>{calcLevel(stats.skywars_experience ?? 0).toFixed(3)} </span>
-							<span className="text-accent">({calcLevelOld(stats.skywars_experience ?? 0).toFixed(3)})</span>
+							<span>{calcLevel(stats.skywars_experience ?? 0).toFixed(4)} </span>
+							<span className="text-accent">({calcLevelOld(stats.skywars_experience ?? 0).toFixed(4)})</span>
 						</td>
 					</tr>
 					<tr>
