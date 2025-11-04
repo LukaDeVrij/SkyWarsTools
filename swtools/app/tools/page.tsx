@@ -1,5 +1,6 @@
 import React from "react";
 import MontageCardCard from "../components/tools/MontageCardCard";
+import SchemesCard from "../components/tools/SchemesCard";
 
 const ToolsPage = () => {
 	return (
@@ -8,6 +9,9 @@ const ToolsPage = () => {
 			<div className="flex justify-center p-5 lg:p-8 gap-8 flex-wrap">
 				<div className="w-90 h-90 bg-content rounded-xl">
                     <MontageCardCard addInput={true}></MontageCardCard>
+                </div>
+				<div className="w-90 h-90 bg-content rounded-xl">
+                    <SchemesCard></SchemesCard>
                 </div>
 
 			</div>

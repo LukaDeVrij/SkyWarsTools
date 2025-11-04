@@ -1,13 +1,17 @@
 import React from "react";
-import { kitProcessing } from "@/app/utils/Utils";
+import { kitProcessing, toCamelCase } from "@/app/utils/Utils";
 import KitPrestigeString from "../../universal/KitPrestigeString";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import MinecraftText from "@/app/utils/MinecraftText";
+import { Eye } from "lucide-react";
+import Link from "next/link";
+import { Tooltip } from "@mui/material";
+import { getSchemeByName } from "@/app/utils/Scheme";
 
 const Extended: React.FC<OverallResponse> = (response) => {
-
 	// response = useOverall(response.player); // Temp hook fix
+	const schemeSplit = response.display.active_scheme?.split("scheme_")[1];
 
 	return (
 		<TabContent>
@@ -43,7 +47,14 @@ const Extended: React.FC<OverallResponse> = (response) => {
 						</tr>
 						<tr className="border-b-1 border-white">
 							<td>Display Scheme</td>
-							<td>{response.display.active_scheme ?? "Unknown"}</td>
+							<td className="flex gap-2 items-center">
+								<span>{schemeSplit ? toCamelCase(getSchemeByName(schemeSplit)?.name ?? "Unknown") : "Unknown"}</span>
+								<Tooltip title={"See all schemes"}>
+									<Link href={`/tools/schemes`} className="animate-pulse">
+										<Eye />
+									</Link>
+								</Tooltip>
+							</td>
 						</tr>
 						<tr>
 							<td colSpan={2} style={{ height: "24px" }}></td>

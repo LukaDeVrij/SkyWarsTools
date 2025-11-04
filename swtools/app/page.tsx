@@ -60,6 +60,7 @@ export default function Home() {
 					<FreqPlayerList></FreqPlayerList>
 				</div>
 				<Contributors></Contributors>
+				<span className="px-4 lg:px-8 py-2 text-gray-500 font-bold">This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
 			</div>
 		</div>
 	);

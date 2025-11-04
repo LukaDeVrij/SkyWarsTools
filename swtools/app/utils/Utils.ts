@@ -767,7 +767,7 @@ export const kitPrestiges: Record<number, KitPrestigeInfo> = {
 		name: "VII",
 		minXp: 30000,
 		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
-		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail", "§bPrestige Scheme"],
+		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail"],
 	}, // Rainbow Gradient
 };
 

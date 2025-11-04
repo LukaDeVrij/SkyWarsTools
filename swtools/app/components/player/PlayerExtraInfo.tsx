@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate } from "@/app/utils/Utils"; // Assuming you have a utility function for this
+import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate, toCamelCase } from "@/app/utils/Utils"; // Assuming you have a utility function for this
 import { NextSave, OverallResponse } from "@/app/types/OverallResponse";
 import { Tooltip } from "@mui/material";
 import { Clock, CloudCheck } from "lucide-react";
+import SnapshotCooldown from "./SnapshotCooldown";
 
 interface PlayerExtraInfoProps {
 	response: OverallResponse;
@@ -54,16 +55,14 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 							const iconPath = socials[socialKey];
 							if (!iconPath) return null;
 
-							// console.log(links[socialKey]);
 
 							let finalSocialLink = linkPrefixes[socialKey] + links[socialKey];
 							if (!finalSocialLink.startsWith("http") && !finalSocialLink.startsWith("/")) {
 								finalSocialLink = "https://" + finalSocialLink;
 							}
 
-							// console.log(finalSocialLink);
 							return (
-								<a key={social} href={finalSocialLink} target="_blank" rel="noopener noreferrer" title={socialKey}>
+								<a key={social} href={finalSocialLink} target="_blank" rel="noopener noreferrer" title={toCamelCase(socialKey)}>
 									<Image
 										src={iconPath.startsWith("/") ? iconPath : `/${iconPath}`}
 										alt={`${social} icon`}
@@ -84,17 +83,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 					</Tooltip>
 				) : null}
 				{savedTheseStats == false ? (
-					<Tooltip
-						className="ml-auto text-red-500"
-						title={
-							"Snapshot save is on cooldown. Previous save was " +
-							saveTime?.toLocaleTimeString() +
-							". Next save available: " +
-							nextSaveTime?.toLocaleTimeString()
-						}
-					>
-						<Clock />
-					</Tooltip>
+					<SnapshotCooldown saveTime={saveTime} nextSaveTime={nextSaveTime!} />
 				) : null}
 			</div>
 			<div className="w-full bg-content p-4 justify-around font-bold hidden lg:flex flex-nowrap">
