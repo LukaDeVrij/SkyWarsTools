@@ -53,7 +53,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 			<div className="flex flex-wrap gap-2 lg:gap-3 justify-center">
 				{filteredKitNames
 					.map((kit) => {
-						// console.log(kit);
+						const mega: boolean = kit.includes("_mega_");
 						const kitStats: KitStats = {
 							wins:
 								typeof stats[`wins_${kit}` as keyof typeof stats] === "number"
@@ -73,7 +73,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 									: 0,
 						};
 
-						const currentPrestige: KitPrestigeInfo = getKitPrestigeInfo(kitStats.xp ?? 0);
+						const currentPrestige: KitPrestigeInfo = getKitPrestigeInfo(kitStats.xp ?? 0, mega);
 						const nextPrestige: KitPrestigeInfo = getKitPrestigeInfoByPrestige(currentPrestige.key + 1);
 
 						return { kit, kitStats, currentPrestige, nextPrestige };

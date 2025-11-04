@@ -76,6 +76,8 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 
 	const renderSortArrow = (key: keyof KitStats | "kit" | "wlr" | "kdr") => (sortKey === key ? (sortOrder === "asc" ? " ▲" : " ▼") : "");
 
+	const mega = Object.keys(kitData)[0]?.includes("_mega_") ?? false;
+
 	return (
 		<>
 			<span className="lg:hidden text-sm text-center px-2 text-gray-300">On mobile? You can horizontally scroll the table!</span>
@@ -124,7 +126,7 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 									<td>{(stats.kills ?? 0).toLocaleString()}</td>
 									<td>{(stats.deaths ?? 0).toLocaleString()}</td>
 									<td className={kdr > 5 ? "text-green-600" : ""}>{kdr.toFixed(2)}</td>
-									<td title={getKitPrestigeInfo(stats.xp ?? 0).name}>{(stats.xp ?? 0).toLocaleString()}</td>
+									<td title={getKitPrestigeInfo(stats.xp ?? 0, mega).name}>{(stats.xp ?? 0).toLocaleString()}</td>
 								</tr>
 							);
 						})}

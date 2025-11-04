@@ -105,6 +105,44 @@ export interface Stats {
 	heads_ethereal?: number;
 	heads_indescribable?: number;
 	heads_special?: number;
+
+	// Challenges
+	challenge_wins?: number;
+	challenge_attempts?: number;
+	challenge_attempts_1?: number;
+	challenge_wins_1?: number;
+	challenge_attempts_2?: number;
+	challenge_wins_2?: number;
+	challenge_attempts_3?: number;
+	challenge_wins_3?: number;
+	challenge_attempts_4?: number;
+	challenge_wins_4?: number;
+	challenge_attempts_5?: number;
+	challenge_wins_5?: number;
+	challenge_attempts_6?: number;
+	challenge_wins_6?: number;
+	challenge_attempts_7?: number;
+	challenge_wins_7?: number;
+	challenge_attempts_8?: number;
+	challenge_wins_8?: number;
+	challenge_attempts_archer?: number;
+	challenge_wins_archer?: number;
+	challenge_attempts_half_health?: number;
+	challenge_wins_half_health?: number;
+	challenge_attempts_no_block?: number;
+	challenge_wins_no_block?: number;
+	challenge_attempts_no_chest?: number;
+	challenge_wins_no_chest?: number;
+	challenge_attempts_paper?: number;
+	challenge_wins_paper?: number;
+	challenge_attempts_rookie?: number;
+	challenge_wins_rookie?: number;
+	challenge_attempts_uhc?: number;
+	challenge_wins_uhc?: number;
+	challenge_attempts_ultimate_warrior?: number;
+	challenge_wins_ultimate_warrior?: number;
+
+	// Ranked
 	SkyWars_skywars_rating_3_18_position?: number;
 	SkyWars_skywars_rating_3_18_rating?: number;
 	SkyWars_skywars_rating_4_18_position?: number;
@@ -221,6 +259,76 @@ export interface Stats {
 	SkyWars_skywars_rating_11_22_rating?: number;
 	SkyWars_skywars_rating_12_22_position?: number;
 	SkyWars_skywars_rating_12_22_rating?: number;
+
+	// Ranked Kits Stats
+	wins_kit_ranked_ranked_default?: number;
+	losses_kit_ranked_ranked_default?: number;
+	kills_kit_ranked_ranked_default?: number;
+	deaths_kit_ranked_ranked_default?: number;
+	time_played_kit_ranked_ranked_default?: number;
+	xp_kit_ranked_ranked_default?: number;
+	wins_kit_ranked_ranked_champion?: number;
+	losses_kit_ranked_ranked_champion?: number;
+	kills_kit_ranked_ranked_champion?: number;
+	deaths_kit_ranked_ranked_champion?: number;
+	time_played_kit_ranked_ranked_champion?: number;
+	xp_kit_ranked_ranked_champion?: number;
+	wins_kit_ranked_ranked_armorer?: number;
+	losses_kit_ranked_ranked_armorer?: number;
+	kills_kit_ranked_ranked_armorer?: number;
+	deaths_kit_ranked_ranked_armorer?: number;
+	time_played_kit_ranked_ranked_armorer?: number;
+	xp_kit_ranked_ranked_armorer?: number;
+	wins_kit_ranked_ranked_athlete?: number;
+	losses_kit_ranked_ranked_athlete?: number;
+	kills_kit_ranked_ranked_athlete?: number;
+	deaths_kit_ranked_ranked_athlete?: number;
+	time_played_kit_ranked_ranked_athlete?: number;
+	xp_kit_ranked_ranked_athlete?: number;
+	wins_kit_ranked_ranked_scout?: number;
+	losses_kit_ranked_ranked_scout?: number;
+	kills_kit_ranked_ranked_scout?: number;
+	deaths_kit_ranked_ranked_scout?: number;
+	time_played_kit_ranked_ranked_scout?: number;
+	xp_kit_ranked_ranked_scout?: number;
+	wins_kit_ranked_ranked_pyromancer?: number;
+	losses_kit_ranked_ranked_pyromancer?: number;
+	kills_kit_ranked_ranked_pyromancer?: number;
+	deaths_kit_ranked_ranked_pyromancer?: number;
+	time_played_kit_ranked_ranked_pyromancer?: number;
+	xp_kit_ranked_ranked_pyromancer?: number;
+	wins_kit_ranked_ranked_healer?: number;
+	losses_kit_ranked_ranked_healer?: number;
+	kills_kit_ranked_ranked_healer?: number;
+	deaths_kit_ranked_ranked_healer?: number;
+	time_played_kit_ranked_ranked_healer?: number;
+	xp_kit_ranked_ranked_healer?: number;
+	wins_kit_ranked_ranked_magician?: number;
+	losses_kit_ranked_ranked_magician?: number;
+	kills_kit_ranked_ranked_magician?: number;
+	deaths_kit_ranked_ranked_magician?: number;
+	time_played_kit_ranked_ranked_magician?: number;
+	xp_kit_ranked_ranked_magician?: number;
+	wins_kit_ranked_ranked_hound?: number;
+	losses_kit_ranked_ranked_hound?: number;
+	kills_kit_ranked_ranked_hound?: number;
+	deaths_kit_ranked_ranked_hound?: number;
+	time_played_kit_ranked_ranked_hound?: number;
+	xp_kit_ranked_ranked_hound?: number;
+	wins_kit_ranked_ranked_bowman?: number;
+	losses_kit_ranked_ranked_bowman?: number;
+	kills_kit_ranked_ranked_bowman?: number;
+	deaths_kit_ranked_ranked_bowman?: number;
+	time_played_kit_ranked_ranked_bowman?: number;
+	xp_kit_ranked_ranked_bowman?: number;
+	wins_kit_ranked_ranked_paladin?: number;
+	losses_kit_ranked_ranked_paladin?: number;
+	kills_kit_ranked_ranked_paladin?: number;
+	deaths_kit_ranked_ranked_paladin?: number;
+	time_played_kit_ranked_ranked_paladin?: number;
+	xp_kit_ranked_ranked_paladin?: number;
+
+	// normal kits
 	wins_kit_advanced_solo_armorer?: number;
 	losses_kit_advanced_solo_armorer?: number;
 	kills_kit_advanced_solo_armorer?: number;
@@ -455,6 +563,8 @@ export interface Stats {
 	deaths_kit_advanced_solo_engineer?: number;
 	time_played_kit_advanced_solo_engineer?: number;
 	xp_kit_advanced_solo_engineer?: number;
+
+	// insane kits
 	wins_kit_defending_team_armorer?: number;
 	losses_kit_defending_team_armorer?: number;
 	kills_kit_defending_team_armorer?: number;
@@ -657,6 +767,8 @@ export interface Stats {
 	deaths_kit_supporting_team_zookeeper?: number;
 	time_played_kit_supporting_team_zookeeper?: number;
 	xp_kit_supporting_team_zookeeper?: number;
+
+	// Mythical kits
 	"wins_kit_mythical_end-lord"?: number;
 	"losses_kit_mythical_end-lord"?: number;
 	"kills_kit_mythical_end-lord"?: number;
@@ -699,6 +811,7 @@ export interface Stats {
 	"time_played_kit_mythical_nether-lord"?: number;
 	"xp_kit_mythical_nether-lord"?: number;
 
+	// Mini kits
 	wins_kit_mini_solo_athlete?: number;
 	kills_kit_mini_solo_athlete?: number;
 	time_played_kit_mini_solo_athlete?: number;
@@ -739,6 +852,88 @@ export interface Stats {
 	kills_kit_mini_solo_scout?: number;
 	time_played_kit_mini_solo_scout?: number;
 	xp_kit_mini_solo_scout?: number;
+
+	// Mega
+	wins_kit_mega_mega_armorer?: number;
+	losses_kit_mega_mega_armorer?: number;
+	kills_kit_mega_mega_armorer?: number;
+	deaths_kit_mega_mega_armorer?: number;
+	time_played_kit_mega_mega_armorer?: number;
+	xp_kit_mega_mega_armorer?: number;
+	wins_kit_mega_mega_armorsmith?: number;
+	losses_kit_mega_mega_armorsmith?: number;
+	kills_kit_mega_mega_armorsmith?: number;
+	deaths_kit_mega_mega_armorsmith?: number;
+	time_played_kit_mega_mega_armorsmith?: number;
+	xp_kit_mega_mega_armorsmith?: number;
+	wins_kit_mega_mega_cannoneer?: number;
+	losses_kit_mega_mega_cannoneer?: number;
+	kills_kit_mega_mega_cannoneer?: number;
+	deaths_kit_mega_mega_cannoneer?: number;
+	time_played_kit_mega_mega_cannoneer?: number;
+	xp_kit_mega_mega_cannoneer?: number;
+	"wins_kit_mega_mega_baseball-player"?: number;
+	"losses_kit_mega_mega_baseball-player"?: number;
+	"kills_kit_mega_mega_baseball-player"?: number;
+	"deaths_kit_mega_mega_baseball-player"?: number;
+	"time_played_kit_mega_mega_baseball-player"?: number;
+	"xp_kit_mega_mega_baseball-player"?: number;
+	wins_kit_mega_mega_default?: number;
+	losses_kit_mega_mega_default?: number;
+	kills_kit_mega_mega_default?: number;
+	deaths_kit_mega_mega_default?: number;
+	time_played_kit_mega_mega_default?: number;
+	xp_kit_mega_mega_default?: number;
+	wins_kit_mega_mega_knight?: number;
+	losses_kit_mega_mega_knight?: number;
+	kills_kit_mega_mega_knight?: number;
+	deaths_kit_mega_mega_knight?: number;
+	time_played_kit_mega_mega_knight?: number;
+	xp_kit_mega_mega_knight?: number;
+	wins_kit_mega_mega_scout?: number;
+	losses_kit_mega_mega_scout?: number;
+	kills_kit_mega_mega_scout?: number;
+	deaths_kit_mega_mega_scout?: number;
+	time_played_kit_mega_mega_scout?: number;
+	xp_kit_mega_mega_scout?: number;
+	wins_kit_mega_mega_healer?: number;
+	losses_kit_mega_mega_healer?: number;
+	kills_kit_mega_mega_healer?: number;
+	deaths_kit_mega_mega_healer?: number;
+	time_played_kit_mega_mega_healer?: number;
+	xp_kit_mega_mega_healer?: number;
+	wins_kit_mega_mega_hellhound?: number;
+	losses_kit_mega_mega_hellhound?: number;
+	kills_kit_mega_mega_hellhound?: number;
+	deaths_kit_mega_mega_hellhound?: number;
+	time_played_kit_mega_mega_hellhound?: number;
+	xp_kit_mega_mega_hellhound?: number;
+	wins_kit_mega_mega_fisherman?: number;
+	losses_kit_mega_mega_fisherman?: number;
+	kills_kit_mega_mega_fisherman?: number;
+	deaths_kit_mega_mega_fisherman?: number;
+	time_played_kit_mega_mega_fisherman?: number;
+	xp_kit_mega_mega_fisherman?: number;
+	wins_kit_mega_mega_hunter?: number;
+	losses_kit_mega_mega_hunter?: number;
+	kills_kit_mega_mega_hunter?: number;
+	deaths_kit_mega_mega_hunter?: number;
+	time_played_kit_mega_mega_hunter?: number;
+	xp_kit_mega_mega_hunter?: number;
+	wins_kit_mega_mega_pyromaniac?: number;
+	losses_kit_mega_mega_pyromaniac?: number;
+	kills_kit_mega_mega_pyromaniac?: number;
+	deaths_kit_mega_mega_pyromaniac?: number;
+	time_played_kit_mega_mega_pyromaniac?: number;
+	xp_kit_mega_mega_pyromaniac?: number;
+	wins_kit_mega_mega_witch?: number;
+	losses_kit_mega_mega_witch?: number;
+	kills_kit_mega_mega_witch?: number;
+	deaths_kit_mega_mega_witch?: number;
+	time_played_kit_mega_mega_witch?: number;
+	xp_kit_mega_mega_witch?: number;
+
+	// Snapshot stats
 	skywars_experience?: number;
 	coins?: number;
 	heads?: number;

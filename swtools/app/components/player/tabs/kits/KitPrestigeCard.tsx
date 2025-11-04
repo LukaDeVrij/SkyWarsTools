@@ -25,7 +25,26 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		mode: string;
 		kit: string;
 	};
+	const modeFixer = (mode: string): string => {
+		switch (mode) {
+			case "Solo":
+				return "Normal";
+			case "Team":
+				return "Insane";
+			case "Mini":
+				return "Mini";
+			case "Ranked":
+				return "Ranked";
+			case "Mega":
+				return "Mega";
+			default:
+				return "Mythic";
+		}
+	};
 	const kitObject: KitObject = parseKitStatsKey(kitName);
+	const properMode = modeFixer(kitObject.mode);
+	const staleMode = properMode == "Ranked";
+	const mega = properMode == "Mega";
 
 	let maxed = false;
 	if (nextPrestige.key === 0) {
@@ -49,9 +68,9 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		}
 	}
 
-	const percent = stats.xp ? Math.round((stats.xp / prestigeGoal.minXp) * 100) : 0;
+	const percent = stats.xp ? Math.round((stats.xp / (mega ? prestigeGoal.megaXp : prestigeGoal.minXp)) * 100) : 0;
 
-	const xpRequired = prestigeGoal.minXp - (stats.xp ?? 0);
+	const xpRequired = (mega ? prestigeGoal.megaXp : prestigeGoal.minXp) - (stats.xp ?? 0);
 	const playtimeRequiredSeconds = stats.xp && stats.timePlayed ? Math.ceil(xpRequired / (customXpPerHour / 3600)) : 0;
 
 	const initialWinsPerHour = stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0;
@@ -76,12 +95,7 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		const m = Math.floor((seconds % 3600) / 60);
 		return `${h}h ${m}m`;
 	};
-	function modeFixer(mode: string) {
-		if (mode === "Solo") return "Normal";
-		if (mode === "Team") return "Insane";
-		if (mode === "Mini") return "Mini";
-		else return "Mythic";
-	}
+
 	function toggleHeight() {
 		if (maxHeight == 30) {
 			setMaxHeight(150);
@@ -94,13 +108,14 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 		<div
 			className={
 				`bg-gray-900 rounded-xl p-4 w-85 h-${maxHeight} overflow-hidden cursor-pointer shadow-lg border ` +
-				(glitched ? "border-red-500 bg-red-900/50" : maxed ? "enchanted border-amber-400" : "border-gray-700")
+				(glitched ? "border-red-500 bg-red-900/50" : maxed ? "enchanted border-amber-400" : "border-gray-700") +
+				(staleMode ? " border-gray-600 pointer-events-none opacity-60" : "")
 			}
 			onClick={() => toggleHeight()}
 		>
 			<div className="flex justify-between items-center mb-2">
 				<span className="text-lg font-semibold flex gap-2">
-					{kitObject.kit} - {modeFixer(kitObject.mode)}
+					{kitObject.kit} - {properMode}
 					{glitched ? (
 						<Tooltip title="This kit was leveled up suspiciously fast, and is likely glitched using a lab mode.">
 							<MessageCircleWarning className="inline cursor-help text-white w-4 h-4" />
@@ -111,7 +126,7 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 			</div>
 			<div className="flex justify-between items-center mb-2">
 				<span className="text-gray-300 text-sm">
-					{stats.xp?.toLocaleString() ?? 0} / {prestigeGoal.minXp.toLocaleString()} EXP
+					{stats.xp?.toLocaleString() ?? 0} / {(mega ? prestigeGoal.megaXp : prestigeGoal.minXp).toLocaleString()} EXP
 				</span>
 				<span className="text-gray-300 text-sm">{initialXpPerHour} EXP/h</span>
 			</div>
@@ -276,10 +291,9 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 								<MinecraftText key={index}>{reward}</MinecraftText>
 							))}
 							{prestigeGoal.name == "VII" && (
-									
-									<MinecraftText>
-										{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
-									</MinecraftText>
+								<MinecraftText>
+									{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
+								</MinecraftText>
 							)}
 						</div>
 					</>

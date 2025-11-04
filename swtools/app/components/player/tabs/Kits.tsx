@@ -16,6 +16,8 @@ const Kits: React.FC<OverallResponse> = (response) => {
 	const normal_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 	const insane_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 	const mythical_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const mega_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
+	const ranked_kits: { [key: string]: OverallResponse["stats"][keyof OverallResponse["stats"]] } = {};
 
 	allKeys.forEach((kv) => {
 		const key = kv.value;
@@ -28,6 +30,10 @@ const Kits: React.FC<OverallResponse> = (response) => {
 			mythical_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		} else if (key.includes("_solo_")) {
 			normal_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
+		} else if (key.includes("_mega_")) {
+			mega_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
+		} else if (key.includes("_ranked_")) {
+			ranked_kits[key] = response.stats[key as keyof OverallResponse["stats"]] ?? 0;
 		}
 	});
 
@@ -51,7 +57,7 @@ const Kits: React.FC<OverallResponse> = (response) => {
 
 			<TabPanel>
 				<TabContent>
-					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits }} />
+					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
@@ -86,6 +92,18 @@ const Kits: React.FC<OverallResponse> = (response) => {
 							>
 								Mythical
 							</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Ranked
+							</Tab>
+							<Tab
+								selectedClassName={"selected-tab"}
+								className={"whitespace-nowrap p-1 rounded-xl font-semibold cursor-pointer animate-press"}
+							>
+								Mega
+							</Tab>
 						</TabList>
 						<TabPanel>
 							<KitsUniversalTable kitData={normal_kits} />
@@ -98,6 +116,12 @@ const Kits: React.FC<OverallResponse> = (response) => {
 						</TabPanel>
 						<TabPanel>
 							<KitsUniversalTable kitData={mythical_kits} />
+						</TabPanel>
+						<TabPanel>
+							<KitsUniversalTable kitData={ranked_kits} />
+						</TabPanel>
+						<TabPanel>
+							<KitsUniversalTable kitData={mega_kits} />
 						</TabPanel>
 					</Tabs>
 				</TabContent>

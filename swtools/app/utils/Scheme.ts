@@ -285,13 +285,14 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§f", "§c", "§c", "§c", "§f"],
 		iconColor: "§c",
 		req: "§5§o§cUnlocked at Healer Mega Kit Prestige VII!",
-
+		reqKit: "Healer Mega",
 	},
 	{
 		name: "mahogany",
 		rankColor: ["§e", "§6", "§6", "§6", "§e"],
 		iconColor: "§6",
 		req: "§5§o§cUnlocked at Hunter Mega Kit Prestige VII!",
+		reqKit: "Hunter Mega",
 	},
 	{
 		name: "spell",
@@ -305,6 +306,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§f", "§6", "§6", "§6", "§f"],
 		iconColor: "§6",
 		req: "§5§o§cUnlocked at Paladin Mega Kit Prestige VII!",
+		reqKit: "Paladin Mega",
 	},
 	{
 		name: "agile",
@@ -318,6 +320,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§f", "§7", "§7", "§7", "§f"],
 		iconColor: "§f",
 		req: "§5§o§cUnlocked at Skeletor Mega Kit Prestige VII!",
+		reqKit: "Skeletor Mega",
 	},
 	{
 		name: "slimy",
@@ -394,6 +397,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§7", "§b", "§b", "§b", "§7"],
 		iconColor: "§b",
 		req: "§5§o§cUnlocked at Default Mega Kit Prestige VII!",
+		reqKit: "Default Mega",
 	},
 	{
 		name: "sun_prestige",
@@ -487,12 +491,14 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§7", "§b", "§b", "§f", "§f"],
 		iconColor: "§f",
 		req: "§5§o§cUnlocked at Armorsmith Mega Kit Prestige VII!",
+		reqKit: "Armorsmith Mega",
 	},
 	{
 		name: "grand_slam",
 		rankColor: ["§2", "§a", "§a", "§a", "§2"],
 		iconColor: "§f",
 		req: "§5§o§cUnlocked at Baseball Player Mega Kit Prestige VII!",
+		reqKit: "Baseball Player Mega",
 	},
 	{
 		name: "fleet",
@@ -534,6 +540,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§c", "§c", "§e", "§e", "§6"],
 		iconColor: "§6",
 		req: "§5§o§cUnlocked at Cannoneer Mega Kit Prestige VII!",
+		reqKit: "Cannoneer Mega",
 	},
 	{
 		name: "verdant",
@@ -582,6 +589,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§5", "§e", "§e", "§e", "§5"],
 		iconColor: "§f",
 		req: "§5§o§cUnlocked at Enderman Mega Kit Prestige VII!",
+		reqKit: "Enderman Mega",
 	},
 	{
 		name: "redstone",
@@ -672,6 +680,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§7", "§7", "§3", "§3", "§7"],
 		iconColor: "§c",
 		req: "§5§o§cUnlocked at Hellhound Mega Kit Prestige VII!",
+		reqKit: "Hellhound Mega",
 	},
 	{
 		name: "wilderness",
@@ -713,6 +722,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§9", "§f", "§f", "§f", "§9"],
 		iconColor: "§e",
 		req: "§5§o§cUnlocked at Knight Mega Kit Prestige VII!",
+		reqKit: "Knight Mega",
 	},
 	{
 		name: "portal",
@@ -803,6 +813,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§b", "§b", "§6", "§8", "§7"],
 		iconColor: "§8",
 		req: "§5§o§cUnlocked at Pyro Mega Kit Prestige VII!",
+		reqKit: "Pyromaniac Mega",
 	},
 	{
 		name: "normal",
@@ -893,6 +904,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§5", "§a", "§a", "§a", "§5"],
 		iconColor: "§d",
 		req: "§5§o§cUnlocked at Witch Mega Kit Prestige VII!",
+		reqKit: "Witch Mega",
 	},
 	{
 		name: "leo",
@@ -1043,6 +1055,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§7", "§f", "§6", "§b", "§d"],
 		iconColor: "§c",
 		req: "§5§o§cUnlocked at Armorer Mega Kit Prestige VII!",
+		reqKit: "Armorer Mega",
 	},
 	{
 		name: "opalsmith",
