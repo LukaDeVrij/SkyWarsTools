@@ -142,6 +142,46 @@ export const keys: LeaderboardKey[] = [
 				"scout",
 			],
 		},
+		{
+			type: "ranked",
+			mode: "ranked",
+			kits: [
+				"default",
+				"champion",
+				"armorer",
+				"athlete",
+				"scout",
+				"pyromancer",
+				"healer",
+				"champion",
+				"hound",
+				"magician",
+				"bowman",
+				"paladin",
+			],
+		},
+		{
+			type: "mega",
+			mode: "mega",
+			kits: [
+				"armorer",
+				"armorsmith",
+				"cannoneer",
+				"baseball-player",
+				"default",
+				"enderman",
+				"knight",
+				"paladin",
+				"scout",
+				"healer",
+				"hellhound",
+				"fisherman",
+				"hunter",
+				"pyromaniac",
+				"skeletor",
+				"witch",
+			],
+		},
 	].flatMap(({ type, mode, kits }) =>
 		kits.flatMap((kit) =>
 			["wins", "losses", "kills", "deaths", "time_played", "xp"].map((stat) => {
@@ -149,6 +189,10 @@ export const keys: LeaderboardKey[] = [
 				let name;
 				if (type == "mini") {
 					name = `${toCamelCase(stat)}${type ? ` ${toCamelCase(type)}` : ""} ${toCamelCase(kit.replace(/-/g, " "))}`;
+				} else if (type == "mega") {
+					name = `${toCamelCase(stat)} Mega ${toCamelCase(kit.replace(/-/g, " "))}`;
+				} else if (type == "ranked") {
+					name = `${toCamelCase(stat)} Ranked ${toCamelCase(kit.replace(/-/g, " "))}`;
 				} else {
 					name = `${toCamelCase(stat)}${
 						mode ? ` ${toCamelCase(mode === "solo" ? "normal" : mode === "team" ? "insane" : mode)}` : ""
@@ -257,4 +301,38 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Heads Indescribable", value: "heads_indescribable" },
 	{ name: "Heads Special", value: "heads_special" },
 	{ name: "Heads Sweet", value: "heads_sweet" },
+	{ name: "Challenge Wins", value: "challenge_wins" },
+	{ name: "Challenge Attempts", value: "challenge_attempts" },
+	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },
+	{ name: "1 Challenge Wins", value: "challenge_wins_1" },
+	{ name: "2 Challenge Attempts", value: "challenge_attempts_2" },
+	{ name: "2 Challenge Wins", value: "challenge_wins_2" },
+	{ name: "3 Challenge Attempts", value: "challenge_attempts_3" },
+	{ name: "3 Challenge Wins", value: "challenge_wins_3" },
+	{ name: "4 Challenge Attempts", value: "challenge_attempts_4" },
+	{ name: "4 Challenge Wins", value: "challenge_wins_4" },
+	{ name: "5 Challenge Attempts", value: "challenge_attempts_5" },
+	{ name: "5 Challenge Wins", value: "challenge_wins_5" },
+	{ name: "6 Challenge Attempts", value: "challenge_attempts_6" },
+	{ name: "6 Challenge Wins", value: "challenge_wins_6" },
+	{ name: "7 Challenge Attempts", value: "challenge_attempts_7" },
+	{ name: "7 Challenge Wins", value: "challenge_wins_7" },
+	{ name: "8 Challenge Attempts", value: "challenge_attempts_8" },
+	{ name: "8 Challenge Wins", value: "challenge_wins_8" },
+	{ name: "Challenge Attempts Archer", value: "challenge_attempts_archer" },
+	{ name: "Challenge Wins Archer", value: "challenge_wins_archer" },
+	{ name: "Challenge Attempts Half Health", value: "challenge_attempts_half_health" },
+	{ name: "Challenge Wins Half Health", value: "challenge_wins_half_health" },
+	{ name: "Challenge Attempts No Block", value: "challenge_attempts_no_block" },
+	{ name: "Challenge Wins No Block", value: "challenge_wins_no_block" },
+	{ name: "Challenge Attempts No Chest", value: "challenge_attempts_no_chest" },
+	{ name: "Challenge Wins No Chest", value: "challenge_wins_no_chest" },
+	{ name: "Challenge Attempts Paper", value: "challenge_attempts_paper" },
+	{ name: "Challenge Wins Paper", value: "challenge_wins_paper" },
+	{ name: "Challenge Attempts Rookie", value: "challenge_attempts_rookie" },
+	{ name: "Challenge Wins Rookie", value: "challenge_wins_rookie" },
+	{ name: "Challenge Attempts UHC", value: "challenge_attempts_uhc" },
+	{ name: "Challenge Wins UHC", value: "challenge_wins_uhc" },
+	{ name: "Challenge Attempts Ultimate Warrior", value: "challenge_attempts_ultimate_warrior" },
+	{ name: "Challenge Wins Ultimate Warrior", value: "challenge_wins_ultimate_warrior" },
 ];

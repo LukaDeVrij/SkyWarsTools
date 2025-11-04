@@ -751,34 +751,38 @@ export type KitPrestigeInfo = {
 	key: number;
 	name: string;
 	minXp: number;
+	megaXp: number;
 	color: string;
 	rewards: string[];
 };
 export const kitPrestiges: Record<number, KitPrestigeInfo> = {
-	0: { key: 0, name: "-", minXp: 0, color: "#808080", rewards: [] }, // Gray
-	1: { key: 1, name: "I", minXp: 1000, color: "#ffffff", rewards: ["§650,000 Coins", "§fSilver §7Particle Trail"] }, // Silver
-	2: { key: 2, name: "II", minXp: 2500, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
-	3: { key: 3, name: "III", minXp: 5000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
-	4: { key: 4, name: "IV", minXp: 10000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
-	5: { key: 5, name: "V", minXp: 15000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
-	6: { key: 6, name: "VI", minXp: 20000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
+	0: { key: 0, name: "-", minXp: 0, megaXp: 0, color: "#808080", rewards: [] }, // Gray
+	1: { key: 1, name: "I", minXp: 1000, megaXp: 1000, color: "#ffffff", rewards: ["§650,000 Coins", "§fSilver §7Particle Trail"] }, // Silver
+	2: { key: 2, name: "II", minXp: 2500, megaXp: 2000, color: "#00ff22", rewards: ["§6100,000 Coins", "§2Green §7Particle Trail"] }, // Green
+	3: { key: 3, name: "III", minXp: 5000, megaXp: 3000, color: "#0088ff", rewards: ["§6250,000 Coins", "§9Blue §7Particle Trail"] }, // Blue
+	4: { key: 4, name: "IV", minXp: 10000, megaXp: 4000, color: "#9911aa", rewards: ["§31 §7Opal", "§dPurple §7Particle Trail"] }, // Purple
+	5: { key: 5, name: "V", minXp: 15000, megaXp: 6000, color: "orange", rewards: ["§31 §7Opal", "§6Gold §7Particle Trail"] }, // Gold
+	6: { key: 6, name: "VI", minXp: 20000, megaXp: 8000, color: "#ff22ff", rewards: ["§31 §7Opal", "§dPink §7Particle Trail"] }, // Pink
 	7: {
 		key: 7,
 		name: "VII",
 		minXp: 30000,
+		megaXp: 10000,
 		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
 		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail"],
 	}, // Rainbow Gradient
 };
 
-export function getKitPrestigeInfo(kitExp: number): KitPrestigeInfo {
+export function getKitPrestigeInfo(kitExp: number, useMega?: boolean): KitPrestigeInfo {
 	const levels = Object.keys(kitPrestiges)
 		.map(Number)
 		.sort((a, b) => a - b);
 
 	let lastPrestige = kitPrestiges[0];
 	for (const lvl of levels) {
-		if (kitExp >= kitPrestiges[lvl].minXp) {
+		let minXp = kitPrestiges[lvl].minXp;
+		if (useMega) minXp = kitPrestiges[lvl].megaXp;
+		if (kitExp >= minXp) {
 			lastPrestige = kitPrestiges[lvl];
 		} else {
 			break;
@@ -792,8 +796,7 @@ export function getKitPrestigeInfoByPrestige(prestige: number): KitPrestigeInfo 
 }
 
 export async function fetcher<T = unknown>(url: string): Promise<T> {
-
-	console.log("Fetching without auth")
+	console.log("Fetching without auth");
 	const res = await fetch(url);
 
 	if (!res.ok) {
@@ -810,7 +813,7 @@ export async function fetcher<T = unknown>(url: string): Promise<T> {
 	return res.json() as Promise<T>;
 }
 export async function fetcherWithAuth<T = unknown>(token: string, url: string): Promise<T> {
-	console.log("fet6ching with auth")
+	console.log("fet6ching with auth");
 	const res = await fetch(url, {
 		headers: {
 			Authorization: `Bearer ${token}`,

@@ -25,7 +25,7 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 		}
 	);
 
-	let bg = "Dire.png";
+	let bg = "Onionring.png";
 	if (typedUserInfo?.user && typedUserInfo?.user.profile_bg) {
 		bg = typedUserInfo?.user.profile_bg;
 	}

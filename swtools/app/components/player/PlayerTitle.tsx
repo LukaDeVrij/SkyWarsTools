@@ -37,6 +37,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
+			shouldRetryOnError: false,
 		}
 	);
 
@@ -49,8 +50,10 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
+			shouldRetryOnError: false,
 		}
 	);
+	console.log(userInfoData)
 
 	React.useEffect(() => {
 		if (userInfoData && userInfoData.success && userInfoData.user) {

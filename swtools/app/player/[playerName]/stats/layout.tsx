@@ -98,6 +98,8 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	}
 	playerName = overallData.player;
 
+	// console.log(overallData);
+
 	// Pass overallData as prop to children if needed, or use context if children need it deeply
 	return (
 		<>
