@@ -180,6 +180,7 @@ const DescentGUI: React.FC<{ combinedData: DescentMap }> = ({ combinedData }) =>
 										<MinecraftText>{item.subtitle}</MinecraftText>
 										<MinecraftText>{getItemDescription(item)}</MinecraftText>
 										<MinecraftText>{getItemCostText(item)}</MinecraftText>
+										{item.requires && <MinecraftText>{"§c!! Requires SkyWars Level " + item.requires?.toString()}</MinecraftText>}
 									</div>
 								</div>
 							</>

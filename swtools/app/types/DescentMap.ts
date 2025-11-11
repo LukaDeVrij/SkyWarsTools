@@ -56,7 +56,8 @@ export interface DescentItem {
 	subtitle: string;
 	tiers: Tier[];
 	maxText: string;
-    playerOwns?: boolean | number;
+	playerOwns?: boolean | number;
+	requires?: number;
 }
 
 export interface Tier {
