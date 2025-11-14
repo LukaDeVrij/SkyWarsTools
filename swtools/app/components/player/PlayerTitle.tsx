@@ -123,7 +123,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 	return (
 		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
 			<div className="z-10 relative">
-				<Image
+				<img
 					alt="player avatar"
 					width={100}
 					height={100}
