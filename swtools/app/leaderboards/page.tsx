@@ -8,10 +8,11 @@ type LeaderboardKey = { name: string; value: string };
 const categories = [
 	{
 		name: "Main",
-		filter: (k: LeaderboardKey) => !k.value.toLowerCase().includes("skywars_skywars_rating") && !k.value.toLowerCase().includes("kit"),
+		filter: (k: LeaderboardKey) => !k.value.toLowerCase().includes("skywars_skywars_rating") && !k.value.toLowerCase().includes("kit") && !k.value.toLowerCase().includes("challenge"),
 	},
 	{ name: "Kit", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("kit") },
 	{ name: "Ranked", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("skywars_skywars_rating") },
+	{ name: "Challenges", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("challenge") },
 ];
 
 const Page = () => {

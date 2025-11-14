@@ -145,61 +145,52 @@ const Potions: React.FC<{ response: OverallResponse }> = ({ response }) => {
 	return (
 		<>
 			<span className="text-2xl text-red-500">Angel&apos;s Brewery</span>
-			<span className="flex flex-row gap-2">Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
-			{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? <Check className="text-green-500" /> : <X className="text-red-500" />}
+			<span className="flex flex-row gap-2">
+				Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
+				{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? (
+					<Check className="text-green-500" />
+				) : (
+					<X className="text-red-500" />
+				)}
 			</span>
-			<div className="w-full h-fit flex flex-row flex-wrap justify-center gap-4 py-4">
+			<div className="w-full flex flex-col items-center py-4 gap-4">
 				{Object.keys(potions).map((key) => {
 					const potion = potions[key as keyof typeof potions];
 					let gamesLeft = brewery ? (brewery[key as keyof Brewery] as number) ?? 0 : 0;
 					gamesLeft = Math.max(0, gamesLeft);
+
 					return (
-						<div
-							key={key}
-							className={`w-45 h-45 lg:w-50 lg:h-50 bg-layer rounded-2xl p-4 flex flex-col text-center items-center group relative${
-								response.stats.brewery_active === key ? " enchanted" : ""
-							}`}
-						>
-							<h2 className="font-semibold text-l lg:text-xl h-15">
-								<MinecraftText>{potion.lore[0]}</MinecraftText>
-							</h2>
-							<img
-								src={"/" + potion.icon}
-								height={50}
-								width={50}
-								style={{ imageRendering: "pixelated" }}
-								className="p-0.5 peer"
-								alt=""
-								tabIndex={0}
-								onClick={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) {
-										tooltip.classList.toggle("opacity-100");
-										tooltip.classList.toggle("pointer-events-auto");
-									}
-								}}
-								onBlur={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) {
-										tooltip.classList.remove("opacity-100");
-										tooltip.classList.remove("pointer-events-auto");
-									}
-								}}
-							/>
+						<div key={key} className="flex flex-row justify-center items-center gap-6 w-full p-0 rounded-2xl">
 							<div
-								className="fixed z-99 bottom-0 left-0 lg:left-1/3 w-full lg:w-100 p-2 rounded items-center justify-center opacity-0 group-hover:opacity-100 peer-hover:opacity-100 transition-opacity bg-black/90 text-xl text-white text-left pointer-events-none group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
-								tabIndex={-1}
+								className={`h-fit w-75 bg-layer rounded-2xl p-4 flex flex-col text-center items-center relative gap-2${
+									response.stats.brewery_active === key ? " enchanted" : ""
+								}`}
 							>
-								{Object.values(potion.lore).map((line, i) => (
-									<MinecraftText key={i}>{line}</MinecraftText>
-								))}
+								<h2 className="font-semibold text-l lg:text-xl h-15">
+									<MinecraftText>{potion.lore[0]}</MinecraftText>
+								</h2>
+								<img
+									src={"/" + potion.icon}
+									height={50}
+									width={50}
+									style={{ imageRendering: "pixelated" }}
+									className="p-0.5"
+									alt=""
+								/>
+								{response.stats.brewery_active && response.stats.brewery_active == key ? (
+									<span className="text-green-500 font-semibold">Enabled</span>
+								) : (
+									<span className="text-red-500 font-semibold">Disabled</span>
+								)}
+								<span className="font-semibold">{gamesLeft} games left</span>
 							</div>
-							{response.stats.brewery_active && response.stats.brewery_active == key ? (
-								<span className="text-green-500 font-semibold">Enabled</span>
-							) : (
-								<span className="text-red-500 font-semibold">Disabled</span>
-							)}
-							<span className="font-semibold">{gamesLeft} games left</span>
+							<div className="flex flex-col justify-center w-120 p-3 lg:p-4 text-sm lg:text-lg bg-layer rounded-2xl">
+								{Object.values(potion.lore)
+									.filter((_, i) => i !== 0)
+									.map((line, i) => (
+										<MinecraftText key={i}>{line}</MinecraftText>
+									))}
+							</div>
 						</div>
 					);
 				})}

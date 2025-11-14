@@ -27,8 +27,6 @@ const ErrorViewBack = () => {
 		}, 1000);
 	};
 
-	const [metaData, setMetaData] = React.useState<MetaDataResponse | null>(null);
-
 	React.useEffect(() => {
 		fetch(process.env.NEXT_PUBLIC_SKYWARSTOOLS_API + "/api/getMetadata" || "http://api.skywarstools.com/api/getMetadata", {
 			method: "GET",

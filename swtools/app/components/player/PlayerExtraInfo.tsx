@@ -3,7 +3,7 @@ import Image from "next/image";
 import { calcHypixelLevel, timeAgo, formatTimestampToVerboseDate, toCamelCase } from "@/app/utils/Utils"; // Assuming you have a utility function for this
 import { NextSave, OverallResponse } from "@/app/types/OverallResponse";
 import { Tooltip } from "@mui/material";
-import { Clock, CloudCheck } from "lucide-react";
+import { CloudCheck } from "lucide-react";
 import SnapshotCooldown from "./SnapshotCooldown";
 
 interface PlayerExtraInfoProps {

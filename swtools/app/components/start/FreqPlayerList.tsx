@@ -27,7 +27,7 @@ const FreqPlayerList = () => {
 				{!isLoading &&
 					!error &&
 					data &&
-					data.stats.slice(0, 6).map((entry: StatEntry, index: number) => (
+					data.stats.slice(0, 9).map((entry: StatEntry, index: number) => (
 						<a
 							key={index}
 							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press"
@@ -36,7 +36,7 @@ const FreqPlayerList = () => {
 						>
 							<Image
 								src={`https://www.mc-heads.net/avatar/${entry.value}`}
-								alt={entry.value}
+								alt={"head" + entry.value}
 								width={40}
 								height={40}
 								className="rounded"
