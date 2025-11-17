@@ -14,7 +14,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 	const [search, setSearch] = React.useState("");
 	const [order, setOrder] = React.useState<"xp" | "prestige" | "opal">("xp");
 
-	const filteredKitNames = kitNames.filter((kit) => kit.toLowerCase().includes(search.toLowerCase()));
+	const filteredKitNames = kitNames.filter((kit) => kit.toLowerCase().replaceAll("-", " ").replaceAll("team", "insane").includes(search.toLowerCase()));
 	// const filteredKitNames = ["kit_mythical_end-lord"]
 	// TODO add search by mode properly (with 3rd party lib? this is what i did in the old site)
 
@@ -30,8 +30,8 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 	}
 
 	return (
-		<div className="min-h-160">
-			<div className="flex flex-row lg:justify-between gap-4 items-center mb-4">
+		<div className="min-h-160 flex flex-col gap-4">
+			<div className="flex flex-row lg:justify-between gap-4 items-center">
 				<input
 					type="text"
 					placeholder="Search kits..."
