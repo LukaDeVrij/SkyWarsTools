@@ -1,7 +1,6 @@
-import { KitStats } from "@/app/types/KitStats";
-import { getKitPrestigeInfo, getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey, romanize } from "@/app/utils/Utils";
+
+import { getKitPrestigeInfo, KitPrestigeInfo, parseKitStatsKey, romanize } from "@/app/utils/Utils";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { ScatterChart } from "@mui/x-charts";
 import { BarChart } from "@mui/x-charts/BarChart";
 import React from "react";
 
@@ -42,7 +41,7 @@ const KitPrestigeBreakdown: React.FC<Record<string, number | undefined>> = (stat
 			typeof stats[`xp_${kit}` as keyof typeof stats] === "number" ? (stats[`xp_${kit}` as keyof typeof stats] as number) : 0;
 		const currentPrestige: KitPrestigeInfo = getKitPrestigeInfo(xp ?? 0, mega);
 
-		let mode: string = parseKitStatsKey(kit).mode;
+		const mode: string = parseKitStatsKey(kit).mode;
 		totalCounts[currentPrestige.key as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7]++;
 		switch (mode) {
 			case "Solo":
