@@ -18,6 +18,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 		{ label: "Session", href: `/player/${playerName}/session` },
 		{ label: "Compare", href: `/player/${playerName}/compare` },
 		{ label: "Calculate", href: `/player/${playerName}/calculate` },
+		{ label: "Versus", href: `/player/${playerName}/versus` },
 	];
 
 	// Update recentPlayers in localStorage (max 3, most recent first)
