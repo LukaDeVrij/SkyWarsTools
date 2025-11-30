@@ -267,6 +267,12 @@ export interface Stats {
 	deaths_kit_ranked_ranked_default?: number;
 	time_played_kit_ranked_ranked_default?: number;
 	xp_kit_ranked_ranked_default?: number;
+	wins_kit_ranked_ranked_blacksmith?: number;
+	losses_kit_ranked_ranked_blacksmith?: number;
+	kills_kit_ranked_ranked_blacksmith?: number;
+	deaths_kit_ranked_ranked_blacksmith?: number;
+	time_played_kit_ranked_ranked_blacksmith?: number;
+	xp_kit_ranked_ranked_blacksmith?: number;
 	wins_kit_ranked_ranked_champion?: number;
 	losses_kit_ranked_ranked_champion?: number;
 	kills_kit_ranked_ranked_champion?: number;
