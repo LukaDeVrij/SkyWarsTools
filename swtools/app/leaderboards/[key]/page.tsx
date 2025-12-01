@@ -103,7 +103,6 @@ const Page = () => {
 		});
 	}
 
-	// idk why !!
 	const makeGlitchCheck: boolean = !!statInfo && statInfo.value.includes("_team_") && statInfo.value.includes("_kit_");
 
 	return (
