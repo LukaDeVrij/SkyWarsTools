@@ -1,4 +1,5 @@
 "use client";
+import { UUIDResponse } from "@/app/types/UUIDResponse";
 import { Tooltip } from "@mui/material";
 import { Search } from "lucide-react";
 import React from "react";
@@ -33,14 +34,15 @@ const PlayerVersusSearch = ({ player }: PlayerVersusSearchProps) => {
 								setError("Player not found.");
 								return;
 							}
-							const uuidData = await uuidRes.json();
+							const uuidData: UUIDResponse = await uuidRes.json();
 							const uuid = uuidData?.uuid;
+							const correctedName = uuidData?.name;
 							if (!uuid) {
 								setError("Player not found.");
 								return;
 							}
 
-							window.location.href = `versus/view?vs=${uuid}`;
+							window.location.href = `?vs=${correctedName}`;
 						} catch (err: unknown) {
 							setError("An error occurred.");
 							console.error(err);
