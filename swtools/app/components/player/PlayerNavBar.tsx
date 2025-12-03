@@ -64,7 +64,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 						</div>
 						{/* Spacer between items, except after last */}
 						{idx < navItems.length - 1 && (
-							<div className="w-5 flex flex-col justify-center items-center">
+							<div className="min-w-[5px] w-[15px] flex flex-col justify-center items-center ">
 								<div className="h-7 w-full lg:h-[32px]" />
 								<div className="bg-yellow-300 h-0.5 lg:h-[2px] w-full" />
 							</div>

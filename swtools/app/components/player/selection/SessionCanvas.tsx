@@ -628,7 +628,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		img.src = `https://starlightskins.lunareclipse.studio/render/ultimate/${newStats.player}/bust`;
 		img.crossOrigin = "anonymous";
 		img.onload = function () {
-			ctx.drawImage(img, entry.box[0] + 25, entry.box[1], entry.box[2] - 50, entry.box[3]);
+			ctx.drawImage(img, entry.box[0] + 50, entry.box[1], entry.box[2] - 100, entry.box[3]);
 		};
 	}
 	function sessionFillHeader(ctx: CanvasRenderingContext2D, entry: Entry) {
