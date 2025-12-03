@@ -5,7 +5,7 @@ import KitPrestigeString from "../../universal/KitPrestigeString";
 import TabContent from "./TabContent";
 import { OverallResponse, Stats } from "@/app/types/OverallResponse";
 import MinecraftText from "@/app/utils/MinecraftText";
-import { Eye } from "lucide-react";
+import { Eye, MessageCircleWarning } from "lucide-react";
 import Link from "next/link";
 import { Tooltip } from "@mui/material";
 import { getSchemeByName } from "@/app/utils/Scheme";
@@ -99,8 +99,14 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								</tr>
 								<tr className="border-b-1 border-white">
 									<td>Max Prestige Kits</td>
-									<td>
+									<td className="flex gap-2 items-center">
 										<MinecraftText>{response.stats.kitsMaxPrestige ?? "0"}</MinecraftText>
+										<Tooltip title={"Might be inaccurate for legacy players, see all kits"}>
+											<Link href={`kits`} className="animate-pulse">
+												<MessageCircleWarning />
+											</Link>
+										</Tooltip>
+
 									</td>
 								</tr>
 								<tr className="border-b-1 border-white">

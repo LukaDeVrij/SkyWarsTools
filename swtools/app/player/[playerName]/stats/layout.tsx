@@ -11,7 +11,6 @@ import type { Metadata } from "next";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { calcLevel } from "@/app/utils/Utils";
 import getMostPlayedKit from "@/app/utils/getMostPlayedKit";
-import { extractKitMaxPrestige } from "@/app/utils/extractMaxKitPrestiges";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -44,7 +43,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
 	const level = calcLevel(statsData.stats.skywars_experience ?? 0).toFixed(0);
 	const best_kit = getMostPlayedKit(statsData);
-	const maxPrestige = extractKitMaxPrestige(statsData.stats.kitsMaxPrestige ?? "");
+	const maxPrestige = statsData.stats.kitsMaxPrestige;
 
 	const description = `
 ⭐ Level ${level}

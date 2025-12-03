@@ -86,7 +86,7 @@ export interface Stats {
 	void_kills?: number;
 	bow_kills?: number;
 	mob_kills?: number;
-	kitsMaxPrestige?: string;
+	kitsMaxPrestige?: number;
 	time_played_solo?: number;
 	time_played_team?: number;
 	time_played_mega?: number;

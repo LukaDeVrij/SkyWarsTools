@@ -1,22 +1,8 @@
 import { OverallResponse } from "@/app/types/OverallResponse";
+import { headsMap } from "@/app/utils/Utils";
 import React from "react";
 
 const Heads: React.FC<{ response: OverallResponse }> = ({ response }) => {
-	const headsMap = [
-		{ key: "heads_eww", label: "Eww", kills: 0, exp: 1, playerKills: 0, playerEXP: 0, color: "#A9A9A9ff" },
-		{ key: "heads_yucky", label: "Yucky", kills: 50, exp: 2, playerKills: 0, playerEXP: 0, color: "#808080ff" },
-		{ key: "heads_meh", label: "Meh", kills: 200, exp: 3, playerKills: 0, playerEXP: 0, color: "#FFFFFFff" },
-		{ key: "heads_decent", label: "Decent", kills: 500, exp: 4, playerKills: 0, playerEXP: 0, color: "#FFFF00ff" },
-		{ key: "heads_salty", label: "Salty", kills: 1000, exp: 5, playerKills: 0, playerEXP: 0, color: "#008000ff" },
-		{ key: "heads_tasty", label: "Tasty", kills: 2000, exp: 6, playerKills: 0, playerEXP: 0, color: "#ADD8E6ff" },
-		{ key: "heads_succulent", label: "Succulent", kills: 5000, exp: 7, playerKills: 0, playerEXP: 0, color: "#00AAAAff" },
-		{ key: "heads_divine", label: "Divine", kills: 10000, exp: 10, playerKills: 0, playerEXP: 0, color: "#FFC0CBff" },
-		{ key: "heads_heavenly", label: "Heavenly", kills: 25000, exp: 15, playerKills: 0, playerEXP: 0, color: "#800080ff" },
-		{ key: "heads_ethereal", label: "Ethereal", kills: 50000, exp: 20, playerKills: 0, playerEXP: 0, color: "#8B0000ff" },
-		{ key: "heads_indescribable", label: "Indescribable", kills: 100000, exp: 25, playerKills: 0, playerEXP: 0, color: "#FF0000ff" },
-		{ key: "heads_special", label: "Special", kills: "YouTube", exp: 25, playerKills: 0, playerEXP: 0, color: "#FF0000ff" },
-		{ key: "heads_sweet", label: "Sweet", kills: "Admin", exp: 25, playerKills: 0, playerEXP: 0, color: "#FF0000ff" },
-	];
 
 	let totalKills = 0;
 	let totalExp = 0;

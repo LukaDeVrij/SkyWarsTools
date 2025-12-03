@@ -6,6 +6,7 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import KitPrestiges from "./kits/KitPrestiges";
 import KitsUniversalTable from "./kits/KitsUniversalTable";
 import { keys } from "@/app/utils/LeaderboardKeys";
+import KitPrestigeBreakdown from "./kits/KitPrestigeBreakdown";
 
 const Kits: React.FC<OverallResponse> = (response) => {
 
@@ -45,7 +46,13 @@ const Kits: React.FC<OverallResponse> = (response) => {
 					selectedClassName={"selected-tab"}
 					className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
 				>
-					Prestiges
+					Progress
+				</Tab>
+				<Tab
+					selectedClassName={"selected-tab"}
+					className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+				>
+					Prestige Breakdown
 				</Tab>
 				<Tab
 					selectedClassName={"selected-tab"}
@@ -58,6 +65,11 @@ const Kits: React.FC<OverallResponse> = (response) => {
 			<TabPanel>
 				<TabContent>
 					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
+				</TabContent>
+			</TabPanel>
+			<TabPanel>
+				<TabContent>
+					<KitPrestigeBreakdown {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
