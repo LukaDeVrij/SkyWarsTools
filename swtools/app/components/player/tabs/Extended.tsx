@@ -100,7 +100,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr className="border-b-1 border-white">
 									<td>Max Prestige Kits</td>
 									<td className="flex gap-2 items-center">
-										<MinecraftText>{response.stats.kitsMaxPrestige ?? "0"}</MinecraftText>
+										<MinecraftText>{(response.stats.kitsMaxPrestige ?? 0).toString()}</MinecraftText>
 										<Tooltip title={"Might be inaccurate for legacy players, see all kits"}>
 											<Link href={`kits`} className="animate-pulse">
 												<MessageCircleWarning />

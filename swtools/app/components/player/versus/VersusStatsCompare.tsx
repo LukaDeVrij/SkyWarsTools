@@ -153,7 +153,7 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 									width={40}
 									height={40}
 									className="rounded-sm"
-									alt={player1.player + " avatar"}
+									alt={player1.player + " skin"}
 								/>
 							</th>
 							<th className="w-[30%]"></th>
@@ -167,7 +167,7 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
                                         width={40}
                                         height={40}
                                         className="rounded-sm"
-                                        alt={player2.player + " avatar"}
+                                        alt={player2.player + " skin"}
                                     />
                                     {/* GPT bs over */}
                                 </span>
