@@ -49,7 +49,7 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 		levelOpp = calcLevel(opponentData.stats.skywars_experience ?? 0);
 		schemeOpp = formatScheme(levelOpp, opponentData, false);
 		rankOpp = getPlayerRank(opponentData);
-		playerTitleOpp = `${schemeOpp} ${rankOpp.prefix} ${opponentName}`;
+		playerTitleOpp = `${schemeOpp} ${rankOpp.prefix} ${opponentData.player}`;
 	}
 
 	return (
@@ -78,9 +78,12 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 						width={150}
 						height={356}
 						style={{ width: 150, height: 356 }}
-						alt={`${overallData.player} avatar`}
+						alt=""
 						className="object-contain"
 						priority={true}
+						onError={(e) => {
+							(e.target as HTMLImageElement).style.display = "none";
+						}}
 					/>
 				</div>
 				{/* No opponentNAme means no query parameter */}
@@ -99,7 +102,7 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 							<p className="mb-10">Enter an opponent name to get a versus breakdown of their stats!</p>
 						</div>
 						<div className="flex-shrink-0 hidden lg:flex items-center justify-center" style={{ width: 150, height: 356 }}>
-							<Image src={`/unknownskin.png`} width={150} height={356} alt="Unknown avatar" className="object-contain" />
+							<Image src={`/unknownskin.png`} width={150} height={356} alt="Unknown skin" className="object-contain" />
 						</div>
 					</>
 				)}
@@ -119,7 +122,7 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 							<div className="flex flex-row mx-auto w-full lg:w-100 gap-4 p-1 lg:p-2 text-sm font-semibold justify-center items-center bg-content rounded-lg mb-4 lg:mb-0 lg:rounded-3xl">
 								<Info className="h-8 w-8 hidden lg:block" />
 								<div className="flex flex-col items-center text-gray-300">
-									<span>All categories give a maximum of 100 points</span>
+									<span>Each category distributes 100 points</span>
 									<span>Hover over values for more information</span>
 									<span className="lg:hidden text-red-400">On mobile: tap and hold!</span>
 								</div>
@@ -132,9 +135,12 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 								width={150}
 								height={356}
 								style={{ width: 150, height: 356 }}
-								alt={`${opponentData.player} avatar`}
+								alt={`${opponentData.player} skin`}
 								className="object-contain"
 								priority={true}
+								onError={(e) => {
+									(e.target as HTMLImageElement).style.display = "none";
+								}}
 							/>
 						</div>
 					</>
