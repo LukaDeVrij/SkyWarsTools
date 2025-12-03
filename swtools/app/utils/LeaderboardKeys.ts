@@ -161,6 +161,11 @@ export const keys: LeaderboardKey[] = [
 			],
 		},
 		{
+			type: "blacksmith",
+			mode: "ranked",
+			kits: ["blacksmith"],
+		},
+		{
 			type: "mega",
 			mode: "mega",
 			kits: [

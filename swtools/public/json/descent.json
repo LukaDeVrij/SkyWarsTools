@@ -602,19 +602,19 @@
 		"subtitle": "§5§8Permanent Upgrade",
 		"tiers": [
 			{
-				"text": "§5§7§7Quests reward §8+0%➜§a+5% §6Coins§7.",
+				"text": "§5§7§7Quests reward §8+0%➜§a+10% §6Coins§7.",
 				"cost": 3
 			},
 			{
-				"text": "§5§7§7Quests reward §8+5%➜§a+10% §6Coins§7.",
+				"text": "§5§7§7Quests reward §8+5%➜§a+20% §6Coins§7.",
 				"cost": 3
 			},
 			{
-				"text": "§5§7§7Quests reward §8+10%➜§a+15% §6Coins§7.",
+				"text": "§5§7§7Quests reward §8+10%➜§a+30% §6Coins§7.",
 				"cost": 3
 			},
 			{
-				"text": "§5§7§7Quests reward §8+15%➜§a+20% §6Coins§7.",
+				"text": "§5§7§7Quests reward §8+15%➜§a+40% §6Coins§7.",
 				"cost": 3
 			}
 		],

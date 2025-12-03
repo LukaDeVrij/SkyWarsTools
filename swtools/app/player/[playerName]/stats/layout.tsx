@@ -86,10 +86,6 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 	const awaitedParams = await params;
 	let playerName = awaitedParams.playerName;
-	if (playerName.length > 20) {
-		playerName = "";
-		return <div>Redirecting...</div>;
-	}
 
 	const overallData = await fetchOverallData(playerName);
 	if (!overallData) {

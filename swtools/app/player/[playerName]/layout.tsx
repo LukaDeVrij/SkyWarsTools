@@ -29,12 +29,17 @@ const PlayerLayout = async ({ children, params }: LayoutProps) => {
 	const playerName = awaitedParams.playerName;
 
 	let data;
-	try {
-		data = await getPlayerData(playerName);
-	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : "Unknown error";
-		const statusCode = errorMessage.includes("not found") ? 404 : 500;
-		return <ErrorView statusCode={statusCode} statusText={errorMessage}></ErrorView>;
+	if (playerName.length <= 16) {
+		try {
+			data = await getPlayerData(playerName);
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : "Unknown error";
+			const statusCode = errorMessage.includes("not found") ? 404 : 500;
+			return <ErrorView statusCode={statusCode} statusText={errorMessage}></ErrorView>;
+		}
+	} else {
+		data = { name: playerName }; // Now a UUID
+		// If a UUID is directly input - no need to go through getUUID, only problem is that the UUID will then be used on the stats page and such
 	}
 
 	const correctedName = data.name;
