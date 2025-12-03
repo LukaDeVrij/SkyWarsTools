@@ -46,5 +46,18 @@ type Snapshot = {
 	statsVersion: number;
 	queried: number;
 };
+type SnapshotsResponse = {
+	[key: string]: Snapshot;
+};
 
-export type { Snapshot };
+type SnapshotKeysResponse = {
+	uuid: string;
+	player: string;
+	data: { queried: number; player: string }[];
+	page?: number;
+	pageSize?: number;
+	total?: number;
+	totalPages?: number;
+};
+
+export type { Snapshot, SnapshotsResponse, SnapshotKeysResponse };

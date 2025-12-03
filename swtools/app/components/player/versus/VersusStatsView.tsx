@@ -13,9 +13,9 @@ import ErrorView from "../../universal/ErrorView";
 import Loading from "../../universal/Loading";
 import VersusStatsCompare from "./VersusStatsCompare";
 import { Info } from "lucide-react";
-import { Tooltip } from "@mui/material";
+import { SnapshotKeysResponse, SnapshotsResponse } from "@/app/types/Snapshot";
 
-export function VersusStatsView({ overallData }: { overallData: OverallResponse }) {
+export function VersusStatsView({ overallData, snapshots }: { overallData: OverallResponse; snapshots: SnapshotsResponse | undefined }) {
 	const searchParams = useSearchParams();
 	const opponentName = searchParams.get("vs");
 
@@ -36,6 +36,30 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 			revalidateOnReconnect: false,
 		}
 	);
+
+	const { data: snapshotKeys } = useSWR<SnapshotKeysResponse>(
+		opponentName && opponentData
+			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/snapshotKeys?player=${encodeURIComponent(opponentName)}&page=1`
+			: null,
+		fetcher,
+		{ revalidateOnFocus: false, revalidateOnReconnect: false }
+	);
+
+	const keys = (() => {
+		if (!snapshotKeys?.data || snapshotKeys.data.length <= 2) return undefined;
+		return snapshotKeys.data.slice(0, 2).map((s: { queried: number }) => s.queried);
+	})();
+
+	const { data: opponentSnapshots } = useSWR<SnapshotsResponse>(
+		opponentName && opponentData && keys && keys.length > 0
+			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${encodeURIComponent(opponentName)}&keys=${keys.join(
+					","
+			  )}`
+			: null,
+		fetcher,
+		{ revalidateOnFocus: false, revalidateOnReconnect: false }
+	);
+
 	if (error) {
 		return <ErrorView statusCode={error.statusCode} statusText={error.statusText}></ErrorView>;
 	}
@@ -127,7 +151,12 @@ export function VersusStatsView({ overallData }: { overallData: OverallResponse 
 									<span className="lg:hidden text-red-400">On mobile: tap and hold!</span>
 								</div>
 							</div>
-							<VersusStatsCompare player1={overallData} player2={opponentData}></VersusStatsCompare>
+							<VersusStatsCompare
+								player1={overallData}
+								player2={opponentData}
+								p1snapshots={snapshots}
+								p2snapshots={opponentSnapshots}
+							></VersusStatsCompare>
 						</div>
 						<div className="flex-shrink-0 hidden lg:flex items-center justify-center" style={{ width: 150, height: 356 }}>
 							<Image
