@@ -6,9 +6,30 @@ import Image from "next/image";
 import { formatScheme } from "@/app/utils/Scheme";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
+import { SnapshotsResponse } from "@/app/types/Snapshot";
+import { Info, MessageCircleWarning } from "lucide-react";
 
-function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; player2: OverallResponse }) {
+function VersusStatsCompare({
+	player1,
+	player2,
+	p1snapshots,
+	p2snapshots,
+}: {
+	player1: OverallResponse;
+	player2: OverallResponse;
+	p1snapshots?: SnapshotsResponse;
+	p2snapshots?: SnapshotsResponse;
+}) {
 	// Calculation and comparison logic goes here
+	let comparisons: {
+		label: string;
+		toFixed: number;
+		title: string;
+		player1Value: number;
+		player2Value: number;
+		player1Score: number;
+		player2Score: number;
+	}[] = [];
 
 	const killsA = player1.stats.kills ?? 0;
 	const killsB = player2.stats.kills ?? 0;
@@ -56,7 +77,12 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 	const maxKitsScoreA = (maxKitsA / (maxKitsA + maxKitsB)) * 100;
 	const maxKitsScoreB = (maxKitsB / (maxKitsA + maxKitsB)) * 100;
 
-	const comparisons = [
+	const playTimeA = player1.stats.time_played ?? 0;
+	const playTimeB = player2.stats.time_played ?? 0;
+	const playTimeScoreA = (playTimeA / (playTimeA + playTimeB)) * 100;
+	const playTimeScoreB = (playTimeB / (playTimeA + playTimeB)) * 100;
+
+	comparisons = [
 		{
 			label: "Experience",
 			toFixed: 0,
@@ -129,12 +155,114 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 			player1Score: maxKitsScoreA,
 			player2Score: maxKitsScoreB,
 		},
+		{
+			label: "Hours Played",
+			toFixed: 1,
+			title: "Total Playtime in Hours",
+			player1Value: playTimeA / 3600,
+			player2Value: playTimeB / 3600,
+			player1Score: playTimeScoreA,
+			player2Score: playTimeScoreB,
+		},
 	];
+	let shouldAddSessions = true;
+	let sessionComparisons: {
+		label: string;
+		toFixed: number;
+		title: string;
+		player1Value: number;
+		player2Value: number;
+		player1Score: number;
+		player2Score: number;
+	}[] = [];
+	if (p1snapshots && p2snapshots) {
+		const p1s1 = p1snapshots[Object.keys(p1snapshots)[1]];
+		const p1s2 = p1snapshots[Object.keys(p1snapshots)[0]];
+		const p2s1 = p2snapshots[Object.keys(p2snapshots)[1]];
+		const p2s2 = p2snapshots[Object.keys(p2snapshots)[0]];
+
+		const sessionKillsA = p1s2.stats.kills - p1s1.stats.kills;
+		const sessionKillsB = p2s2.stats.kills - p2s1.stats.kills;
+		const sessionDeathsA = p1s2.stats.deaths - p1s1.stats.deaths;
+		const sessionDeathsB = p2s2.stats.deaths - p2s1.stats.deaths;
+		const kdRatioA = sessionKillsA / sessionDeathsA;
+		const kdRatioB = sessionKillsB / sessionDeathsB;
+		const kdRatioScoreA = (kdRatioA / (kdRatioA + kdRatioB)) * 100;
+		const kdRatioScoreB = (kdRatioB / (kdRatioA + kdRatioB)) * 100;
+		shouldAddSessions = isFinite(kdRatioA) && isFinite(kdRatioB);
+		console.warn(
+			!shouldAddSessions &&
+				"kdRatio for player 1 or player 2 was not finite or NaN. this means one of the players had 0 deaths in the session, which would lead to misleading stats."
+		);
+
+		const sessionWinsA = p1s2.stats.wins - p1s1.stats.wins;
+		const sessionWinsB = p2s2.stats.wins - p2s1.stats.wins;
+		const sessionLossesA = p1s2.stats.losses - p1s1.stats.losses;
+		const sessionLossesB = p2s2.stats.losses - p2s1.stats.losses;
+		const winLossRatioA = sessionWinsA / sessionLossesA;
+		const winLossRatioB = sessionWinsB / sessionLossesB;
+		const winLossRatioScoreA = (winLossRatioA / (winLossRatioA + winLossRatioB)) * 100;
+		const winLossRatioScoreB = (winLossRatioB / (winLossRatioA + winLossRatioB)) * 100;
+		shouldAddSessions = shouldAddSessions && isFinite(winLossRatioA) && isFinite(winLossRatioB);
+		console.warn(
+			!shouldAddSessions &&
+				"winLossRatio for player 1 or player 2 was not finite or NaN. this means one of the players had 0 losses in the session, which would lead to misleading stats."
+		);
+
+		const expPerHourA =
+			(p1s2.stats.skywars_experience - p1s1.stats.skywars_experience) / ((p1s2.stats.time_played - p1s1.stats.time_played) / 3600);
+		const expPerHourB =
+			(p2s2.stats.skywars_experience - p2s1.stats.skywars_experience) / ((p2s2.stats.time_played - p2s1.stats.time_played) / 3600);
+		const expPerHourScoreA = (expPerHourA / (expPerHourA + expPerHourB)) * 100;
+		const expPerHourScoreB = (expPerHourB / (expPerHourA + expPerHourB)) * 100;
+		shouldAddSessions = shouldAddSessions && isFinite(expPerHourA) && isFinite(expPerHourB);
+		console.warn(
+			!shouldAddSessions &&
+				"expPerHour for player 1 or player 2 was not finite or NaN. this means one of the players had 0 time played in the session, which would lead to misleading stats."
+		);
+
+		if (shouldAddSessions) {
+			// Check for NaN values (could be NaN when no time played in session)
+			sessionComparisons = [
+				{
+					label: "Session K/D",
+					toFixed: 3,
+					title: "Kill/Death Ratio in Last Session",
+					player1Value: kdRatioA,
+					player2Value: kdRatioB,
+					player1Score: kdRatioScoreA,
+					player2Score: kdRatioScoreB,
+				},
+				{
+					label: "Session W/L",
+					toFixed: 3,
+					title: "Win/Loss Ratio in Last Session",
+					player1Value: winLossRatioA,
+					player2Value: winLossRatioB,
+					player1Score: winLossRatioScoreA,
+					player2Score: winLossRatioScoreB,
+				},
+				{
+					label: "Session XP/H",
+					toFixed: 0,
+					title: "Experience per Hour in Last Session",
+					player1Value: expPerHourA,
+					player2Value: expPerHourB,
+					player1Score: expPerHourScoreA,
+					player2Score: expPerHourScoreB,
+				},
+			];
+		}
+	}
 
 	const finalScoreA = comparisons.reduce((acc, comp) => acc + comp.player1Score, 0);
 	const finalScoreB = comparisons.reduce((acc, comp) => acc + comp.player2Score, 0);
+	const finalSessionScoreA = sessionComparisons.reduce((acc, comp) => acc + comp.player1Score, 0);
+	const finalSessionScoreB = sessionComparisons.reduce((acc, comp) => acc + comp.player2Score, 0);
+	const totalFinalScoreA = finalScoreA + finalSessionScoreA;
+	const totalFinalScoreB = finalScoreB + finalSessionScoreB;
 
-	const winnerStats = finalScoreA > finalScoreB ? player1 : player2;
+	const winnerStats = totalFinalScoreA > totalFinalScoreB ? player1 : player2;
 	const level = calcLevel(winnerStats.stats.skywars_experience ?? 0);
 	const scheme = formatScheme(level, winnerStats, false);
 	const rank = getPlayerRank(winnerStats);
@@ -152,26 +280,26 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 									src={`https://www.mc-heads.net/avatar/${player1.player}`}
 									width={40}
 									height={40}
-									className="rounded-sm"
+									className="rounded-sm ml-2"
 									alt={player1.player + " skin"}
 								/>
 							</th>
 							<th className="w-[30%]"></th>
-                            {/* TODO justify-end doesnt work?! */}
-                            <th className="p-2 text-3xl w-[35%] truncate text-right">
-                                {/* I am so confused */}
-                                <span className="inline-block align-middle mr-2"></span>
-                                <span className="inline-block align-middle">
-                                    <Image
-                                        src={`https://www.mc-heads.net/avatar/${player2.player}`}
-                                        width={40}
-                                        height={40}
-                                        className="rounded-sm"
-                                        alt={player2.player + " skin"}
-                                    />
-                                    {/* GPT bs over */}
-                                </span>
-                            </th>
+							{/* TODO justify-end doesnt work?! */}
+							<th className="p-2 text-3xl w-[35%] truncate text-right">
+								{/* I am so confused */}
+								<span className="inline-block align-middle"></span>
+								<span className="inline-block align-middle">
+									<Image
+										src={`https://www.mc-heads.net/avatar/${player2.player}`}
+										width={40}
+										height={40}
+										className="rounded-sm mr-2"
+										alt={player2.player + " skin"}
+									/>
+									{/* GPT bs over */}
+								</span>
+							</th>
 						</tr>
 						<tr className="hidden lg:table-row">
 							<th className="px-2 py-1 lg:p-2 lg:px-4 text-3xl w-[35%] truncate max-w-[1px]">{player1.player}</th>
@@ -183,7 +311,7 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 						{comparisons.map((comp) => (
 							<tr key={comp.label}>
 								<td
-									className={`px-2 py-1 lg:p-2 lg:px-4 w-[35%] truncate max-w-[1px] ${
+									className={`px-4 py-1 lg:py-2 w-[35%] truncate max-w-[1px] ${
 										comp.player1Value > comp.player2Value
 											? "text-green-400"
 											: comp.player1Value < comp.player2Value
@@ -201,7 +329,7 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 									</Tooltip>
 								</td>
 								<td
-									className={`px-2 py-1 lg:p-2 lg:px-4 text-right w-[35%] truncate max-w-[1px] ${
+									className={`px-4 py-1 lg:py-2 text-right w-[35%] truncate max-w-[1px] ${
 										comp.player2Value > comp.player1Value
 											? "text-green-400"
 											: comp.player2Value < comp.player1Value
@@ -216,15 +344,63 @@ function VersusStatsCompare({ player1, player2 }: { player1: OverallResponse; pl
 							</tr>
 						))}
 					</tbody>
+					{p1snapshots && p2snapshots && (
+						<tbody className="border-t-2 border-[var(--accent)]">
+							{sessionComparisons.map((comp) => (
+								<tr key={comp.label}>
+									<td
+										className={`px-4 py-1 lg:py-2 w-[35%] truncate max-w-[1px] ${
+											comp.player1Value > comp.player2Value
+												? "text-green-400"
+												: comp.player1Value < comp.player2Value
+												? "text-red-400"
+												: ""
+										}`}
+									>
+										<Tooltip placement="left" title={comp.player1Score.toFixed(1) + " points"}>
+											<span className="truncate max-w-full block">{comp.player1Value.toFixed(comp.toFixed)}</span>
+										</Tooltip>
+									</td>
+									<td className="px-0 py-1 lg:p-2 lg:px-4 font-semibold text-center w-[30%] truncate max-w-[1px]">
+										<Tooltip title={comp.title} placement="top">
+											<span className="truncate max-w-full block">{comp.label}</span>
+										</Tooltip>
+									</td>
+									<td
+										className={`px-4 py-1 lg:py-2 text-right w-[35%] truncate max-w-[1px] ${
+											comp.player2Value > comp.player1Value
+												? "text-green-400"
+												: comp.player2Value < comp.player1Value
+												? "text-red-400"
+												: ""
+										}`}
+									>
+										<Tooltip placement="right" title={comp.player2Score.toFixed(1) + " points"}>
+											<span className="truncate max-w-full block">{comp.player2Value.toFixed(comp.toFixed)}</span>
+										</Tooltip>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					)}
 				</table>
-				<div className="w-full text-xl lg:ext-2xl bg-content rounded-lg p-4 mt-8 text-center gap-2 flex flex-col">
-					<div className="flex flex-row justify-between">
-						<span className={`font-semibold ${finalScoreA > finalScoreB ? "text-green-400" : "text-red-400"}`}>
-							{finalScoreA.toFixed(2)}
+				{!shouldAddSessions && (
+					<div className="flex flex-row mx-auto w-full lg:w-100 gap-4 p-1 lg:p-2 text-sm font-semibold justify-center items-center bg-content rounded-lg mt-4 lg:mb-0 lg:rounded-3xl">
+						<MessageCircleWarning className="h-8 w-8 hidden lg:block text-red-400" />
+						<div className="flex flex-col items-center text-gray-300">
+							<span>Session stats were omitted because</span>
+							<span>one of the sessions had invalid stats</span>
+						</div>
+					</div>
+				)}
+				<div className="w-full text-xl lg:text-2xl rounded-lg p-0 p-4 mt-4 text-center gap-2 flex flex-col bg-content">
+					<div className="flex flex-row justify-between lg:text-3xl">
+						<span className={`font-semibold ${totalFinalScoreA > totalFinalScoreB ? "text-green-400" : "text-red-400"}`}>
+							{totalFinalScoreA.toFixed(2)}
 						</span>
 						<span>Winner</span>
-						<span className={`font-semibold ${finalScoreB > finalScoreA ? "text-green-400" : "text-red-400"}`}>
-							{finalScoreB.toFixed(2)}
+						<span className={`font-semibold ${totalFinalScoreB > totalFinalScoreA ? "text-green-400" : "text-red-400"}`}>
+							{totalFinalScoreB.toFixed(2)}
 						</span>
 					</div>
 
