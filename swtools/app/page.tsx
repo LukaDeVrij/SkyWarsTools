@@ -7,6 +7,7 @@ import { CircleQuestionMark } from "lucide-react";
 import Link from "next/link";
 import Contributors from "./components/start/Contributors";
 import Head from "next/head";
+import WebsiteVersion from "./components/WebsiteVersion";
 
 export default function Home() {
 	return (
@@ -60,7 +61,12 @@ export default function Home() {
 					<FreqPlayerList></FreqPlayerList>
 				</div>
 				<Contributors></Contributors>
-				<span className="px-4 lg:px-8 py-2 text-gray-500 font-bold">This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
+				<div className="flex flex-row justify-between px-4 lg:px-8 py-2 text-gray-500 font-bold">
+					<span>
+						This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.
+					</span>
+					<WebsiteVersion></WebsiteVersion>
+				</div>
 			</div>
 		</div>
 	);
