@@ -883,7 +883,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 					aspectRatio: "2000 / 1285",
 					display: "block",
 					borderRadius: "0 0 15px 15px",
-					backgroundImage: 'url("/maps/Aegis.png")',
+					backgroundImage: 'url("/maps/Ancient.png")',
 					backgroundSize: "cover",
 					...canvasProps.style,
 				}}
