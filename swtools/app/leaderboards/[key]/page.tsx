@@ -201,9 +201,13 @@ const Page = () => {
 								<th className="p-1 lg:py-2 text-l lg:text-xl">{statInfo?.short || statInfo?.name}</th>
 								{data?.siblingKeys?.map((key) => (
 									<th key={key} className="p-1 lg:py-2 text-l lg:text-xl animate-press">
-										<a href={`/leaderboards/${key}`} className="text-accent hover:underline">
-											{siblingKeyNames[key].split(" ")[0]}
-										</a>
+										{!key.includes("rating") ? (
+											<a href={`/leaderboards/${key}`} className="text-accent hover:underline">
+												{siblingKeyNames[key]}
+											</a>
+										) : (
+											siblingKeyNames[key]
+										)}
 									</th>
 								))}
 							</tr>
@@ -231,6 +235,7 @@ const Page = () => {
 
 								const siblingValues = Object.values(entry.siblings);
 
+								// Glitch check only on kit leaderboards
 								let glitched = false;
 								if (makeGlitchCheck) {
 									const statSuffix = statInfo?.value.replace(/^.*?_kit/, "_kit");
@@ -307,12 +312,21 @@ const Page = () => {
 														: ""
 												}
 											>
-												<span>{entry.score.toLocaleString()}</span>
+												<span>
+													{/* Positions are off by 1 in API */}
+													{!statInfo?.value.includes("_position")
+														? entry.score.toLocaleString()
+														: entry.score + 1}
+												</span>
 											</Tooltip>
 										</td>
 
 										{Object.keys(siblingKeyNames).map((key, idx) => {
-											const value = siblingValues[idx]?.toLocaleString() ?? 0;
+											let value = siblingValues[idx] ?? 0;
+											// Positions are off by 1 in API
+											if (key.includes("_position")) {
+												value = value + 1;
+											}
 											return (
 												<Tooltip
 													title={
@@ -324,7 +338,7 @@ const Page = () => {
 													}
 													key={key + entry.uuid}
 												>
-													<td className="p-1 lg:py-2 text-l lg:text-xl relative z-2">{value}</td>
+													<td className="p-1 lg:py-2 text-l lg:text-xl relative z-2">{value.toLocaleString()}</td>
 												</Tooltip>
 											);
 										})}
