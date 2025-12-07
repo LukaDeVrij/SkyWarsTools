@@ -23,7 +23,7 @@
 		"lucide-react": "^0.539.0",
 		"next": "^15.5.7",
 		"plotly.js": "^3.1.0",
-		"react": "19.1.0",
+		"react": "19.1.2",
 		"react-firebase-hooks": "^5.1.1",
 		"react-plotly.js": "^2.6.0",
 		"react-tabs": "^6.1.0",
