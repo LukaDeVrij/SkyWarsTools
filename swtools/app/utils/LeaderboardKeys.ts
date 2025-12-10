@@ -255,7 +255,6 @@ export const keys: LeaderboardKey[] = [
 				"scout",
 				"pyromancer",
 				"healer",
-				"champion",
 				"hound",
 				"magician",
 				"bowman",
