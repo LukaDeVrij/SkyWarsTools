@@ -37,7 +37,7 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 				src={
 					authLoading
 						? "/maps/loading.png"
-						: `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/image?name=` + bg.replaceAll(".png", "")
+						: `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/image?q=large&name=` + bg.replaceAll(".png", "")
 				}
 				priority
 				width={1150}
