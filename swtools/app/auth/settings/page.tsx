@@ -125,8 +125,13 @@ const ProfileSettingsPage = () => {
 	}
 
 	return (
-		<div className="p-5 w-full flex flex-col gap-2">
-			<PropertyBackgrounds value={profileUser?.profile_bg}/>
+		<div className="p-5 w-full flex flex-col gap-4">
+			<PropertyBackgrounds
+				value={background}
+				setBackground={(bg) => {
+					setBackground(bg);
+				}}
+			/>
 			<PropertyCombobox
 				title={"Nationality"}
 				explainText="The country/flag shown on your MC account page"
