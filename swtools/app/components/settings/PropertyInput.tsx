@@ -16,7 +16,7 @@ const PropertyInput: React.FC<PropertyInputProps> = ({ title, explainText, value
 	};
 
 	return (
-		<div className="flex justify-between items-start lg:items-center gap-2 mb-4 rounded-lg w-full flex-col lg:flex-row">
+		<div className="flex justify-between items-start lg:items-center gap-2 rounded-lg w-full flex-col lg:flex-row">
 			<div>
 				<div className="flex items-center">
 					<strong className="text-lg">{title}</strong>

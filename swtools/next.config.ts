@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
 				pathname: "/**",
 			},
 		],
+		qualities: [75, 85, 100],
 	},
 	allowedDevOrigins: ["localhost:3000", "http://localhost:3000, http://192.168.178.51:3000, 192.168.178.51:3000"],
 };

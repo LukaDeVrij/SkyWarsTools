@@ -10,6 +10,7 @@ import PropertyInput from "@/app/components/settings/PropertyInput";
 import ErrorView from "@/app/components/universal/ErrorView";
 import Loading from "@/app/components/universal/Loading";
 import Link from "next/link";
+import PropertyBackgrounds from "@/app/components/settings/PropertyBackgrounds";
 
 const fetchMaps = async (): Promise<string[]> => {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/list`);
@@ -124,13 +125,12 @@ const ProfileSettingsPage = () => {
 	}
 
 	return (
-		<div className="p-5 w-full flex flex-col gap-2">
-			<PropertyCombobox
-				title={"Profile Background"}
-				explainText="The image shown on your MC account page"
-				options={maps}
-				initialValue={profileUser?.profile_bg ?? undefined}
-				onChange={setBackground}
+		<div className="p-5 w-full flex flex-col gap-4">
+			<PropertyBackgrounds
+				value={background}
+				setBackground={(bg) => {
+					setBackground(bg);
+				}}
 			/>
 			<PropertyCombobox
 				title={"Nationality"}

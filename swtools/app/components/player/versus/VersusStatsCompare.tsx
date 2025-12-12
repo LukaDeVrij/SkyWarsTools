@@ -7,7 +7,7 @@ import { formatScheme } from "@/app/utils/Scheme";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { SnapshotsResponse } from "@/app/types/Snapshot";
-import { Info, MessageCircleWarning } from "lucide-react";
+import { MessageCircleWarning } from "lucide-react";
 
 function VersusStatsCompare({
 	player1,
@@ -393,7 +393,7 @@ function VersusStatsCompare({
 						</div>
 					</div>
 				)}
-				<div className="w-full text-xl lg:text-2xl rounded-lg p-0 p-4 mt-4 text-center gap-2 flex flex-col bg-content">
+				<div className="w-full text-xl lg:text-2xl rounded-lg p-4 mt-4 text-center gap-2 flex flex-col bg-content">
 					<div className="flex flex-row justify-between lg:text-3xl">
 						<span className={`font-semibold ${totalFinalScoreA > totalFinalScoreB ? "text-green-400" : "text-red-400"}`}>
 							{totalFinalScoreA.toFixed(2)}
