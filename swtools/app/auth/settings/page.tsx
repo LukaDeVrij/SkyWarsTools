@@ -36,6 +36,23 @@ const ProfileSettingsPage = () => {
 	const [nationality, setNationality] = React.useState<string | null>(null);
 	const [emoji, setEmoji] = React.useState<string | null>(null);
 	const [bio, setBio] = React.useState<string | null>(null);
+	const [saved, setSaved] = React.useState<boolean>(false);
+
+	// Warn user if leaving with unsaved changes
+	React.useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			const changesMade =
+				background !== (profileUser?.profile_bg ?? null) ||
+				nationality !== (profileUser?.nationality ?? null) ||
+				emoji !== (profileUser?.emoji ?? null) ||
+				bio !== (profileUser?.bio ?? null);
+			if (!saved && changesMade) {
+				e.preventDefault();
+			}
+		};
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+	}, [saved, background, nationality, emoji, bio]);
 
 	// Fetch ID token
 	React.useEffect(() => {
@@ -102,6 +119,7 @@ const ProfileSettingsPage = () => {
 				alert("Failed to update profile: " + (data.cause || "Unknown error"));
 			} else {
 				alert("Profile updated!");
+				setSaved(true);
 			}
 		} catch (err) {
 			console.error("Failed to update profile:", err);

@@ -12,6 +12,10 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 	const [useLevelScheme, setUseLevelScheme] = React.useState(true);
 	const [useRank, setUseRank] = React.useState(true);
 	const [useCheaterSuffix, setUseCheaterSuffix] = React.useState(false);
+	const [useName, setUseName] = React.useState(true);
+	const [fontSize, setFontSize] = React.useState(80);
+
+	const [showOptions, setShowOptions] = React.useState(false);
 
 	const handleSave = () => {
 		const canvas = canvasRef.current;
@@ -35,7 +39,7 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 	};
 
 	// Kind of hardcoded, but it works
-	const box = [10, 0, 900, 85];
+	const box = [10, 0, 2000, 180 + fontSize / 2];
 
 	// Scheme bits
 	const level = calcLevel(data.stats.skywars_experience ?? 0);
@@ -54,31 +58,32 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 				document.fonts.add(font);
 				if (ctx) {
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
-					ctx.font = `40px MinecraftReg`;
+					ctx.font = `${fontSize}px MinecraftReg`;
 					let text = `${scheme}`;
 					if (rank.cleanPrefix && useRank) {
 						text += " " + rank.prefix + " ";
 					} else {
 						text += "§7 ";
 					}
-					text += data.player;
+					if (useName) text += data.player;
 
 					if (useCheaterSuffix) {
 						text += " §c[CHEATING]";
 					}
-					fillMCColorText(ctx, text, box);
+					console.log("current text:" + text);
+					fillMCColorText(ctx, text.trimEnd(), box);
 				}
 			});
 		}
 	});
 
 	return (
-		<div className="flex flex-col items-center gap-4 py-8 overflow-hidden">
+		<div className="flex flex-col items-center gap-4 py-8 overflow-visible">
 			<div className="w-full max-w-full overflow-x-auto lg:justify-center flex">
 				<canvas
 					ref={canvasRef}
-					width={900}
-					height={60}
+					width={2000}
+					height={170}
 					style={{
 						border: "3px solid #ffffff22",
 						borderRadius: "10px",
@@ -88,38 +93,64 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 					}}
 				/>
 			</div>
-			<div className="flex flex-row gap-5">
-				<label className="flex items-center gap-2 text-base font-medium text-white">
-					<input
-						type="checkbox"
-						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-						checked={useLevelScheme}
-						onChange={(e) => setUseLevelScheme(e.target.checked)}
-					/>
-					<span>Use Level Scheme</span>
-				</label>
-				<label className="flex items-center gap-2 text-base font-medium text-white">
-					<input
-						type="checkbox"
-						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-						checked={useRank}
-						onChange={(e) => {
-							setUseRank(e.target.checked);
-						}}
-					/>
-					<span>Include Rank</span>
-				</label>
-				<label className="flex items-center gap-2 text-base font-medium text-white">
-					<input
-						type="checkbox"
-						className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-						checked={useCheaterSuffix}
-						onChange={(e) => {
-							setUseCheaterSuffix(e.target.checked);
-						}}
-					/>
-					<span>Cheater Suffix</span>
-				</label>
+			<div className="relative">
+				<button
+					className="bg-gray-800 text-white px-4 py-2 rounded shadow hover:bg-gray-700 transition cursor-pointer"
+					onClick={() => setShowOptions((v) => !v)}
+				>
+					Options
+				</button>
+				{showOptions && (
+					<div className="absolute left-0 mt-2 w-60 bg-content rounded z-10 p-4 flex flex-col gap-3">
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useLevelScheme}
+								onChange={(e) => setUseLevelScheme(e.target.checked)}
+							/>
+							<span>Use Level Scheme</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useRank}
+								onChange={(e) => setUseRank(e.target.checked)}
+							/>
+							<span>Include Rank</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useCheaterSuffix}
+								onChange={(e) => setUseCheaterSuffix(e.target.checked)}
+							/>
+							<span>Cheater Suffix</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useName}
+								onChange={(e) => setUseName(e.target.checked)}
+							/>
+							<span>Show Name</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="number"
+								min={20}
+								max={200}
+								value={fontSize}
+								onChange={(e) => setFontSize(parseInt(e.target.value))}
+								className="w-14 p-1 rounded border border-gray-300 focus:outline-none text-white bg-gray-800"
+							/>
+							<span>Font Size</span>
+						</label>
+					</div>
+				)}
 			</div>
 			<div className="flex gap-2">
 				<Button onClick={handleSave}>Save</Button>

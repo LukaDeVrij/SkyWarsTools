@@ -20,7 +20,7 @@ export default function Home() {
 					<h1 className="text-5xl font-semibold text-center lg:text-left ">Welcome</h1>
 					<p className="font-semibold text-center lg:text-left text-lg">
 						SkyWarsTools has standard features such as player stats and information, along with snapshots, which allow for
-						session tracking, leaderboards and more! <span className="text-red-400">Currently in development.</span>
+						session tracking, leaderboards and more!
 					</p>
 				</div>
 				<Image className={"hidden lg:block"} src={"/title.png"} alt={"SkyWarsTools title logo"} width={300} height={60}></Image>
@@ -30,7 +30,7 @@ export default function Home() {
 				<div className="rounded-lg px-4 lg:px-8 font-semibold flex flex-col lg:flex-row gap-2 lg:gap-4 ">
 					<Link
 						href="/patreon"
-						className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press"
+						className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press enchanted"
 						target="_blank"
 						rel="noopener noreferrer"
 					>

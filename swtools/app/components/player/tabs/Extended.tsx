@@ -336,7 +336,8 @@ const Extended: React.FC<OverallResponse> = (response) => {
 									<tr>
 										<td colSpan={4} style={{ height: "12px" }}></td>
 									</tr>
-									{[1, 2, 3, 5, 6, 7, 8].map((num) => {
+									{/* This shit is wrong - I dont understand how they count challenges and their 'wins' */}
+									{/* {[1, 2, 3, 5, 6, 7, 8].map((num) => {
 										const attempts = (response.stats[`challenge_attempts_${num}` as keyof Stats] as number) ?? 0;
 										const wins = ((response.stats[`challenge_wins_${num}` as keyof Stats] as number) ?? 0) / num;
 										const winRate = attempts > 0 ? ((wins / attempts) * 100).toFixed(2) : null;
@@ -351,7 +352,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 												</td>
 											</tr>
 										);
-									})}
+									})} */}
 								</tbody>
 							</table>
 						</div>

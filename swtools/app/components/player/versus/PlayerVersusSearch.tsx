@@ -1,7 +1,7 @@
 "use client";
 import { UUIDResponse } from "@/app/types/UUIDResponse";
 import { Tooltip } from "@mui/material";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import React from "react";
 
 interface PlayerVersusSearchProps {
@@ -25,7 +25,7 @@ const PlayerVersusSearch = ({ player }: PlayerVersusSearchProps) => {
 							return;
 						}
 						if (playerName.toLowerCase() == player.toLowerCase()) {
-							setError("You cannot versus yourself silly!");
+							setError("You cannot versus yourself...");
 							return;
 						}
 						try {
@@ -50,14 +50,11 @@ const PlayerVersusSearch = ({ player }: PlayerVersusSearchProps) => {
 					}
 				}}
 			/>
-			<div className="absolute right-2 flex items-center h-full pointer-events-none">
+			<div className="absolute right-2 flex items-center h-full">
 				{errorMsg && (
 					<Tooltip title={errorMsg}>
-						<div>
-							<svg className="h-6 w-6 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-								<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" />
-								<line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" />
-							</svg>
+						<div className="text-red-500">
+							<X></X>
 						</div>
 					</Tooltip>
 				)}

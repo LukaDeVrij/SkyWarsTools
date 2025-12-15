@@ -12,8 +12,10 @@ import useSWR from "swr";
 import ErrorView from "../../universal/ErrorView";
 import Loading from "../../universal/Loading";
 import VersusStatsCompare from "./VersusStatsCompare";
-import { Info } from "lucide-react";
+import { Info, RotateCcw, X } from "lucide-react";
 import { SnapshotKeysResponse, SnapshotsResponse } from "@/app/types/Snapshot";
+import { Tooltip } from "@mui/material";
+import Link from "next/link";
 
 export function VersusStatsView({ overallData, snapshots }: { overallData: OverallResponse; snapshots: SnapshotsResponse | undefined }) {
 	const searchParams = useSearchParams();
@@ -86,8 +88,13 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 					<h1 className="text-3xl lg:text-5xl text-center font-semibold animate-scale">VS</h1>
 				</div>
 				{opponentName && opponentData ? (
-					<div className="flex-1 min-w-0 text-xl lg:text-2xl truncate text-right">
+					<div className="flex-1 min-w-0 text-xl lg:text-2xl truncate text-right flex flex-row justify-end items-center gap-2">
 						<MinecraftText>{playerTitleOpp}</MinecraftText>
+						<Tooltip title="Try another opponent" placement="top">
+							<Link href={`/player/${encodeURIComponent(overallData.player)}/versus`}>
+								<X className="ml-2 inline-block h-6 w-6 lg:h-8 lg:w-8 text-gray-400" />
+							</Link>
+						</Tooltip>
 					</div>
 				) : (
 					<div className="flex-1 min-w-0 text-right text-2xl">

@@ -114,7 +114,6 @@ const PlayerInputField = () => {
 					placeholder="Search a player..."
 					disabled={loading}
 					className="flex w-[140px] lg:w-[200px] outline-0"
-					autoFocus
 					title="Press Ctrl+K or Cmd+K to focus"
 				/>
 				<button type="submit" disabled={loading || !input.trim()} className="flex items-center justify-center cursor-pointer">

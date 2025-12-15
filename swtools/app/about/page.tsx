@@ -26,7 +26,7 @@ export default function AboutPage() {
 						<HelpCard title="Snapshots">
 							SkyWarsTools uses snapshots. Every time a player is searched for, a snapshot of their stats is saved. This
 							allows us to track progress over time, and display graphs. Snapshots are taken at most once every 16 hours per
-							player to reduce load on the Hypixel API.
+							player to reduce load on the Hypixel API and internal databases.
 						</HelpCard>
 						<HelpCard title="Compare & Session">
 							Use these snapshots to compare, or to see how you did in a single session between two snapshots. This works best
