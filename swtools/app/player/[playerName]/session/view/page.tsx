@@ -32,9 +32,31 @@ const PlayerSessionViewPage = () => {
 			<ErrorView statusCode={"Too many snapshots!"} statusText="You may select up to 30 snapshots for compare/session."></ErrorView>
 		);
 	}
+	let tooFew: boolean = false;
+	if (keys && (Array.isArray(keys) ? keys.length < 2 : typeof keys === "string" && keys.split(",").length < 2)) {
+		tooFew = true;
+	}
+	let tooMany: boolean = false;
+	if (keys && (Array.isArray(keys) ? keys.length > 2 : typeof keys === "string" && keys.split(",").length > 2)) {
+		tooMany = true;
+	}
+
+
 
 	return (
 		<div className="bg-content h-auto p-2 lg:p-8 lg:rounded-b-xl">
+			{tooFew && (
+				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col mb-2">
+					<span className="w-fit">Warning: Only one snapshot selected!</span>
+					<span className="text-[12px] text-yellow-900">To generate a session, pick two snapshots to calculate between.</span>
+				</div>
+			)}
+			{tooMany && (
+				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col mb-2">
+					<span className="w-fit">Warning: More than two snapshots selected!</span>
+					<span className="text-[12px] text-yellow-900">Only the first two snapshots will be used to generate the session.</span>
+				</div>
+			)}
 			<Tabs>
 				<TabList
 					className={

@@ -9,7 +9,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 const Button: React.FC<ButtonProps> = ({ children, variant = "primary", onClick, ...props }) => {
 	const baseStyle = "px-4 py-2 rounded font-semibold focus:outline-none transition-colors cursor-pointer animate-press";
 	const variants = {
-		primary: "bg-blue-600 text-white hover:bg-blue-700",
+		primary: "bg-button text-white hover:bg-button-hover",
 		secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
 	};
 

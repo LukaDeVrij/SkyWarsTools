@@ -33,12 +33,10 @@ const PlayerStatsLayout = async ({ searchParams, params }: CompareViewPageProps)
 
 	if (!data || Object.keys(data).length < 1) {
 		return (
-			<div className="bg-red-500 text-black font-bold p-2 rounded-xl flex flex-col">
-				<span>Error: You need at least 1 snapshots!</span>
-				<span className="text-[12px] text-red-900">
-					If you went through the selector menu, something went wrong, please report (Click about)
-				</span>
-			</div>
+			<ErrorView
+				statusCode={"No snapshots found"}
+				statusText="We couldn't find any snapshots with the provided keys."
+			></ErrorView>
 		);
 	}
 

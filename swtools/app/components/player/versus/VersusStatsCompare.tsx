@@ -8,6 +8,8 @@ import { getPlayerRank } from "@/app/utils/RankTag";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { SnapshotsResponse } from "@/app/types/Snapshot";
 import { MessageCircleWarning } from "lucide-react";
+import Button from "../../universal/Button";
+import Link from "next/link";
 
 function VersusStatsCompare({
 	player1,
@@ -407,6 +409,11 @@ function VersusStatsCompare({
 					<div className="text-2xl lg:text-3xl">
 						<MinecraftText>{playerTitle}</MinecraftText>
 					</div>
+				</div>
+				<div className="mt-4 scale-70">
+					<Button>
+						<Link href={`/player/${player1.player}/versus`}>Versus someone else</Link>
+					</Button>
 				</div>
 			</div>
 		</>
