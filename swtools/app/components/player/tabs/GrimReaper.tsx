@@ -74,8 +74,8 @@ const GrimReaper: React.FC<OverallResponse> = (response) => {
 							<h2 className="font-semibold flex items-center flex-col justify-center text-center">
 								<Title color="text-blue-400">Angel&apos;s Descent</Title>
 								<span className="flex flex-row gap-2">
-									Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/25)
-									{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 25 ? (
+									Eligibility: ({Math.floor(calcLevel(response.stats.skywars_experience ?? 0))}/15)
+									{Math.floor(calcLevel(response.stats.skywars_experience ?? 0)) >= 15 ? (
 										<Check className="text-green-500" />
 									) : (
 										<X className="text-red-500" />
