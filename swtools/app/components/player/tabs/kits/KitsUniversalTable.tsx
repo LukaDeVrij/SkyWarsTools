@@ -1,6 +1,6 @@
 import { KitStats } from "@/app/types/KitStats";
 import { OverallResponse } from "@/app/types/OverallResponse";
-import { getKitPrestigeInfo, parseKitStatsKey } from "@/app/utils/Utils";
+import { formatPlaytime, getKitPrestigeInfo, parseKitStatsKey } from "@/app/utils/Utils";
 import React, { useState } from "react";
 
 interface KitsUniversalTableProps {
@@ -31,8 +31,15 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 			kitStats[kit.kit].deaths = (kitData[key] as number) ?? 0;
 		} else if (key.startsWith("xp_")) {
 			kitStats[kit.kit].xp = (kitData[key] as number) ?? 0;
+		} else if (key.startsWith("time_played_")) {
+			kitStats[kit.kit].timePlayed = (kitData[key] as number) ?? 0;
 		}
 	});
+
+	// Idea was good, to exclude some stats from mini - problem is it looks ass. So for now ill just keep all table columns
+	// const isMini = Object.keys(kitData)[0]?.includes("_mini_") ?? false;
+	// console.log(isMini);
+	const isMini = false;
 
 	const [sortKey, setSortKey] = useState<keyof KitStats | "kit" | "wlr" | "kdr">("kit");
 	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -67,6 +74,7 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 			a = statsA[sortKey] ?? 0;
 			b = statsB[sortKey] ?? 0;
 		}
+
 		if (typeof a === "string" && typeof b === "string") {
 			return sortOrder === "asc" ? a.localeCompare(b) : b.localeCompare(a);
 		} else {
@@ -91,23 +99,36 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 							<th onClick={() => handleSort("wins")} style={{ cursor: "pointer" }}>
 								Wins{renderSortArrow("wins")}
 							</th>
-							<th onClick={() => handleSort("losses")} style={{ cursor: "pointer" }}>
-								Losses{renderSortArrow("losses")}
-							</th>
-							<th onClick={() => handleSort("wlr")} style={{ cursor: "pointer" }}>
-								W/L{renderSortArrow("wlr")}
-							</th>
+							{!isMini && (
+								<>
+									<th onClick={() => handleSort("losses")} style={{ cursor: "pointer" }}>
+										Losses{renderSortArrow("losses")}
+									</th>
+									<th onClick={() => handleSort("wlr")} style={{ cursor: "pointer" }}>
+										W/L{renderSortArrow("wlr")}
+									</th>
+								</>
+							)}
+
 							<th onClick={() => handleSort("kills")} style={{ cursor: "pointer" }}>
 								Kills{renderSortArrow("kills")}
 							</th>
-							<th onClick={() => handleSort("deaths")} style={{ cursor: "pointer" }}>
-								Deaths{renderSortArrow("deaths")}
-							</th>
-							<th onClick={() => handleSort("kdr")} style={{ cursor: "pointer" }}>
-								K/D{renderSortArrow("kdr")}
-							</th>
+							{!isMini && (
+								<>
+									<th onClick={() => handleSort("deaths")} style={{ cursor: "pointer" }}>
+										Deaths{renderSortArrow("deaths")}
+									</th>
+									<th onClick={() => handleSort("kdr")} style={{ cursor: "pointer" }}>
+										K/D{renderSortArrow("kdr")}
+									</th>
+								</>
+							)}
+
 							<th onClick={() => handleSort("xp")} style={{ cursor: "pointer" }}>
 								XP{renderSortArrow("xp")}
+							</th>
+							<th onClick={() => handleSort("timePlayed")} style={{ cursor: "pointer" }}>
+								Playtime{renderSortArrow("timePlayed")}
 							</th>
 						</tr>
 					</thead>
@@ -121,12 +142,23 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 								<tr key={kitName} className="border-b-1 border-white">
 									<td>{kitName}</td>
 									<td>{(stats.wins ?? 0).toLocaleString()}</td>
-									<td>{(stats.losses ?? 0).toLocaleString()}</td>
-									<td className={wlr > 1 ? "text-green-600" : ""}>{wlr.toFixed(2)}</td>
+									{!isMini && (
+										<>
+											<td>{(stats.losses ?? 0).toLocaleString()}</td>
+											<td className={wlr > 1 ? "text-green-600" : ""}>{wlr.toFixed(2)}</td>
+										</>
+									)}
 									<td>{(stats.kills ?? 0).toLocaleString()}</td>
-									<td>{(stats.deaths ?? 0).toLocaleString()}</td>
-									<td className={kdr > 5 ? "text-green-600" : ""}>{kdr.toFixed(2)}</td>
+									{!isMini && (
+										<>
+											<td>{(stats.deaths ?? 0).toLocaleString()}</td>
+											<td className={kdr > 5 ? "text-green-600" : ""}>{kdr.toFixed(2)}</td>
+										</>
+									)}
 									<td title={getKitPrestigeInfo(stats.xp ?? 0, mega).name}>{(stats.xp ?? 0).toLocaleString()}</td>
+									<td id={stats.timePlayed !== undefined ? stats.timePlayed.toString() : undefined}>
+										{stats.timePlayed ? `${formatPlaytime(stats.timePlayed)}` : "0m"}
+									</td>
 								</tr>
 							);
 						})}
