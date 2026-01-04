@@ -272,6 +272,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§e", "§e", "§e", "§e", "§e"],
 		iconColor: "§c",
 		req: "§5§o§cUnlocked at Fisherman Mega Kit Prestige VII!",
+		reqKit: "Fisherman Mega",
 	},
 	{
 		name: "obsidian",
@@ -641,6 +642,13 @@ export const rawSchemes: Scheme[] = [
 		reqKit: "Frog Team",
 	},
 	{
+		name: "jersey",
+		rankColor: ["§f", "§f", "§f", "§f", "§f"],
+		iconColor: "§c",
+		req: "§5§o§cUnlocked at Baseball Player Insane Kit Prestige VII!",
+		reqKit: "Baseball Player Team",
+	},
+	{
 		name: "poppy",
 		rankColor: ["§c", "§4", "§0", "§0", "§c"],
 		iconColor: "§4",
@@ -791,8 +799,8 @@ export const rawSchemes: Scheme[] = [
 		name: "insane",
 		rankColor: ["§7", "§f", "§f", "§f", "§7"],
 		iconColor: "§6",
-		req: "§5§o§cUnlocked at Pro Insane Kit Prestige VII!",
-		reqKit: "Pro Insane",
+		req: "§5§o§cUnlocked at Rookie Insane Kit Prestige VII!",
+		reqKit: "Rookie Insane",
 	},
 	{
 		name: "smoke",
@@ -1111,6 +1119,7 @@ export const rawSchemes: Scheme[] = [
 		rankColor: ["§f", "§e", "§c", "§d", "§f"],
 		iconColor: "§b",
 		req: "§5§o§cUnlocked at Scout Mega Kit Prestige VII!",
+		reqKit: "Scout Mega",
 	},
 	{
 		name: "ultraviolence",

@@ -7,6 +7,7 @@ import KitPrestiges from "./kits/KitPrestiges";
 import KitsUniversalTable from "./kits/KitsUniversalTable";
 import { keys } from "@/app/utils/LeaderboardKeys";
 import KitPrestigeBreakdown from "./kits/KitPrestigeBreakdown";
+import { calcLevel } from "@/app/utils/Utils";
 
 const Kits: React.FC<OverallResponse> = (response) => {
 	const allKeys = keys;
@@ -37,6 +38,8 @@ const Kits: React.FC<OverallResponse> = (response) => {
 		}
 	});
 
+	const playerLevel: number = calcLevel(response.stats.skywars_experience as number);
+
 	return (
 		<Tabs>
 			<TabList className={"bg-main h-10 w-full flex gap-2 items-center px-4 overflow-scroll lg:overflow-auto text-base lg:text-lg"}>
@@ -62,7 +65,15 @@ const Kits: React.FC<OverallResponse> = (response) => {
 
 			<TabPanel>
 				<TabContent>
-					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
+					<KitPrestiges
+						playerLevel={playerLevel} // pass player level here - needed for pres 7 previews
+						{...normal_kits}
+						{...insane_kits}
+						{...mini_kits}
+						{...mythical_kits}
+						{...ranked_kits}
+						{...mega_kits}
+					/>
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
