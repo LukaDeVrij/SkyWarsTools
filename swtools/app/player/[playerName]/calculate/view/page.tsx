@@ -1,7 +1,7 @@
 "use client";
 import { auth } from "@/app/firebase/config";
 import { Snapshot } from "@/app/types/Snapshot";
-import { fetcher, fetcherWithAuth, formatPlaytime, toCamelCase } from "@/app/utils/Utils";
+import { calcEXPFromLevel, fetcher, fetcherWithAuth, formatPlaytime, toCamelCase } from "@/app/utils/Utils";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -18,7 +18,7 @@ type SnapshotsResponse = {
 };
 
 const CalculateViewPage = () => {
-	const [user, loading, ] = useAuthState(auth);
+	const [user, loading] = useAuthState(auth);
 	const playerName = useParams().playerName as string;
 	const keys = useSearchParams().get("k") as string;
 	const stat = useSearchParams().get("stat") as string;
@@ -72,9 +72,9 @@ const CalculateViewPage = () => {
 	const lostSnapshots = keys.split(",").filter((k) => !data[k]);
 	let lostSnapshotsText = "";
 	if (lostSnapshots.length > 0) {
-		lostSnapshotsText = `Could not find snapshots for keys: ${lostSnapshots.join(", ")} (requested ${
-			keys.split(",").length
-		}, got ${Object.keys(data).length})`;
+		lostSnapshotsText = `Could not find snapshots for keys: ${lostSnapshots.join(", ")} (requested ${keys.split(",").length}, got ${
+			Object.keys(data).length
+		})`;
 	}
 
 	// Prepare data for calculations - here we get the extra stats such as WL which can be calculated from the base stats
@@ -137,6 +137,13 @@ const CalculateViewPage = () => {
 	if (goalType) trendLineData.push(goal.y);
 	if (goalType) goalLineData.push(goal.y);
 
+	// Check whether Level is selected, and if player level is below 20
+	const belowLevel20 =
+		stat === "level" &&
+		goalType &&
+		(snapshots[0].stats.skywars_experience < calcEXPFromLevel(20) ||
+			snapshots[snapshots.length - 1].stats.skywars_experience < calcEXPFromLevel(20));
+
 	return (
 		<div className="overflow-x-auto p-2 lg:p-4 bg-content">
 			{hasDifferentStatsVersion && (
@@ -155,6 +162,15 @@ const CalculateViewPage = () => {
 				<div className="bg-red-500 text-black font-bold p-3 rounded-xl flex flex-col">
 					<span>Error: Some queried snapshots were not found!</span>
 					<span className="text-[12px] text-red-900">{lostSnapshotsText}</span>
+				</div>
+			)}
+			{belowLevel20 && (
+				<div className="bg-yellow-500 text-black font-bold p-3 rounded-xl flex flex-col">
+					<span>Warning: You are below level 20, where level progression is non-linear!</span>
+					<span className="text-[12px] text-red-900">
+						This means the calculation not be accurate. Try using SkyWars Experience instead: your
+						goal of level {goal.y.toFixed(2)} is {calcEXPFromLevel(goal.y).toFixed(0)} SkyWars Experience.
+					</span>
 				</div>
 			)}
 			<div className="mt-2 bg-layer p-2 rounded-2xl lg:w-[80%] mx-auto aspect-square lg:aspect-auto">
@@ -227,10 +243,7 @@ const CalculateViewPage = () => {
 						{
 							label: "Current stat value",
 							title: "The most recent known value of '" + stat + "'.",
-							value:
-								regressionResult.points.length > 0
-									? regressionResult.points[0].y.toFixed(2)
-									: "-",
+							value: regressionResult.points.length > 0 ? regressionResult.points[0].y.toFixed(2) : "-",
 						},
 						{
 							label: "Predicted stat goal",
