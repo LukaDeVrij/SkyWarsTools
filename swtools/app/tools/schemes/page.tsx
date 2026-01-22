@@ -1,7 +1,6 @@
 import React from "react";
 
 import { rawSchemes } from "@/app/utils/Scheme";
-import type { Scheme } from "@/app/utils/Scheme";
 import { toCamelCase, formatSchemePreview } from "@/app/utils/Utils";
 import MinecraftText from "@/app/utils/MinecraftText";
 

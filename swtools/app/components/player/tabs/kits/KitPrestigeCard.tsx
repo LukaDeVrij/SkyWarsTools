@@ -1,14 +1,6 @@
-import { Display, OverallResponse } from "@/app/types/OverallResponse";
 import MinecraftText from "@/app/utils/MinecraftText";
-import { formatScheme, getSchemeByKit, Scheme } from "@/app/utils/Scheme";
-import {
-	calcLevel,
-	formatSchemePreview,
-	getKitPrestigeInfoByPrestige,
-	KitPrestigeInfo,
-	parseKitStatsKey,
-	toCamelCase,
-} from "@/app/utils/Utils";
+import { getSchemeByKit, Scheme } from "@/app/utils/Scheme";
+import { formatSchemePreview, getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey, toCamelCase } from "@/app/utils/Utils";
 import Tooltip from "@mui/material/Tooltip";
 import { MessageCircleWarning } from "lucide-react";
 import React from "react";
@@ -84,11 +76,11 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 
 	const initialWinsPerHour = stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0;
 	const [winsPerHour, setWinsPerHour] = React.useState(
-		stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0
+		stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0,
 	);
 	const initialKillsPerHour = stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0;
 	const [killsPerHour, setKillsPerHour] = React.useState(
-		stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0
+		stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0,
 	);
 
 	const winsInRequiredPlaytime = Math.ceil(winsPerHour * (playtimeRequiredSeconds / 3600));
