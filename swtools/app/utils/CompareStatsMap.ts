@@ -318,6 +318,31 @@ export const compareMap: CompareStatsMap = {
 		hypixelKey: "games_mini",
 		format: undefined,
 	},
+	wins_lab: {
+		label: "Lab Wins",
+		hypixelKey: "wins_lab",
+		format: undefined,
+	},
+	losses_lab: {
+		label: "Lab Losses",
+		hypixelKey: "losses_lab",
+		format: undefined,
+	},
+	kills_lab: {
+		label: "Lab Kills",
+		hypixelKey: "kills_lab",
+		format: undefined,
+	},
+	deaths_lab: {
+		label: "Lab Deaths",
+		hypixelKey: "deaths_lab",
+		format: undefined,
+	},
+	time_played_lab: {
+		label: "Lab Time Played",
+		hypixelKey: "time_played_lab",
+		format: undefined,
+	},
 };
 
 export function createCompareStatsMapFromSnapshot(snapshot: Snapshot, transformKey: boolean): Record<string, number | string | undefined> {
