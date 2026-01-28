@@ -7,7 +7,7 @@ import React, { useRef } from "react";
 
 interface SessionCanvasProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
 	data?: SnapshotsResponse;
-	mode?: "overall" | "solo" | "team" | "mini";
+	mode?: "overall" | "solo" | "team" | "mini" | "lab";
 }
 type Entry = {
 	title?: string;
@@ -38,6 +38,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		solo: CanvasBoxes;
 		team: CanvasBoxes;
 		mini: CanvasBoxes;
+		lab: CanvasBoxes;
 	} = {
 		overall: {
 			skin: {
@@ -535,6 +536,136 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				contentSize: "96px",
 			},
 		},
+		lab: {
+			skin: {
+				title: undefined,
+				statsKey: undefined,
+				box: [10 * scalingFactorX, 10 * scalingFactorY, 238 * scalingFactorX, 300 * scalingFactorY],
+				color: undefined,
+				content: sessionFillImage,
+				contentSize: "60px",
+			},
+			header: {
+				title: undefined,
+				statsKey: undefined,
+				box: [258 * scalingFactorX, 10 * scalingFactorY, 732 * scalingFactorX, 50 * scalingFactorY],
+				color: "#ffffff",
+				content: sessionFillHeader,
+				contentSize: "42px",
+			},
+			player_name: {
+				title: undefined,
+				statsKey: undefined,
+				box: [258 * scalingFactorX, 70 * scalingFactorY, 732 * scalingFactorX, 120 * scalingFactorY],
+				color: undefined,
+				content: sessionFillPlayerName,
+				contentSize: "92px",
+			},
+			mode: {
+				title: undefined,
+				statsKey: undefined,
+				box: [258 * scalingFactorX, 260 * scalingFactorY, 732 * scalingFactorX, 50 * scalingFactorY],
+				color: "#edaa23",
+				content: sessionFillMode,
+				contentSize: "42px",
+			},
+			timespan: {
+				title: undefined,
+				statsKey: undefined,
+				box: [258 * scalingFactorX, 200 * scalingFactorY, 732 * scalingFactorX, 50 * scalingFactorY],
+				color: "#ffffff",
+				content: sessionFillTimespan,
+				contentSize: "42px",
+			},
+			wins: {
+				title: "Lab Wins",
+				statsKey: "wins_lab",
+				box: [10 * scalingFactorX, 320 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#6af168",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			losses: {
+				title: "Lab Losses",
+				statsKey: "losses_lab",
+				box: [258 * scalingFactorX, 320 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#ea5e5f",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			w_l_ratio: {
+				title: "Lab W/L",
+				statsKey: undefined,
+				box: [505 * scalingFactorX, 320 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#edaa23",
+				content: sessionFillRatio,
+				contentSize: "96px",
+			},
+			time_played: {
+				title: "Lab Playtime",
+				statsKey: "time_played_lab",
+				box: [753 * scalingFactorX, 320 * scalingFactorY, 237 * scalingFactorX, 150 * scalingFactorY],
+				color: "#ffffff",
+				content: sessionFillPlaytime,
+				contentSize: "96px",
+			},
+			kills: {
+				title: "Lab Kills",
+				statsKey: "kills_lab",
+				box: [10 * scalingFactorX, 480 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#6af168",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			deaths: {
+				title: "Lab Deaths",
+				statsKey: "deaths_lab",
+				box: [258 * scalingFactorX, 480 * scalingFactorY, 237 * scalingFactorX, 150 * scalingFactorY],
+				color: "#ea5e5f",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			k_d_ratio: {
+				title: "Lab K/D",
+				statsKey: undefined,
+				box: [505 * scalingFactorX, 480 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#edaa23",
+				content: sessionFillRatio,
+				contentSize: "96px",
+			},
+			heads: {
+				title: "Heads (Overall)",
+				statsKey: "heads",
+				box: [753 * scalingFactorX, 480 * scalingFactorY, 237 * scalingFactorX, 150 * scalingFactorY],
+				color: "#f542ec",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			skywars_experience: {
+				title: "EXP Gained (Overall)",
+				statsKey: "skywars_experience",
+				box: [10 * scalingFactorX, 640 * scalingFactorY, 238 * scalingFactorX, 150 * scalingFactorY],
+				color: "#f542ec",
+				content: sessionFillDiff,
+				contentSize: "96px",
+			},
+			progress: {
+				title: "Progress",
+				statsKey: undefined,
+				box: [258 * scalingFactorX, 640 * scalingFactorY, 485 * scalingFactorX, 150 * scalingFactorY],
+				color: "#ffffff",
+				content: sessionFillProgress,
+				contentSize: "58px",
+			},
+			hourly_exp: {
+				title: "EXP/Hour (Overall)",
+				statsKey: undefined,
+				box: [753 * scalingFactorX, 640 * scalingFactorY, 237 * scalingFactorX, 150 * scalingFactorY],
+				color: "#f542ec",
+				content: sessionFillHourlyEXP,
+				contentSize: "96px",
+			},
+		},
 	};
 
 	const [hasDifferentStatsVersion, setHasDifferentStatsVersion] = React.useState(false);
@@ -705,6 +836,8 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 			modeText = "Mode: TEAM";
 		} else if (mode == "mini") {
 			modeText = "Mode: MINI";
+		} else if (mode == "lab") {
+			modeText = "Mode: LAB";
 		} else {
 			modeText = "Mode: Overall";
 		}
@@ -752,6 +885,9 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				break;
 			case "mini":
 				modePrefix = "_mini";
+				break;
+			case "lab":
+				modePrefix = "_lab";
 				break;
 		}
 
@@ -852,7 +988,9 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		const newExp = newStats.stats["skywars_experience"];
 		const oldExp = oldStats.stats["skywars_experience"];
 
-		const hoursPlayed = (newStats.stats["time_played"] - oldStats.stats["time_played"]) / 60 / 60;
+		const actualTimePlayedOld = oldStats.stats["time_played"] + oldStats.stats["time_played_lab"];
+		const actualTimePlayedNew = newStats.stats["time_played"] + newStats.stats["time_played_lab"];
+		const hoursPlayed = (actualTimePlayedNew - actualTimePlayedOld) / 60 / 60;
 
 		let expPerHour = (newExp - oldExp) / hoursPlayed;
 		expPerHour = Math.round(expPerHour);

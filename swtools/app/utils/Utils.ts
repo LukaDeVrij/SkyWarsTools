@@ -1,5 +1,6 @@
 import { DescentItem, DescentMap } from "../types/DescentMap";
 import { OverallResponse } from "../types/OverallResponse";
+import { Scheme } from "./Scheme";
 
 export function kitProcessing(value: string): string {
 	const parts = value.split("_");
@@ -181,7 +182,7 @@ export function formatTimestampToVerboseDate(timestamp: number): string {
 		hour: "2-digit",
 		minute: "2-digit",
 	};
-	return date.toLocaleDateString("en-US", options);
+	return date.toLocaleDateString(undefined, options);
 }
 
 export function calcKitPrestigeLevel(xp: number): number {
@@ -931,7 +932,37 @@ export const headsMap = [
 	{ key: "heads_sweet", label: "Sweet", kills: "Admin", exp: 25, playerKills: 0, playerEXP: 0, color: "#FF0000ff" },
 ];
 
+export const formatSchemePreview = (scheme: Scheme, level: number) => {
+	const levelStr: string = Math.floor(level).toString();
 
-export function getRedisKey(date: Date): string {
-	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-}
+	let rankColor: string[] | string = scheme.rankColor;
+	const iconColor: string = scheme.iconColor;
+
+	let formattedScheme: string = "";
+	const icon: string = "★";
+
+	if (Array.isArray(rankColor)) {
+		// Scheme is not just 1 color, its an array
+		formattedScheme = scheme.rankColor[0];
+		// If below level 100, the array has 1 too many colors - we get rid of the color on index 1, which is 1st number after the bracket basically
+		if (level < 100) rankColor = Array.isArray(scheme.rankColor) ? scheme.rankColor.filter((_, i) => i !== 1) : scheme.rankColor;
+
+		// Color for the first bracket, along with the actual bracket itself
+		formattedScheme += rankColor[0] + "[";
+
+		// We go over every digit in the level, and prepend the color from the array for that position
+		for (let index = 0; index < levelStr.length; index++) {
+			const char = levelStr.charAt(index);
+			formattedScheme += rankColor[index + 1] + char;
+		}
+
+		// Icon and its color
+		formattedScheme += iconColor + icon;
+		// We end with the last color from the array, which is for the closing bracket
+		formattedScheme += rankColor[rankColor.length - 1] + "]";
+	} else {
+		// Color is a single § code string -> '§2'
+		formattedScheme += rankColor + "[" + levelStr + iconColor + icon + "]";
+	}
+	return formattedScheme;
+};

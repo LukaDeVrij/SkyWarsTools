@@ -3,8 +3,11 @@ import KitPrestigeCard from "./KitPrestigeCard";
 import { getKitPrestigeInfo, getKitPrestigeInfoByPrestige, KitPrestigeInfo } from "@/app/utils/Utils";
 import { KitStats } from "@/app/types/KitStats";
 
-const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
+type KitPrestigesProps = {
+	playerLevel: number;
+} & Record<string, number | undefined>;
 
+const KitPrestiges: React.FC<KitPrestigesProps> = ({ playerLevel, ...stats }) => {
 	// Extract kit names - every kit should have time_played, if not theres no stats anyway
 	const kitNames = Object.keys(stats)
 		.filter((key) => key.startsWith("time_played_kit_"))
@@ -99,6 +102,7 @@ const KitPrestiges: React.FC< Record<string, number|undefined>> = (stats) => {
 							stats={kitStats}
 							currentPrestige={currentPrestige}
 							nextPrestige={nextPrestige}
+							playerLevel={playerLevel}
 						/>
 					))}
 			</div>

@@ -1,45 +1,11 @@
 import React from "react";
 
 import { rawSchemes } from "@/app/utils/Scheme";
-import type { Scheme } from "@/app/utils/Scheme";
-import { toCamelCase } from "@/app/utils/Utils";
+import { toCamelCase, formatSchemePreview } from "@/app/utils/Utils";
 import MinecraftText from "@/app/utils/MinecraftText";
 
 const SchemePreviews = () => {
-	const formatSchemePreview = (scheme: Scheme, level: number) => {
-		const levelStr: string = Math.floor(level).toString();
 
-		let rankColor: string[] | string = scheme.rankColor;
-		const iconColor: string = scheme.iconColor;
-
-		let formattedScheme: string = "";
-		const icon: string = "★";
-
-		if (Array.isArray(rankColor)) {
-			// Scheme is not just 1 color, its an array
-			formattedScheme = scheme.rankColor[0];
-			// If below level 100, the array has 1 too many colors - we get rid of the color on index 1, which is 1st number after the bracket basically
-			if (level < 100) rankColor = Array.isArray(scheme.rankColor) ? scheme.rankColor.filter((_, i) => i !== 1) : scheme.rankColor;
-
-			// Color for the first bracket, along with the actual bracket itself
-			formattedScheme += rankColor[0] + "[";
-
-			// We go over every digit in the level, and prepend the color from the array for that position
-			for (let index = 0; index < levelStr.length; index++) {
-				const char = levelStr.charAt(index);
-				formattedScheme += rankColor[index + 1] + char;
-			}
-
-			// Icon and its color
-			formattedScheme += iconColor + icon;
-			// We end with the last color from the array, which is for the closing bracket
-			formattedScheme += rankColor[rankColor.length - 1] + "]";
-		} else {
-			// Color is a single § code string -> '§2'
-			formattedScheme += rankColor + "[" + levelStr + iconColor + icon + "]";
-		}
-		return formattedScheme;
-	};
 
 	const formatReq = (req?: string | number) => {
 		if (!req) return "None";

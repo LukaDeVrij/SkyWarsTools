@@ -9,4 +9,4 @@ type UserProfile = {
 	patreon_cents?: number | null;
 	contrib?: boolean | null;
 };
-// Linter says this isnt used but it is
+// Linter says this isnt used but it is!!!

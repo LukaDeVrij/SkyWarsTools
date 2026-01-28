@@ -42,6 +42,11 @@ type Snapshot = {
 		kills_mini: number;
 		time_played_mini: number;
 		games_mini: number;
+		wins_lab: number;
+		losses_lab: number;
+		kills_lab: number;
+		deaths_lab: number;
+		time_played_lab: number;
 	};
 	statsVersion: number;
 	queried: number;
