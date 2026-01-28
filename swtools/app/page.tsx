@@ -9,6 +9,7 @@ import Contributors from "./components/start/Contributors";
 import Head from "next/head";
 import WebsiteVersion from "./components/WebsiteVersion";
 import PlayerCount from "./components/PlayerCount";
+import DailyPlayerCount from "./components/DailyPlayerCount";
 
 export default function Home() {
 	return (
@@ -26,7 +27,26 @@ export default function Home() {
 				</div>
 				<Image className={"hidden lg:block"} src={"/title.png"} alt={"SkyWarsTools title logo"} width={300} height={60}></Image>
 			</div>
-
+			<div className="rounded-lg px-4 lg:px-8 font-semibold flex flex-col lg:flex-row gap-2 lg:gap-4 mb-4">
+				<Link
+					href="/patreon"
+					className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press enchanted"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<p className="w-[80%]">Support the project on Patreon and get special perks!</p>
+					<Image src="/icons/patreon.png" alt="Patreon" width={50} height={50} />
+				</Link>
+				<Link
+					href="/discord"
+					className="w-full lg:w-[50%] h-20 bg-content rounded-xl p-3 lg:text-lg flex-row gap-2 justify-between items-center flex animate-press"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<p className="w-[80%]">Feature ideas? Bugs or problems found? Join the Discord!</p>
+					<Image src="/icons/discord.png" alt="Patreon" width={50} height={50} />
+				</Link>
+			</div>
 			<div className="flex flex-col gap-4">
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">
@@ -49,32 +69,12 @@ export default function Home() {
 
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">SkyWars Statistics</h2>
-					<div className="flex flex-row gap-4">
+					<div className="flex flex-col lg:flex-row gap-4">
 						<PlayerCount></PlayerCount>
-						<PlayerCount></PlayerCount>
+						<DailyPlayerCount></DailyPlayerCount>
 					</div>
 				</div>
-				{/* <Contributors></Contributors> */}
-				{/* <div className="rounded-lg px-4 lg:px-8 font-semibold flex flex-col lg:flex-row gap-2 lg:gap-4">
-					<Link
-						href="/patreon"
-						className="w-1/4 h-20 bg-content rounded-xl p-3 lg:text-2xl flex-row gap-2 justify-between items-center flex animate-press enchanted"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Patreon
-						<Image src="/icons/patreon.png" alt="Patreon" width={50} height={50} />
-					</Link>
-					<Link
-						href="/discord"
-						className="w-1/4 h-20 bg-content rounded-xl p-3 lg:text-2xl flex-row gap-2 justify-between items-center flex animate-press"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Discord
-						<Image src="/icons/discord.png" alt="Patreon" width={50} height={50} />
-					</Link>
-				</div> */}
+				<Contributors></Contributors>
 				<div className="flex flex-row justify-between px-4 lg:px-8 py-2 text-gray-500 font-bold">
 					<span>This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
 					<WebsiteVersion></WebsiteVersion>
