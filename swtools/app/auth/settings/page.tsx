@@ -15,7 +15,6 @@ import PropertyBackgrounds from "@/app/components/settings/PropertyBackgrounds";
 const fetchMaps = async (): Promise<string[]> => {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/list`);
 	const data = await res.json();
-	console.log(data);
 	return data as string[];
 };
 const fetchNationalities = async (): Promise<string[]> => {
@@ -99,12 +98,14 @@ const ProfileSettingsPage = () => {
 
 	async function updateProfile() {
 		if (!user) return;
-		const newUserProfile = {
+
+		let newUserProfile: UserProfile = {
 			profile_bg: background,
 			nationality: nationality,
 			emoji: emoji,
 			bio: bio,
 		};
+
 		try {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/updateUserInfo`, {
 				method: "POST",
@@ -149,6 +150,7 @@ const ProfileSettingsPage = () => {
 				setBackground={(bg) => {
 					setBackground(bg);
 				}}
+				user={profileUser}
 			/>
 			<PropertyCombobox
 				title={"Nationality"}
