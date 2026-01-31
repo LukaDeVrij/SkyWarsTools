@@ -1,6 +1,6 @@
 import MinecraftText from "@/app/utils/MinecraftText";
-import { getSchemeByKit } from "@/app/utils/Scheme";
-import { getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey, toCamelCase } from "@/app/utils/Utils";
+import { getSchemeByKit, Scheme } from "@/app/utils/Scheme";
+import { formatSchemePreview, getKitPrestigeInfoByPrestige, KitPrestigeInfo, parseKitStatsKey, toCamelCase } from "@/app/utils/Utils";
 import Tooltip from "@mui/material/Tooltip";
 import { MessageCircleWarning } from "lucide-react";
 import React from "react";
@@ -17,8 +17,9 @@ type KitPrestigeCardProps = {
 	stats: KitStats;
 	currentPrestige: KitPrestigeInfo;
 	nextPrestige: KitPrestigeInfo;
+	playerLevel: number;
 };
-const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, currentPrestige, nextPrestige }) => {
+const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, currentPrestige, nextPrestige, playerLevel }) => {
 	type KitObject = {
 		original: string;
 		stat: string;
@@ -75,17 +76,21 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 
 	const initialWinsPerHour = stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0;
 	const [winsPerHour, setWinsPerHour] = React.useState(
-		stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0
+		stats.wins && stats.timePlayed ? Math.round(stats.wins / (stats.timePlayed / 3600)) : 0,
 	);
 	const initialKillsPerHour = stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0;
 	const [killsPerHour, setKillsPerHour] = React.useState(
-		stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0
+		stats.kills && stats.timePlayed ? Math.round(stats.kills / (stats.timePlayed / 3600)) : 0,
 	);
 
 	const winsInRequiredPlaytime = Math.ceil(winsPerHour * (playtimeRequiredSeconds / 3600));
 	const killsInRequiredPlaytime = Math.ceil(killsPerHour * (playtimeRequiredSeconds / 3600));
 	const winsAtGoalPrestige = (stats.wins ?? 0) + winsInRequiredPlaytime;
 	const killsAtGoalPrestige = (stats.kills ?? 0) + killsInRequiredPlaytime;
+
+	// Make preview for pres 7 scheme into a string using player level (no icon though)
+	const pres7Scheme: Scheme | undefined = getSchemeByKit(kitObject.kit, kitObject.mode);
+	const previewSchemeString: string | null = pres7Scheme ? formatSchemePreview(pres7Scheme, playerLevel) : null;
 
 	const [maxHeight, setMaxHeight] = React.useState<number>(30);
 
@@ -279,7 +284,11 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 						<span className="flex flex-col text-lg items-center justify-center mt-2">
 							<span className="text-l">Obtained</span>
 							<MinecraftText>
-								{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
+								{"" +
+									toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") +
+									" Scheme - " +
+									previewSchemeString}
+								{}
 							</MinecraftText>
 						</span>
 					</>
@@ -292,7 +301,11 @@ const KitPrestigeCard: React.FC<KitPrestigeCardProps> = ({ kitName, stats, curre
 							))}
 							{prestigeGoal.name == "VII" && (
 								<MinecraftText>
-									{"" + toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") + " Scheme"}
+									{"" +
+										toCamelCase(getSchemeByKit(kitObject.kit, kitObject.mode)?.name ?? "Unknown") +
+										" Scheme - " +
+										previewSchemeString}
+									{}
 								</MinecraftText>
 							)}
 						</div>

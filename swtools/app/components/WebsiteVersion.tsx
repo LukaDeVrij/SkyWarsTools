@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import LastCommit from "../types/LastCommit";
 import { fetcher } from "../utils/Utils";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function WebsiteVersion() {
 	function formatVersion(date: Date): string {
@@ -16,7 +17,13 @@ export default function WebsiteVersion() {
 	});
 	if (data && data.date) {
 		const date = new Date(data.date);
-		return <div>v{formatVersion(date)}</div>;
+		return (
+			<>
+				<Tooltip title={data.message ? data.message : "No commit message available"}>
+					<span>v{formatVersion(date)}</span>
+				</Tooltip>
+			</>
+		);
 	}
 	return <></>;
 }

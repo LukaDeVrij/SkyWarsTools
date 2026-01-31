@@ -81,15 +81,20 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 	return (
 		<>
 			<div className="flex flex-col lg:flex-row flex-1 items-center bg-layer p-4 rounded-lg gap-2 lg:gap-0">
-				<div className="flex-1 min-w-0 text-xl lg:text-2xl truncate">
+				<Link
+					className="flex-1 min-w-0 text-xl lg:text-2xl truncate"
+					href={"/player/" + encodeURIComponent(overallData.player) + "/stats/table"}
+				>
 					<MinecraftText>{playerTitle}</MinecraftText>
-				</div>
+				</Link>
 				<div className="flex flex-shrink-0 flex-col lg:flex-row items-center justify-center w-40">
 					<h1 className="text-3xl lg:text-5xl text-center font-semibold animate-scale">VS</h1>
 				</div>
 				{opponentName && opponentData ? (
 					<div className="flex-1 min-w-0 text-xl lg:text-2xl truncate text-right flex flex-row justify-end items-center gap-2">
-						<MinecraftText>{playerTitleOpp}</MinecraftText>
+						<Link href={"/player/" + encodeURIComponent(opponentData.player) + "/stats/table"} className="truncate">
+							<MinecraftText>{playerTitleOpp}</MinecraftText>
+						</Link>
 						<Tooltip title="Try another opponent" placement="top">
 							<Link href={`/player/${encodeURIComponent(overallData.player)}/versus`}>
 								<X className="ml-2 inline-block h-6 w-6 lg:h-8 lg:w-8 text-gray-400" />

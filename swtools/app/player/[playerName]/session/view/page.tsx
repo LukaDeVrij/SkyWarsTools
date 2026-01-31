@@ -87,6 +87,12 @@ const PlayerSessionViewPage = () => {
 					>
 						Mini
 					</Tab>
+					<Tab
+						selectedClassName={"selected-tab"}
+						className={"whitespace-nowrap p-1 px-3 rounded-xl font-semibold cursor-pointer animate-press"}
+					>
+						Lab
+					</Tab>
 				</TabList>
 				<TabPanel>
 					<SessionCanvas data={data} mode={"overall"} />
@@ -99,6 +105,9 @@ const PlayerSessionViewPage = () => {
 				</TabPanel>
 				<TabPanel>
 					<SessionCanvas data={data} mode={"mini"} />
+				</TabPanel>
+				<TabPanel>
+					<SessionCanvas data={data} mode={"lab"} />
 				</TabPanel>
 			</Tabs>
 		</div>

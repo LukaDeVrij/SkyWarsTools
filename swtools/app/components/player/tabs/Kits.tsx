@@ -7,9 +7,9 @@ import KitPrestiges from "./kits/KitPrestiges";
 import KitsUniversalTable from "./kits/KitsUniversalTable";
 import { keys } from "@/app/utils/LeaderboardKeys";
 import KitPrestigeBreakdown from "./kits/KitPrestigeBreakdown";
+import { calcLevel } from "@/app/utils/Utils";
 
 const Kits: React.FC<OverallResponse> = (response) => {
-
 	const allKeys = keys;
 
 	// fucking ts
@@ -38,6 +38,7 @@ const Kits: React.FC<OverallResponse> = (response) => {
 		}
 	});
 
+	const playerLevel: number = calcLevel(response.stats.skywars_experience as number);
 
 	return (
 		<Tabs>
@@ -64,12 +65,22 @@ const Kits: React.FC<OverallResponse> = (response) => {
 
 			<TabPanel>
 				<TabContent>
-					<KitPrestiges {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
+					<KitPrestiges
+						playerLevel={playerLevel} // pass player level here - needed for pres 7 previews
+						{...normal_kits}
+						{...insane_kits}
+						{...mini_kits}
+						{...mythical_kits}
+						{...ranked_kits}
+						{...mega_kits}
+					/>
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
 				<TabContent>
-					<KitPrestigeBreakdown {...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }} />
+					<KitPrestigeBreakdown
+						{...{ ...normal_kits, ...insane_kits, ...mini_kits, ...mythical_kits, ...ranked_kits, ...mega_kits }}
+					/>
 				</TabContent>
 			</TabPanel>
 			<TabPanel>
@@ -116,6 +127,10 @@ const Kits: React.FC<OverallResponse> = (response) => {
 							>
 								Mega
 							</Tab>
+							{/* <span className="ml-auto mx-1 font-light text-sm flex items-center">
+								Show Prestiges
+								<input type="checkbox" id="showPrestiges" className="mx-2" />
+							</span> */}
 						</TabList>
 						<TabPanel>
 							<KitsUniversalTable kitData={normal_kits} />
@@ -135,6 +150,7 @@ const Kits: React.FC<OverallResponse> = (response) => {
 						<TabPanel>
 							<KitsUniversalTable kitData={mega_kits} />
 						</TabPanel>
+						
 					</Tabs>
 				</TabContent>
 			</TabPanel>

@@ -25,8 +25,7 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 		}
 	);
 
-	let bg = "Winter Retreat.png";
-	let customBg = false;
+	let bg = "Verglas.png";
 	if (typedUserInfo?.user && typedUserInfo?.user.profile_bg) {
 		bg = typedUserInfo?.user.profile_bg;
 		// icky check for custom bg
