@@ -35,7 +35,7 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 		// Keep only 3
 		recent = recent.slice(0, 3);
 		setRecentPlayers(recent);
-	}, [playerName]);
+	}, [playerName, setRecentPlayers]);
 
 	return (
 		<nav className="bg-main w-full h-10 lg:h-[60px] flex p-1 lg:p-3 lg:rounded-t-xl overflow-x-scroll lg:overflow-hidden">

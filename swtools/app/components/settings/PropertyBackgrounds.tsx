@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "../universal/Button";
-import { Edit, X } from "lucide-react";
+import { Edit} from "lucide-react";
 import BackgroundSelector from "./BackgroundSelector";
-import Image from "next/image";
 
 const PropertyCombobox: React.FC<{
 	value?: string | null;

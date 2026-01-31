@@ -99,7 +99,7 @@ const ProfileSettingsPage = () => {
 	async function updateProfile() {
 		if (!user) return;
 
-		let newUserProfile: UserProfile = {
+		const newUserProfile: UserProfile = {
 			profile_bg: background,
 			nationality: nationality,
 			emoji: emoji,
