@@ -144,7 +144,8 @@ const PlayerCount = ({ fullWidth = false }: PlayerCountProps) => {
 							{
 								data: chartData.map((d) => d.hour),
 								valueFormatter: transformHour,
-								max: 24,
+								max: chartData[chartData.length - 1].hour,
+								min: chartData[0].hour,
 							},
 						]}
 						series={mode === "overall" ? seriesOverall : seriesAll}

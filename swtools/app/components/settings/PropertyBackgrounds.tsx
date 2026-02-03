@@ -16,7 +16,7 @@ const PropertyCombobox: React.FC<{
 	useEffect(() => {
 		if (value) {
 			setCurrentMap(value);
-			if (value.includes(".gif")) {
+			if (value.includes(".webp") && (user?.contrib == true || user?.patreon == true)) {
 				setIsPatreonBg(true);
 			}
 		}

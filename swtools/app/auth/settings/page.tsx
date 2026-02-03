@@ -100,11 +100,17 @@ const ProfileSettingsPage = () => {
 		if (!user) return;
 
 		const newUserProfile: UserProfile = {
-			profile_bg: background,
 			nationality: nationality,
 			emoji: emoji,
 			bio: bio,
 		};
+
+		if (background?.includes(".webp")) {
+			newUserProfile.custom_bg = background;
+		} else {
+			newUserProfile.profile_bg = background;
+			newUserProfile.custom_bg = null;
+		}
 
 		try {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/auth/updateUserInfo`, {

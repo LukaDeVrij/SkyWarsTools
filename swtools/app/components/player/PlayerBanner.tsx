@@ -22,14 +22,13 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-		}
+		},
 	);
-
 	let bg = "Verglas.png";
+	let customBg = false;
 	if (typedUserInfo?.user && typedUserInfo?.user.profile_bg) {
 		bg = typedUserInfo?.user.profile_bg;
-		// icky check for custom bg
-		if (bg.includes(".gif")) customBg = true;
+		customBg = typedUserInfo.user.custom_bg != undefined && (typedUserInfo.user.contrib == true || typedUserInfo.user.patreon == true);
 	}
 
 	return (
@@ -51,7 +50,9 @@ const PlayerBanner: React.FC<PlayerBannerProps> = ({ playerName }) => {
 			) : (
 				<Image
 					src={
-						authLoading ? "/maps/loading.png" : `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/backgrounds/image?name=rotate.gif`
+						authLoading
+							? "/maps/loading.png"
+							: `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/backgrounds/image?name=${typedUserInfo?.user.custom_bg}`
 					}
 					priority
 					width={1150}
