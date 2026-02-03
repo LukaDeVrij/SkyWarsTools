@@ -12,7 +12,7 @@ import useSWR from "swr";
 import ErrorView from "../../universal/ErrorView";
 import Loading from "../../universal/Loading";
 import VersusStatsCompare from "./VersusStatsCompare";
-import { Info, RotateCcw, X } from "lucide-react";
+import { Info, X } from "lucide-react";
 import { SnapshotKeysResponse, SnapshotsResponse } from "@/app/types/Snapshot";
 import { Tooltip } from "@mui/material";
 import Link from "next/link";

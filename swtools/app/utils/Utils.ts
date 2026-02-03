@@ -966,3 +966,7 @@ export const formatSchemePreview = (scheme: Scheme, level: number) => {
 	}
 	return formattedScheme;
 };
+
+export function getRedisKey(date: Date): string {
+	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}

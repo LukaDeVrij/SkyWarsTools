@@ -1,6 +1,6 @@
 import React from "react";
 import { OverallResponse } from "@/app/types/OverallResponse";
-import MontageCardCard from "../../tools/MontageCardCard";
+import MontageCardCard from "../../tools/thumbnails/MontageCardCard";
 import Link from "next/link";
 import RecentGames from "./tools/RecentGames";
 import RecentNames from "./tools/RecentNames";
