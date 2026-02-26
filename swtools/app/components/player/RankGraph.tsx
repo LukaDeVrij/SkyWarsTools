@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import useSWR from "swr";
 import HoverableSpan from "../universal/HoverableSpan";
 import { LineChart } from "@mui/x-charts";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Button, ButtonGroup, createTheme, ThemeProvider } from "@mui/material";
 import { fetcher } from "@/app/utils/Utils";
 import Loading from "../universal/Loading";
 
@@ -38,7 +38,11 @@ type GetRankResponse = {
 	};
 };
 
+type RangeMode = "2weeks" | "all";
+
 const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
+	const [range, setRange] = useState<RangeMode>("2weeks");
+
 	const { data, error, isLoading } = useSWR<RankHistoryResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRankHistory?uuid=${encodeURIComponent(uuid)}`,
 		fetcher,
@@ -46,7 +50,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
 			shouldRetryOnError: false,
-		}
+		},
 	);
 	const { data: ranking } = useSWR<GetRankResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRank/skywars_experience?uuid=${encodeURIComponent(uuid)}`,
@@ -55,8 +59,17 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
 			shouldRetryOnError: false,
-		}
+		},
 	);
+
+	const filteredHistory = useMemo(() => {
+		if (!data?.rankHistory) return {};
+		const entries = Object.entries(data.rankHistory);
+		if (range === "2weeks") {
+			return Object.fromEntries(entries.slice(-14));
+		}
+		return data.rankHistory;
+	}, [data, range]);
 
 	let delta = "~";
 	if (data && ranking && data.rankHistory && Object.keys(data.rankHistory).length >= 2) {
@@ -75,23 +88,37 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 	return (
 		<div className="w-full h-72  lg:w-[60%] bg-content p-4">
 			<div className="w-full h-full flex flex-col justify-between bg-layer rounded-2xl gap-2">
-				<div className="h-[25%] flex flex-row justify-start items-start m-4 mb-0">
-					<div className="w-[50%] lg:w-[25%] flex flex-col mx-4 font-semibold">
-						<span>
-							<HoverableSpan hoverText="Only within known playerbase, can be innacurate">Level Ranking</HoverableSpan>
-						</span>
-						<span className="text-4xl">#{ranking?.rank ?? "?"}</span>
-					</div>
-					<div className="w-[50%] lg:w-[25%] flex flex-col mx-4 font-semibold">
-						<span>
-							<HoverableSpan hoverText="Difference with your position from previous week">Delta</HoverableSpan>
-						</span>
-						<span className={`text-4xl ${delta[0] === "+" ? "text-green-500" : delta[0] === "-" ? "text-red-500" : ""}`}>
-							{delta}
-						</span>
-					</div>
-				</div>
 				<ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
+					<div className="h-[25%] flex flex-row justify-between items-start m-4 mb-0">
+						<div className="flex flex-row">
+							<div className="w-[50%] lg:w-auto flex flex-col mx-4 font-semibold">
+								<span>
+									<HoverableSpan hoverText="Only within known playerbase, can be innacurate">Rank</HoverableSpan>
+								</span>
+								<span className="text-4xl">#{ranking?.rank ?? "?"}</span>
+							</div>
+							<div className="w-[50%] lg:w-auto flex flex-col mx-4 font-semibold">
+								<span>
+									<HoverableSpan hoverText="Difference with your position from previous week">Delta</HoverableSpan>
+								</span>
+								<span
+									className={`text-4xl ${delta[0] === "+" ? "text-green-500" : delta[0] === "-" ? "text-red-500" : ""}`}
+								>
+									{delta}
+								</span>
+							</div>
+						</div>
+						<div className="hidden lg:block">
+							<ButtonGroup size="small">
+								<Button variant={range === "2weeks" ? "contained" : "outlined"} onClick={() => setRange("2weeks")}>
+									2 Weeks
+								</Button>
+								<Button variant={range === "all" ? "contained" : "outlined"} onClick={() => setRange("all")}>
+									All
+								</Button>
+							</ButtonGroup>
+						</div>
+					</div>
 					{data && data.rankHistory && Object.keys(data.rankHistory).length > 0 ? (
 						<>
 							{/* Desktop AND mobile */}
@@ -99,7 +126,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 								<LineChart
 									xAxis={[
 										{
-											data: Object.keys(data.rankHistory),
+											data: Object.keys(filteredHistory),
 											scaleType: "band",
 										},
 									]}
@@ -112,7 +139,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 									]}
 									series={[
 										{
-											data: Object.values(data.rankHistory),
+											data: Object.values(filteredHistory),
 										},
 									]}
 									style={{ marginLeft: "-25px" }}

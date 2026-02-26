@@ -29,7 +29,7 @@ const DailyPlayerCount: React.FC<DailyPlayerCountProps> = ({ fullWidth = false }
 		revalidateOnReconnect: false,
 	};
 	const { data, error, isLoading } = useSWR<DailyPlayerCountInterface>(
-		process.env.NEXT_PUBLIC_SKYWARSTOOLS_API + "/api/getCounts/daily",
+		process.env.NEXT_PUBLIC_SKYWARSTOOLS_API + "/api/getCounts/daily" + (!fullWidth ? "?amount=14" : ""),
 		fetcher,
 		options,
 	);
