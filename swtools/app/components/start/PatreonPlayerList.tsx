@@ -51,8 +51,8 @@ const PatreonPlayerList = () => {
 									className="rounded"
 								/>
 								<div className="min-w-0">
-									<div className="font-semibold truncate max-w-[225px] flex gap-2 items-center">
-										<span className="truncate max-w-[190px]">{supporter.name ?? "Unknown"}</span>
+									<div className="font-semibold truncate flex gap-2 items-center">
+										<span className="truncate ">{supporter.name ?? "Unknown"}</span>
 										{
 											<span
 												dangerouslySetInnerHTML={{
