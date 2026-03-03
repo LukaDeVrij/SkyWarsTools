@@ -38,10 +38,10 @@ type GetRankResponse = {
 	};
 };
 
-type RangeMode = "2weeks" | "all";
+type RangeMode = "2months" | "all";
 
 const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
-	const [range, setRange] = useState<RangeMode>("2weeks");
+	const [range, setRange] = useState<RangeMode>("2months");
 
 	const { data, error, isLoading } = useSWR<RankHistoryResponse>(
 		`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRankHistory?uuid=${encodeURIComponent(uuid)}`,
@@ -65,8 +65,8 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 	const filteredHistory = useMemo(() => {
 		if (!data?.rankHistory) return {};
 		const entries = Object.entries(data.rankHistory);
-		if (range === "2weeks") {
-			return Object.fromEntries(entries.slice(-14));
+		if (range === "2months") {
+			return Object.fromEntries(entries.slice(-8));
 		}
 		return data.rankHistory;
 	}, [data, range]);
@@ -110,8 +110,8 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 						</div>
 						<div className="hidden lg:block">
 							<ButtonGroup size="small">
-								<Button variant={range === "2weeks" ? "contained" : "outlined"} onClick={() => setRange("2weeks")}>
-									2 Weeks
+								<Button variant={range === "2months" ? "contained" : "outlined"} onClick={() => setRange("2months")}>
+									2 Months
 								</Button>
 								<Button variant={range === "all" ? "contained" : "outlined"} onClick={() => setRange("all")}>
 									All
