@@ -445,10 +445,10 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Descent Progress", value: "customs_descentProgress" },
 	{ name: "Kills Normal", value: "customs_kills_normal" },
 	{ name: "Wins Normal", value: "customs_wins_normal" },
-	{ name: "Deaths Normal", value: "custom_deaths_normal" },
+	{ name: "Deaths Normal", value: "customs_deaths_normal" },
 	{ name: "Losses Normal", value: "customs_losses_normal" },
 	{ name: "Kills Insane", value: "customs_kills_insane" },
 	{ name: "Wins Insane", value: "customs_wins_insane" },
-	{ name: "Deaths Insane", value: "custom_deaths_insane" },
+	{ name: "Deaths Insane", value: "customs_deaths_insane" },
 	{ name: "Losses Insane", value: "customs_losses_insane" },
 ];

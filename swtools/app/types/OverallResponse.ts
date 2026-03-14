@@ -984,11 +984,11 @@ export interface Stats {
 	customs_descentProgress?: number;
 	customs_kills_normal?: number;
 	customs_wins_normal?: number;
-	custom_deaths_normal?: number;
+	customs_deaths_normal?: number;
 	customs_losses_normal?: number;
 	customs_kills_insane?: number;
 	customs_wins_insane?: number;
-	custom_deaths_insane?: number;
+	customs_deaths_insane?: number;
 	customs_losses_insane?: number;
 }
 
