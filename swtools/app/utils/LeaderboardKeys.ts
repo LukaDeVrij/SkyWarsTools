@@ -441,4 +441,14 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Challenge Wins UHC", value: "challenge_wins_uhc" },
 	{ name: "Challenge Attempts Ultimate Warrior", value: "challenge_attempts_ultimate_warrior" },
 	{ name: "Challenge Wins Ultimate Warrior", value: "challenge_wins_ultimate_warrior" },
+	// Custom leaderboards
+	{ name: "Descent Progress", value: "customs_descentProgress" },
+	{ name: "Kills Normal", value: "customs_kills_normal" },
+	{ name: "Wins Normal", value: "customs_wins_normal" },
+	{ name: "Deaths Normal", value: "custom_deaths_normal" },
+	{ name: "Losses Normal", value: "customs_losses_normal" },
+	{ name: "Kills Insane", value: "customs_kills_insane" },
+	{ name: "Wins Insane", value: "customs_wins_insane" },
+	{ name: "Deaths Insane", value: "custom_deaths_insane" },
+	{ name: "Losses Insane", value: "customs_losses_insane" },
 ];

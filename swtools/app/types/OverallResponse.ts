@@ -979,6 +979,17 @@ export interface Stats {
 	losses_lab?: number;
 	kills_lab?: number;
 	deaths_lab?: number;
+
+	// Customs
+	customs_descentProgress?: number;
+	customs_kills_normal?: number;
+	customs_wins_normal?: number;
+	custom_deaths_normal?: number;
+	customs_losses_normal?: number;
+	customs_kills_insane?: number;
+	customs_wins_insane?: number;
+	custom_deaths_insane?: number;
+	customs_losses_insane?: number;
 }
 
 export interface Brewery {

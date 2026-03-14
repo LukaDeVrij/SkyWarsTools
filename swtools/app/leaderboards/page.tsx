@@ -8,11 +8,19 @@ type LeaderboardKey = { name: string; value: string };
 const categories = [
 	{
 		name: "Main",
-		filter: (k: LeaderboardKey) => !k.value.toLowerCase().includes("_rating_") && !k.value.toLowerCase().includes("kit") && !k.value.toLowerCase().includes("challenge"),
+		filter: (k: LeaderboardKey) =>
+			!k.value.toLowerCase().includes("_rating_") &&
+			!k.value.toLowerCase().includes("kit") &&
+			!k.value.toLowerCase().includes("challenge") &&
+			!k.value.toLowerCase().includes("customs_"),
 	},
 	{ name: "Kit", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("kit") },
-	{ name: "Ranked", filter: (k: LeaderboardKey) => (k.value.toLowerCase().includes("_rating_") && !k.value.toLowerCase().includes("_position"))},
+	{
+		name: "Ranked",
+		filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("_rating_") && !k.value.toLowerCase().includes("_position"),
+	},
 	{ name: "Challenges", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("challenge") },
+	{ name: "Custom", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("customs_") },
 ];
 
 const Page = () => {
