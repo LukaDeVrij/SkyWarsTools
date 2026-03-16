@@ -90,6 +90,7 @@ export interface Stats {
 	time_played_solo?: number;
 	time_played_team?: number;
 	time_played_mega?: number;
+	time_played_mega_doubles?: number;
 	time_played_ranked?: number;
 	time_played_lab?: number;
 	time_played_mini?: number;
@@ -105,6 +106,28 @@ export interface Stats {
 	heads_ethereal?: number;
 	heads_indescribable?: number;
 	heads_special?: number;
+
+	games?: number;
+	games_solo?: number;
+	games_team?: number;
+	games_ranked?: number;
+	games_mega?: number;
+	games_mega_doubles?: number;
+	games_lab?: number;
+	games_lab_solo?: number;
+	games_lab_team?: number;
+	kills_mega_doubles?: number;
+	deaths_mega_doubles?: number;
+	wins_mega_doubles?: number;
+	losses_mega_doubles?: number;
+	kills_ranked?: number;
+	deaths_ranked?: number;
+	wins_ranked?: number;
+	losses_ranked?: number;
+	kills_mega?: number;
+	deaths_mega?: number;
+	wins_mega?: number;
+	losses_mega?: number;
 
 	// Challenges
 	challenge_wins?: number;
@@ -979,7 +1002,6 @@ export interface Stats {
 	losses_lab?: number;
 	kills_lab?: number;
 	deaths_lab?: number;
-
 	// Customs
 	customs_descentProgress?: number;
 	customs_kills_normal?: number;
@@ -990,6 +1012,7 @@ export interface Stats {
 	customs_wins_insane?: number;
 	customs_deaths_insane?: number;
 	customs_losses_insane?: number;
+	customs_game_ends_solo?: number;
 }
 
 export interface Brewery {

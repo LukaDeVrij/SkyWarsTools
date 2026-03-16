@@ -355,7 +355,7 @@ export const keys: LeaderboardKey[] = [
 	// Mini mode only has wins and kills
 	{ name: "Wins Mini", value: "wins_mini" },
 	{ name: "Kills Mini", value: "kills_mini" },
-	{ name: "Games Mini", value: "games_mini" },
+	{ name: "Games Played Mini", value: "games_mini" },
 
 	//
 	{ name: "Survived Players", value: "survived_players" },
@@ -407,6 +407,32 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Heads Indescribable", value: "heads_indescribable" },
 	{ name: "Heads Special", value: "heads_special" },
 	{ name: "Heads Sweet", value: "heads_sweet" },
+
+
+	{ name: "Games Played", value: "games" },
+	{ name: "Games Played Solo", value: "games_solo" },
+	{ name: "Games Played Team", value: "games_team" },
+	{ name: "Games Played Ranked", value: "games_ranked" },
+	{ name: "Games Played Mega", value: "games_mega" },
+	{ name: "Games Played Mega Doubles", value: "games_mega_doubles" },
+	{ name: "Games Played Lab", value: "games_lab" },
+	{ name: "Games Played Lab Solo", value: "games_lab_solo" },
+	{ name: "Games Played Lab Team", value: "games_lab_team" },
+	
+	{ name: "Kills Mega Doubles", value: "kills_mega_doubles" },
+	{ name: "Deaths Mega Doubles", value: "deaths_mega_doubles" },
+	{ name: "Wins Mega Doubles", value: "wins_mega_doubles" },
+	{ name: "Losses Mega Doubles", value: "losses_mega_doubles" },
+	{ name: "Kills Ranked", value: "kills_ranked" },
+	{ name: "Deaths Ranked", value: "deaths_ranked" },
+	{ name: "Wins Ranked", value: "wins_ranked" },
+	{ name: "Losses Ranked", value: "losses_ranked" },
+	{ name: "Kills Mega", value: "kills_mega" },
+	{ name: "Deaths Mega", value: "deaths_mega" },
+	{ name: "Wins Mega", value: "wins_mega" },
+	{ name: "Losses Mega", value: "losses_mega" },
+
+	
 	{ name: "Challenge Wins", value: "challenge_wins" },
 	{ name: "Challenge Attempts", value: "challenge_attempts" },
 	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },
@@ -451,4 +477,5 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Wins Insane", value: "customs_wins_insane" },
 	{ name: "Deaths Insane", value: "customs_deaths_insane" },
 	{ name: "Losses Insane", value: "customs_losses_insane" },
+	{ name: "Game Ends Solo", value: "customs_game_ends_solo" },
 ];

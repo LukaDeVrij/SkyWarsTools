@@ -45,8 +45,9 @@ const PlayerNavBar: React.FC<PlayerNavBarProps> = ({ playerName }) => {
 				<div className="bg-yellow-300 h-0.5 lg:h-[2px] w-full" />
 			</div>
 			{navItems.map((item, idx) => {
-				// console.log(normalizedPath)
-				const isActive = normalizedPath.includes(item.href.toLowerCase());
+				const regex = new RegExp(`/player/${playerName}/${item.label.toLowerCase()}`, 'i');
+				const isActive = regex.test(pathname);
+				
 				return (
 					<React.Fragment key={item.label}>
 						<div className="flex flex-col items-center">
