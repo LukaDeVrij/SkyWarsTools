@@ -1,0 +1,51 @@
+"use client";
+import React from "react";
+import Image from "next/image";
+
+interface ClimberCardProps {
+    addInput: boolean;
+}
+
+const ClimberCard: React.FC<ClimberCardProps> = ({ addInput }) => {
+    const [player, setPlayer] = React.useState("");
+
+    return (
+        <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4 text-center">Leaderboard Climber</h2>
+            <p className="mb-4 text-center">See who is around your rank and how far away they are.</p>
+            {addInput && (
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        const player = (e.currentTarget.elements.namedItem("player") as HTMLInputElement).value.trim();
+                        if (player) {
+                            window.location.href = `/tools/climber?player=${encodeURIComponent(player)}`;
+                        }
+                    }}
+                    className="flex"
+                >
+                    <input
+                        type="text"
+                        name="player"
+                        placeholder="Player name"
+                        className="p-2 flex-1 font-semibold rounded-l border border-gray-300 focus:outline-none "
+                        onChange={(e) => setPlayer(e.target.value)}
+                        value={player}
+                    />
+                    <button
+                        type="submit"
+                        className="p-2 font-semibold px-4 bg-button rounded-r transition-colors"
+                        disabled={!player.trim()}
+                    >
+                        Go
+                    </button>
+                </form>
+            )}
+            <div className="mt-4 flex justify-center">
+                <Image src="/climber.png" alt="Leaderboard Climber preview" width={320} height={180} className="rounded-xl" />
+            </div>
+        </div>
+    );
+};
+
+export default ClimberCard;

@@ -42,7 +42,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 		response.stats.challenge_wins_uhc ?? 0,
 		response.stats.challenge_wins_ultimate_warrior ?? 0
 	);
-	console.log(playerFullCompletions);
+	// console.log(playerFullCompletions);
 
 	function getBackgroundImage(unlocked: boolean) {
 		return !unlocked ? `url('/ranked/invSlotLocked.png')` : `url('/ranked/invSlot.png')`;

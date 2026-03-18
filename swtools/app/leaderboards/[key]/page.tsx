@@ -11,33 +11,7 @@ import { keys } from "@/app/utils/LeaderboardKeys";
 import Tooltip from "@mui/material/Tooltip";
 import Head from "next/head";
 import ErrorView from "@/app/components/universal/ErrorView";
-
-type LBResponse = {
-	stat: string;
-	page: number;
-	entries: LBEntry[];
-	siblingKeys: string[];
-};
-
-type LBEntry = {
-	uuid: string;
-	score: number;
-	info: {
-		player: string;
-		display: {
-			levelFormattedWithBrackets?: string;
-			levelFormatted: string;
-			newPackageRank?: string;
-			monthlyPackageRank?: string;
-			rankPlusColor?: string;
-			monthlyRankColor?: string;
-			active_scheme?: string;
-		};
-		queried: number;
-		exp: number;
-	};
-	siblings: Record<string, number>;
-};
+import { LBResponse, LBEntry } from "@/app/types/Leaderboard";
 
 const Page = () => {
 	const params = useParams();
@@ -59,7 +33,7 @@ const Page = () => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-		}
+		},
 	);
 
 	// Scroll to highlighted row after render
@@ -107,53 +81,89 @@ const Page = () => {
 
 	return (
 		<>
-			<div className="flex items-center  border border-accent rounded-lg gap-3 mx-auto">
-				<Head>
-					<title>{statInfo?.name} Leaderboard | SkyWarsTools</title>
-				</Head>
-				<Search className="px-2 w-10 h-10"></Search>
-				<input
-					placeholder="Search a player..."
-					className=" outline-none w-full p-1 font-semibold"
-					onKeyDown={async (e) => {
-						if (e.key === "Enter") {
-							const playerName = (e.target as HTMLInputElement).value.trim();
-							if (!playerName) return;
-							try {
-								const uuidRes = await fetch(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${playerName}`);
-								if (!uuidRes.ok) {
-									setError("Player not found.");
-									return;
-								}
-								const uuidData = await uuidRes.json();
-								const uuid = uuidData?.uuid;
-								if (!uuid) {
-									setError("Player not found.");
-									return;
-								}
-								const res = await fetch(
-									`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRank/${awaitedParams.key}?uuid=${shortenUUID(uuid)}`
-								);
-								if (!res.ok) {
-									setError("Player not on leaderboard!");
-									return;
-								}
-								const data = await res.json();
+			<div className="flex flex-row gap-2 justify-center items-center mb-4">
+				<div className="flex items-center  border border-accent rounded-lg gap-3 h-10">
+					<Search className="px-2 w-10 h-10"></Search>
+					<input
+						placeholder="Search a player..."
+						className=" outline-none w-full p-1 font-semibold"
+						onKeyDown={async (e) => {
+							if (e.key === "Enter") {
+								const playerName = (e.target as HTMLInputElement).value.trim();
+								if (!playerName) return;
+								try {
+									const uuidRes = await fetch(
+										`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getUUID?player=${playerName}`,
+									);
+									if (!uuidRes.ok) {
+										setError("Player not found.");
+										return;
+									}
+									const uuidData = await uuidRes.json();
+									const uuid = uuidData?.uuid;
+									if (!uuid) {
+										setError("Player not found.");
+										return;
+									}
+									const res = await fetch(
+										`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRank/${awaitedParams.key}?uuid=${shortenUUID(uuid)}`,
+									);
+									if (!res.ok) {
+										setError("Player not on leaderboard!");
+										return;
+									}
+									const data = await res.json();
 
-								const pageSize = 50;
-								const pageIndex = data.rank ? Math.floor((data.rank - 1) / pageSize) + 1 : 1;
-								if (pageIndex == page) {
-									setHighlight(shortenUUID(uuid));
-								} else {
-									window.location.search = `?page=${pageIndex}&highlight=${shortenUUID(uuid)}`;
+									const pageSize = 50;
+									const pageIndex = data.rank ? Math.floor((data.rank - 1) / pageSize) + 1 : 1;
+									if (pageIndex == page) {
+										setHighlight(shortenUUID(uuid));
+									} else {
+										window.location.search = `?page=${pageIndex}&highlight=${shortenUUID(uuid)}`;
+									}
+								} catch (err: unknown) {
+									setError("An error occurred.");
+									console.error(err);
 								}
-							} catch (err: unknown) {
-								setError("An error occurred.");
-								console.error(err);
 							}
-						}
-					}}
-				/>
+						}}
+					/>
+				</div>
+				<div className="flex items-center border border-accent rounded-lg gap-3 h-10 w-40">
+					<span className="px-2 w-10 h-10 flex items-center justify-center">#</span>
+					<input
+						placeholder="Or value..."
+						className=" outline-none w-full p-1 font-semibold"
+						onKeyDown={async (e) => {
+							if (e.key === "Enter") {
+								const score = (e.target as HTMLInputElement).value.trim();
+								if (!score) return;
+								try {
+									const res = await fetch(
+										`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getRankByScore/${statKey}?score=${score}`,
+									);
+									if (!res.ok) {
+										setError("Score not found on leaderboard.");
+										return;
+									}
+									const data = await res.json();
+									console.log(data)
+									const rank = data?.rank;
+									if (!rank) {
+										setError("Could not determine rank from score.");
+										return;
+									}
+									const pageSize = 50;
+									const pageIndex = Math.floor((rank - 1) / pageSize) + 1;
+									window.location.search = `?page=${pageIndex}`;
+								} catch (err: unknown) {
+									setError("An error occurred.");
+									console.error(err);
+								}
+							}
+						}}
+					/>
+				</div>
 			</div>
 			<div className="flex items-center rounded-lg mx-auto p-1">
 				{errorMsg && <span className="text-red-500 font-semibold">{errorMsg}</span>}
@@ -269,8 +279,8 @@ const Page = () => {
 											isStale
 												? { backgroundColor: "rgba(128,128,128,0.2)" }
 												: glitched
-												? { backgroundColor: "rgba(255,0,0,0.1)" }
-												: undefined
+													? { backgroundColor: "rgba(255,0,0,0.1)" }
+													: undefined
 										}
 									>
 										{/* Rank */}
@@ -280,10 +290,10 @@ const Page = () => {
 												index + (page - 1) * 50 + 1 === 1
 													? "text-yellow-400"
 													: index + (page - 1) * 50 + 1 === 2
-													? "text-gray-300"
-													: index + (page - 1) * 50 + 1 === 3
-													? "text-orange-700"
-													: "",
+														? "text-gray-300"
+														: index + (page - 1) * 50 + 1 === 3
+															? "text-orange-700"
+															: "",
 											].join(" ")}
 										>
 											{index + (page - 1) * 50 + 1}
@@ -308,8 +318,8 @@ const Page = () => {
 													statInfo?.value.includes("time_played")
 														? formatPlaytime(entry.score)
 														: statInfo?.value.includes("xp")
-														? `Prestige ${romanize(calcKitPrestigeLevel(entry.score))}`
-														: ""
+															? `Prestige ${romanize(calcKitPrestigeLevel(entry.score))}`
+															: ""
 												}
 											>
 												<span>
@@ -327,14 +337,16 @@ const Page = () => {
 											if (key.includes("_position")) {
 												value = value + 1;
 											}
+
+											console.log(calcKitPrestigeLevel(215));
 											return (
 												<Tooltip
 													title={
 														key.includes("time_played")
 															? formatPlaytime(siblingValues[idx])
 															: key.includes("xp")
-															? `Prestige ${romanize(calcKitPrestigeLevel(siblingValues[idx]))}`
-															: ""
+																? `Prestige ${romanize(calcKitPrestigeLevel(siblingValues[idx]))}`
+																: ""
 													}
 													key={key + entry.uuid}
 												>

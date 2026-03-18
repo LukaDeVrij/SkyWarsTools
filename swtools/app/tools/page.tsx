@@ -2,6 +2,7 @@ import React from "react";
 import MontageCardCard from "../components/tools/thumbnails/MontageCardCard";
 import SchemesCard from "../components/tools/thumbnails/SchemesCard";
 import CountsCard from "../components/tools/thumbnails/CountsCard";
+import ClimberCard from "../components/tools/thumbnails/ClimberCard";
 
 const ToolsPage = () => {
 	return (
@@ -17,6 +18,9 @@ const ToolsPage = () => {
 				<div className="w-90 h-90 bg-content rounded-xl">
                     <CountsCard></CountsCard>
                 </div>
+				<div className="w-90 h-90 bg-content rounded-xl">
+					<ClimberCard addInput={true}></ClimberCard>
+				</div>
 
 			</div>
 		</div>

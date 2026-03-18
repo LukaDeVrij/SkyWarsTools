@@ -143,7 +143,7 @@ export function timeAgo(
 		showHours: true,
 		showDays: true,
 		showYears: true,
-	}
+	},
 ): string {
 	const now = Math.floor(Date.now() / 1000);
 	let diff = now - unixTimestamp;
@@ -190,6 +190,9 @@ export function calcKitPrestigeLevel(xp: number): number {
 
 	if (xp > perLevelXp[perLevelXp.length - 1]) {
 		return 7;
+	}
+	if (xp < perLevelXp[0]) {
+		return 0;
 	}
 
 	let level = 0;
@@ -663,6 +666,7 @@ export function calcNextPrestigeObj(level: number): [PrestigeObject, number] {
 
 export function romanize(num: number): string {
 	if (isNaN(num)) return "";
+	if (num == 0) return "0";
 	const lookup: [number, string][] = [
 		[1000, "M"],
 		[900, "CM"],
