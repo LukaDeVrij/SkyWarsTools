@@ -9,7 +9,6 @@ import { formatScheme } from "@/app/utils/Scheme";
 import { ArrowBigLeft, ArrowBigRight, LoaderCircle, Search } from "lucide-react";
 import { keys } from "@/app/utils/LeaderboardKeys";
 import Tooltip from "@mui/material/Tooltip";
-import Head from "next/head";
 import ErrorView from "@/app/components/universal/ErrorView";
 import { LBResponse, LBEntry } from "@/app/types/Leaderboard";
 
@@ -316,7 +315,7 @@ const Page = () => {
 											<Tooltip
 												title={
 													statInfo?.value.includes("time_played")
-														? formatPlaytime(entry.score)
+														? entry.score.toString()
 														: statInfo?.value.includes("xp")
 															? `Prestige ${romanize(calcKitPrestigeLevel(entry.score))}`
 															: ""
@@ -324,9 +323,11 @@ const Page = () => {
 											>
 												<span>
 													{/* Positions are off by 1 in API */}
-													{!statInfo?.value.includes("_position")
-														? entry.score.toLocaleString()
-														: entry.score + 1}
+													{statInfo?.value.includes("time_played")
+														? formatPlaytime(entry.score)
+														: !statInfo?.value.includes("_position")
+															? entry.score.toLocaleString()
+															: entry.score + 1}
 												</span>
 											</Tooltip>
 										</td>

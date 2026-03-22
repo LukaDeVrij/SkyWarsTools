@@ -31,7 +31,7 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 		isLoading,
 		error,
 	} = useSWR<OverallResponse>(
-		opponentName ? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/skywars?player=${opponentName}` : null,
+		opponentName ? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${opponentName}` : null,
 		fetcher,
 		{
 			revalidateOnFocus: false,

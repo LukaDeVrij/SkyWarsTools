@@ -4,7 +4,6 @@ import MontageCardCard from "../../tools/thumbnails/MontageCardCard";
 import Link from "next/link";
 import RecentGames from "./tools/RecentGames";
 import RecentNames from "./tools/RecentNames";
-import LeaderboardClimber from "./tools/LeaderboardClimber";
 import ClimberCard from "../../tools/thumbnails/ClimberCard";
 
 

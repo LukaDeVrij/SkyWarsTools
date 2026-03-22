@@ -6,7 +6,7 @@ import MinecraftText from "@/app/utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
 import { formatScheme } from "@/app/utils/Scheme";
 import { calcLevel, fetcher } from "@/app/utils/Utils";
-import { RefreshCcw, Search } from "lucide-react";
+import { MessageCircleWarning, RefreshCcw, Search } from "lucide-react";
 import React from "react";
 import useSWR from "swr";
 
@@ -71,7 +71,6 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 
 	if (!lbEntries.length) return <Loading></Loading>;
 	const currentPlayerIndex = lbEntries.findIndex((entry: LBEntry) => entry.uuid === response.uuid);
-	const startIndex = Math.max(0, currentPlayerIndex - 10);
 	const playersAbove = lbEntries;
 	const currentPlayerScore = response.stats.skywars_experience ?? 0;
 
@@ -86,7 +85,7 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 				throw new Error("Failed to update stats");
 			}
 			const newResponse: OverallResponse = await res.json();
-			const newValue = newResponse.stats.skywars_experience ?? 0;
+			const newValue = Math.round(newResponse.stats.skywars_experience ?? 0);
 
 			setLbEntries((prev) => {
 				const updated = prev.map((entry) =>
@@ -138,11 +137,13 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 
 	return (
 		<div className="bg-layer rounded-xl p-6 m-0 flex flex-col items-center w-full">
-			<h1 className="font-bold mb-2 text-4xl">Leaderboard Climber</h1>
-			<span className="font-semibold text-center mb-2 px-3 bg-content rounded-xl p-2">
-				Stats of other players can be outdated. Works best for highly ranked players.<br></br>Refreshing will update a player's
-				stats and their position on the leaderboard.
-			</span>
+			<h1 className="font-bold mb-2 text-2xl lg:text-4xl">Leaderboard Climber</h1>
+			<div className="font-semibold text-center mb-2 px-3 bg-content rounded-xl p-2 flex flex-row gap-2 items-center justify-center">
+				<MessageCircleWarning className="h-8 w-8 hidden lg:block text-red-400" />
+				<span >
+					Stats of other players can be outdated. Works best for highly ranked players.<br></br>Player stats can be refreshed individually, which are then saved.
+				</span>
+			</div>
 			<div className="w-80 max-w-xl flex items-center border border-accent rounded-lg gap-3 mx-auto mb-2">
 				<Search className="px-2 w-10 h-10" />
 				<input
@@ -161,7 +162,7 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 			</div>
 			{searchError ? <span className="text-red-500 text-sm font-semibold mb-2">{searchError}</span> : null}
 			<div className="w-full overflow-x-auto rounded-lg my-4">
-				<table className="min-w-full text-left bg-content">
+				<table className="w-200 lg:min-w-full text-left bg-content ">
 					<thead className="text-accent border-b-2 border-accent bg-content">
 						<tr>
 							<th className="p-2 text-xl">#</th>
@@ -190,7 +191,8 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 							const level = calcLevel(entry.info.exp ?? 0);
 							const scheme = formatScheme(level, mockOverallResponse, false);
 							const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
-							const isStale = Date.now() - entry.info.queried > SEVEN_DAYS_MS;
+							// const isStale = Date.now() - entry.info.queried > SEVEN_DAYS_MS;
+							const isStale = false;
 
 							return (
 								<tr
@@ -215,8 +217,8 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 											: scoreDelta === 0
 												? "0"
 												: scoreDelta > 0
-													? `+${scoreDelta.toLocaleString()}`
-													: scoreDelta.toLocaleString()}
+													? `+${Math.round(scoreDelta).toLocaleString()}`
+													: Math.round(scoreDelta).toLocaleString()}
 									</td>
 									<td className={["p-2 text-right font-semibold", isStale ? "text-red-500" : ""].join(" ")}>
 										{entry.score.toLocaleString()}

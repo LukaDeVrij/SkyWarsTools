@@ -42,7 +42,7 @@ const ClimberCard: React.FC<ClimberCardProps> = ({ addInput }) => {
                 </form>
             )}
             <div className="mt-4 flex justify-center">
-                <Image src="/climber.png" alt="Leaderboard Climber preview" width={320} height={180} className="rounded-xl" />
+                <Image src="/tools_climber.png" alt="Leaderboard Climber preview" width={320} height={180} className="rounded-xl" />
             </div>
         </div>
     );

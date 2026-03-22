@@ -6,15 +6,24 @@ import Loading from "@/app/components/universal/Loading";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { fetcher } from "@/app/utils/Utils";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
+import React from "react";
 import useSWR from "swr";
+import { Suspense } from "react";
 
 const ClimberPage = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ClimberContent />
+    </Suspense>
+  );
+};
+
+const ClimberContent = () => {
   const searchParams = useSearchParams();
   const playerName = searchParams.get("player") as string;
 
   const { data, isLoading, error } = useSWR<OverallResponse>(
-    `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/skywars?player=${playerName}`,
+    `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${playerName}`,
     fetcher,
     {
       revalidateOnFocus: false,
