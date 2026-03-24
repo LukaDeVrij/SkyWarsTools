@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
 	const level = calcLevel(statsData.stats.skywars_experience ?? 0).toFixed(0);
 	const best_kit = getMostPlayedKit(statsData);
-	const maxPrestige = statsData.stats.kitsMaxPrestige;
+	const maxPrestige = statsData.stats.customs_kitsMaxPrestige ?? 0;
 
 	const description = `
 ⭐ Level ${level}

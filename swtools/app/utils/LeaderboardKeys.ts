@@ -247,19 +247,7 @@ export const keys: LeaderboardKey[] = [
 		{
 			type: "ranked",
 			mode: "ranked",
-			kits: [
-				"default",
-				"champion",
-				"armorer",
-				"athlete",
-				"scout",
-				"pyromancer",
-				"healer",
-				"hound",
-				"magician",
-				"bowman",
-				"paladin",
-			],
+			kits: ["default", "champion", "armorer", "athlete", "scout", "pyromancer", "healer", "hound", "magician", "bowman", "paladin"],
 		},
 		{
 			type: "blacksmith",
@@ -326,8 +314,8 @@ export const keys: LeaderboardKey[] = [
 						break;
 				}
 				return { name, value, short };
-			})
-		)
+			}),
+		),
 	),
 	// Misc stats
 	{ name: "SkyWars Experience", value: "skywars_experience", short: "XP" },
@@ -377,7 +365,6 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Void Kills", value: "void_kills" },
 	{ name: "Bow Kills", value: "bow_kills" },
 	{ name: "Mob Kills", value: "mob_kills" },
-	{ name: "Kits Max Prestige", value: "kitsMaxPrestige" },
 	{ name: "Time Played Solo", value: "time_played_solo" },
 	{ name: "Time Played Team", value: "time_played_team" },
 	{ name: "Time Played Mega", value: "time_played_mega" },
@@ -455,7 +442,6 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Heads Special Mini", value: "heads_special_mini" },
 	{ name: "Heads Sweet Mini", value: "heads_sweet_mini" },
 
-
 	{ name: "Games Played", value: "games" },
 	{ name: "Games Played Solo", value: "games_solo" },
 	{ name: "Games Played Team", value: "games_team" },
@@ -465,7 +451,7 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Games Played Lab", value: "games_lab" },
 	{ name: "Games Played Lab Solo", value: "games_lab_solo" },
 	{ name: "Games Played Lab Team", value: "games_lab_team" },
-	
+
 	{ name: "Kills Mega Doubles", value: "kills_mega_doubles" },
 	{ name: "Deaths Mega Doubles", value: "deaths_mega_doubles" },
 	{ name: "Wins Mega Doubles", value: "wins_mega_doubles" },
@@ -479,7 +465,6 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Wins Mega", value: "wins_mega" },
 	{ name: "Losses Mega", value: "losses_mega" },
 
-	
 	{ name: "Challenge Wins", value: "challenge_wins" },
 	{ name: "Challenge Attempts", value: "challenge_attempts" },
 	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },
@@ -525,4 +510,11 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Deaths Insane", value: "customs_deaths_insane" },
 	{ name: "Losses Insane", value: "customs_losses_insane" },
 	{ name: "Game Ends Solo", value: "customs_game_ends_solo" },
+	{ name: "Kits Max Prestige Normal", value: "customs_kitsMaxPrestigeNormal" },
+	{ name: "Kits Max Prestige Insane", value: "customs_kitsMaxPrestigeInsane" },
+	{ name: "Kits Max Prestige Mythic", value: "customs_kitsMaxPrestigeMythic" },
+	{ name: "Kits Max Prestige Mini", value: "customs_kitsMaxPrestigeMini" },
+	{ name: "Kits Max Prestige Mega", value: "customs_kitsMaxPrestigeMega" },
+	{ name: "Kits Max Prestige Ranked", value: "customs_kitsMaxPrestigeRanked" },
+	{ name: "Kits Max Prestige", value: "customs_kitsMaxPrestige" },
 ];

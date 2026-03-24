@@ -40,7 +40,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 		// response.stats.challenge_wins_paper ?? 0,
 		response.stats.challenge_wins_rookie ?? 0,
 		response.stats.challenge_wins_uhc ?? 0,
-		response.stats.challenge_wins_ultimate_warrior ?? 0
+		response.stats.challenge_wins_ultimate_warrior ?? 0,
 	);
 	// console.log(playerFullCompletions);
 
@@ -100,13 +100,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr className="border-b-1 border-white">
 									<td>Max Prestige Kits</td>
 									<td className="flex gap-2 items-center">
-										<MinecraftText>{(response.stats.kitsMaxPrestige ?? 0).toString()}</MinecraftText>
-										<Tooltip title={"Might be inaccurate for legacy players, see all kits"}>
-											<Link href={`kits`} className="animate-pulse">
-												<MessageCircleWarning />
-											</Link>
-										</Tooltip>
-
+										<MinecraftText>{(response.stats.customs_kitsMaxPrestige ?? 0).toString()}</MinecraftText>
 									</td>
 								</tr>
 								<tr className="border-b-1 border-white">
