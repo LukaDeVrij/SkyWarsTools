@@ -86,7 +86,6 @@ export interface Stats {
 	void_kills?: number;
 	bow_kills?: number;
 	mob_kills?: number;
-	kitsMaxPrestige?: number;
 	time_played_solo?: number;
 	time_played_team?: number;
 	time_played_mega?: number;
@@ -106,6 +105,51 @@ export interface Stats {
 	heads_ethereal?: number;
 	heads_indescribable?: number;
 	heads_special?: number;
+
+	heads_solo?: number;
+	heads_eww_solo?: number;
+	heads_yucky_solo?: number;
+	heads_meh_solo?: number;
+	heads_decent_solo?: number;
+	heads_salty_solo?: number;
+	heads_tasty_solo?: number;
+	heads_succulent_solo?: number;
+	heads_divine_solo?: number;
+	heads_heavenly_solo?: number;
+	heads_ethereal_solo?: number;
+	heads_indescribable_solo?: number;
+	heads_special_solo?: number;
+	heads_sweet_solo?: number;
+
+	heads_team?: number;
+	heads_eww_team?: number;
+	heads_yucky_team?: number;
+	heads_meh_team?: number;
+	heads_decent_team?: number;
+	heads_salty_team?: number;
+	heads_tasty_team?: number;
+	heads_succulent_team?: number;
+	heads_divine_team?: number;
+	heads_heavenly_team?: number;
+	heads_ethereal_team?: number;
+	heads_indescribable_team?: number;
+	heads_special_team?: number;
+	heads_sweet_team?: number;
+
+	heads_mini?: number;
+	heads_eww_mini?: number;
+	heads_yucky_mini?: number;
+	heads_meh_mini?: number;
+	heads_decent_mini?: number;
+	heads_salty_mini?: number;
+	heads_tasty_mini?: number;
+	heads_succulent_mini?: number;
+	heads_divine_mini?: number;
+	heads_heavenly_mini?: number;
+	heads_ethereal_mini?: number;
+	heads_indescribable_mini?: number;
+	heads_special_mini?: number;
+	heads_sweet_mini?: number;
 
 	games?: number;
 	games_solo?: number;
@@ -1013,6 +1057,13 @@ export interface Stats {
 	customs_deaths_insane?: number;
 	customs_losses_insane?: number;
 	customs_game_ends_solo?: number;
+	customs_kitsMaxPrestigeNormal?: number;
+	customs_kitsMaxPrestigeInsane?: number;
+	customs_kitsMaxPrestigeMythic?: number;
+	customs_kitsMaxPrestigeMini?: number;
+	customs_kitsMaxPrestigeMega?: number;
+	customs_kitsMaxPrestigeRanked?: number;
+	customs_kitsMaxPrestige?: number;
 }
 
 export interface Brewery {

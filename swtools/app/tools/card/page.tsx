@@ -20,7 +20,7 @@ const SuspenseMontageCardPage = () => {
 	const playerName = searchParams.get("player") as string;
 
 	const { data, isLoading, error } = useSWR<OverallResponse>(
-		playerName ? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/skywars?player=${playerName}` : null,
+		playerName ? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/overall?player=${playerName}` : null,
 		fetcher,
 		{
 			revalidateOnFocus: false,

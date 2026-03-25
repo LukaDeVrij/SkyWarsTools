@@ -10,10 +10,12 @@ const categories = [
 		name: "Main",
 		filter: (k: LeaderboardKey) =>
 			!k.value.toLowerCase().includes("_rating_") &&
+			!k.value.toLowerCase().includes("heads") &&
 			!k.value.toLowerCase().includes("kit") &&
 			!k.value.toLowerCase().includes("challenge") &&
 			!k.value.toLowerCase().includes("customs_"),
 	},
+	{ name: "Heads", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("heads") },
 	{ name: "Kit", filter: (k: LeaderboardKey) => k.value.toLowerCase().includes("kit") },
 	{
 		name: "Ranked",
@@ -28,8 +30,6 @@ const Page = () => {
 	const [searchValue, setSearchValue] = useState<string | null>(null);
 	const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
 		Main: true,
-		Kit: false,
-		Ranked: false,
 	});
 
 	const filteredKeys = keys.filter((k) => !searchValue || k.name.toLowerCase().includes(searchValue.toLowerCase()));

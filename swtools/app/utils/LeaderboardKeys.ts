@@ -247,19 +247,7 @@ export const keys: LeaderboardKey[] = [
 		{
 			type: "ranked",
 			mode: "ranked",
-			kits: [
-				"default",
-				"champion",
-				"armorer",
-				"athlete",
-				"scout",
-				"pyromancer",
-				"healer",
-				"hound",
-				"magician",
-				"bowman",
-				"paladin",
-			],
+			kits: ["default", "champion", "armorer", "athlete", "scout", "pyromancer", "healer", "hound", "magician", "bowman", "paladin"],
 		},
 		{
 			type: "blacksmith",
@@ -326,8 +314,8 @@ export const keys: LeaderboardKey[] = [
 						break;
 				}
 				return { name, value, short };
-			})
-		)
+			}),
+		),
 	),
 	// Misc stats
 	{ name: "SkyWars Experience", value: "skywars_experience", short: "XP" },
@@ -377,10 +365,10 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Void Kills", value: "void_kills" },
 	{ name: "Bow Kills", value: "bow_kills" },
 	{ name: "Mob Kills", value: "mob_kills" },
-	{ name: "Kits Max Prestige", value: "kitsMaxPrestige" },
 	{ name: "Time Played Solo", value: "time_played_solo" },
 	{ name: "Time Played Team", value: "time_played_team" },
 	{ name: "Time Played Mega", value: "time_played_mega" },
+	{ name: "Time Played Mega Doubles", value: "time_played_mega_doubles" },
 	{ name: "Time Played Ranked", value: "time_played_ranked" },
 	{ name: "Time Played Lab", value: "time_played_lab" },
 	{ name: "Time Played Mini", value: "time_played_mini" },
@@ -408,6 +396,51 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Heads Special", value: "heads_special" },
 	{ name: "Heads Sweet", value: "heads_sweet" },
 
+	// Heads Solo
+	{ name: "Heads Solo", value: "heads_solo" },
+	{ name: "Heads Eww Solo", value: "heads_eww_solo" },
+	{ name: "Heads Yucky Solo", value: "heads_yucky_solo" },
+	{ name: "Heads Meh Solo", value: "heads_meh_solo" },
+	{ name: "Heads Decent Solo", value: "heads_decent_solo" },
+	{ name: "Heads Salty Solo", value: "heads_salty_solo" },
+	{ name: "Heads Tasty Solo", value: "heads_tasty_solo" },
+	{ name: "Heads Succulent Solo", value: "heads_succulent_solo" },
+	{ name: "Heads Divine Solo", value: "heads_divine_solo" },
+	{ name: "Heads Heavenly Solo", value: "heads_heavenly_solo" },
+	{ name: "Heads Ethereal Solo", value: "heads_ethereal_solo" },
+	{ name: "Heads Indescribable Solo", value: "heads_indescribable_solo" },
+	{ name: "Heads Special Solo", value: "heads_special_solo" },
+	{ name: "Heads Sweet Solo", value: "heads_sweet_solo" },
+	// Heads Team
+	{ name: "Heads Team", value: "heads_team" },
+	{ name: "Heads Eww Team", value: "heads_eww_team" },
+	{ name: "Heads Yucky Team", value: "heads_yucky_team" },
+	{ name: "Heads Meh Team", value: "heads_meh_team" },
+	{ name: "Heads Decent Team", value: "heads_decent_team" },
+	{ name: "Heads Salty Team", value: "heads_salty_team" },
+	{ name: "Heads Tasty Team", value: "heads_tasty_team" },
+	{ name: "Heads Succulent Team", value: "heads_succulent_team" },
+	{ name: "Heads Divine Team", value: "heads_divine_team" },
+	{ name: "Heads Heavenly Team", value: "heads_heavenly_team" },
+	{ name: "Heads Ethereal Team", value: "heads_ethereal_team" },
+	{ name: "Heads Indescribable Team", value: "heads_indescribable_team" },
+	{ name: "Heads Special Team", value: "heads_special_team" },
+	{ name: "Heads Sweet Team", value: "heads_sweet_team" },
+	// Heads Mini
+	{ name: "Heads Mini", value: "heads_mini" },
+	{ name: "Heads Eww Mini", value: "heads_eww_mini" },
+	{ name: "Heads Yucky Mini", value: "heads_yucky_mini" },
+	{ name: "Heads Meh Mini", value: "heads_meh_mini" },
+	{ name: "Heads Decent Mini", value: "heads_decent_mini" },
+	{ name: "Heads Salty Mini", value: "heads_salty_mini" },
+	{ name: "Heads Tasty Mini", value: "heads_tasty_mini" },
+	{ name: "Heads Succulent Mini", value: "heads_succulent_mini" },
+	{ name: "Heads Divine Mini", value: "heads_divine_mini" },
+	{ name: "Heads Heavenly Mini", value: "heads_heavenly_mini" },
+	{ name: "Heads Ethereal Mini", value: "heads_ethereal_mini" },
+	{ name: "Heads Indescribable Mini", value: "heads_indescribable_mini" },
+	{ name: "Heads Special Mini", value: "heads_special_mini" },
+	{ name: "Heads Sweet Mini", value: "heads_sweet_mini" },
 
 	{ name: "Games Played", value: "games" },
 	{ name: "Games Played Solo", value: "games_solo" },
@@ -418,7 +451,7 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Games Played Lab", value: "games_lab" },
 	{ name: "Games Played Lab Solo", value: "games_lab_solo" },
 	{ name: "Games Played Lab Team", value: "games_lab_team" },
-	
+
 	{ name: "Kills Mega Doubles", value: "kills_mega_doubles" },
 	{ name: "Deaths Mega Doubles", value: "deaths_mega_doubles" },
 	{ name: "Wins Mega Doubles", value: "wins_mega_doubles" },
@@ -432,7 +465,6 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Wins Mega", value: "wins_mega" },
 	{ name: "Losses Mega", value: "losses_mega" },
 
-	
 	{ name: "Challenge Wins", value: "challenge_wins" },
 	{ name: "Challenge Attempts", value: "challenge_attempts" },
 	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },
@@ -478,4 +510,11 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Deaths Insane", value: "customs_deaths_insane" },
 	{ name: "Losses Insane", value: "customs_losses_insane" },
 	{ name: "Game Ends Solo", value: "customs_game_ends_solo" },
+	{ name: "Kits Max Prestige Normal", value: "customs_kitsMaxPrestigeNormal" },
+	{ name: "Kits Max Prestige Insane", value: "customs_kitsMaxPrestigeInsane" },
+	{ name: "Kits Max Prestige Mythic", value: "customs_kitsMaxPrestigeMythic" },
+	{ name: "Kits Max Prestige Mini", value: "customs_kitsMaxPrestigeMini" },
+	{ name: "Kits Max Prestige Mega", value: "customs_kitsMaxPrestigeMega" },
+	{ name: "Kits Max Prestige Ranked", value: "customs_kitsMaxPrestigeRanked" },
+	{ name: "Kits Max Prestige", value: "customs_kitsMaxPrestige" },
 ];

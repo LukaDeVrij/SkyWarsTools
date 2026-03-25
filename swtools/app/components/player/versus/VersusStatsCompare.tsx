@@ -74,8 +74,8 @@ function VersusStatsCompare({
 	const killDeathRatioScoreA = (killDeathRatioA / (killDeathRatioA + killDeathRatioB)) * 100;
 	const killDeathRatioScoreB = (killDeathRatioB / (killDeathRatioA + killDeathRatioB)) * 100;
 
-	const maxKitsA = player1.stats.kitsMaxPrestige ?? 0;
-	const maxKitsB = player2.stats.kitsMaxPrestige ?? 0;
+	const maxKitsA = player1.stats.customs_kitsMaxPrestige ?? 0;
+	const maxKitsB = player2.stats.customs_kitsMaxPrestige ?? 0;
 	const maxKitsScoreA = (maxKitsA / (maxKitsA + maxKitsB)) * 100;
 	const maxKitsScoreB = (maxKitsB / (maxKitsA + maxKitsB)) * 100;
 
