@@ -2,6 +2,7 @@
 import { fetcher, timeAgo } from "@/app/utils/Utils";
 import useSWR from "swr";
 import { useState } from "react";
+import { Tooltip } from "@mui/material";
 
 type RecentGame = {
 	date: number;
@@ -54,24 +55,26 @@ const RecentGames: React.FC<{ uuid: string }> = ({ uuid }) => {
 									<tr className="border-b-2">
 										<th className="text-left px-2 py-1">Map</th>
 										<th className="text-left px-2 py-1">Mode</th>
-										<th className="text-left px-2 py-1">Time Ago</th>
 									</tr>
 								</thead>
 								<tbody>
 									{data.games.slice(0, 3).map((game, idx) => (
-										<tr key={idx} className="border-b">
-											<td className="px-2 py-1">{game.map}</td>
-											<td className="px-2 py-1">{game.mode}</td>
-											<td className="px-2 py-1">
-												{timeAgo(game.date / 1000, {
-													showSeconds: false,
-													showMinutes: true,
-													showHours: true,
-													showDays: true,
-													showYears: true,
-												})}
-											</td>
-										</tr>
+										<Tooltip
+											title={"Played " + timeAgo(game.date / 1000, {
+												showSeconds: false,
+												showMinutes: true,
+												showHours: true,
+												showDays: true,
+												showYears: true,
+											})}
+											key={idx}
+											placement="top"
+										>
+											<tr key={idx} className="border-b">
+												<td className="px-2 py-1">{game.map}</td>
+												<td className="px-2 py-1">{game.mode}</td>
+											</tr>
+										</Tooltip>
 									))}
 								</tbody>
 							</table>

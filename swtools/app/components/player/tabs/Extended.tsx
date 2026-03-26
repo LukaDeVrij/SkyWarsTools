@@ -100,7 +100,12 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr className="border-b-1 border-white">
 									<td>Max Prestige Kits</td>
 									<td className="flex gap-2 items-center">
-										<MinecraftText>{(response.stats.customs_kitsMaxPrestige ?? 0).toString()}</MinecraftText>
+										{(response.stats.customs_kitsMaxPrestige ?? 0).toString()}
+										<Tooltip title={"See kits"}>
+											<Link href={`/player/${response.player}/stats/kits`}>
+												<Eye />
+											</Link>
+										</Tooltip>
 									</td>
 								</tr>
 								<tr className="border-b-1 border-white">
@@ -110,7 +115,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 											{schemeSplit ? toCamelCase(getSchemeByName(schemeSplit)?.name ?? "Unknown") : "Unknown"}
 										</span>
 										<Tooltip title={"See all schemes"}>
-											<Link href={`/tools/schemes`} className="animate-pulse">
+											<Link href={`/tools/schemes`}>
 												<Eye />
 											</Link>
 										</Tooltip>
@@ -151,10 +156,6 @@ const Extended: React.FC<OverallResponse> = (response) => {
 									<td>Coins</td>
 									<td>{response.stats.coins?.toLocaleString()}</td>
 								</tr>
-								{/* <tr className="border-b-1 border-white">
-						<td>Tokens</td>
-						<td>{stats.stats.tokens?.toLocaleString()}</td>
-					</tr> */}
 								<tr className="border-b-1 border-white">
 									<td>Opals</td>
 									<td>{response.stats.opals ?? "None"}</td>
@@ -232,17 +233,13 @@ const Extended: React.FC<OverallResponse> = (response) => {
 											: "N/A"}
 									</td>
 								</tr>
-								{/* <tr className="border-b-1 border-white">
-						<td>Kill/Game Ratio</td>
-						<td>
-							{stats?.kills && stats?.games_played
-								? (stats.kills / stats.games_played).toFixed(2)
-								: "N/A"}
-						</td>
-					</tr> */}
 								<tr className="border-b-1 border-white">
 									<td>Survived Players</td>
 									<td>{response.stats.survived_players?.toLocaleString()}</td>
+								</tr>
+								<tr className="border-b-1 border-white">
+									<td>Game Ends (Solo)</td>
+									<td>{response.stats.customs_game_ends_solo?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>

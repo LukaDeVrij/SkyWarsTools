@@ -86,7 +86,7 @@ const SnapshotSelection: React.FC<SnapshotSelectionProps> = ({ playerName, pageT
 						/>
 					</div>
 					<div className="flex flex-col text-left">
-						<span className="font-semibold">{playerName}</span>
+						<span className="font-semibold">{snapshots[0]?.player ?? playerName}</span>
 						<span className="text-sm text-green-400">Now</span>
 					</div>
 				</button>

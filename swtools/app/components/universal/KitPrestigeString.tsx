@@ -13,7 +13,22 @@ const KitPrestigeString: React.FC<KitPrestigeStringProps> = ({ kit, response }) 
 	const xp: number = (response.stats[indexer] || 0) as number; // sorry ts
 	const prestige: KitPrestigeInfo = getKitPrestigeInfo(xp);
 
-	return <span style={{ color: prestige.color }}>({prestige.name})</span>;
+	if (prestige.key == 7) {
+		return (
+			<span
+				style={{
+					background: prestige.color,
+					backgroundClip: "text",
+					WebkitBackgroundClip: "text",
+					WebkitTextFillColor: "transparent",
+				}}
+			>
+				({prestige.name})
+			</span>
+		);
+	} else {
+		return <span style={{ color: prestige.color }}>({prestige.name})</span>;
+	}
 };
 
 export default KitPrestigeString;

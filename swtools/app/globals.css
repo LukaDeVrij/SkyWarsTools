@@ -10,6 +10,7 @@ body {
 	--background-nav: #1a1a1a;
 	--background-layer: #1e2434;
 	--background-content: #31394c;
+	--background-content-alt: #282e3d;
 	--background-button: #1c7031;
 	--background-button-hover: #23570f;
 	--foreground: #ededed;
@@ -24,6 +25,17 @@ body {
 }
 .bg-content {
 	background: var(--background-content);
+}
+.bg-content-alt {
+	background: var(--background-content-alt);
+}
+
+.zebra-rows > tr:nth-child(odd) {
+	background: var(--background-content);
+}
+
+.zebra-rows > tr:nth-child(even) {
+	background: var(--background-content-alt);
 }
 .bg-layer {
 	background: var(--background-layer);

@@ -63,7 +63,6 @@ const RecentNames: React.FC<{ uuid: string }> = ({ uuid }) => {
 										<tr className="border-b-2">
 											<th className="text-left px-2 py-1">Name</th>
 											<th className="text-left px-2 py-1">First Seen</th>
-											<th className="text-left px-2 py-1">Time Ago</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -72,16 +71,9 @@ const RecentNames: React.FC<{ uuid: string }> = ({ uuid }) => {
 											.map((change, idx) => (
 												<tr key={idx} className="border-b">
 													<td className="px-2 py-1">{change.player}</td>
-													<td className="px-2 py-1">{new Date(change.queried).toLocaleDateString()}</td>
-													<td className="px-2 py-1">
-														{timeAgo(change.queried / 1000, {
-															showSeconds: false,
-															showMinutes: false,
-															showHours: true,
-															showDays: true,
-															showYears: true,
-														})}
-													</td>
+													<Tooltip title={timeAgo(change.queried / 1000)}>
+														<td className="px-2 py-1">{new Date(change.queried).toLocaleDateString()}</td>
+													</Tooltip>
 												</tr>
 											))}
 									</tbody>
