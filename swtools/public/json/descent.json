@@ -454,7 +454,8 @@
 				"text": "§5§7§cD§6O§eU§aB§bL§dE§5 §cR§6A§eI§aN§bB§dO§5W§r§7 ALL THE WAY!",
 				"cost": 9
 			}
-		]
+		],
+		"requires": 50
 	},
 	"diamond_in_the_rough": {
 		"title": "Diamond In The Rough§r",
@@ -507,7 +508,8 @@
 				"text": "§5§7§7Dominate the skies with a powerful\n§5§7tower of colourful blocks!",
 				"cost": 10
 			}
-		]
+		],
+		"requires": 60
 	},
 	"distillery_discount": {
 		"title": "Distillery Discount§r",
