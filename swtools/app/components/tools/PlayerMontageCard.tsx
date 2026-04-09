@@ -10,10 +10,12 @@ import { getPlayerRank } from "@/app/utils/RankTag";
 const MontageCard: React.FC<OverallResponse> = (data) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [useLevelScheme, setUseLevelScheme] = React.useState(true);
+	const [useLevel, setUseLevel] = React.useState(true);
 	const [useRank, setUseRank] = React.useState(true);
 	const [useCheaterSuffix, setUseCheaterSuffix] = React.useState(false);
 	const [useName, setUseName] = React.useState(true);
 	const [fontSize, setFontSize] = React.useState(80);
+	const [useShadow, setUseShadow] = React.useState(true);
 
 	const [showOptions, setShowOptions] = React.useState(false);
 
@@ -59,7 +61,10 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 				if (ctx) {
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 					ctx.font = `${fontSize}px MinecraftReg`;
-					let text = `${scheme}`;
+					let text = "";
+					if (useLevel) {
+						text = `${scheme}`;
+					}
 					if (rank.cleanPrefix && useRank) {
 						text += " " + rank.prefix + " ";
 					} else {
@@ -69,6 +74,17 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 
 					if (useCheaterSuffix) {
 						text += " §c[CHEATING]";
+					}
+					if (useShadow) {
+						ctx.shadowColor = "black";
+						ctx.shadowOffsetX = 4;
+						ctx.shadowOffsetY = 4;
+						ctx.shadowBlur = 4;
+					} else {
+						ctx.shadowColor = "transparent";
+						ctx.shadowOffsetX = 0;
+						ctx.shadowOffsetY = 0;
+						ctx.shadowBlur = 0;
 					}
 					console.log("current text:" + text);
 					fillMCColorText(ctx, text.trimEnd(), box);
@@ -106,6 +122,15 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 							<input
 								type="checkbox"
 								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useLevel}
+								onChange={(e) => setUseLevel(e.target.checked)}
+							/>
+							<span>Show Level</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
 								checked={useLevelScheme}
 								onChange={(e) => setUseLevelScheme(e.target.checked)}
 							/>
@@ -124,20 +149,21 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 							<input
 								type="checkbox"
 								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-								checked={useCheaterSuffix}
-								onChange={(e) => setUseCheaterSuffix(e.target.checked)}
-							/>
-							<span>Cheater Suffix</span>
-						</label>
-						<label className="flex items-center gap-2 text-base font-medium text-white">
-							<input
-								type="checkbox"
-								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
 								checked={useName}
 								onChange={(e) => setUseName(e.target.checked)}
 							/>
 							<span>Show Name</span>
 						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useCheaterSuffix}
+								onChange={(e) => setUseCheaterSuffix(e.target.checked)}
+							/>
+							<span>Cheater Suffix</span>
+						</label>
+
 						<label className="flex items-center gap-2 text-base font-medium text-white">
 							<input
 								type="number"
@@ -148,6 +174,15 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 								className="w-14 p-1 rounded border border-gray-300 focus:outline-none text-white bg-gray-800"
 							/>
 							<span>Font Size</span>
+						</label>
+						<label className="flex items-center gap-2 text-base font-medium text-white">
+							<input
+								type="checkbox"
+								className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+								checked={useShadow}
+								onChange={(e) => setUseShadow(e.target.checked)}
+							/>
+							<span>Text Shadow</span>
 						</label>
 					</div>
 				)}
