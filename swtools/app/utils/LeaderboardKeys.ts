@@ -465,6 +465,8 @@ export const keys: LeaderboardKey[] = [
 	{ name: "Wins Mega", value: "wins_mega" },
 	{ name: "Losses Mega", value: "losses_mega" },
 
+	{ name: "Potions Brewed", value: "skywars_tonic_taker" },
+
 	{ name: "Challenge Wins", value: "challenge_wins" },
 	{ name: "Challenge Attempts", value: "challenge_attempts" },
 	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },

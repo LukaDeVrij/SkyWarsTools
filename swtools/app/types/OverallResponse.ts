@@ -93,6 +93,19 @@ export interface Stats {
 	time_played_ranked?: number;
 	time_played_lab?: number;
 	time_played_mini?: number;
+	kills_lab_solo?: number;
+	deaths_lab_solo?: number;
+	wins_lab_solo?: number;
+	losses_lab_solo?: number;
+	time_played_lab_solo?: number;
+	kills_lab_team?: number;
+	deaths_lab_team?: number;
+	wins_lab_team?: number;
+	losses_lab_team?: number;
+	time_played_lab_team?: number;
+
+	skywars_tonic_taker?: number;
+
 	heads_eww?: number;
 	heads_yucky?: number;
 	heads_meh?: number;
