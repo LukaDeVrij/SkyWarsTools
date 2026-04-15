@@ -2,7 +2,7 @@
 // This is why its hella long, and not very React-y. Also many Typescript hacks
 
 import { Snapshot } from "@/app/types/Snapshot";
-import { calcEXPFromLevel, calcLevel, calcPrestigeTag, timeDiff } from "@/app/utils/Utils";
+import { calcEXPFromLevel, calcLevel, calcPrestigeTag, formatTimestampShort, timeDiff } from "@/app/utils/Utils";
 import React, { useRef } from "react";
 
 interface SessionCanvasProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
@@ -1060,11 +1060,4 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 
 export default SessionCanvas;
 
-function formatTimestampShort(date: Date): string {
-	const year = date.getFullYear();
-	const month = String(date.getMonth() + 1).padStart(2, "0");
-	const day = String(date.getDate()).padStart(2, "0");
-	const hours = String(date.getHours()).padStart(2, "0");
-	const minutes = String(date.getMinutes()).padStart(2, "0");
-	return `${year}-${month}-${day} ${hours}:${minutes}`;
-}
+

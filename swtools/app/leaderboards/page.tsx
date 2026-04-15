@@ -11,23 +11,31 @@ type CategoryRule = {
 	exclude?: string[];
 };
 
+const weeklyKeys: LeaderboardKey[] = [
+	{ name: "Weekly Experience", value: "weekly/skywars_experience" },
+	{ name: "Weekly Kills", value: "weekly/kills" },
+	{ name: "Weekly Wins", value: "weekly/wins" },
+	{ name: "Weekly Time Played", value: "weekly/time_played" },
+];
+
 // TODO probs need a bit of a refactor, where we take keys out and continue with the rest
 const categoryRules: CategoryRule[] = [
 	{
 		name: "Main",
-		exclude: ["_rating_", "heads", "kit", "challenge", "customs_"],
+		exclude: ["_rating_", "heads", "kit", "challenge", "customs_", "weekly/"],
 	},
 	{ name: "Heads", include: ["heads"] },
 	{ name: "Kit", include: ["kit"], exclude: ["customs"] },
 	{ name: "Ranked", include: ["_rating_"], exclude: ["_position"] },
 	{ name: "Challenges", include: ["challenge"] },
 	{ name: "Custom", include: ["customs_"] },
+	{ name: "Weekly", include: ["weekly/"] },
 ];
 
 const matchesCategory = (value: string, { include = [], exclude = [] }: CategoryRule) =>
 	include.every((token) => value.includes(token)) && exclude.every((token) => !value.includes(token));
 
-const normalizedKeys: NormalizedLeaderboardKey[] = keys.map((k) => ({
+const normalizedKeys: NormalizedLeaderboardKey[] = [...weeklyKeys, ...keys].map((k) => ({
 	...k,
 	lowerName: k.name.toLowerCase(),
 	lowerValue: k.value.toLowerCase(),
@@ -38,6 +46,7 @@ const Page = () => {
 	const [searchValue, setSearchValue] = useState<string | null>(null);
 	const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
 		Main: true,
+		Weekly: false,
 	});
 
 	const searchLower = searchValue?.toLowerCase() ?? "";
@@ -51,7 +60,7 @@ const Page = () => {
 	};
 
 	const goToLeaderboard = (key: string) => {
-		window.location.href = `leaderboards/${key}`;
+		window.location.href = `/leaderboards/${key}`;
 	};
 
 	const handleKeyClick = (key: string) => {

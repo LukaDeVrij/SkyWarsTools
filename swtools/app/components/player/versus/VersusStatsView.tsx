@@ -16,6 +16,7 @@ import { Info, X } from "lucide-react";
 import { SnapshotKeysResponse, SnapshotsResponse } from "@/app/types/Snapshot";
 import { Tooltip } from "@mui/material";
 import Link from "next/link";
+import Alert from "../../universal/Alert";
 
 export function VersusStatsView({ overallData, snapshots }: { overallData: OverallResponse; snapshots: SnapshotsResponse | undefined }) {
 	const searchParams = useSearchParams();
@@ -36,7 +37,7 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-		}
+		},
 	);
 
 	const { data: snapshotKeys } = useSWR<SnapshotKeysResponse>(
@@ -44,7 +45,7 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/snapshotKeys?player=${encodeURIComponent(opponentName)}&page=1`
 			: null,
 		fetcher,
-		{ revalidateOnFocus: false, revalidateOnReconnect: false }
+		{ revalidateOnFocus: false, revalidateOnReconnect: false },
 	);
 
 	const keys = (() => {
@@ -55,11 +56,11 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 	const { data: opponentSnapshots } = useSWR<SnapshotsResponse>(
 		opponentName && opponentData && keys && keys.length > 0
 			? `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/api/getSnapshots?player=${encodeURIComponent(opponentName)}&keys=${keys.join(
-					","
-			  )}`
+					",",
+				)}`
 			: null,
 		fetcher,
-		{ revalidateOnFocus: false, revalidateOnReconnect: false }
+		{ revalidateOnFocus: false, revalidateOnReconnect: false },
 	);
 
 	if (error) {
@@ -155,14 +156,11 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 				{!isLoading && opponentData && (
 					<>
 						<div className="w-full h-fit flex flex-col items-center text-3xl text-center">
-							<div className="flex flex-row mx-auto w-full lg:w-100 gap-4 p-1 lg:p-2 text-sm font-semibold justify-center items-center bg-content rounded-lg mb-4 lg:mb-0 lg:rounded-3xl">
-								<Info className="h-8 w-8 hidden lg:block" />
-								<div className="flex flex-col items-center text-gray-300">
-									<span>Each category distributes 100 points</span>
-									<span>Hover over values for more information</span>
-									<span className="lg:hidden text-red-400">On mobile: tap and hold!</span>
-								</div>
-							</div>
+							<Alert
+								variant="info"
+								className="mb-4"
+								messages={["Each category distributes 100 points", "Hover over values for more information"]}
+							></Alert>
 							<VersusStatsCompare
 								player1={overallData}
 								player2={opponentData}
