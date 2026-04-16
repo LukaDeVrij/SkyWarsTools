@@ -10,6 +10,7 @@ import Head from "next/head";
 import WebsiteVersion from "./components/WebsiteVersion";
 import PlayerCount from "./components/PlayerCount";
 import DailyPlayerCount from "./components/DailyPlayerCount";
+import CustomWeeklyLeaderboard from "./components/leaderboards/CustomWeeklyLeaderboard";
 
 export default function Home() {
 	return (
@@ -74,6 +75,9 @@ export default function Home() {
 						<DailyPlayerCount></DailyPlayerCount>
 					</div>
 				</div>
+				{/* <div className="rounded-lg px-4 py-2 lg:px-8">
+					<CustomWeeklyLeaderboard></CustomWeeklyLeaderboard>
+				</div> */}
 				<Contributors></Contributors>
 				<div className="flex flex-row justify-between px-4 lg:px-8 py-2 text-gray-500 font-bold">
 					<span>This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>

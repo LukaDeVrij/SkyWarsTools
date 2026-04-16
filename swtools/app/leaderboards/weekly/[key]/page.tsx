@@ -77,6 +77,11 @@ const Page = () => {
 		return <ErrorView statusCode={400} statusText="Weekly comparison has no players?!" />;
 	}
 
+	const generatedAt = new Date(Date.parse(data.generatedAt));
+	const prevTime = data.entries[0].previousTime;
+	const currentTime = data.entries[0].currentTime;
+	console.log(data.entries[0])
+
 	return (
 		<>
 			<div className="flex flex-col lg:flex-row items-center justify-center gap-2 mb-4">
@@ -139,16 +144,6 @@ const Page = () => {
 						Go
 					</button>
 				</div>
-				{/* <button
-					className="px-3 h-10 rounded-lg bg-layer text-content font-bold cursor-pointer"
-					onClick={() => {
-						setWeekInput("");
-						setErrorMsg(null);
-						window.location.search = "";
-					}}
-				>
-					Latest
-				</button> */}
 			</div>
 
 			<div className="flex items-center rounded-lg mx-auto p-1">
@@ -162,8 +157,8 @@ const Page = () => {
 					</h2>
 					<div className="flex items-center gap-3 bg-content p-2 px-3 rounded-t-xl">
 						<span className="font-semibold text-sm lg:text-base">
-							{formatTimestampShort(new Date(Date.parse(data.generatedAt) - 604800000))} -{" "}
-							{formatTimestampShort(new Date(Date.parse(data.generatedAt)))}
+							{formatTimestampShort(new Date(prevTime))} -{" "}
+							{formatTimestampShort(new Date(currentTime))}
 						</span>
 					</div>
 				</div>
@@ -175,7 +170,7 @@ const Page = () => {
 								<th className="p-2 lg:py-2 text-l lg:text-xl">#</th>
 								<th className="p-1 lg:py-2 text-l lg:text-xl">Level</th>
 								<th className="p-1 lg:py-2 text-l lg:text-xl">Player</th>
-								<th className="p-1 lg:py-2 text-l lg:text-xl">Weekly Delta</th>
+								<th className="p-1 lg:py-2 text-l lg:text-xl">Delta</th>
 							</tr>
 						</thead>
 						<tbody>

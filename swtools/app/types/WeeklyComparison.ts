@@ -15,4 +15,6 @@ export interface WeeklyComparisonEntry {
     delta: number;
     current: number;
     previous: number;
+    previousTime: number;
+    currentTime: number;
 }

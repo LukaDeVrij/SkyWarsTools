@@ -29,7 +29,7 @@ const categoryRules: CategoryRule[] = [
 	{ name: "Ranked", include: ["_rating_"], exclude: ["_position"] },
 	{ name: "Challenges", include: ["challenge"] },
 	{ name: "Custom", include: ["customs_"] },
-	{ name: "Weekly", include: ["weekly/"] },
+	// { name: "Weekly", include: ["weekly/"] },
 ];
 
 const matchesCategory = (value: string, { include = [], exclude = [] }: CategoryRule) =>
