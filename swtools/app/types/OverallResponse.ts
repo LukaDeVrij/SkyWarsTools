@@ -642,6 +642,12 @@ export interface Stats {
 	kills_kit_advanced_solo_zookeeper?: number;
 	deaths_kit_advanced_solo_zookeeper?: number;
 	time_played_kit_advanced_solo_zookeeper?: number;
+	"wins_kit_basic_solo_fallen-angel"?: number;
+	"losses_kit_basic_solo_fallen-angel"?: number;
+	"kills_kit_basic_solo_fallen-angel"?: number;
+	"deaths_kit_basic_solo_fallen-angel"?: number;
+	"time_played_kit_basic_solo_fallen-angel"?: number;
+	"xp_kit_basic_solo_fallen-angel"?: number;
 	xp_kit_advanced_solo_zookeeper?: number;
 	wins_kit_advanced_solo_engineer?: number;
 	losses_kit_advanced_solo_engineer?: number;
@@ -853,6 +859,18 @@ export interface Stats {
 	deaths_kit_supporting_team_zookeeper?: number;
 	time_played_kit_supporting_team_zookeeper?: number;
 	xp_kit_supporting_team_zookeeper?: number;
+	"wins_kit_attacking_team_fallen-angel"?: number;
+	"losses_kit_attacking_team_fallen-angel"?: number;
+	"kills_kit_attacking_team_fallen-angel"?: number;
+	"deaths_kit_attacking_team_fallen-angel"?: number;
+	"time_played_kit_attacking_team_fallen-angel"?: number;
+	"xp_kit_attacking_team_fallen-angel"?: number;
+	wins_kit_attacking_team_magician?: number;
+	losses_kit_attacking_team_magician?: number;
+	kills_kit_attacking_team_magician?: number;
+	deaths_kit_attacking_team_magician?: number;
+	time_played_kit_attacking_team_magician?: number;
+	xp_kit_attacking_team_magician?: number;
 
 	// Mythical kits
 	"wins_kit_mythical_end-lord"?: number;

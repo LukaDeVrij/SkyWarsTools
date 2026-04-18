@@ -219,6 +219,7 @@ export const keys: LeaderboardKey[] = [
 				"slime",
 				"sloth",
 				"snowman",
+				"magician",
 			],
 		},
 		{ type: "mining", mode: "team", kits: ["cannoneer", "default", "speleologist"] },
