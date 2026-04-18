@@ -193,14 +193,14 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "cerulean_prestige",
-		rankColor: ["§3", "§c", "§c", "§c", "§3"],
-		iconColor: "§c",
+		rankColor: ["§3", "§b", "§b", "§b", "§3"],
+		iconColor: "§b",
 		req: 410,
 	},
 	{
 		name: "ancient",
-		rankColor: "§7",
-		iconColor: "§7",
+		rankColor: ["§7", "§8", "§8", "§8", "§7"],
+		iconColor: "§8",
 		req: "§5§o§cUnlocked at Archeologist Normal Kit Prestige VII!",
 		reqKit: "Archeologist Solo",
 	},
@@ -402,7 +402,7 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "sun_prestige",
-		rankColor: ["§c", "§e", "§e", "§e", "§c"],
+		rankColor: ["§c", "§6", "§e", "§e", "§c"],
 		iconColor: "§6",
 		req: 250,
 	},
@@ -420,7 +420,7 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "iridescent_prestige",
-		rankColor: ["§b", "§b", "§b", "§d", "§a"],
+		rankColor: ["§b", "§a", "§b", "§d", "§a"],
 		iconColor: "§a",
 		req: 340,
 	},
