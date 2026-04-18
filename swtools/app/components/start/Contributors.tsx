@@ -7,7 +7,7 @@ const Contributors = () => {
 			<span className="font-semibold mb-1">Special thanks to these people for contributing to the project!</span>
 			<div className="flex flex-row gap-4 flex-wrap">
 				<span>LifelessNerd</span>
-				<span>Forums_</span>
+				<span>Forums</span>
 				<span>SMED</span>
 				<span>abald</span>
 			</div>

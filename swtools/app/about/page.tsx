@@ -14,10 +14,11 @@ export default function AboutPage() {
 				<div className="flex flex-col gap-3 lg:gap-5 w-3/4">
 					<h1 className="text-5xl font-semibold text-center lg:text-left ">About</h1>
 					<p className="font-semibold text-center lg:text-left text-lg">
-						Commonly asked questions, help with general usage and contact information.
+						Commonly asked questions, help with general usage and contact information. <br></br>
+						Click on a card for more information on that feature!
 					</p>
 				</div>
-				<Image className={"hidden lg:block"} src={"/title.png"} alt={"SkyWarsTools title logo"} width={300} height={60}></Image>
+				<Image className={"hidden lg:block"} src={"/logo.png"} alt={"SkyWarsTools title logo"} width={150} height={60}></Image>
 			</div>
 
 			<div className="flex flex-col gap-4">
@@ -33,15 +34,27 @@ export default function AboutPage() {
 							by looking up your stats at the start of a session, and then creating a session using that snapshot and your
 							most recent stats.
 						</HelpCard>
+						<HelpCard title="Stats">
+							The stats page contains many more stats, all information about the Grim Reaper and Angel's Descent, and a
+							breakdown of all of your kits and their prestige progress! You can even see equipped cosmetics and get previous
+							names and games.
+						</HelpCard>
 						<HelpCard title="Leaderboards">
 							Infinite leaderboards are generated using the snapshots. Only players who have been searched for are included,
 							so the more people use the site, the better the leaderboards will be! The Level leaderboard is updated
 							automatically every 24 hours, others are generated on command, and cached.
 						</HelpCard>
 						<HelpCard title="Calculate">
-							You can use snapshots to calculate your progress over time, and predict when you will reach a certain goal.
+							You can use snapshots to calculate your progress over time, and predict when you will reach a certain goal. Your
+							progress will be extrapolated based on a selected amount of snapshots, so make sure these snapshots are from a
+							period of time that best represents your current grind!
 						</HelpCard>
-						<HelpCard title="Tools">Various other tools, non-specific to players, are available in the Tools section!</HelpCard>
+						<HelpCard title="Versus">
+							Compare your stats and latest session with another player! 100 points are divided per category, and summed up at
+							the end.
+						</HelpCard>
+						<HelpCard title="Tools for players">Tools that require a player name as input, such as the creation of a Montage Card can be found under Tools.</HelpCard>
+						<HelpCard title="General Tools">General Tools such as all Schemes, the current player counts on Hypixel are also found there.</HelpCard>
 						<HelpCard title="Other Questions?">
 							Have more questions, a feature request, or found a bug? Contact me using the links below, or join the{" "}
 							<Link href="/discord" className="underline">
