@@ -9,7 +9,7 @@ import ErrorView from "@/app/components/universal/ErrorView";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { keys } from "@/app/utils/LeaderboardKeys";
 import { getPlayerRank } from "@/app/utils/RankTag";
-import { calcLevel, fetcher, formatPlaytime, formatTimestampShort, formatTimestampToVerboseDate, shortenUUID } from "@/app/utils/Utils";
+import { calcLevel, fetcher, formatPlaytime, formatTimestampShort, shortenUUID } from "@/app/utils/Utils";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { WeeklyComparisonEntry, WeeklyComparisonResponse } from "@/app/types/WeeklyComparison";
 
@@ -77,7 +77,7 @@ const Page = () => {
 		return <ErrorView statusCode={400} statusText="Weekly comparison has no players?!" />;
 	}
 
-	const generatedAt = new Date(Date.parse(data.generatedAt));
+	// const generatedAt = new Date(Date.parse(data.generatedAt));
 	const prevTime = data.entries[0].previousTime;
 	const currentTime = data.entries[0].currentTime;
 	console.log(data.entries[0])

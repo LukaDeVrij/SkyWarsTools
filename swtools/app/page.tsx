@@ -5,7 +5,6 @@ import PatreonPlayerList from "./components/start/PatreonPlayerList";
 import { Tooltip } from "@mui/material";
 import { CircleQuestionMark } from "lucide-react";
 import Link from "next/link";
-import Contributors from "./components/start/Contributors";
 import Head from "next/head";
 import WebsiteVersion from "./components/WebsiteVersion";
 import PlayerCount from "./components/PlayerCount";

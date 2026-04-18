@@ -190,8 +190,6 @@ function LeaderboardClimber({ response }: { response: OverallResponse }) {
 							const rank = getPlayerRank(mockOverallResponse);
 							const level = calcLevel(entry.info.exp ?? 0);
 							const scheme = formatScheme(level, mockOverallResponse, false);
-							const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
-							// const isStale = Date.now() - entry.info.queried > SEVEN_DAYS_MS;
 							const isStale = false;
 
 							return (

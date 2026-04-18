@@ -35,7 +35,7 @@ export default function AboutPage() {
 							most recent stats.
 						</HelpCard>
 						<HelpCard title="Stats">
-							The stats page contains many more stats, all information about the Grim Reaper and Angel's Descent, and a
+							The stats page contains many more stats, all information about the Grim Reaper and Angel&apos;s Descent, and a
 							breakdown of all of your kits and their prestige progress! You can even see equipped cosmetics and get previous
 							names and games.
 						</HelpCard>
@@ -53,8 +53,12 @@ export default function AboutPage() {
 							Compare your stats and latest session with another player! 100 points are divided per category, and summed up at
 							the end.
 						</HelpCard>
-						<HelpCard title="Tools for players">Tools that require a player name as input, such as the creation of a Montage Card can be found under Tools.</HelpCard>
-						<HelpCard title="General Tools">General Tools such as all Schemes, the current player counts on Hypixel are also found there.</HelpCard>
+						<HelpCard title="Tools for players">
+							Tools that require a player name as input, such as the creation of a Montage Card can be found under Tools.
+						</HelpCard>
+						<HelpCard title="General Tools">
+							General Tools such as all Schemes, the current player counts on Hypixel are also found there.
+						</HelpCard>
 						<HelpCard title="Other Questions?">
 							Have more questions, a feature request, or found a bug? Contact me using the links below, or join the{" "}
 							<Link href="/discord" className="underline">
