@@ -91,7 +91,7 @@ const CTSkyWarsToolsDownload = () => {
 					<li>Download the archive from the button above.</li>
 					<li>Open Minecraft and type /ct files, navigate to the modules folder</li>
 					<li>Extract the ZIP-file into your ChatTriggers modules folder.</li>
-					<li>The folder called 'CTSkyWarsTools' should be in modules.</li>
+					<li>The folder called &apos;CTSkyWarsTools&apos; should be in modules.</li>
 					<li>In Minecraft, type /ct reload</li>
 				</ol>
 			</div>
