@@ -468,6 +468,10 @@ export const keys: LeaderboardKey[] = [
 
 	{ name: "Potions Brewed", value: "skywars_tonic_taker" },
 
+	{ name: "Wins Lucky Blocks Solo", value: "lab_win_lucky_blocks_lab_solo" },
+	{ name: "Wins Lucky Blocks Team", value: "lab_win_lucky_blocks_lab_team" },
+	{ name: "Wins Lucky Blocks Lab", value: "lab_win_lucky_blocks_lab" },
+
 	{ name: "Challenge Wins", value: "challenge_wins" },
 	{ name: "Challenge Attempts", value: "challenge_attempts" },
 	{ name: "1 Challenge Attempts", value: "challenge_attempts_1" },

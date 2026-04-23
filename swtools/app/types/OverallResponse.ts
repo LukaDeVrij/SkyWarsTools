@@ -106,6 +106,10 @@ export interface Stats {
 
 	skywars_tonic_taker?: number;
 
+	lab_win_lucky_blocks_lab_solo?: number;
+	lab_win_lucky_blocks_lab_team?: number;
+	lab_win_lucky_blocks_lab?: number;
+
 	heads_eww?: number;
 	heads_yucky?: number;
 	heads_meh?: number;
