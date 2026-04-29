@@ -128,7 +128,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 					width={100}
 					height={100}
 					className="rounded h-20 w-20 lg:h-28 lg:w-28 mb-6 lg:mb-12 mx-2 lg:mx-4 z-10 hidden lg:inline"
-					src={`https://www.mc-heads.net/avatar/${response.player}`}
+					src={`https://www.mc-heads.net/avatar/${response.player}/`}
 				/>
 				{/* Online status indicator overlay */}
 				<span
