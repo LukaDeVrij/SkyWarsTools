@@ -1012,8 +1012,8 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "mythic_ii_prestige",
-		rankColor: ["§6", "§e", "§a", "§d", "§c"],
-		iconColor: "§b",
+		rankColor: ["§6", "§e", "§a", "§b", "§c"],
+		iconColor: "§d",
 		req: 200,
 	},
 	{
