@@ -163,7 +163,7 @@ const PlayerInputField = () => {
 									}}
 								>
 									<Image
-										src={`https://www.mc-heads.net/avatar/${name}`}
+										src={`https://www.mc-heads.net/avatar/${name}/`}
 										width={25}
 										height={25}
 										className="rounded-lg"
