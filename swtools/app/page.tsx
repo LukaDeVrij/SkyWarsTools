@@ -90,9 +90,9 @@ export default function Home() {
 						<DailyPlayerCount></DailyPlayerCount>
 					</div>
 				</div>
-				{/* <div className="rounded-lg px-4 py-2 lg:px-8">
+				<div className="rounded-lg px-4 py-2 lg:px-8">
 					<CustomWeeklyLeaderboard></CustomWeeklyLeaderboard>
-				</div> */}
+				</div>
 				{/* <Contributors></Contributors> */}
 				<div className="flex flex-row justify-between px-4 lg:px-8 py-2 text-gray-500 font-bold">
 					<span>This website is not affiliated, connected to or run by Hypixel, Mojang or Microsoft.</span>
