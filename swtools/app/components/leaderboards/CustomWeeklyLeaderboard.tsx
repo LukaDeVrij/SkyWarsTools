@@ -105,9 +105,11 @@ const CustomWeeklyLeaderboard = () => {
 	return (
 		<div className="w-full mx-auto flex flex-col items-center justify-center gap-0">
 			<div className="w-full flex flex-col lg:flex-row items-start lg:items-end justify-between gap-2">
-				<h3 className="text-xl lg:text-2xl font-bold text-center text-accent pt-2 px-6 rounded-t-xl bg-content w-fit">
-					Past Week Climbers
-				</h3>
+				<Tooltip title="This is a leaderboard consisting of players that have been on weekly leaderboards the past weeks, and shows their EXP climb.">
+					<h3 className="text-xl lg:text-2xl font-bold text-center text-accent pt-2 px-6 rounded-t-xl bg-content w-fit">
+						Past Week Climbers
+					</h3>
+				</Tooltip>
 				{prevTime && currentTime && (
 					<div className="flex items-center gap-3 bg-content p-2 px-3 rounded-t-xl">
 						<span className="font-semibold text-sm lg:text-base">
@@ -189,7 +191,9 @@ const CustomWeeklyLeaderboard = () => {
 										<Tooltip title={row.timePlayed.toLocaleString()}>
 											<span>{formatPlaytime(row.timePlayed)}</span>
 										</Tooltip>
-										<span className="text-base text-gray-400 ml-1">({(((row.timePlayed * 1000) / WEEK_MS) * 100).toFixed(1)}%)</span>
+										<span className="text-base text-gray-400 ml-1">
+											({(((row.timePlayed * 1000) / WEEK_MS) * 100).toFixed(1)}%)
+										</span>
 									</td>
 								</tr>
 							);

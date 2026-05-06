@@ -35,21 +35,10 @@ const Page = () => {
 		revalidateOnReconnect: false,
 	});
 
-	const parsedCurrentWeek = Number.parseInt(data?.week ?? "", 10);
-	const hasNumericWeek = Number.isFinite(parsedCurrentWeek);
-
 	React.useEffect(() => {
 		setWeekInput(weekParam);
 	}, [weekParam]);
 
-	const updateWeekQuery = (week?: number) => {
-		if (!Number.isFinite(week) || (week ?? 0) < 1) {
-			setErrorMsg("Week must be 1 or greater.");
-			return;
-		}
-
-		window.location.search = `?week=${week}`;
-	};
 
 	const entries = [...(data?.entries ?? [])]
 		.sort((a, b) => {
@@ -84,68 +73,6 @@ const Page = () => {
 
 	return (
 		<>
-			<div className="flex flex-col lg:flex-row items-center justify-center gap-2 mb-4">
-				<div className="flex items-center gap-2 bg-content rounded-lg p-1 px-2">
-					<button
-						className="px-1 rounded bg-layer text-content font-bold disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-						disabled={!hasNumericWeek || parsedCurrentWeek <= 1}
-						onClick={() => {
-							if (!hasNumericWeek) return;
-							updateWeekQuery(parsedCurrentWeek - 1);
-						}}
-					>
-						<ArrowBigLeft></ArrowBigLeft>
-					</button>
-					<span className="font-semibold text-base lg:text-lg bg-layer px-3 rounded-xl">
-						{isLatest ? `Latest (Week ${data.week})` : `Week ${data.week}`}
-					</span>
-					<button
-						className="px-1 rounded bg-layer text-content font-bold disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-						disabled={!hasNumericWeek}
-						onClick={() => {
-							if (!hasNumericWeek) return;
-							updateWeekQuery(parsedCurrentWeek + 1);
-						}}
-					>
-						<ArrowBigRight></ArrowBigRight>
-					</button>
-				</div>
-				<div className="flex items-center border border-accent rounded-lg gap-2 h-10 px-2 w-64">
-					<input
-						type="number"
-						min={1}
-						placeholder="Go to week..."
-						value={weekInput}
-						className="outline-none w-full p-1 font-semibold"
-						onChange={(e) => setWeekInput(e.target.value)}
-						onKeyDown={(e) => {
-							if (e.key !== "Enter") return;
-							const parsedWeek = Number.parseInt(weekInput, 10);
-							if (!Number.isFinite(parsedWeek)) {
-								setErrorMsg("Enter a valid week number.");
-								return;
-							}
-							setErrorMsg(null);
-							updateWeekQuery(parsedWeek);
-						}}
-					/>
-					<button
-						className="px-2 rounded bg-button text-main font-bold cursor-pointer"
-						onClick={() => {
-							const parsedWeek = Number.parseInt(weekInput, 10);
-							if (!Number.isFinite(parsedWeek)) {
-								setErrorMsg("Enter a valid week number.");
-								return;
-							}
-							setErrorMsg(null);
-							updateWeekQuery(parsedWeek);
-						}}
-					>
-						Go
-					</button>
-				</div>
-			</div>
-
 			<div className="flex items-center rounded-lg mx-auto p-1">
 				{errorMsg && <span className="text-red-500 font-semibold">{errorMsg}</span>}
 			</div>
