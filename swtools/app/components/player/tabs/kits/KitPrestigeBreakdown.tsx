@@ -7,8 +7,8 @@ import React from "react";
 const KitPrestigeBreakdown: React.FC<Record<string, number | undefined>> = (stats) => {
 	// Extract kit names - every kit should have time_played, if not theres no stats anyway
 	const kitNames = Object.keys(stats)
-		.filter((key) => key.startsWith("time_played_kit_"))
-		.map((key) => key.replace(/^time_played_/, ""));
+		.filter((key) => key.startsWith("xp_kit_"))
+		.map((key) => key.replace(/^xp_/, ""));
 
 	const modeCounts = {
 		normal: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },

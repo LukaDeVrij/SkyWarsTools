@@ -10,8 +10,8 @@ type KitPrestigesProps = {
 const KitPrestiges: React.FC<KitPrestigesProps> = ({ playerLevel, ...stats }) => {
 	// Extract kit names - every kit should have time_played, if not theres no stats anyway
 	const kitNames = Object.keys(stats)
-		.filter((key) => key.startsWith("time_played_kit_"))
-		.map((key) => key.replace(/^time_played_/, ""));
+		.filter((key) => key.startsWith("xp_kit_"))
+		.map((key) => key.replace(/^xp_/, ""));
 		
 
 	const [search, setSearch] = React.useState("");
