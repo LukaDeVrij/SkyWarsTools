@@ -1,6 +1,6 @@
 ## Info for contributing
 
-The backend API is provided in the .env file. This APi is closed source. Most endpoints are used in this project, but not all documented. Types of the most common ones are defined.
+The backend API is provided in the .env file. This API is closed source. Most endpoints are used in this project, but not all documented. Types of the most common ones are defined.
 Have a feature in mind that requires certain data, and you don't know what API endpoint to use/if it is available? Contact me on the Discord server. 
 
 ## Getting Started
