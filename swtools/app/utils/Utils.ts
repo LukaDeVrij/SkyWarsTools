@@ -186,7 +186,7 @@ export function formatTimestampToVerboseDate(timestamp: number): string {
 }
 
 export function calcKitPrestigeLevel(xp: number): number {
-	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 30000];
+	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 25000];
 
 	if (xp > perLevelXp[perLevelXp.length - 1]) {
 		return 7;
@@ -205,7 +205,7 @@ export function calcKitPrestigeLevel(xp: number): number {
 	return 0; // shouldnt be hit - this keeps typescript happy
 }
 export function calcKitPrestigeExp(level: number): number {
-	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 30000];
+	const perLevelXp = [1000, 2500, 5000, 10000, 15000, 20000, 25000];
 	return perLevelXp[level - 1] || 0; // Return 0 if level is out of bounds
 }
 
@@ -771,7 +771,7 @@ export const kitPrestiges: Record<number, KitPrestigeInfo> = {
 	7: {
 		key: 7,
 		name: "VII",
-		minXp: 30000,
+		minXp: 25000,
 		megaXp: 10000,
 		color: "linear-gradient(90deg, #FF0000 0%, #FF7F00 16%, #FFFF00 33%, #00FF00 50%, #0000FF 66%, #4B0082 83%, #9400D3 100%)",
 		rewards: ["§31 §7Opal", "§cR§6a§ei§an§bb§3o§dw §7Particle Trail"],
