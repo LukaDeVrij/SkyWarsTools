@@ -20,7 +20,8 @@ const page = () => {
       {currentData?.maps?.length ? (
         <ul>
           {currentData.maps.map((map) => (
-            <li key={map}>{map}</li>
+            <li key={map}>
+              <a href={`/tools/rotation/map?mapName=${map}`}>{map}</a></li>
           ))}
         </ul>
       ) : (
