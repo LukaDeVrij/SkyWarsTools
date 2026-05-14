@@ -100,7 +100,7 @@ const PlayerInputField = () => {
 		<>
 			<form
 				onSubmit={handleSubmit}
-				className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background)] p-2 rounded-xl"
+				className="flex align-middle gap-1 lg:text-xl w-[180px] lg:w-[245px] m-1 bg-[var(--background-content-alt)] p-2 rounded-xl"
 			>
 				<input
 					id="player-input-field"
@@ -139,7 +139,7 @@ const PlayerInputField = () => {
 			<div className="relative inline-block" ref={dropdownRef}>
 				<button
 					type="button"
-					className="flex items-center justify-center cursor-pointer p-2 lg:-ml-4 rounded-xl bg-[var(--background)] animate-press-hard"
+					className="flex items-center justify-center cursor-pointer p-2 lg:-ml-4 rounded-xl bg-[var(--background-content-alt)] animate-press-hard"
 					onClick={() => setShowDropdown((prev) => !prev)}
 					tabIndex={-1}
 					aria-label="Show recent players"

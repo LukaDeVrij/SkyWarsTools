@@ -16,6 +16,19 @@ body {
 	--foreground: #ededed;
 	--accent: #ffcd22;
 }
+
+:root[data-theme="light"] {
+	--background: #a3a3a2;
+	--background-nav: #4e4e4e;
+	--background-layer: #36486e;
+	--background-content: #606e86;
+	--background-content-alt: rgb(62, 84, 117);
+	--background-button: #4caf50;
+	--background-button-hover: #45a049;
+	--foreground: #e0e0e0;
+	--accent: #ffbf00;
+}
+
 /*  for the two navbars at the top */
 .bg-nav {
 	background: var(--background-nav);
@@ -130,6 +143,9 @@ body {
 	animation: enchanted-shine 2s alternate infinite;
 	pointer-events: none;
 }
+:root[data-theme="light"] .enchanted::before {
+	background: linear-gradient(120deg, rgba(255, 255, 255, 0.42) 0%, rgba(90, 100, 0, 0.5) 50%, rgba(150, 65, 247, 0.733) 100%);
+}
 
 @keyframes enchanted-shine {
 	0% {
@@ -186,7 +202,7 @@ html {
 	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
 }
-& .MuiTooltip-tooltip {
+.MuiTooltip-tooltip {
 	font-size: 16px;
 	background-color: rgba(0, 0, 0, 0.842);
 	font-family: "Montserrat", system-ui, sans-serif;

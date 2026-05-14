@@ -17,10 +17,23 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
+	const themeInitScript = `
+		(function () {
+			try {
+				var savedTheme = localStorage.getItem("theme");
+				var theme = savedTheme === "light" ? "light" : "dark";
+				document.documentElement.setAttribute("data-theme", theme);
+			} catch (e) {
+				document.documentElement.setAttribute("data-theme", "dark");
+			}
+		})();
+	`;
+
+		return (
+			<html lang="en" data-theme="dark" suppressHydrationWarning>
 			<head>
 				<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"></link>
+				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
 			</head>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

@@ -7,9 +7,10 @@ import { useState, useRef, useEffect } from "react";
 
 interface NavBarProfileProps {
 	mobile?: boolean;
+	alignRight?: boolean;
 }
 
-const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
+const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false, alignRight = true }) => {
 	const [user, loading, error] = useAuthState(auth);
 	const [open, setOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,7 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false }) => {
 	}, [open]);
 
 	return (
-		<div className={`relative float-right ml-auto ${mobile ? "block lg:hidden" : "hidden lg:block"}`} ref={dropdownRef}>
+		<div className={`relative float-right ${alignRight ? "ml-auto" : ""} ${mobile ? "block lg:hidden" : "hidden lg:block"}`} ref={dropdownRef}>
 			<button
 				type="button"
 				className="p-2 rounded-md text-[var(--foreground)] font-montserrat font-[700] animate-press focus:outline-none cursor-pointer"

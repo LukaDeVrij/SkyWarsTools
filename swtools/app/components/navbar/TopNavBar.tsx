@@ -4,6 +4,7 @@ import NavDropdownMenu from "./NavDropdownMenu";
 import NavBarProfile from "./NavBarProfile";
 import PlayerInputField from "./PlayerInputField";
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 const TopNavBar = () => {
 	const content = [
@@ -22,7 +23,7 @@ const TopNavBar = () => {
 							<p className="hidden lg:inline font-semibold text-2xl">SkyWarsTools</p>
 						</Link>
 						<PlayerInputField />
-						<NavBarProfile mobile={true} />
+						<NavBarProfile mobile={true} alignRight={false} />
 					</div>
 
 					<div className="flex items-center justify-center lg:justify-start gap-2 lg:gap-4">
@@ -30,7 +31,10 @@ const TopNavBar = () => {
 							<NavDropdownMenu key={item.name} label={item.name} href={item.href} />
 						))}
 					</div>
-					<NavBarProfile />
+					<div className="hidden lg:flex items-center ml-auto gap-1">
+						<ThemeToggle />
+						<NavBarProfile alignRight={false} />
+					</div>
 				</div>
 			</nav>
 		</>
