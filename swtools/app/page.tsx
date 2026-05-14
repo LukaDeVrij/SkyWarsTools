@@ -76,7 +76,7 @@ export default function Home() {
 				<div className="rounded-lg px-4 lg:px-8">
 					<h2 className="text-2xl font-bold mb-1 flex flex-row gap-4">
 						Popular Players
-						<Tooltip title="Based on how often Hypixel stats were retrieved for each player.">
+						<Tooltip title="Based on the amount of times Hypixel Stats had to be retrieved for a player">
 							<CircleQuestionMark className="cursor-help" />
 						</Tooltip>
 					</h2>
