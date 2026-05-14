@@ -2,9 +2,9 @@
 import { useMapRotationMap } from "@/app/hooks/useMapRotation";
 import { timeAgo } from "@/app/utils/Utils";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
-const page = () => {
+const MapPageContent = () => {
 	const params = useSearchParams();
 	const { mapData, mapError, isMapLoading } = useMapRotationMap(params.get("mapName") || "");
 	return (
@@ -60,4 +60,12 @@ const page = () => {
 	);
 };
 
-export default page;
+const MapPage = () => {
+	return (
+		<Suspense fallback={<div>Loading map details...</div>}>
+			<MapPageContent />
+		</Suspense>
+	);
+};
+
+export default MapPage;

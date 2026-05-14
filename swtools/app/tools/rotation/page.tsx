@@ -2,7 +2,7 @@
 import React from 'react'
 import { useMapRotationCurrent } from '../../hooks/useMapRotation'
 
-const page = () => {
+const RotationPage = () => {
 
   const { currentData, currentError, isCurrentLoading } = useMapRotationCurrent()
 
@@ -31,4 +31,4 @@ const page = () => {
   )
 }
 
-export default page
+export default RotationPage
