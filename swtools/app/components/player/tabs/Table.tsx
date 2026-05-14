@@ -171,7 +171,7 @@ const Table: React.FC<OverallResponse> = (response) => {
 					</tbody>
 				</table>
 
-				<table className="p-4 w-full lg:w-[50%] text-left bg-content">
+				<table className="p-4 w-full lg:w-[50%] text-left bg-content [&_td]:py-0.5 [&_td]:px-2 [&_th]:px-2">
 					<thead className="text-accent">
 						<tr>
 							<th className="inline lg:hidden">Mode</th>

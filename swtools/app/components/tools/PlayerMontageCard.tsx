@@ -86,7 +86,6 @@ const MontageCard: React.FC<OverallResponse> = (data) => {
 						ctx.shadowOffsetY = 0;
 						ctx.shadowBlur = 0;
 					}
-					console.log("current text:" + text);
 					fillMCColorText(ctx, text.trimEnd(), box);
 				}
 			});

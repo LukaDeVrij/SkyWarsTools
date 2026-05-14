@@ -104,9 +104,9 @@ const CustomWeeklyLeaderboard = () => {
 
 	return (
 		<div className="w-full mx-auto flex flex-col items-center justify-center gap-0">
-			<div className="w-full flex flex-col lg:flex-row items-start lg:items-end justify-between gap-2">
+			<div className="w-full flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-between gap-0 lg:gap-2">
 				<Tooltip title="This is a leaderboard consisting of players that have been on weekly leaderboards the past weeks, and shows their EXP climb.">
-					<h3 className="text-xl lg:text-2xl font-bold text-center text-accent pt-2 px-6 rounded-t-xl bg-content w-fit">
+					<h3 className="text-xl lg:text-2xl font-bold text-center text-accent py-2 lg:pt-2 px-6 rounded-t-xl bg-content w-fit">
 						Past Week Climbers
 					</h3>
 				</Tooltip>
@@ -120,8 +120,8 @@ const CustomWeeklyLeaderboard = () => {
 				)}
 			</div>
 
-			<div className="w-full overflow-x-auto rounded-b-lg">
-				<table className="min-w-full w-[980px] lg:w-full bg-content rounded-b-lg">
+			<div className="w-full overflow-x-auto">
+				<table className="min-w-full w-[980px] lg:w-full bg-content lg:rounded-b-lg">
 					<thead className="text-left text-accent border-b-2">
 						<tr>
 							<th className="p-2 lg:py-2 text-l lg:text-xl">#</th>

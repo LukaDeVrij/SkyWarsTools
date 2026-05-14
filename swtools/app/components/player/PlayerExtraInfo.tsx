@@ -5,6 +5,7 @@ import { NextSave, OverallResponse } from "@/app/types/OverallResponse";
 import { Tooltip } from "@mui/material";
 import { CloudCheck } from "lucide-react";
 import SnapshotCooldown from "./SnapshotCooldown";
+import MetaInfoComponent from "./MetaInfoComponent";
 
 interface PlayerExtraInfoProps {
 	response: OverallResponse;
@@ -44,7 +45,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 		savedTheseStats = false;
 		nextSaveTime = new Date(saveTime.getTime() + 16 * 60 * 60 * 1000);
 	}
-	// console.log(savedTheseStats);
+
 	return (
 		<>
 			<div className="bg-content p-4 px-6 font-bold flex gap-4 flex-row items-center">
@@ -77,14 +78,7 @@ const PlayerExtraInfo: React.FC<PlayerExtraInfoProps> = async ({ response }) => 
 				) : (
 					<p className="text-gray-400">No socials linked</p>
 				)}
-				{savedTheseStats ? (
-					<Tooltip className="ml-auto text-green-500" title="A snapshot of these main stats has been saved!">
-						<CloudCheck />
-					</Tooltip>
-				) : null}
-				{savedTheseStats == false ? (
-					<SnapshotCooldown saveTime={saveTime} nextSaveTime={nextSaveTime!} />
-				) : null}
+				<MetaInfoComponent uuid={response.uuid} savedTheseStats={savedTheseStats} saveTime={saveTime} nextSaveTime={nextSaveTime}/>
 			</div>
 			<div className="w-full bg-content p-4 justify-around font-bold hidden lg:flex flex-nowrap">
 				<span>

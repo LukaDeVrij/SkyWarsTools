@@ -339,7 +339,6 @@ const Page = () => {
 												value = value + 1;
 											}
 
-											console.log(calcKitPrestigeLevel(215));
 											return (
 												<Tooltip
 													title={
