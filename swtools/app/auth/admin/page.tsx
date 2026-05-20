@@ -31,7 +31,7 @@ const AdminPage: React.FC = () => {
 		<div className="w-full min-h-screen bg-content flex flex-col items-center justify-start p-8 gap-4">
 			<LogsPanel profileToken={profileToken} />
 			<LogsDownloader profileToken={profileToken} />
-			<MapRotationCheck profileToken={profileToken} />
+			<MapRotationCheck profileToken={profileToken ?? ""} />
 		</div>
 	);
 };
