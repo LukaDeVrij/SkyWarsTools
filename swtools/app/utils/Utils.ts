@@ -901,13 +901,13 @@ export function fillMCColorText(ctx: CanvasRenderingContext2D, str: string, box:
 }
 
 // Fetch function for admin API
-export async function fetchAdminData(token: string | null, urlSuffix: string) {
+export async function fetchAdminData(token: string | null, urlSuffix: string, method: string = "GET") {
 	if (!token) throw new Error("No auth token provided");
 
 	const url = `${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/admin/${urlSuffix}`;
 
 	const res = await fetch(url, {
-		method: "GET",
+		method: method,
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,

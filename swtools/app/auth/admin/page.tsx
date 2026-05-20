@@ -5,6 +5,7 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LogsPanel from "./components/Logs";
 import LogsDownloader from "./components/LogsDownloader";
+import MapRotationCheck from "./components/MapRotationCheck";
 
 
 
@@ -30,6 +31,7 @@ const AdminPage: React.FC = () => {
 		<div className="w-full min-h-screen bg-content flex flex-col items-center justify-start p-8 gap-4">
 			<LogsPanel profileToken={profileToken} />
 			<LogsDownloader profileToken={profileToken} />
+			<MapRotationCheck profileToken={profileToken} />
 		</div>
 	);
 };
