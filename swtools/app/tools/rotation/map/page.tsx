@@ -13,7 +13,7 @@ type RotationRow = {
 
 type RotationAnomaly = {
 	timestamp: number;
-	type: "duplicate_add" | "remove_without_add";
+	type: "duplicate_add" | "remove_without_add" | "starts_with_remove" | "out_of_order_remove" | "out_of_order_add";
 	message: string;
 };
 
@@ -30,7 +30,9 @@ const buildRotationRows = (added: number[], removed: number[], hideAnomalies: bo
 		...removed.map((timestamp, index) => ({ timestamp, eventType: "removed" as const, index })),
 	].sort((a, b) => {
 		if (a.timestamp !== b.timestamp) return a.timestamp - b.timestamp;
-		if (a.eventType !== b.eventType) return a.eventType === "added" ? -1 : 1;
+		// For equal timestamps, process removals before adds so we do not create
+		// impossible "add before remove" pairings when a state flips instantly.
+		if (a.eventType !== b.eventType) return a.eventType === "removed" ? -1 : 1;
 		return a.index - b.index;
 	});
 
@@ -39,23 +41,51 @@ const buildRotationRows = (added: number[], removed: number[], hideAnomalies: bo
 	const rows: RotationRow[] = [];
 	const anomalies: RotationAnomaly[] = [];
 	let openRowIndex: number | null = null;
+	let expectedNextType: "added" | "removed" = "added";
 
 	for (const event of events) {
 		if (event.eventType === "added") {
+			if (expectedNextType !== "added") {
+				anomalies.push({
+					timestamp: event.timestamp,
+					type: "out_of_order_add",
+					message: "Added event encountered where a remove was expected.",
+				});
+			}
+
 			if (openRowIndex !== null) {
 				anomalies.push({
 					timestamp: event.timestamp,
 					type: "duplicate_add",
 					message: "Added event while map was already active.",
 				});
-				if (hideAnomalies) continue;
+
+				if (hideAnomalies) {
+					// Keep pairing behavior correct by re-basing the open window to the latest add.
+					const openRow = rows[openRowIndex];
+					openRow.added = event.timestamp;
+					openRow.removed = null;
+					openRow.daysInRotation = 0;
+					openRow.isOngoing = true;
+					expectedNextType = "removed";
+					continue;
+				}
+
+				// Keep the previous unmatched add visible as an anomaly row,
+				// then start a fresh active window from the latest add.
+				const previousOpenRow = rows[openRowIndex];
+				previousOpenRow.removed = null;
+				previousOpenRow.daysInRotation = null;
+				previousOpenRow.isOngoing = false;
 
 				rows.push({
 					added: event.timestamp,
 					removed: null,
-					daysInRotation: null,
-					isOngoing: false,
+					daysInRotation: 0,
+					isOngoing: true,
 				});
+				openRowIndex = rows.length - 1;
+				expectedNextType = "removed";
 				continue;
 			}
 
@@ -66,7 +96,19 @@ const buildRotationRows = (added: number[], removed: number[], hideAnomalies: bo
 				isOngoing: true,
 			});
 			openRowIndex = rows.length - 1;
+			expectedNextType = "removed";
 			continue;
+		}
+
+		if (expectedNextType !== "removed") {
+			anomalies.push({
+				timestamp: event.timestamp,
+				type: openRowIndex === null ? "starts_with_remove" : "out_of_order_remove",
+				message:
+					openRowIndex === null
+						? "First event is a remove; sequence should start with an add."
+						: "Removed event encountered where an add was expected.",
+			});
 		}
 
 		if (openRowIndex === null) {
@@ -95,6 +137,7 @@ const buildRotationRows = (added: number[], removed: number[], hideAnomalies: bo
 		openRow.isOngoing = false;
 		openRow.daysInRotation = Math.max(0, Math.floor((event.timestamp - openRow.added) / secondsPerDay));
 		openRowIndex = null;
+		expectedNextType = "added";
 	}
 
 	if (openRowIndex !== null) {
@@ -111,7 +154,7 @@ const buildRotationRows = (added: number[], removed: number[], hideAnomalies: bo
 const MapPageContent = () => {
 	const params = useSearchParams();
 	const { mapData, mapError, isMapLoading } = useMapRotationMap(params.get("mapName") || "");
-	const [hideAnomalies, setHideAnomalies] = React.useState(true);
+	const [hideAnomalies, setHideAnomalies] = React.useState(false);
 	const rotationData = mapData ? buildRotationRows(mapData.map.added, mapData.map.removed, hideAnomalies) : { rows: [], anomalies: [] };
 	const rotationRows = rotationData.rows;
 
