@@ -177,6 +177,7 @@ export const keys: LeaderboardKey[] = [
 			],
 		},
 		{ type: "enderchest", mode: "solo", kits: ["enderchest"] },
+		{ type: "enderchest", mode: "team", kits: ["enderchest"] },
 		{
 			type: "defending",
 			mode: "team",
