@@ -3,6 +3,7 @@ import MontageCardCard from "../components/tools/thumbnails/MontageCardCard";
 import SchemesCard from "../components/tools/thumbnails/SchemesCard";
 import CountsCard from "../components/tools/thumbnails/CountsCard";
 import ClimberCard from "../components/tools/thumbnails/ClimberCard";
+import CTSWTCard from "../components/tools/thumbnails/CTSWTCard";
 
 const ToolsPage = () => {
 	return (
@@ -10,18 +11,20 @@ const ToolsPage = () => {
 			<h1 className="text-4xl font-bold text-center pt-8">Extra Tools</h1>
 			<div className="flex justify-center p-5 lg:p-8 gap-8 flex-wrap">
 				<div className="w-90 h-90 bg-content rounded-xl">
-                    <MontageCardCard addInput={true}></MontageCardCard>
-                </div>
+					<CTSWTCard></CTSWTCard>
+				</div>
 				<div className="w-90 h-90 bg-content rounded-xl">
-                    <SchemesCard></SchemesCard>
-                </div>
+					<MontageCardCard addInput={true}></MontageCardCard>
+				</div>
 				<div className="w-90 h-90 bg-content rounded-xl">
-                    <CountsCard></CountsCard>
-                </div>
+					<SchemesCard></SchemesCard>
+				</div>
+				<div className="w-90 h-90 bg-content rounded-xl">
+					<CountsCard></CountsCard>
+				</div>
 				<div className="w-90 h-90 bg-content rounded-xl">
 					<ClimberCard addInput={true}></ClimberCard>
 				</div>
-
 			</div>
 		</div>
 	);
