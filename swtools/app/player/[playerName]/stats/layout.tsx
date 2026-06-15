@@ -11,6 +11,7 @@ import type { Metadata } from "next";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import { calcLevel } from "@/app/utils/Utils";
 import getMostPlayedKit from "@/app/utils/getMostPlayedKit";
+import WeeklyRanks from "@/app/components/player/WeeklyRanks";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -100,6 +101,7 @@ const PlayerStatsLayout = async ({ children, params }: LayoutProps) => {
 		<>
 			<PlayerBanner playerName={playerName} />
 			<PlayerTitle playerName={playerName} response={overallData} />
+			<WeeklyRanks uuid={overallData.uuid}></WeeklyRanks>
 			<div className="h-fit w-full flex flex-col lg:flex-row">
 				<RankGraph uuid={overallData.uuid} />
 				<PlayerOverallStats response={overallData} />

@@ -16,6 +16,7 @@ const weeklyKeys: LeaderboardKey[] = [
 	{ name: "Weekly Kills", value: "weekly/kills" },
 	{ name: "Weekly Wins", value: "weekly/wins" },
 	{ name: "Weekly Time Played", value: "weekly/time_played" },
+	{ name: "Weekly Heads", value: "weekly/heads" },
 ];
 
 // TODO probs need a bit of a refactor, where we take keys out and continue with the rest

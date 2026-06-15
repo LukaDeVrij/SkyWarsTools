@@ -158,115 +158,125 @@ const MapPageContent = () => {
 	const rotationData = mapData ? buildRotationRows(mapData.map.added, mapData.map.removed, hideAnomalies) : { rows: [], anomalies: [] };
 	const rotationRows = rotationData.rows;
 
+	const headerClass = "p-2 text-l lg:text-xl select-none whitespace-nowrap";
+
+	if (isMapLoading) {
+		return (
+			<div className="flex flex-col p-4">
+				<h1 className="text-4xl font-bold text-center my-2">Map Details</h1>
+				<div className="w-full overflow-x-auto rounded-xl lg:p-8 h-200" />
+			</div>
+		);
+	}
+
+	if (mapError) {
+		return (
+			<div className="flex flex-col p-4">
+				<h1 className="text-4xl font-bold text-center my-2">Map Details</h1>
+				<div className="w-full overflow-x-auto rounded-xl lg:p-8 h-200" />
+			</div>
+		);
+	}
+
 	return (
-		<div>
-			<h1>Map Rotation Map Details</h1>
-			{isMapLoading && <div>Loading map details...</div>}
-			{mapError && <div>Error loading map details.</div>}
+		<div className="flex flex-col p-4">
+			<h1 className="text-4xl font-bold text-center my-2">{mapData?.map.map_name ?? "Map Details"}</h1>
+			<span className="font-semibold text-center mb-2 px-3">Rotation history for this map</span>
+
 			{mapData && (
-				<div className="flex flex-col items-center justify-center min-h-screen  p-6">
-					<label htmlFor="hideAnomalies" className="mb-4 text-white flex items-center gap-2">
-						<input
-							type="checkbox"
-							id="hideAnomalies"
-							checked={hideAnomalies}
-							onChange={() => setHideAnomalies(!hideAnomalies)}
+				<>
+					{/* Map image */}
+					<div className="px-4 lg:px-8 pb-8">
+						<img
+							src={`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/image?q=large&name=${encodeURIComponent(params.get("mapName") || "")}`}
+							alt={`${mapData.map.map_name} image`}
+							className="w-full rounded-t-lg"
 						/>
-						Hide anomalies
-					</label>
-					<div className="w-full max-w-2xl bg-content rounded-lg shadow-md p-8">
-						<h2 className="text-3xl font-bold mb-6 text-gray-100">{mapData.map.map_name}</h2>
-						<div className="overflow-x-auto mb-6">
-							<table className="w-full border-collapse table-fixed">
-								<thead>
-									<tr className="bg-blue-500 text-white">
-										<th className="border px-4 py-2 text-left font-semibold">Added</th>
-										<th className="border px-4 py-2 text-left font-semibold">In Rotation</th>
-										<th className="border px-4 py-2 text-left font-semibold">Removed</th>
-									</tr>
-								</thead>
-								<tbody>
-									{rotationRows.map((row, i) => (
-										<tr key={i} className="hover:bg-gray-800 transition-colors">
-											<td
-												className={
-													"border border-gray-300 px-4 py-2 text-white align-top" +
-													(row.daysInRotation == null ? " bg-red-900/50" : "")
-												}
-											>
-												{row.added ? new Date(row.added * 1000).toLocaleString() : "-"}
-											</td>
-											<td
-												className={
-													"border border-gray-300 px-4 py-2 text-white align-top" +
-													(row.daysInRotation == null ? " bg-red-900/50" : "")
-												}
-											>
-												{row.daysInRotation === null
-													? "-"
-													: row.isOngoing
-														? `${row.daysInRotation} days (ongoing)`
-														: `${row.daysInRotation} days`}
-											</td>
-											<td
-												className={
-													"border border-gray-300 px-4 py-2 text-white align-top" +
-													(row.daysInRotation == null ? " bg-red-900/50" : "")
-												}
-											>
-												{row.removed ? new Date(row.removed * 1000).toLocaleString() : "-"}
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-						{rotationData.anomalies.length > 0 && (
-							<div className="mb-6 rounded-md border border-yellow-500 bg-yellow-950/30 p-4 text-yellow-100">
-								<p className="font-semibold mb-2">Potential Misaligned Datapoints</p>
-								<ul className="list-disc pl-5 space-y-1">
-									{rotationData.anomalies.map((anomaly, i) => (
-										<li key={`${anomaly.type}-${anomaly.timestamp}-${i}`}>
-											{new Date(anomaly.timestamp * 1000).toLocaleString()} - {anomaly.message}
-										</li>
-									))}
-								</ul>
-							</div>
-						)}
-						<div className="space-y-3 text-white">
-							<p className="text-lg">
-								<span className="font-semibold">Last Change:</span>{" "}
-								{new Date(mapData.map.last_change * 1000).toLocaleString()} ({timeAgo(mapData.map.last_change)})
-							</p>
-							<p className="text-lg">
-								<span className="font-semibold">Last Status:</span>{" "}
-								<span
-									className={`px-3 py-1 rounded-full font-semibold ${mapData.map.last_status ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}
-								>
-									{mapData.map.last_status ? "Active" : "Inactive"}
-								</span>
-							</p>
-						</div>
-						<div className="mt-6">
-							<img
-								src={`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/maps/image?name=${encodeURIComponent(params.get("mapName") || "")}`}
-								alt={`${mapData.map.map_name} image`}
-								className="w-full rounded-md shadow-md"
-							/>
-						</div>
+						<table className="w-150 lg:w-full bg-content rounded-b-lg">
+							<tbody>
+								<tr>
+									<td className="p-2 font-semibold text-lg text-accent">Last Change</td>
+									<td className="p-2 font-semibold text-lg">{timeAgo(mapData.map.last_change)}</td>
+									<td className="p-2 font-semibold text-lg">
+										<span
+											className={`px-3 py-1 rounded-full font-semibold ${
+												mapData.map.last_status ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"
+											}`}
+										>
+											{mapData.map.last_status ? "Active" : "Inactive"}
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-				</div>
+
+					{/* Rotation table */}
+					<div className="w-full overflow-x-auto rounded-xl lg:p-8">
+						<table className="w-150 lg:w-full bg-content rounded-lg">
+							<thead className="text-left text-accent border-b-2">
+								<tr>
+									<th className={headerClass}>Added</th>
+									<th className={headerClass}>In Rotation</th>
+									<th className={headerClass}>Removed</th>
+								</tr>
+							</thead>
+							<tbody>
+								{rotationRows.map((row, i) => (
+									<tr key={i} className={row.daysInRotation == null ? "bg-red-900/30" : ""}>
+										<td className="p-2 font-semibold text-lg">
+											{row.added ? new Date(row.added * 1000).toLocaleString() : "-"}
+										</td>
+										<td className="p-2 font-semibold text-lg">
+											{row.daysInRotation === null
+												? "-"
+												: row.isOngoing
+													? `${row.daysInRotation} days (ongoing)`
+													: `${row.daysInRotation} days`}
+										</td>
+										<td className="p-2 font-semibold text-lg">
+											{row.removed ? new Date(row.removed * 1000).toLocaleString() : "-"}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+					{/* Controls */}
+					{/* <div className="flex justify-center mb-4">
+						<label htmlFor="hideAnomalies" className="flex items-center gap-2 font-semibold cursor-pointer">
+							<input
+								type="checkbox"
+								id="hideAnomalies"
+								checked={hideAnomalies}
+								onChange={() => setHideAnomalies(!hideAnomalies)}
+							/>
+							Hide anomalies
+						</label>
+					</div> */}
+					{/* Anomalies */}
+					{rotationData.anomalies.length > 0 && (
+						<div className="mx-4 lg:mx-8 mb-4 rounded-md border border-yellow-500 bg-yellow-950/30 p-4 text-yellow-100">
+							<p className="font-semibold mb-2">Potential Misaligned Datapoints</p>
+							<ul className="list-disc pl-5 space-y-1">
+								{rotationData.anomalies.map((anomaly, i) => (
+									<li key={`${anomaly.type}-${anomaly.timestamp}-${i}`}>
+										{new Date(anomaly.timestamp * 1000).toLocaleString()} — {anomaly.message}
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);
 };
 
-const MapPage = () => {
-	return (
-		<Suspense fallback={<div>Loading map details...</div>}>
-			<MapPageContent />
-		</Suspense>
-	);
-};
+const MapPage = () => (
+	<Suspense fallback={<div>Loading map details...</div>}>
+		<MapPageContent />
+	</Suspense>
+);
 
 export default MapPage;

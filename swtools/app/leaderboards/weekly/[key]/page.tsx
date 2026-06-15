@@ -62,14 +62,12 @@ const Page = () => {
 		return <ErrorView statusCode={404} statusText="Could not get that weekly comparison" />;
 	}
 
-	if (!data?.entries) {
-		return <ErrorView statusCode={400} statusText="Weekly comparison has no players?!" />;
+	if (!data?.entries || data.entries.length < 1) {
+		return <ErrorView statusCode={400} statusText="Weekly comparison has no players?! Report this!" />;
 	}
 
-	// const generatedAt = new Date(Date.parse(data.generatedAt));
 	const prevTime = data.entries[0].previousTime;
 	const currentTime = data.entries[0].currentTime;
-	console.log(data.entries[0])
 
 	return (
 		<>

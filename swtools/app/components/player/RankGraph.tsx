@@ -99,7 +99,7 @@ const RankGraph: React.FC<RankGraphProps> = ({ uuid }) => {
 							</div>
 							<div className="w-[50%] lg:w-auto flex flex-col mx-4 font-semibold">
 								<span>
-									<HoverableSpan hoverText="Difference with your position from previous week">Delta</HoverableSpan>
+									<HoverableSpan hoverText="Difference with the position from previous week">Delta</HoverableSpan>
 								</span>
 								<span
 									className={`text-4xl ${delta[0] === "+" ? "text-green-500" : delta[0] === "-" ? "text-red-500" : ""}`}

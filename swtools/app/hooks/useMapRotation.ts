@@ -17,16 +17,21 @@ type MapRotationCurrentResponse = {
 
 type MapRotationMapResponse = {
 	success: boolean;
-	map: {
-		map_name: string;
-		added: number[];
-		removed: number[];
-		last_change: number;
-		last_status: boolean;
-		createdAt: string;
-		updatedAt: string;
-	};
+	map: Map
 };
+type Map = {
+	map_name: string;
+	added: number[];
+	removed: number[];
+	last_change: number;
+	last_status: boolean;
+	createdAt: string;
+	updatedAt: string;
+};
+type MapRotationAllResponse = {
+	success: boolean;
+	maps: Map[]
+}
 
 export const useMapRotationCurrent = () => {
 	const {
@@ -39,6 +44,19 @@ export const useMapRotationCurrent = () => {
 		currentData,
 		currentError,
 		isCurrentLoading,
+	};
+};
+export const useMapRotationAll = () => {
+	const {
+		data: allMapsData,
+		error: allMapsError,
+		isLoading: allMapsIsLoading,
+	} = useSWR<MapRotationAllResponse>(`${process.env.NEXT_PUBLIC_SKYWARSTOOLS_API}/map-rotation/all`, fetcher);
+
+	return {
+		allMapsData,
+		allMapsError,
+		allMapsIsLoading,
 	};
 };
 

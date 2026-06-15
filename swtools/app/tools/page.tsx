@@ -4,6 +4,7 @@ import SchemesCard from "../components/tools/thumbnails/SchemesCard";
 import CountsCard from "../components/tools/thumbnails/CountsCard";
 import ClimberCard from "../components/tools/thumbnails/ClimberCard";
 import CTSWTCard from "../components/tools/thumbnails/CTSWTCard";
+import MapRotationCard from "../components/tools/thumbnails/MapRotationCard";
 
 const ToolsPage = () => {
 	return (
@@ -12,6 +13,9 @@ const ToolsPage = () => {
 			<div className="flex justify-center p-5 lg:p-8 gap-8 flex-wrap">
 				<div className="w-90 h-90 bg-content rounded-xl">
 					<CTSWTCard></CTSWTCard>
+				</div>
+				<div className="w-90 h-90 bg-content rounded-xl">
+					<MapRotationCard></MapRotationCard>
 				</div>
 				<div className="w-90 h-90 bg-content rounded-xl">
 					<MontageCardCard addInput={true}></MontageCardCard>
