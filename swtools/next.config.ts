@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: "https",
+				hostname: "render.crafty.gg",
+				pathname: "/3d/**/**",
+			},
+			{
+				protocol: "https",
 				hostname: "api.skywarstools.com",
 				pathname: "/**",
 			},
@@ -22,7 +27,7 @@ const nextConfig: NextConfig = {
 				protocol: "http",
 				hostname: "localhost",
 				pathname: "/**",
-			}
+			},
 		],
 		qualities: [10, 75, 85, 100],
 	},

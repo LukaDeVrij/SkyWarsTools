@@ -1,5 +1,4 @@
 import { OverallResponse } from "../types/OverallResponse";
-import { calcPrestigeObj } from "./Utils";
 
 export type Scheme = {
 	name: string;
@@ -7,6 +6,7 @@ export type Scheme = {
 	iconColor: string;
 	req?: string | number;
 	reqKit?: string;
+	formattedName?: string;
 };
 
 // These are somewhat unconfirmed scheme names - these do make sense and if hypixel designed their scheme names normally this will work
@@ -157,8 +157,8 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "icicle_prestige",
-		rankColor: ["§9", "§c", "§c", "§c", "§9"],
-		iconColor: "§c",
+		rankColor: ["§9", "§b", "§b", "§b", "§9"],
+		iconColor: "§b",
 		req: 290,
 	},
 	{
@@ -181,7 +181,7 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "target_prestige",
-		rankColor: "§c",
+		rankColor: ["§c", "§f", "§c", "§c", "§c"],
 		iconColor: "§f",
 		req: 380,
 	},
@@ -462,7 +462,7 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "radiant_prestige",
-		rankColor: ["§0", "§0", "§7", "§f", "§8"],
+		rankColor: ["§0", "§8", "§7", "§f", "§8"],
 		iconColor: "§7",
 		req: 470,
 	},
@@ -999,7 +999,7 @@ export const rawSchemes: Scheme[] = [
 	},
 	{
 		name: "beagle",
-		rankColor: ["§f", "§7", "§7", "§7", "§f"],
+		rankColor: ["§f", "§7", "§f", "§7", "§7"],
 		iconColor: "§f",
 		req: "§5§o§cUnlocked at Hound Mini Kit Prestige VII!",
 		reqKit: "Hound Mini",
@@ -1136,11 +1136,20 @@ export const rawSchemes: Scheme[] = [
 	},
 ];
 
+export const schemes: Scheme[] = rawSchemes.map((scheme) => ({
+	...scheme,
+	formattedName: scheme.name
+		.replace(/_prestige$/, "")
+		.replace(/_/g, " ")
+		.replace(/\b(i|ii|iii|iv|v|vi|vii|viii|ix|x)\b/gi, (m) => m.toUpperCase())
+		.replace(/\b\w/g, (c) => c.toUpperCase()),
+}));
+
 const schemeByName = new Map<string, Scheme>();
 const schemeByReq = new Map<string | number, Scheme>();
 const schemeByKit = new Map<string, Scheme>();
 
-for (const scheme of rawSchemes) {
+for (const scheme of schemes) {
 	schemeByName.set(scheme.name.toLowerCase(), scheme);
 	if (scheme.req !== undefined) {
 		schemeByReq.set(scheme.req, scheme);
@@ -1160,6 +1169,14 @@ export function getSchemeByName(name: string): Scheme | undefined {
 export function getSchemeByReq(req: string | number): Scheme | undefined {
 	return schemeByReq.get(req);
 }
+export function getLastScheme(): Scheme {
+	return {
+		name: "???",
+		rankColor: "§5",
+		iconColor: "§5",
+		req: 9999,
+	};
+}
 
 export function formatScheme(level: number, overallResponse: OverallResponse, overwriteScheme: boolean): string {
 	try {
@@ -1173,7 +1190,7 @@ export function formatScheme(level: number, overallResponse: OverallResponse, ov
 		if (!overwriteScheme) {
 			schemeName = overallResponse.display.active_scheme.split("scheme_")[1] ?? "stone_prestige";
 		} else {
-			const [, presLevel] = calcPrestigeObj(level);
+			const presLevel = calcScheme(level).req ?? 9999;
 			schemeName = getSchemeByReq(presLevel)?.name ?? "stone_prestige";
 		}
 		// console.log(schemeName);
@@ -1230,4 +1247,46 @@ function extractIcon(levelFormattedWithBrackets: string): string {
 	}
 	// Shit hit the fan
 	return "✯";
+}
+
+export function calcScheme(level: number): Scheme {
+	if (level >= 500) {
+		return getLastScheme();
+	}
+
+	const base = Math.floor(level / 10) * 10;
+
+	return getSchemeByReq(base) ?? getLastScheme();
+}
+
+export function calcSchemeString(level: number): string {
+	const scheme = calcScheme(level);
+	let prestigeTag = `[${level}]`;
+	try {
+		if (Array.isArray(scheme.rankColor)) {
+			prestigeTag = prestigeTag
+				.split("")
+				.map((char, index) => {
+					return scheme.rankColor[index] + char;
+				})
+				.join("");
+		} else {
+			prestigeTag = scheme.rankColor + prestigeTag;
+		}
+
+		prestigeTag = prestigeTag.slice(0, -1) + (scheme.iconColor ?? "") + "✯" + prestigeTag.slice(-1);
+	} catch {
+		// In case of error, return a default prestige tag
+		prestigeTag = `[${level}]✯`;
+	}
+	return prestigeTag;
+}
+
+export function calcNextPrestigeScheme(level: number): Scheme {
+	const scheme = calcScheme(level);
+	const prestigeReq = scheme.req as number;
+	const nextPrestigeReq = prestigeReq + 10;
+	const nextScheme = getSchemeByReq(nextPrestigeReq);
+	if (!nextScheme) return getLastScheme();
+	return nextScheme;
 }

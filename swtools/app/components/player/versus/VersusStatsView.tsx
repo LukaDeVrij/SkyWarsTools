@@ -111,7 +111,7 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 			<div className="flex flex-row flex-1 items-center bg-layer p-4 rounded-lg gap-4">
 				<div className="flex-shrink-0 hidden lg:flex items-center justify-center" style={{ width: 150, height: 356 }}>
 					<Image
-						src={`https://starlightskins.lunareclipse.studio/render/ultimate/${overallData.player}/full`}
+						src={`https://render.crafty.gg/3d/full/${overallData.player}`}
 						width={150}
 						height={356}
 						style={{ width: 150, height: 356 }}
@@ -170,7 +170,7 @@ export function VersusStatsView({ overallData, snapshots }: { overallData: Overa
 						</div>
 						<div className="flex-shrink-0 hidden lg:flex items-center justify-center" style={{ width: 150, height: 356 }}>
 							<Image
-								src={`https://starlightskins.lunareclipse.studio/render/ultimate/${opponentData.player}/full`}
+								src={`https://render.crafty.gg/3d/full/${opponentData.player}`}
 								width={150}
 								height={356}
 								style={{ width: 150, height: 356 }}

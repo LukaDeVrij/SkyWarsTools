@@ -1,6 +1,7 @@
+import SchemePreviews from "../tools/schemes/page";
 import { DescentItem, DescentMap } from "../types/DescentMap";
 import { OverallResponse } from "../types/OverallResponse";
-import { Scheme } from "./Scheme";
+import { getLastScheme, getSchemeByReq, Scheme } from "./Scheme";
 
 export function kitProcessing(value: string): string {
 	const parts = value.split("_");
@@ -236,433 +237,382 @@ export function calcEXPFromLevel(level: number): number {
 
 // Skywars leveling system
 
-export type PrestigeObject = {
-	currentColor: string;
-	emblem: string;
-	icon: string;
-	name: string;
-	rank: string | string[];
-};
+// export type PrestigeObject = {
+// 	currentColor: string;
+// 	emblem: string;
+// 	icon: string;
+// 	name: string;
+// 	rank: string | string[];
+// };
 
-const prestigeColors: { [key: number]: PrestigeObject } = {
-	0: {
-		rank: "§7",
-		emblem: "§7",
-		name: "Default",
-		currentColor: "#808080", // GRAY
-		icon: "✯",
-	}, // GRAY
-	10: {
-		rank: "§f",
-		emblem: "§f",
-		name: "Iron",
-		currentColor: "#D4D4D4", // SILVER
-		icon: "✙",
-	}, // WHITE
-	20: {
-		rank: "§6",
-		emblem: "§6",
-		name: "Gold",
-		currentColor: "#FFD700", // GOLD
-		icon: "❤",
-	}, // GOLD
-	30: {
-		rank: "§b",
-		emblem: "§b",
-		name: "Diamond",
-		currentColor: "#00FFFF", // DIAMOND BLUE
-		icon: "☠",
-	}, // AQUA
-	40: {
-		rank: "§c",
-		emblem: "§c",
-		name: "Ruby",
-		currentColor: "#E0115F", // RUBY RED
-		icon: "❦",
-	}, // RED
-	50: {
-		rank: "§d",
-		emblem: "§d",
-		name: "Crystal",
-		currentColor: "#E6E6FA", // LAVENDER
-		icon: "✵",
-	}, // LIGHT_PURPLE
-	60: {
-		rank: "§5",
-		emblem: "§5",
-		name: "Amethyst",
-		currentColor: "#9966CC", // AMETHYST PURPLE
-		icon: "☯",
-	}, // DARK_PURPLE
-	70: {
-		rank: "§9",
-		emblem: "§9",
-		name: "Opal",
-		currentColor: "#1E90FF", // DODGER BLUE
-		icon: "❣",
-	}, // BLUE
-	80: {
-		rank: "§e",
-		emblem: "§e",
-		name: "Topaz",
-		currentColor: "#FFC87C", // TOPAZ ORANGE
-		icon: "✦",
-	}, // YELLOW
-	90: {
-		rank: "§a",
-		emblem: "§a",
-		name: "Jade",
-		currentColor: "#00A86B", // JADE GREEN
-		icon: "✰",
-	}, // GREEN
-	100: {
-		rank: ["§c", "§6", "§e", "§a", "§d"],
-		emblem: "§b",
-		name: "Mythic I",
-		currentColor: "#FF69B4", // HOT PINK
-		icon: "@_@",
-	}, // MYTHIC 1
-	110: {
-		rank: ["§4", "§c", "§c", "§c", "§4"],
-		emblem: "§c",
-		name: "Bloody",
-		currentColor: "#8B0000", // DARK RED
-		icon: "✈",
-	}, // BLOODY
-	120: {
-		rank: "§1",
-		emblem: "§1",
-		name: "Cobalt",
-		currentColor: "#0047AB", // COBALT BLUE
-		icon: "✈",
-	},
-	130: {
-		rank: ["§c", "§f", "§f", "§f", "§c"],
-		emblem: "§f",
-		name: "Content",
-		currentColor: "#FFDAB9", // PEACH
-		icon: "✠",
-	}, // CONTENT
-	140: {
-		rank: "§4",
-		emblem: "§4",
-		name: "Crimson",
-		currentColor: "#DC143C", // CRIMSON RED
-		icon: "♕",
-	}, // CRIMSON
-	150: {
-		rank: ["§6", "§e", "§e", "§e", "§6"],
-		emblem: "§e",
-		name: "Firefly",
-		currentColor: "#FFA500", // ORANGE
-		icon: "δvδ",
-	}, // TITANIUM II
-	160: {
-		rank: "§2",
-		emblem: "§2",
-		name: "Emerald",
-		currentColor: "#50C878", // EMERALD GREEN
-		icon: "∴",
-	}, // EMERALD
-	170: {
-		rank: ["§1", "§9", "§9", "§9", "§1"],
-		emblem: "§9",
-		name: "Abyss",
-		currentColor: "#191970", // MIDNIGHT BLUE
-		icon: "✰",
-	}, // ABYSS
-	180: {
-		rank: "§3",
-		emblem: "§3",
-		name: "Sapphire",
-		currentColor: "#0F52BA", // SAPPHIRE BLUE
-		icon: "⁑",
-	}, // Sapphire
-	190: {
-		rank: ["§4", "§e", "§e", "§e", "§4"],
-		emblem: "§e",
-		name: "Emergency",
-		currentColor: "#FF4500", // ORANGE RED
-		icon: "☢",
-	}, // Emergency
-	200: {
-		rank: ["§6", "§e", "§a", "§b", "§c"],
-		emblem: "§d",
-		name: "Mythic II",
-		currentColor: "#FF1493", // DEEP PINK
-		icon: "zz_zz",
-	}, // Mythic II
-	210: {
-		rank: ["§5", "§d", "§d", "§d", "§5"],
-		emblem: "§d",
-		name: "Mulberry",
-		currentColor: "#C54B8C", // MULBERRY
-		icon: "♝",
-	},
-	220: {
-		rank: "§8",
-		emblem: "§8",
-		name: "Slate",
-		currentColor: "#708090", // SLATE GRAY
-		icon: "🔱",
-	},
-	230: {
-		rank: ["§d", "§b", "§b", "§b", "§d"],
-		emblem: "§b",
-		name: "Blood God",
-		currentColor: "#8B0000", // DARK BLOOD RED
-		icon: "☁",
-	},
-	240: {
-		rank: "§0",
-		emblem: "§0",
-		name: "Midnight",
-		currentColor: "#191970", // MIDNIGHT BLUE
-		icon: "⍟",
-	},
-	250: {
-		rank: ["§c", "§e", "§e", "§e", "§c"],
-		emblem: "§6",
-		name: "Sun",
-		currentColor: "#FFD700", // SUN YELLOW
-		icon: "♗",
-	},
-	260: {
-		rank: ["§1", "§6", "§6", "§6", "§0"],
-		emblem: "§e",
-		name: "Bulb",
-		currentColor: "#FFFFE0", // LIGHT YELLOW
-		icon: "♔",
-	},
-	270: {
-		rank: ["§1", "§3", "§3", "§3", "§1"],
-		emblem: "§3",
-		name: "Twilight",
-		currentColor: "#483D8B", // DARK SLATE BLUE
-		icon: "♞",
-	},
-	280: {
-		rank: ["§a", "§1", "§a", "§e", "§1"],
-		emblem: "§a",
-		name: "Natural",
-		currentColor: "#228B22", // FOREST GREEN
-		icon: "✏",
-	},
-	290: {
-		rank: ["§9", "§c", "§c", "§c", "§9"],
-		emblem: "§c",
-		name: "Icicle",
-		currentColor: "#ADD8E6", // LIGHT BLUE
-		icon: "❈",
-	},
-	300: {
-		rank: ["§f", "§a", "§c", "§d", "§6"],
-		emblem: "§c",
-		name: "Mythic III",
-		currentColor: "#FF69B4", // HOT PINK
-		icon: "ಠ_ಠ",
-	},
-	310: {
-		rank: ["§8", "§7", "§7", "§7", "§8"],
-		emblem: "§7",
-		name: "Graphite",
-		currentColor: "#2F4F4F", // DARK SLATE GRAY
-		icon: "ಠ_ಠ",
-	},
-	320: {
-		rank: ["§d", "§a", "§a", "§a", "§d"],
-		emblem: "§a",
-		name: "Punk",
-		currentColor: "#FF4500", // ORANGE RED
-		icon: "ಠ_ಠ",
-	},
-	330: {
-		rank: ["§e", "§c", "§c", "§c", "§e"],
-		emblem: "§c",
-		name: "Meltdown",
-		currentColor: "#FF6347", // TOMATO
-		icon: "ಠ_ಠ",
-	},
-	340: {
-		rank: ["§c", "§a", "§b", "§d", "§a"],
-		emblem: "§a",
-		name: "Iridescent",
-		currentColor: "#DA70D6", // ORCHID
-		icon: "ಠ_ಠ",
-	},
-	350: {
-		rank: ["§f", "§f", "§e", "§e", "§6"],
-		emblem: "§6",
-		name: "Marigold",
-		currentColor: "#FFB347", // MARIGOLD ORANGE
-		icon: "o...0",
-	},
-	360: {
-		rank: ["§9", "§9", "§b", "§f", "§e"], // need proof
-		emblem: "§e",
-		name: "Beach",
-		currentColor: "#87CEEB", // SKY BLUE
-		icon: "ಠ_ಠ",
-	},
-	370: {
-		rank: ["§e", "§e", "§f", "§f", "§6"],
-		emblem: "§6",
-		name: "Spark",
-		currentColor: "#FFD700", // GOLDEN YELLOW
-		icon: "ಠ_ಠ",
-	},
-	380: {
-		rank: "§c",
-		emblem: "§f",
-		name: "Target",
-		currentColor: "#FF0000", // BRIGHT RED
-		icon: "ಠ_ಠ",
-	},
-	390: {
-		rank: ["§2", "§a", "§a", "§a", "§2"],
-		emblem: "§a",
-		name: "Limelight",
-		currentColor: "#32CD32", // LIME GREEN
-		icon: "ಠ_ಠ",
-	},
-	400: {
-		rank: ["§a", "§b", "§d", "§c", "§e"],
-		emblem: "§6",
-		name: "Mythic IV",
-		currentColor: "#FF69B4", // HOT PINK
-		icon: ">u<",
-	},
-	410: {
-		rank: ["§3", "§c", "§c", "§c", "§3"],
-		emblem: "§c",
-		name: "Cerulean",
-		currentColor: "#007BA7", // CERULEAN BLUE
-		icon: "ಠ_ಠ",
-	},
-	420: {
-		rank: ["§1", "§8", "§8", "§8", "§1"],
-		emblem: "§5",
-		name: "Magical",
-		currentColor: "#8A2BE2", // BLUE VIOLET
-		icon: "ಠ_ಠ",
-	},
-	430: {
-		rank: ["§6", "§f", "§f", "§f", "§3"],
-		emblem: "§b",
-		name: "Luminous",
-		currentColor: "#FFFFE0", // LIGHT YELLOW
-		icon: "ಠ_ಠ",
-	},
-	440: {
-		rank: ["§a", "§a", "§e", "§e", "§f"],
-		emblem: "§f",
-		name: "Synthesis",
-		currentColor: "#00FA9A", // MEDIUM SPRING GREEN
-		icon: "ಠ_ಠ",
-	},
-	450: {
-		rank: ["§4", "§6", "§c", "§6", "§f"], // need proof
-		emblem: "§e",
-		name: "Burn",
-		currentColor: "#FF4500", // ORANGE RED
-		icon: "v_v",
-	},
-	460: {
-		rank: ["§9", "§3", "§d", "§9", "§4"], // idk need proof
-		emblem: "§5",
-		name: "Dramatic",
-		currentColor: "#8B0000", // DARK RED
-		icon: "ಠ_ಠ",
-	},
-	470: {
-		rank: ["§1", "§7", "§f", "§8", "§8"], // idk need proof
-		emblem: "§7",
-		name: "Radiant",
-		currentColor: "#FFD700", // GOLDEN YELLOW
-		icon: "ಠ_ಠ",
-	},
-	480: {
-		rank: ["§1", "§1", "§9", "§3", "§f"],
-		emblem: "§b",
-		name: "Tidal",
-		currentColor: "#4682B4", // STEEL BLUE
-		icon: "ಠ_ಠ",
-	},
-	490: {
-		rank: ["§9", "§b", "§f", "§f", "§4"],
-		emblem: "§c",
-		name: "Firework",
-		currentColor: "#FF6347", // TOMATO
-		icon: "ಠ_ಠ",
-	},
-	500: {
-		rank: ["§b", "§d", "§c", "§6", "§a"],
-		emblem: "§e",
-		name: "Mythic V",
-		currentColor: "#FF69B4", // HOT PINK
-		icon: "ಠ_ಠ",
-	},
-	9999: {
-		rank: "§c",
-		emblem: "§c",
-		name: "???",
-		currentColor: "#FF0000", // BRIGHT RED
-		icon: "",
-	},
-};
+// const prestigeColors: { [key: number]: PrestigeObject } = {
+// 	0: {
+// 		rank: "§7",
+// 		emblem: "§7",
+// 		name: "Default",
+// 		currentColor: "#808080", // GRAY
+// 		icon: "✯",
+// 	}, // GRAY
+// 	10: {
+// 		rank: "§f",
+// 		emblem: "§f",
+// 		name: "Iron",
+// 		currentColor: "#D4D4D4", // SILVER
+// 		icon: "✙",
+// 	}, // WHITE
+// 	20: {
+// 		rank: "§6",
+// 		emblem: "§6",
+// 		name: "Gold",
+// 		currentColor: "#FFD700", // GOLD
+// 		icon: "❤",
+// 	}, // GOLD
+// 	30: {
+// 		rank: "§b",
+// 		emblem: "§b",
+// 		name: "Diamond",
+// 		currentColor: "#00FFFF", // DIAMOND BLUE
+// 		icon: "☠",
+// 	}, // AQUA
+// 	40: {
+// 		rank: "§c",
+// 		emblem: "§c",
+// 		name: "Ruby",
+// 		currentColor: "#E0115F", // RUBY RED
+// 		icon: "❦",
+// 	}, // RED
+// 	50: {
+// 		rank: "§d",
+// 		emblem: "§d",
+// 		name: "Crystal",
+// 		currentColor: "#E6E6FA", // LAVENDER
+// 		icon: "✵",
+// 	}, // LIGHT_PURPLE
+// 	60: {
+// 		rank: "§5",
+// 		emblem: "§5",
+// 		name: "Amethyst",
+// 		currentColor: "#9966CC", // AMETHYST PURPLE
+// 		icon: "☯",
+// 	}, // DARK_PURPLE
+// 	70: {
+// 		rank: "§9",
+// 		emblem: "§9",
+// 		name: "Opal",
+// 		currentColor: "#1E90FF", // DODGER BLUE
+// 		icon: "❣",
+// 	}, // BLUE
+// 	80: {
+// 		rank: "§e",
+// 		emblem: "§e",
+// 		name: "Topaz",
+// 		currentColor: "#FFC87C", // TOPAZ ORANGE
+// 		icon: "✦",
+// 	}, // YELLOW
+// 	90: {
+// 		rank: "§a",
+// 		emblem: "§a",
+// 		name: "Jade",
+// 		currentColor: "#00A86B", // JADE GREEN
+// 		icon: "✰",
+// 	}, // GREEN
+// 	100: {
+// 		rank: ["§c", "§6", "§e", "§a", "§d"],
+// 		emblem: "§b",
+// 		name: "Mythic I",
+// 		currentColor: "#FF69B4", // HOT PINK
+// 		icon: "@_@",
+// 	}, // MYTHIC 1
+// 	110: {
+// 		rank: ["§4", "§c", "§c", "§c", "§4"],
+// 		emblem: "§c",
+// 		name: "Bloody",
+// 		currentColor: "#8B0000", // DARK RED
+// 		icon: "✈",
+// 	}, // BLOODY
+// 	120: {
+// 		rank: "§1",
+// 		emblem: "§1",
+// 		name: "Cobalt",
+// 		currentColor: "#0047AB", // COBALT BLUE
+// 		icon: "✈",
+// 	},
+// 	130: {
+// 		rank: ["§c", "§f", "§f", "§f", "§c"],
+// 		emblem: "§f",
+// 		name: "Content",
+// 		currentColor: "#FFDAB9", // PEACH
+// 		icon: "✠",
+// 	}, // CONTENT
+// 	140: {
+// 		rank: "§4",
+// 		emblem: "§4",
+// 		name: "Crimson",
+// 		currentColor: "#DC143C", // CRIMSON RED
+// 		icon: "♕",
+// 	}, // CRIMSON
+// 	150: {
+// 		rank: ["§6", "§e", "§e", "§e", "§6"],
+// 		emblem: "§e",
+// 		name: "Firefly",
+// 		currentColor: "#FFA500", // ORANGE
+// 		icon: "δvδ",
+// 	}, // TITANIUM II
+// 	160: {
+// 		rank: "§2",
+// 		emblem: "§2",
+// 		name: "Emerald",
+// 		currentColor: "#50C878", // EMERALD GREEN
+// 		icon: "∴",
+// 	}, // EMERALD
+// 	170: {
+// 		rank: ["§1", "§9", "§9", "§9", "§1"],
+// 		emblem: "§9",
+// 		name: "Abyss",
+// 		currentColor: "#191970", // MIDNIGHT BLUE
+// 		icon: "✰",
+// 	}, // ABYSS
+// 	180: {
+// 		rank: "§3",
+// 		emblem: "§3",
+// 		name: "Sapphire",
+// 		currentColor: "#0F52BA", // SAPPHIRE BLUE
+// 		icon: "⁑",
+// 	}, // Sapphire
+// 	190: {
+// 		rank: ["§4", "§e", "§e", "§e", "§4"],
+// 		emblem: "§e",
+// 		name: "Emergency",
+// 		currentColor: "#FF4500", // ORANGE RED
+// 		icon: "☢",
+// 	}, // Emergency
+// 	200: {
+// 		rank: ["§6", "§e", "§a", "§b", "§c"],
+// 		emblem: "§d",
+// 		name: "Mythic II",
+// 		currentColor: "#FF1493", // DEEP PINK
+// 		icon: "zz_zz",
+// 	}, // Mythic II
+// 	210: {
+// 		rank: ["§5", "§d", "§d", "§d", "§5"],
+// 		emblem: "§d",
+// 		name: "Mulberry",
+// 		currentColor: "#C54B8C", // MULBERRY
+// 		icon: "♝",
+// 	},
+// 	220: {
+// 		rank: "§8",
+// 		emblem: "§8",
+// 		name: "Slate",
+// 		currentColor: "#708090", // SLATE GRAY
+// 		icon: "🔱",
+// 	},
+// 	230: {
+// 		rank: ["§d", "§b", "§b", "§b", "§d"],
+// 		emblem: "§b",
+// 		name: "Blood God",
+// 		currentColor: "#8B0000", // DARK BLOOD RED
+// 		icon: "☁",
+// 	},
+// 	240: {
+// 		rank: "§0",
+// 		emblem: "§0",
+// 		name: "Midnight",
+// 		currentColor: "#191970", // MIDNIGHT BLUE
+// 		icon: "⍟",
+// 	},
+// 	250: {
+// 		rank: ["§c", "§e", "§e", "§e", "§c"],
+// 		emblem: "§6",
+// 		name: "Sun",
+// 		currentColor: "#FFD700", // SUN YELLOW
+// 		icon: "♗",
+// 	},
+// 	260: {
+// 		rank: ["§1", "§6", "§6", "§6", "§0"],
+// 		emblem: "§e",
+// 		name: "Bulb",
+// 		currentColor: "#FFFFE0", // LIGHT YELLOW
+// 		icon: "♔",
+// 	},
+// 	270: {
+// 		rank: ["§1", "§3", "§3", "§3", "§1"],
+// 		emblem: "§3",
+// 		name: "Twilight",
+// 		currentColor: "#483D8B", // DARK SLATE BLUE
+// 		icon: "♞",
+// 	},
+// 	280: {
+// 		rank: ["§a", "§1", "§a", "§e", "§1"],
+// 		emblem: "§a",
+// 		name: "Natural",
+// 		currentColor: "#228B22", // FOREST GREEN
+// 		icon: "✏",
+// 	},
+// 	290: {
+// 		rank: ["§9", "§b", "§b", "§b", "§9"],
+// 		emblem: "§b",
+// 		name: "Icicle",
+// 		currentColor: "#ADD8E6", // LIGHT BLUE
+// 		icon: "❈",
+// 	},
+// 	300: {
+// 		rank: ["§f", "§a", "§c", "§d", "§6"],
+// 		emblem: "§c",
+// 		name: "Mythic III",
+// 		currentColor: "#FF69B4", // HOT PINK
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	310: {
+// 		rank: ["§8", "§7", "§7", "§7", "§8"],
+// 		emblem: "§7",
+// 		name: "Graphite",
+// 		currentColor: "#2F4F4F", // DARK SLATE GRAY
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	320: {
+// 		rank: ["§d", "§a", "§a", "§a", "§d"],
+// 		emblem: "§a",
+// 		name: "Punk",
+// 		currentColor: "#FF4500", // ORANGE RED
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	330: {
+// 		rank: ["§e", "§c", "§c", "§c", "§e"],
+// 		emblem: "§c",
+// 		name: "Meltdown",
+// 		currentColor: "#FF6347", // TOMATO
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	340: {
+// 		rank: ["§c", "§a", "§b", "§d", "§a"],
+// 		emblem: "§a",
+// 		name: "Iridescent",
+// 		currentColor: "#DA70D6", // ORCHID
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	350: {
+// 		rank: ["§f", "§f", "§e", "§e", "§6"],
+// 		emblem: "§6",
+// 		name: "Marigold",
+// 		currentColor: "#FFB347", // MARIGOLD ORANGE
+// 		icon: "o...0",
+// 	},
+// 	360: {
+// 		rank: ["§9", "§9", "§b", "§f", "§e"], // need proof
+// 		emblem: "§e",
+// 		name: "Beach",
+// 		currentColor: "#87CEEB", // SKY BLUE
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	370: {
+// 		rank: ["§e", "§e", "§f", "§f", "§6"],
+// 		emblem: "§6",
+// 		name: "Spark",
+// 		currentColor: "#FFD700", // GOLDEN YELLOW
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	380: {
+// 		rank: ["§c", "§f", "§c", "§c", "§c"],
+// 		emblem: "§f",
+// 		name: "Target",
+// 		currentColor: "#FF0000", // BRIGHT RED
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	390: {
+// 		rank: ["§2", "§a", "§a", "§a", "§2"],
+// 		emblem: "§a",
+// 		name: "Limelight",
+// 		currentColor: "#32CD32", // LIME GREEN
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	400: {
+// 		rank: ["§a", "§b", "§d", "§c", "§e"],
+// 		emblem: "§6",
+// 		name: "Mythic IV",
+// 		currentColor: "#FF69B4", // HOT PINK
+// 		icon: ">u<",
+// 	},
+// 	410: {
+// 		rank: ["§3", "§c", "§c", "§c", "§3"],
+// 		emblem: "§c",
+// 		name: "Cerulean",
+// 		currentColor: "#007BA7", // CERULEAN BLUE
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	420: {
+// 		rank: ["§1", "§8", "§8", "§8", "§1"],
+// 		emblem: "§5",
+// 		name: "Magical",
+// 		currentColor: "#8A2BE2", // BLUE VIOLET
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	430: {
+// 		rank: ["§6", "§f", "§f", "§f", "§3"],
+// 		emblem: "§b",
+// 		name: "Luminous",
+// 		currentColor: "#FFFFE0", // LIGHT YELLOW
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	440: {
+// 		rank: ["§a", "§a", "§e", "§e", "§f"],
+// 		emblem: "§f",
+// 		name: "Synthesis",
+// 		currentColor: "#00FA9A", // MEDIUM SPRING GREEN
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	450: {
+// 		rank: ["§4", "§6", "§c", "§6", "§f"], // need proof
+// 		emblem: "§e",
+// 		name: "Burn",
+// 		currentColor: "#FF4500", // ORANGE RED
+// 		icon: "v_v",
+// 	},
+// 	460: {
+// 		rank: ["§9", "§3", "§d", "§9", "§4"], // idk need proof
+// 		emblem: "§5",
+// 		name: "Dramatic",
+// 		currentColor: "#8B0000", // DARK RED
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	470: {
+// 		rank: ["§0", "§8", "§7", "§f", "§8"],
+// 		emblem: "§7",
+// 		name: "Radiant",
+// 		currentColor: "#FFD700", // GOLDEN YELLOW
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	480: {
+// 		rank: ["§1", "§1", "§9", "§3", "§f"],
+// 		emblem: "§b",
+// 		name: "Tidal",
+// 		currentColor: "#4682B4", // STEEL BLUE
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	490: {
+// 		rank: ["§9", "§b", "§f", "§f", "§4"],
+// 		emblem: "§c",
+// 		name: "Firework",
+// 		currentColor: "#FF6347", // TOMATO
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	500: {
+// 		rank: ["§b", "§d", "§c", "§6", "§a"],
+// 		emblem: "§e",
+// 		name: "Mythic V",
+// 		currentColor: "#FF69B4", // HOT PINK
+// 		icon: "ಠ_ಠ",
+// 	},
+// 	9999: {
+// 		rank: "§c",
+// 		emblem: "§c",
+// 		name: "???",
+// 		currentColor: "#FF0000", // BRIGHT RED
+// 		icon: "",
+// 	},
+// };
 
-export function calcPrestigeObj(level: number): [PrestigeObject, number] {
-	if (level === 9999) {
-		return [prestigeColors[9999], 9999]; // Return the ??? prestige object directly
-	} // Special case for ??? prestige
-	if (level >= 500) {
-		return [prestigeColors[500], 500];
-	}
 
-	const base = Math.floor(level / 10) * 10;
-
-	return [prestigeColors[base], base];
-}
-
-export function calcPrestigeTag(level: number): string {
-	const prestigeLevel = calcPrestigeObj(level)[1];
-	let prestigeTag = `[${level}]`;
-
-	const prestigeLevelKey = prestigeLevel as keyof typeof prestigeColors;
-
-	const prestigeData = prestigeColors[prestigeLevelKey];
-
-	try {
-		if (Array.isArray(prestigeData?.rank)) {
-			prestigeTag = prestigeTag
-				.split("")
-				.map((char, index) => {
-					return prestigeData.rank[index] + char;
-				})
-				.join("");
-		} else {
-			prestigeTag = prestigeData.rank + prestigeTag;
-		}
-
-		prestigeTag = prestigeTag.slice(0, -1) + (prestigeData.emblem ?? "") + "✯" + prestigeTag.slice(-1);
-	} catch {
-		// In case of error, return a default prestige tag
-		prestigeTag = `[${level}]✯`;
-	}
-	return prestigeTag;
-}
-
-export function calcNextPrestigeObj(level: number): [PrestigeObject, number] {
-	const prestige = calcPrestigeObj(level);
-	const prestigeKey = prestige[1];
-	const prestigeKeys = Object.keys(prestigeColors).map(Number);
-	const currentIndex = prestigeKeys.indexOf(prestigeKey);
-	if (currentIndex === -1 || currentIndex === prestigeKeys.length - 1) {
-		return [prestigeColors[prestigeKey], prestigeKey]; // Return current prestige if it's the last one or not found
-	}
-	const nextPrestigeKey = prestigeKeys[currentIndex + 1] as keyof typeof prestigeColors;
-	return [prestigeColors[nextPrestigeKey], nextPrestigeKey]; // Return next prestige object and its key as a tuple
-}
 
 export function romanize(num: number): string {
 	if (isNaN(num)) return "";

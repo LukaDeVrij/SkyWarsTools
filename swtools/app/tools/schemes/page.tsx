@@ -1,6 +1,6 @@
 import React from "react";
 
-import { rawSchemes } from "@/app/utils/Scheme";
+import { schemes } from "@/app/utils/Scheme";
 import { toCamelCase, formatSchemePreview } from "@/app/utils/Utils";
 import MinecraftText from "@/app/utils/MinecraftText";
 
@@ -32,9 +32,9 @@ const SchemePreviews = () => {
 					</thead>
 					<tbody>
 						{/* Slice last one, that i made up for Prestige handyness */}
-						{rawSchemes.slice(0, -1).map((scheme) => (
+						{schemes.slice(0, -1).map((scheme) => (
 							<tr key={scheme.name}>
-								<td className="p-2 font-semibold text-lg">{toCamelCase(scheme.name)}</td>
+								<td className="p-2 font-semibold text-lg">{scheme.formattedName}</td>
 								<td className="p-2 font-mono text-xl">
 									<MinecraftText>{formatSchemePreview(scheme, 100)}</MinecraftText>
 								</td>

@@ -1,8 +1,13 @@
 // This component is ported from the old SkyWarsTools codebase, which was vanilla JS + HTML based.
 // This is why its hella long, and not very React-y. Also many Typescript hacks
 
+import { useFetchSkyWars } from "@/app/hooks/useSkyWars";
+import { OverallResponse } from "@/app/types/OverallResponse";
+import { SkyWarsResponse } from "@/app/types/SkyWarsResponse";
 import { Snapshot } from "@/app/types/Snapshot";
-import { calcEXPFromLevel, calcLevel, calcPrestigeTag, formatTimestampShort, timeDiff } from "@/app/utils/Utils";
+import { getPlayerRank } from "@/app/utils/RankTag";
+import { calcSchemeString, formatScheme } from "@/app/utils/Scheme";
+import { calcEXPFromLevel, calcLevel, formatTimestampShort, timeDiff } from "@/app/utils/Utils";
 import React, { useRef } from "react";
 
 interface SessionCanvasProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
@@ -25,6 +30,10 @@ type SnapshotsResponse = {
 const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 	const { data, mode, ...canvasProps } = props;
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+	// We dont care if we put undefined
+	const playerName = data ? Object.values(data)[0]?.player : undefined;
+	const { skyWarsData, skyWarsError, isSkyWarsLoading } = useFetchSkyWars(playerName);
 
 	type CanvasBoxes = {
 		[key: string]: Entry;
@@ -63,7 +72,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				box: [258 * scalingFactorX, 70 * scalingFactorY, 732 * scalingFactorX, 120 * scalingFactorY],
 				color: undefined,
 				content: sessionFillPlayerName,
-				contentSize: "92px",
+				contentSize: "62px",
 			},
 			mode: {
 				title: undefined,
@@ -752,14 +761,14 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 				});
 			});
 		}
-	}, [data]);
+	}, [data, skyWarsData]);
 
 	function sessionFillImage(ctx: CanvasRenderingContext2D, entry: Entry, oldStats: Snapshot, newStats: Snapshot) {
 		const img = new Image();
-		img.src = `https://starlightskins.lunareclipse.studio/render/ultimate/${newStats.player}/bust`;
+		img.src = `https://render.crafty.gg/3d/bust/${newStats.player}?width=1024`;
 		img.crossOrigin = "anonymous";
 		img.onload = function () {
-			ctx.drawImage(img, entry.box[0] + 50, entry.box[1], entry.box[2] - 100, entry.box[3]);
+			ctx.drawImage(img, entry.box[0], entry.box[1], entry.box[2], entry.box[3]);
 		};
 	}
 	function sessionFillHeader(ctx: CanvasRenderingContext2D, entry: Entry) {
@@ -771,9 +780,47 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		ctx.fillText("Generate your SkyWars Session statistics at skywarstools.com", textX, textY);
 	}
 	function sessionFillPlayerName(ctx: CanvasRenderingContext2D, entry: Entry, oldStats: Snapshot, newStats: Snapshot) {
-		// TODO get scheme and stuff
-		const minecraftTag = newStats.player;
-		ctx.font = `${entry.contentSize} MinecraftReg`;
+		let minecraftTag: string;
+		if (skyWarsData && playerName) {
+			// We create a mock because formatScheme requires OverallResponse
+			const mockOverallResponse: OverallResponse = {
+				took: 0,
+				nextSave: { saved: true, lastSaved: 0 },
+				player: playerName,
+				uuid: "",
+				queried: 0,
+				stats: { networkExp: 0, firstLogin: 0, skywars_experience: skyWarsData.exp },
+				guild: {},
+				display: skyWarsData.display,
+			};
+			// This is enough for it to work
+
+			// Scheme bits
+			const level = calcLevel(mockOverallResponse.stats.skywars_experience ?? 0);
+			const scheme = formatScheme(level, mockOverallResponse, false);
+
+			// Rank
+			const rank = getPlayerRank(mockOverallResponse);
+
+			// Final assembled title
+			minecraftTag = `${scheme} ${rank.prefix} ${mockOverallResponse.player}`;
+
+			// Create a plain version to see how long it will be
+			const plainText = stripMCFormatting(minecraftTag);
+			console.log("We will be rendering text:",  plainText)
+			const boxWidth = entry.box[2];
+			let fontSize = 100;
+
+			ctx.font = `${fontSize}px MinecraftReg`;
+			while (ctx.measureText(plainText).width > boxWidth / 2 && fontSize > 68) {
+				fontSize--;
+				ctx.font = `${fontSize}px MinecraftReg`;
+			}
+			console.log("settled on dynamic font size of " + fontSize)
+		} else {
+			minecraftTag = newStats.player;
+			ctx.font = `${entry.contentSize} MinecraftReg`;
+		}
 
 		fillMCColorText(ctx, minecraftTag, entry.box);
 	}
@@ -828,6 +875,9 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 
 		ctx.textAlign = "center";
 	}
+	function stripMCFormatting(str: string): string {
+		return str.replace(/§[0-9a-fk-or]/gi, "");
+	}
 	function sessionFillMode(ctx: CanvasRenderingContext2D, entry: Entry) {
 		let modeText = "";
 		if (mode == "solo") {
@@ -850,7 +900,7 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 	}
 	function sessionFillTimespan(ctx: CanvasRenderingContext2D, entry: Entry, oldStats: Snapshot, newStats: Snapshot) {
 		let text = `From ${formatTimestampShort(new Date(oldStats.queried))} to ${formatTimestampShort(new Date(newStats.queried))}`;
-		text = text + `  (${timeDiff(newStats.queried, oldStats.queried)})`; // TODO add time diff
+		text = text + `  (${timeDiff(newStats.queried, oldStats.queried)})`;
 		ctx.font = `${entry.contentSize} MinecraftReg`;
 		ctx.fillStyle = entry.color || "#ffffff";
 		const [x, y, width, height] = entry.box;
@@ -957,8 +1007,8 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 		const currentLevelEXP = calcEXPFromLevel(currentLevel);
 		const currentLevelProgress = newExp - currentLevelEXP;
 
-		const levelFormatted = calcPrestigeTag(currentLevel);
-		const nextLevelFormatted = calcPrestigeTag(nextLevel);
+		const levelFormatted = calcSchemeString(currentLevel);
+		const nextLevelFormatted = calcSchemeString(nextLevel);
 
 		const progressPercentage = (currentLevelUnrounded - currentLevel) * 100;
 
@@ -1059,5 +1109,3 @@ const SessionCanvas: React.FC<SessionCanvasProps> = (props) => {
 };
 
 export default SessionCanvas;
-
-

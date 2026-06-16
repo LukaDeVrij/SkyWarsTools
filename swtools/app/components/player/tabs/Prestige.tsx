@@ -1,9 +1,9 @@
 import React from "react";
 import MinecraftText from "@/app/utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
-import { calcEXPFromLevel, calcLevel, calcNextPrestigeObj, calcPrestigeObj, calcPrestigeTag, PrestigeObject } from "@/app/utils/Utils";
+import { calcEXPFromLevel, calcLevel, toCamelCase } from "@/app/utils/Utils";
 import ProgressBar from "../../universal/ProgressBar";
-import { formatScheme } from "@/app/utils/Scheme";
+import { calcNextPrestigeScheme, calcScheme, calcSchemeString, formatScheme } from "@/app/utils/Scheme";
 import TabContent from "./TabContent";
 import { OverallResponse } from "@/app/types/OverallResponse";
 
@@ -13,12 +13,16 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 	// Prestige calculations - lot of stuff
 	const experience: number = response.stats.skywars_experience ?? 0;
 	const currentLevel = Math.floor(calcLevel(experience));
-	const [currentPrestigeObj, currentPrestige] = calcPrestigeObj(currentLevel);
-	const currentPrestigeString = calcPrestigeTag(currentPrestige);
-	const [nextPrestigeObj, nextPrestige]: [PrestigeObject, number] = calcNextPrestigeObj(currentLevel);
-	const nextPrestigeString = formatScheme(nextPrestige, response, true);
 
-	const expTotalNextPrestige = calcEXPFromLevel(nextPrestige);
+	const currentPrestigeScheme = calcScheme(currentLevel);
+	const currentPrestigeLevel = currentPrestigeScheme.req as number;
+	const currentPrestigeString = formatScheme(currentLevel, response, true);
+
+	const nextPrestigeScheme = calcNextPrestigeScheme(currentLevel);
+	const nextPrestigeLevel = nextPrestigeScheme.req as number;
+	const nextPrestigeString = formatScheme(nextPrestigeLevel, response, true);
+
+	const expTotalNextPrestige = calcEXPFromLevel(nextPrestigeLevel);
 	const expDiffNextPrestige = expTotalNextPrestige - experience;
 
 	let playtime = 0;
@@ -30,8 +34,8 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 	const expPerHour = experience / (playtime / 60 / 60);
 
 	const nextPrestigePlaytime = expDiffNextPrestige / expPerHour;
-	const expCurPrestige = calcEXPFromLevel(currentPrestige);
-	const expNextPrestige = calcEXPFromLevel(nextPrestige);
+	const expCurPrestige = calcEXPFromLevel(currentPrestigeLevel);
+	const expNextPrestige = calcEXPFromLevel(nextPrestigeLevel);
 	const expDiffCurNext = expNextPrestige - expCurPrestige;
 
 	const progressPercentage = ((experience - expCurPrestige) / expDiffCurNext) * 100;
@@ -59,14 +63,14 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 						<tbody>
 							<tr>
 								<td className="pr-2 text-accent">Current Prestige</td>
-								<td className="pr-2">{currentPrestigeObj.name}</td>
+								<td className="pr-2">{currentPrestigeScheme.formattedName}</td>
 								<td>
 									<MinecraftText>{currentPrestigeString}</MinecraftText>
 								</td>
 							</tr>
 							<tr>
 								<td className="pr-2 text-accent">Next Prestige</td>
-								<td className="pr-2">{nextPrestigeObj.name}</td>
+								<td className="pr-2">{nextPrestigeScheme.formattedName}</td>
 								<td>
 									<MinecraftText>{nextPrestigeString}</MinecraftText>
 								</td>
@@ -132,14 +136,14 @@ const Prestige: React.FC<OverallResponse> = async (response) => {
 						<tbody>
 							<tr>
 								<td className="pr-2 text-accent">Current Prestige</td>
-								<td className="pr-2">{currentPrestigeObj.name}</td>
+								<td className="pr-2">{currentPrestigeScheme.formattedName}</td>
 								<td>
 									<MinecraftText>{currentPrestigeString}</MinecraftText>
 								</td>
 							</tr>
 							<tr>
 								<td className="pr-2 text-accent">Next Prestige</td>
-								<td className="pr-2">{nextPrestigeObj.name}</td>
+								<td className="pr-2">{nextPrestigeScheme.formattedName}</td>
 								<td>
 									<MinecraftText>{nextPrestigeString}</MinecraftText>
 								</td>
