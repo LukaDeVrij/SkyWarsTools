@@ -192,7 +192,7 @@ const MapPageContent = () => {
 							alt={`${mapData.map.map_name} image`}
 							className="w-full rounded-t-lg"
 						/>
-						<table className="w-150 lg:w-full bg-content rounded-b-lg">
+						<table className="lg:w-full bg-content rounded-b-lg ">
 							<tbody>
 								<tr>
 									<td className="p-2 font-semibold text-lg text-accent">Last Change</td>
@@ -212,7 +212,7 @@ const MapPageContent = () => {
 					</div>
 
 					{/* Rotation table */}
-					<div className="w-full overflow-x-auto rounded-xl lg:p-8">
+					<div className="w-full overflow-x-auto rounded-xl p-4 lg:p-8">
 						<table className="w-150 lg:w-full bg-content rounded-lg">
 							<thead className="text-left text-accent border-b-2">
 								<tr>
@@ -242,22 +242,11 @@ const MapPageContent = () => {
 							</tbody>
 						</table>
 					</div>
-					{/* Controls */}
-					{/* <div className="flex justify-center mb-4">
-						<label htmlFor="hideAnomalies" className="flex items-center gap-2 font-semibold cursor-pointer">
-							<input
-								type="checkbox"
-								id="hideAnomalies"
-								checked={hideAnomalies}
-								onChange={() => setHideAnomalies(!hideAnomalies)}
-							/>
-							Hide anomalies
-						</label>
-					</div> */}
+
 					{/* Anomalies */}
 					{rotationData.anomalies.length > 0 && (
-						<div className="mx-4 lg:mx-8 mb-4 rounded-md border border-yellow-500 bg-yellow-950/30 p-4 text-yellow-100">
-							<p className="font-semibold mb-2">Potential Misaligned Datapoints</p>
+						<div className="mx-4 lg:mx-8 m-4 rounded-md border border-yellow-500 bg-yellow-950/30 p-4 text-yellow-100">
+							<p className="font-semibold mb-2">Potential Misaligned Datapoints*</p>
 							<ul className="list-disc pl-5 space-y-1">
 								{rotationData.anomalies.map((anomaly, i) => (
 									<li key={`${anomaly.type}-${anomaly.timestamp}-${i}`}>
@@ -265,6 +254,13 @@ const MapPageContent = () => {
 									</li>
 								))}
 							</ul>
+							<br></br>
+							<span className="text-sm">
+								<i>
+									* The datapoints are all from the forums thread, but this forums thread is not fully accurate. Not only
+									have seasonal maps been omitted in most rotation posts, random errors are also present for all maps.
+								</i>
+							</span>
 						</div>
 					)}
 				</>
