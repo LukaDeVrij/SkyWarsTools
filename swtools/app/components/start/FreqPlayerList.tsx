@@ -35,7 +35,7 @@ const FreqPlayerList = () => {
 							id={entry.score.toString()}
 						>
 							<Image
-								src={`https://www.mc-heads.net/avatar/${entry.value}/`}
+								src={`${process.env.NEXT_PUBLIC_HEADS_API}/head/${entry.value}/40`}
 								alt={"head" + entry.value}
 								width={40}
 								height={40}

@@ -128,7 +128,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 					width={100}
 					height={100}
 					className="rounded h-20 w-20 lg:h-28 lg:w-28 mb-6 lg:mb-12 mx-2 lg:mx-4 z-10 hidden lg:inline"
-					src={`https://www.mc-heads.net/avatar/${response.player}/`}
+					src={`${process.env.NEXT_PUBLIC_HEADS_API}/head/${response.player}/100`}
 				/>
 				{/* Online status indicator overlay */}
 				<span
@@ -155,9 +155,11 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 						)}
 					</div>
 					<div className="hidden lg:block">
-						{userInfoData?.user?.bio && <Tooltip placement="top" title={'Supporter bio, get your own by subscribing to Patreon!'}>
-							<div className="text-gray-400 italic text-xl">&quot;{userInfoData?.user?.bio}&quot;</div>
-						</Tooltip>}
+						{userInfoData?.user?.bio && (
+							<Tooltip placement="top" title={"Supporter bio, get your own by subscribing to Patreon!"}>
+								<div className="text-gray-400 italic text-xl">&quot;{userInfoData?.user?.bio}&quot;</div>
+							</Tooltip>
+						)}
 					</div>
 				</div>
 				<div className="text-xl font-montserrat justify-between lg:flex">

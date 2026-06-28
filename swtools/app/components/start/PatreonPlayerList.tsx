@@ -44,7 +44,7 @@ const PatreonPlayerList = () => {
 								className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted"
 							>
 								<Image
-									src={`https://www.mc-heads.net/avatar/${supporter.name}/`}
+									src={`${process.env.NEXT_PUBLIC_HEADS_API}/head/${supporter.name}/40`}
 									alt={supporter.name ?? "Minecraft avatar"}
 									width={40}
 									height={40}

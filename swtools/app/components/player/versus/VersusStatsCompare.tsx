@@ -279,7 +279,7 @@ function VersusStatsCompare({
 							{/* Mobile header row with avatars */}
 							<th className="p-2 text-3xl w-[35%] truncate">
 								<Image
-									src={`https://www.mc-heads.net/avatar/${player1.player}/`}
+									src={`${process.env.NEXT_PUBLIC_HEADS_API}/head/${player1.player}/40`}
 									width={40}
 									height={40}
 									className="rounded-sm ml-2"
@@ -293,7 +293,7 @@ function VersusStatsCompare({
 								<span className="inline-block align-middle"></span>
 								<span className="inline-block align-middle">
 									<Image
-										src={`https://www.mc-heads.net/avatar/${player2.player}/`}
+										src={`${process.env.NEXT_PUBLIC_HEADS_API}/head/${player2.player}/40`}
 										width={40}
 										height={40}
 										className="rounded-sm mr-2"
@@ -317,8 +317,8 @@ function VersusStatsCompare({
 										comp.player1Value > comp.player2Value
 											? "text-green-400"
 											: comp.player1Value < comp.player2Value
-											? "text-red-400"
-											: ""
+												? "text-red-400"
+												: ""
 									}`}
 								>
 									<Tooltip placement="left" title={comp.player1Score.toFixed(1) + " points"}>
@@ -335,8 +335,8 @@ function VersusStatsCompare({
 										comp.player2Value > comp.player1Value
 											? "text-green-400"
 											: comp.player2Value < comp.player1Value
-											? "text-red-400"
-											: ""
+												? "text-red-400"
+												: ""
 									}`}
 								>
 									<Tooltip placement="right" title={comp.player2Score.toFixed(1) + " points"}>
@@ -355,8 +355,8 @@ function VersusStatsCompare({
 											comp.player1Value > comp.player2Value
 												? "text-green-400"
 												: comp.player1Value < comp.player2Value
-												? "text-red-400"
-												: ""
+													? "text-red-400"
+													: ""
 										}`}
 									>
 										<Tooltip placement="left" title={comp.player1Score.toFixed(1) + " points"}>
@@ -373,8 +373,8 @@ function VersusStatsCompare({
 											comp.player2Value > comp.player1Value
 												? "text-green-400"
 												: comp.player2Value < comp.player1Value
-												? "text-red-400"
-												: ""
+													? "text-red-400"
+													: ""
 										}`}
 									>
 										<Tooltip placement="right" title={comp.player2Score.toFixed(1) + " points"}>

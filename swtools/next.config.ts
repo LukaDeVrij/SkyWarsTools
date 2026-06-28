@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: "https",
+				hostname: "api.mcheads.org",
+				pathname: "/head/**"
+			},
+			{
+				protocol: "https",
 				hostname: "starlightskins.lunareclipse.studio",
 				pathname: "/render/ultimate/**",
 			},
