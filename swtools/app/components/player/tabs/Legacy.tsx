@@ -20,6 +20,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 		const kdr = deaths === 0 ? (kills > 0 ? Infinity : 0) : kills / deaths;
 		return kdr > 5 ? "text-green-600" : "";
 	};
+	
 
 	const ratings = Object.entries(response.stats)
 		.filter(([key]) => key.includes("rating"))
@@ -128,7 +129,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 									</tr>
 								</thead>
 								<tbody className="zebra-rows">
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Lab</td>
 										<td>{response.stats.wins_lab?.toLocaleString()}</td>
 										<td>{response.stats.losses_lab?.toLocaleString()}</td>
@@ -136,7 +137,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 											{getWLR(response.stats.wins_lab ?? 0, response.stats.losses_lab ?? 0).toLocaleString()}
 										</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Lab Solo</td>
 										<td>{response.stats.wins_lab_solo?.toLocaleString()}</td>
 										<td>{response.stats.losses_lab_solo?.toLocaleString()}</td>
@@ -147,7 +148,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 											).toLocaleString()}
 										</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Lab Team</td>
 										<td>{response.stats.wins_lab_team?.toLocaleString()}</td>
 										<td>{response.stats.losses_lab_team?.toLocaleString()}</td>
@@ -171,7 +172,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 									</tr>
 								</thead>
 								<tbody className="zebra-rows">
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td className="inline lg:hidden">Lab</td>
 										<td>{response.stats.kills_lab?.toLocaleString()}</td>
 										<td>{response.stats.deaths_lab?.toLocaleString()}</td>
@@ -179,18 +180,18 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 											{getWLR(response.stats.kills_lab ?? 0, response.stats.deaths_lab ?? 0).toLocaleString()}
 										</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td className="inline lg:hidden">Lab Solo</td>
 										<td>{response.stats.kills_lab_solo?.toLocaleString()}</td>
 										<td>{response.stats.deaths_lab_solo?.toLocaleString()}</td>
-										<td className={kdrClass(response.stats.kills_solo ?? 0, response.stats.deaths_lab_solo ?? 0)}>
+										<td className={kdrClass(response.stats.kills_lab_solo ?? 0, response.stats.deaths_lab_solo ?? 0)}>
 											{getWLR(
 												response.stats.kills_lab_solo ?? 0,
 												response.stats.deaths_lab_solo ?? 0,
 											).toLocaleString()}
 										</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td className="inline lg:hidden">Lab Team</td>
 										<td>{response.stats.kills_lab_team?.toLocaleString()}</td>
 										<td>{response.stats.deaths_lab_team?.toLocaleString()}</td>
@@ -214,32 +215,32 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 								</tr>
 							</thead>
 							<tbody className="zebra-rows">
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Rush Wins</td>
 									<td>{(response.stats.lab_win_rush_lab ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Rush Solo Wins</td>
 									<td>{(response.stats.lab_win_rush_lab_solo ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Rush Team Wins</td>
 									<td>{(response.stats.lab_win_rush_lab_team ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Slime Wins</td>
 									<td>{(response.stats.lab_win_slime_lab ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Slime Solo Wins</td>
 									<td>{(response.stats.lab_win_slime_lab_solo ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Slime Team Wins</td>
 									<td>{(response.stats.lab_win_slime_lab_team ?? 0).toLocaleString()}</td>
 								</tr>
 
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Hunters vs Beasts Wins</td>
 									<td>{(response.stats.lab_win_hunters_vs_beasts_lab ?? 0).toLocaleString()}</td>
 								</tr>
@@ -253,19 +254,19 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 								</tr>
 							</thead>
 							<tbody className="zebra-rows">
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Lucky Blocks Wins</td>
 									<td>{(response.stats.lab_win_lucky_blocks_lab ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Lucky Blocks Solo Wins</td>
 									<td>{(response.stats.lab_win_lucky_blocks_lab_solo ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Lucky Blocks Team Wins</td>
 									<td>{(response.stats.lab_win_lucky_blocks_lab_team ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>
 										<br></br>
 									</td>
@@ -273,15 +274,15 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 										<br></br>
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>TNT Madness Wins</td>
 									<td>{(response.stats.lab_win_tnt_madness_lab ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>TNT Madness Solo Wins</td>
 									<td>{(response.stats.lab_win_tnt_madness_lab_solo ?? 0).toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>TNT Madness Team Wins</td>
 									<td>{(response.stats.lab_win_tnt_madness_lab_team ?? 0).toLocaleString()}</td>
 								</tr>
@@ -307,7 +308,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 									</tr>
 								</thead>
 								<tbody className="zebra-rows">
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>{response.stats.wins_ranked?.toLocaleString()}</td>
 										<td>{response.stats.losses_ranked?.toLocaleString()}</td>
 										<td className={wlrClass(response.stats.wins_ranked ?? 0, response.stats.losses_ranked ?? 0)}>
@@ -323,7 +324,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 									</tr>
 								</thead>
 								<tbody>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>{response.stats.kills_ranked?.toLocaleString()}</td>
 										<td>{response.stats.deaths_ranked?.toLocaleString()}</td>
 										<td className={kdrClass(response.stats.kills_ranked ?? 0, response.stats.deaths_ranked ?? 0)}>
@@ -334,19 +335,19 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 							</table>
 							<table className="p-4 w-full text-left bg-content [&_td]:py-0.5 [&_td]:px-2 [&_th]:px-2 mt-8">
 								<tbody>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Highest Position</td>
 										<td>{(maxPosition ? "#" + maxPosition : maxPosition).toLocaleString()}</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Highest Position Season</td>
 										<td>{(getKeyName(maxPositionSeason + "_position") ?? "None").replaceAll("Ranked", "")}</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Highest Rating</td>
 										<td>{maxRating.toLocaleString()}</td>
 									</tr>
-									<tr className="border-b-1 border-white">
+									<tr className="border-b border-white">
 										<td>Highest Division</td>
 										<td style={{ color: rankedColors[highestDivision ?? "Stone"] }}>
 											{(highestDivision ?? "None").toLocaleString()}
@@ -356,7 +357,7 @@ const Legacy: React.FC<OverallResponse> = (response) => {
 										<td colSpan={2} style={{ height: "24px" }}></td>
 									</tr>
 									{Object.entries(divisionCounts).map(([key, value]) => (
-										<tr key={key} className="border-b-1 border-white">
+										<tr key={key} className="border-b border-white">
 											<td>{key} Divisions</td>
 											<td>{value}x</td>
 										</tr>

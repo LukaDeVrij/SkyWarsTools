@@ -54,9 +54,9 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 	};
 
 	const getWLR = (stats: KitStats) =>
-		stats.losses === 0 ? (stats.wins ?? 0 > 0 ? Infinity : 0) : (stats.wins ?? 0) / (stats.losses ?? 1);
+		stats.losses === 0 ? ((stats.wins ?? 0 > 0) ? Infinity : 0) : (stats.wins ?? 0) / (stats.losses ?? 1);
 	const getKDR = (stats: KitStats) =>
-		stats.deaths === 0 ? (stats.kills ?? 0 > 0 ? Infinity : 0) : (stats.kills ?? 0) / (stats.deaths ?? 1);
+		stats.deaths === 0 ? ((stats.kills ?? 0 > 0) ? Infinity : 0) : (stats.kills ?? 0) / (stats.deaths ?? 1);
 
 	const sortedEntries = Object.entries(kitStats).sort(([kitA, statsA], [kitB, statsB]) => {
 		let a: number | string = 0;
@@ -135,11 +135,11 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 					<tbody>
 						{sortedEntries.map(([kitName, stats]) => {
 							const wlr: number =
-								stats.losses === 0 ? (stats.wins ?? 0 > 0 ? Infinity : 0) : (stats.wins ?? 0) / (stats.losses ?? 0);
+								stats.losses === 0 ? ((stats.wins ?? 0 > 0) ? Infinity : 0) : (stats.wins ?? 0) / (stats.losses ?? 0);
 							const kdr: number =
-								stats.deaths === 0 ? (stats.kills ?? 0 > 0 ? Infinity : 0) : (stats.kills ?? 0) / (stats.deaths ?? 0);
+								stats.deaths === 0 ? ((stats.kills ?? 0 > 0) ? Infinity : 0) : (stats.kills ?? 0) / (stats.deaths ?? 0);
 							return (
-								<tr key={kitName} className="border-b-1 border-white">
+								<tr key={kitName} className="border-b border-white">
 									<td>{kitName}</td>
 									<td>{(stats.wins ?? 0).toLocaleString()}</td>
 									{!isMini && (
@@ -155,7 +155,12 @@ const KitsUniversalTable: React.FC<KitsUniversalTableProps> = ({ kitData }) => {
 											<td className={kdr > 5 ? "text-green-600" : ""}>{kdr.toFixed(2)}</td>
 										</>
 									)}
-									<td title={getKitPrestigeInfo(stats.xp ?? 0, mega).name}>{(stats.xp ?? 0).toLocaleString()}</td>
+									<td
+										title={getKitPrestigeInfo(stats.xp ?? 0, mega).name}
+										className={getKitPrestigeInfo(stats.xp ?? 0, mega).key == 7 ? "text-green-600 " : ""}
+									>
+										{(stats.xp ?? 0).toLocaleString()}
+									</td>
 									<td id={stats.timePlayed !== undefined ? stats.timePlayed.toString() : undefined}>
 										{stats.timePlayed ? `${formatPlaytime(stats.timePlayed)}` : "0m"}
 									</td>

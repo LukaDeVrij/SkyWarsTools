@@ -16,20 +16,20 @@ const Extended: React.FC<OverallResponse> = (response) => {
 	const schemeSplit = response.display.active_scheme?.split("scheme_")[1];
 
 	const milestones = {
-		1: { req: 1, reward: "Hearts Projectile Trail", item: "apple_golden.png" },
-		2: { req: 3, reward: "Guardians Victory Dance", item: "prismarine_bricks.png" },
-		3: { req: 5, reward: "Blood Explosion Kill Effect", item: "redstone_dust.png" },
-		4: { req: 8, reward: "Grumpy Villager Death Cry", item: "seeds_wheat.png" },
-		5: { req: 11, reward: "Magic Box Cage", item: "barrier.png" },
-		6: { req: 14, reward: "Sad Puppy Death Cry", item: "lead.png" },
-		7: { req: 17, reward: "Green Star Projectile Trail", item: "emerald.png" },
-		8: { req: 20, reward: "Beazinga Death Cry", item: "fireworks.png" },
-		9: { req: 25, reward: "Heart Explosion Kill Effect", item: "apple.png" },
-		10: { req: 30, reward: "Monster Burp Death Cry", item: "rotten_flesh.png" },
-		11: { req: 35, reward: "Notes Projectile Trail", item: "jukebox.png" },
-		12: { req: 40, reward: "Head Rocket Kill Effect", item: "head.png" },
-		13: { req: 45, reward: "Final Smash Kill Effect", item: "wooden_armorstand.png" },
-		14: { req: 50, reward: "Dragon Rider Victory Dance", item: "dragon_egg.png" },
+		1: { req: 1, reward: "Hearts Projectile Trail", item: "apple_golden.png", key: "projectiletrail_hearts" },
+		2: { req: 3, reward: "Guardians Victory Dance", item: "prismarine_bricks.png", key: "victorydance_guardians" },
+		3: { req: 5, reward: "Blood Explosion Kill Effect", item: "redstone_dust.png", key: "killeffect_blood_explosion" },
+		4: { req: 8, reward: "Grumpy Villager Death Cry", item: "seeds_wheat.png", key: "deathcry_grumpy_villager" },
+		5: { req: 11, reward: "Magic Box Cage", item: "barrier.png", key: "cage_magic-box-cage" },
+		6: { req: 14, reward: "Sad Puppy Death Cry", item: "lead.png", key: "deathcry_sad_puppy" },
+		7: { req: 17, reward: "Green Star Projectile Trail", item: "emerald.png", key: "projectiletrail_green_star" },
+		8: { req: 20, reward: "Beazinga Death Cry", item: "fireworks.png", key: "deathcry_bazinga" },
+		9: { req: 25, reward: "Heart Explosion Kill Effect", item: "apple.png", key: "killeffect_heart_explosion" },
+		10: { req: 30, reward: "Monster Burp Death Cry", item: "rotten_flesh.png", key: "deathcry_monster_burp" },
+		11: { req: 35, reward: "Notes Projectile Trail", item: "jukebox.png", key: "projectiletrail_notes" },
+		12: { req: 40, reward: "Head Rocket Kill Effect", item: "head.png", key: "killeffect_head_rocket" },
+		13: { req: 45, reward: "Final Smash Kill Effect", item: "wooden_armorstand.png", key: "killeffect_final_smash" },
+		14: { req: 50, reward: "Dragon Rider Victory Dance", item: "dragon_egg.png", key: "victorydance_dragon_rider" },
 	};
 
 	const playerFullCompletions = Math.min(
@@ -76,28 +76,28 @@ const Extended: React.FC<OverallResponse> = (response) => {
 					<div className="extended-table w-full text-left bg-content font-bold font flex flex-col lg:flex-row lg:text-lg lg:justify-center">
 						<table className="p-4 w-full lg:w-[65%] text-left bg-content ">
 							<tbody>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Current Kit (Normal)</td>
 									<td>
 										{kitProcessing(response.stats.activeKit_SOLO ?? "None")}{" "}
 										{<KitPrestigeString kit={response.stats.activeKit_SOLO} response={response} />}
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Current Kit (Insane)</td>
 									<td>
 										{kitProcessing(response.stats.activeKit_TEAM ?? "None")}{" "}
 										{<KitPrestigeString kit={response.stats.activeKit_TEAM} response={response} />}
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Current Kit (Mini)</td>
 									<td>
 										{kitProcessing(response.stats.activeKit_MINI ?? "None")}{" "}
 										{<KitPrestigeString kit={response.stats.activeKit_MINI} response={response} />}
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Max Prestige Kits</td>
 									<td className="flex gap-2 items-center">
 										{(response.stats.customs_kitsMaxPrestige ?? 0).toString()}
@@ -108,7 +108,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 										</Tooltip>
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Display Scheme</td>
 									<td className="flex gap-2 items-center">
 										<span>
@@ -124,19 +124,19 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Angel of Death Level</td>
 									<td>{response.stats.angel_of_death_level ?? 0}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Angels Offering</td>
 									<td>{response.stats.angels_offering == 1 ? "Yes" : "No"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Favour of the Angel</td>
 									<td>{response.stats.packages?.includes("favor_of_the_angel") ? "Yes" : "No"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Total Corruption Chance</td>
 									<td>
 										{(response.stats.angel_of_death_level ?? 0) +
@@ -148,66 +148,66 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Experience</td>
 									<td>{response.stats.skywars_experience?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Coins</td>
 									<td>{response.stats.coins?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Opals</td>
 									<td>{response.stats.opals ?? "None"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Souls</td>
 									<td>{response.stats.souls?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Paid Souls</td>
 									<td>{response.stats.paid_souls?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Total Souls</td>
 									<td>{response.stats.souls_gathered?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Soul Well Uses</td>
 									<td>{response.stats.soul_well?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Assists</td>
 									<td>{response.stats.assists?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Melee Kills</td>
 									<td>{response.stats.melee_kills?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Void Kills</td>
 									<td>{response.stats.void_kills?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Mob Kills</td>
 									<td>{response.stats.mob_kills?.toLocaleString() ?? 0}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Bow Kills</td>
 									<td>{response.stats.bow_kills?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Arrows Shot</td>
 									<td>{response.stats.arrows_shot?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Arrows Hit</td>
 									<td>{response.stats.arrows_hit?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Arrows Hit/Miss</td>
 									<td>
 										{/* 	TODO Refactor this bs */}
@@ -225,7 +225,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Kill/Win Ratio</td>
 									<td>
 										{response.stats.kills && response.stats.wins
@@ -233,38 +233,38 @@ const Extended: React.FC<OverallResponse> = (response) => {
 											: "N/A"}
 									</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Survived Players</td>
 									<td>{response.stats.survived_players?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Game Ends (Solo)</td>
 									<td>{response.stats.customs_game_ends_solo?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td colSpan={2} style={{ height: "24px" }}></td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Eggs Thrown</td>
 									<td>{response.stats.egg_thrown?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Pearls Thrown</td>
 									<td>{response.stats.enderpearls_thrown?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Blocks Broken</td>
 									<td>{response.stats.blocks_broken?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Blocks Placed</td>
 									<td>{response.stats.blocks_placed?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Items Enchanted</td>
 									<td>{response.stats.items_enchanted?.toLocaleString()}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Chests Opened</td>
 									<td>{response.stats.chests_opened?.toLocaleString()}</td>
 								</tr>
@@ -310,7 +310,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 										const winRate = attempts > 0 ? ((wins / attempts) * 100).toFixed(2) + "%" : "N/A";
 										if (attempts === 0 && wins === 0) return null;
 										return (
-											<tr key={key} className="border-b-1 border-white ">
+											<tr key={key} className="border-b border-white ">
 												<td className=" font-semibold">
 													<Tooltip title={desc} placement="left">
 														<span>{name}</span>
@@ -334,7 +334,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 										const winRate = attempts > 0 ? ((wins / attempts) * 100).toFixed(2) : null;
 										if (attempts === 0 && wins === 0) return null;
 										return (
-											<tr key={num} className="border-b-1 border-white">
+											<tr key={num} className="border-b border-white">
 												<td className="">Games ({num} active)</td>
 												<td className="">{attempts}</td>
 												<td className="">{wins}</td>
@@ -389,7 +389,7 @@ const Extended: React.FC<OverallResponse> = (response) => {
 												}}
 											/>
 											<div
-												className="fixed lg:absolute left-0 w-[100vw] lg:left-1/2 bottom-0 lg:transform lg:-translate-x-1/2 lg:translate-y-full lg:w-max p-2 rounded items-center justify-center opacity-0 peer-hover:opacity-100 
+												className="fixed lg:absolute left-0 w-screen lg:left-1/2 bottom-0 lg:transform lg:-translate-x-1/2 lg:translate-y-full lg:w-max p-2 rounded items-center justify-center opacity-0 peer-hover:opacity-100 
 												transition-opacity bg-black/90 z-10 text-xl text-white text-left pointer-events-none peer-focus-within:opacity-100 peer-focus-within:pointer-events-auto"
 												tabIndex={-1}
 											>
@@ -399,6 +399,15 @@ const Extended: React.FC<OverallResponse> = (response) => {
 												</MinecraftText>
 												{milestone.req <= playerFullCompletions ? (
 													<MinecraftText>§l§aUNLOCKED</MinecraftText>
+												) : response.stats.packages?.includes(milestone.key) ? (
+													<>
+														<MinecraftText>§6You already have this cosmetic! You'll get tokens instead.</MinecraftText>
+														<MinecraftText>
+															{"§cYou need §a " +
+																(milestone.req - playerFullCompletions).toLocaleString() +
+																" §cmore full completions"}
+														</MinecraftText>
+													</>
 												) : (
 													<MinecraftText>
 														{"§cYou need §a " +

@@ -177,6 +177,22 @@ const ProfileSettingsPage = () => {
 					value={profileUser?.patreon_cents}
 				/>
 			)}
+			{profileUser?.patreon === true && (
+				<PropertyStatic
+					title="Patreon Since"
+					explainText={"Since when you are a patron"}
+					value={
+						profileUser?.patreon_since
+							? new Date(profileUser.patreon_since * 1000).toLocaleDateString("en-GB", {
+									timeZone: "UTC",
+									year: "numeric",
+									month: "2-digit",
+									day: "2-digit",
+								})
+							: undefined
+					}
+				/>
+			)}
 			{profileUser?.contrib === true && (
 				<PropertyStatic
 					title="Contributor Status"

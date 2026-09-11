@@ -55,7 +55,7 @@ const WeeklyRanks: React.FC<WeeklyRanksProps> = ({ uuid }) => {
 
 	const records = data?.topWeeklyRanks?.records ?? [];
 
-    // magic
+	// magic
 	const grouped = records.reduce<Record<string, Record<number, { week: string; value: number }[]>>>((acc, r) => {
 		if (r.rank > 3) return acc;
 		if (!acc[r.stat]) acc[r.stat] = {};
@@ -87,7 +87,11 @@ const WeeklyRanks: React.FC<WeeklyRanksProps> = ({ uuid }) => {
 	if (error || cards.length === 0) return null;
 
 	return (
-		<div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-4 pb-0 bg-content">
+		<div
+			className="overflow-x-auto p-4 pb-2 bg-content [scrollbar-width:thin] [scrollbar-color:theme(colors.gray.600)_transparent] 
+		[&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:hidden [&::-webkit-scrollbar-thumb]:hidden 
+		[&::-webkit-scrollbar]:hidden"
+		>
 			<div className="flex gap-2">
 				{cards.map(({ stat, rank, weeks }) => {
 					const medal = MEDALS[rank];
@@ -99,12 +103,13 @@ const WeeklyRanks: React.FC<WeeklyRanksProps> = ({ uuid }) => {
 							<button
 								onClick={() => setOpenCard(isOpen ? null : key)}
 								className={[
-									"flex cursor-pointer h-24 w-full flex-col items-start rounded-lg bg-layer p-3 text-left transition-colors hover:brightness-110",
+									"flex cursor-pointer h-24 w-full flex-col items-start rounded-lg bg-layer text-left transition-colors hover:brightness-110",
 									medal.border,
+									isOpen ? "p-2" : "p-3",
 								].join(" ")}
 							>
 								{isOpen ? (
-									<div className="flex flex-col rounded-lg bg-layer justify-between w-full overflow-y-scroll [scrollbar-width:none] [&::-webkit-scrollbar]">
+									<div className="flex flex-col rounded-lg bg-layer justify-between w-full overflow-y-scroll ">
 										{weeks.map((w, i) => (
 											<div
 												key={w.week}

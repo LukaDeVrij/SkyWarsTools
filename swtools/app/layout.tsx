@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-
-import "./globals.css"; 
+import "./globals.css";
 import TopNavBar from "./components/navbar/TopNavBar";
+import APIStatus from "./components/APIStatus";
 
 export const metadata: Metadata = {
 	description: "SkyWarsTools 2.0 - A SkyWars Stats website with leaderboards, tracking and more!",
@@ -29,8 +29,8 @@ export default function RootLayout({
 		})();
 	`;
 
-		return (
-			<html lang="en" data-theme="dark" suppressHydrationWarning>
+	return (
+		<html lang="en" data-theme="dark" suppressHydrationWarning>
 			<head>
 				<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"></link>
 				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -40,7 +40,7 @@ export default function RootLayout({
 			{/* TODO maybe get rid of scrollbar on overall body and put it on content instead */}
 			<body className="antialiased">
 				<TopNavBar />
-
+				<APIStatus></APIStatus>
 				<div className="w-[100vw] lg:w-[1150px] bg-[var(--background-layer)] m-auto mb-2 lg:mt-2 lg:rounded-xl">{children}</div>
 
 				{/* <Footer /> */}

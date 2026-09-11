@@ -67,6 +67,7 @@ export interface Stats {
 	kill_xp_boost?: number;
 	xezbeth_luck?: number;
 	harvesting_season?: number;
+	cosmetic_tokens?: number;
 	survived_players?: number;
 	blocks_broken?: number;
 	blocks_placed?: number;
@@ -120,6 +121,17 @@ export interface Stats {
 	lab_win_tnt_madness_lab_team?: number;
 	lab_win_hunters_vs_beasts_lab?: number; //
 	lab_win_hunters_vs_beasts_lab_solo?: number; // there is no team, usually solo = overall
+
+	assists_solo?: number;
+	assists_team?: number;
+	assists_mini?: number;
+	assists_mega?: number;
+	assists_lab?: number;
+
+	void_kills_lab?: number;
+	mob_kills_lab?: number;
+	melee_kills_lab?: number;
+	bow_kills_lab?: number;
 
 	heads_eww?: number;
 	heads_yucky?: number;

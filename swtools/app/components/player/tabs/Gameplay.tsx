@@ -44,43 +44,43 @@ const Gameplay: React.FC<OverallResponse> = (response) => {
 					<div className="flex justify-center">
 						<table className="p-4 w-full lg:w-[65%] text-left bg-content ">
 							<tbody>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Balloon</td>
 									<td>{response.stats.active_balloon ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Cage</td>
 									<td>{response.stats.active_cage ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Death Cry</td>
 									<td>{response.stats.active_deathcry ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Emblem</td>
 									<td>{response.stats.active_emblem ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Kill Effect</td>
 									<td>{response.stats.active_killeffect ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Kill Message</td>
 									<td>{response.stats.active_killmessages ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Projectile Trail</td>
 									<td>{response.stats.active_projectiletrail ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Scheme</td>
 									<td>{response.stats.active_scheme ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Spray</td>
 									<td>{response.stats.active_sprays ?? "-"}</td>
 								</tr>
-								<tr className="border-b-1 border-white">
+								<tr className="border-b border-white">
 									<td>Victory Dance</td>
 									<td>{response.stats.active_victorydance ?? "-"}</td>
 								</tr>

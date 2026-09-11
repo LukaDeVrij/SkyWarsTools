@@ -20,31 +20,31 @@ const Playtime: React.FC<OverallResponse> = (response) => {
 							</tr>
 						</thead>
 						<tbody>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td>Overall</td>
 								<td>{response.stats.wins?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins ?? 0, response.stats.time_played ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td>Solo</td>
 								<td>{response.stats.wins_solo?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins_solo ?? 0, response.stats.time_played_solo ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_solo ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td>Teams</td>
 								<td>{response.stats.wins_team?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins_team ?? 0, response.stats.time_played_team ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td>Mini</td>
 								<td>{(response.stats.wins_mini ?? 0).toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td className="inline lg:hidden">{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td>Lab</td>
 								<td>{response.stats.wins_lab?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.wins_lab ?? 0, response.stats.time_played_lab ?? 0)}</td>
@@ -63,31 +63,31 @@ const Playtime: React.FC<OverallResponse> = (response) => {
 							</tr>
 						</thead>
 						<tbody>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td className="inline lg:hidden">Overall</td>
 								<td>{response.stats.kills?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills ?? 0, response.stats.time_played ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td className="inline lg:hidden">Solo</td>
 								<td>{response.stats.kills_solo?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills_solo ?? 0, response.stats.time_played_solo ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_solo ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td className="inline lg:hidden">Teams</td>
 								<td>{response.stats.kills_team?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills_team ?? 0, response.stats.time_played_team ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_team ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td className="inline lg:hidden">Mini</td>
 								<td>{(response.stats.kills_mini ?? 0).toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills_mini ?? 0, response.stats.time_played_mini ?? 0)}</td>
 								<td>{formatPlaytime(response.stats.time_played_mini ?? 0)}</td>
 							</tr>
-							<tr className="border-b-1 border-white">
+							<tr className="border-b border-white">
 								<td className="inline lg:hidden">Lab</td>
 								<td>{response.stats.kills_lab?.toLocaleString()}</td>
 								<td>{calcRatio(response.stats.kills_lab ?? 0, response.stats.time_played_lab ?? 0)}</td>

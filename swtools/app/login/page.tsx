@@ -59,9 +59,13 @@ export default function LogoutPage() {
 					onClick={handleGoogleLogin}
 					className="w-full lg:w-100  p-3 bg-gray-500 rounded text-white font-semibold hover:bg-gray-600 flex items-center justify-center gap-4 cursor-pointer animate-press"
 				>
-					<Image src="/icons/google.png" alt="Google Logo" className="w-7 h-7" height={100} width={100}/>
+					<Image src="/icons/google.png" alt="Google Logo" className="w-7 h-7" height={100} width={100} />
 					Sign in with Google
 				</button>
+				<br></br>
+				<p>
+					No account? You can just sign in with Google nonetheless, <a href="/register">or make an account here</a>!
+				</p>
 			</div>
 		</div>
 	);

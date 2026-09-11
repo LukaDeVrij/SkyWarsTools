@@ -5,11 +5,12 @@ import twemoji from "@twemoji/api";
 import Image from "next/image";
 import MinecraftText from "../../utils/MinecraftText";
 import { getPlayerRank } from "@/app/utils/RankTag";
-import { calcLevel, fetcher } from "@/app/utils/Utils";
+import { calcLevel, fetcher, unshortenUUID } from "@/app/utils/Utils";
 import { formatScheme } from "@/app/utils/Scheme";
 import useSWR from "swr";
 import { OverallResponse } from "@/app/types/OverallResponse";
 import Tooltip from "@mui/material/Tooltip";
+import { ClipboardPen } from "lucide-react";
 
 interface PlayerTitleProps {
 	playerName: string;
@@ -38,7 +39,7 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
 			shouldRetryOnError: false,
-		}
+		},
 	);
 
 	const [nationality, setNationality] = React.useState<string | null>(null);
@@ -51,15 +52,15 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
 			shouldRetryOnError: false,
-		}
+		},
 	);
-	console.log(userInfoData)
+	console.log(userInfoData);
 
 	React.useEffect(() => {
 		if (userInfoData && userInfoData.success && userInfoData.user) {
 			setNationality(userInfoData.user.nationality ?? null);
 			const allowedEmoji: boolean = (userInfoData.user.patreon || userInfoData.user.contrib) ?? false;
-			setEmoji(allowedEmoji ? userInfoData.user.emoji ?? null : null);
+			setEmoji(allowedEmoji ? (userInfoData.user.emoji ?? null) : null);
 		}
 	}, [userInfoData]);
 
@@ -121,24 +122,24 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 	}
 
 	return (
-		<div className="bg-main h-22 lg:h-25 w-full flex items-center">
-			<div className="z-10 relative">
+		<div className="bg-main min-h-22 lg:min-h-25 w-full flex items-start">
+			<div className="z-10 relative -mt-6 lg:-mt-6">
 				<img
 					alt="player avatar"
 					width={100}
 					height={100}
-					className="rounded h-20 w-20 lg:h-28 lg:w-28 mb-6 lg:mb-12 mx-2 lg:mx-4 z-10 hidden lg:inline"
+					className="rounded h-20 w-20 lg:h-28 lg:w-28 mx-2 lg:mx-4 z-10 hidden lg:inline"
 					src={`${process.env.NEXT_PUBLIC_HEADS_API}/${response.uuid}`}
 				/>
 				{/* Online status indicator overlay */}
 				<span
 					title={title}
-					className={`absolute top-[-12px] right-[-25px] lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 hidden lg:block ${bgColor}`}
+					className={`absolute -top-3 -right-6.25 lg:top-[-8] lg:right-[-10] border-2 border-black rounded-full w-5 h-5 hidden lg:block ${bgColor}`}
 				></span>
 			</div>
 
-			<div className="w-full lg:h-22 text-3xl lg:text-4xl flex flex-col justify-center px-2 lg:px-4 text-center lg:text-left">
-				<div className="flex flex-row gap-2 lg:gap-5 items-center justify-between">
+			<div className="w-full min-h-22 lg:min-h-25 text-3xl lg:text-4xl flex flex-col justify-center px-2 lg:px-4 text-center lg:text-left">
+				<div className="flex flex-row flex-wrap gap-2 lg:gap-5 items-center justify-between">
 					<div className="flex items-center gap-2 lg:gap-4">
 						<span
 							title={title}
@@ -154,10 +155,12 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 							/>
 						)}
 					</div>
-					<div className="hidden lg:block">
+					<div className="hidden lg:block max-w-md xl:max-w-lg mb-2">
 						{userInfoData?.user?.bio && (
 							<Tooltip placement="top" title={"Supporter bio, get your own by subscribing to Patreon!"}>
-								<div className="text-gray-400 italic text-xl">&quot;{userInfoData?.user?.bio}&quot;</div>
+								<div className="text-gray-400 italic text-xl whitespace-normal wrap-anywhere">
+									&quot;{userInfoData?.user?.bio}&quot;
+								</div>
 							</Tooltip>
 						)}
 					</div>
@@ -185,6 +188,15 @@ const PlayerTitle: React.FC<PlayerTitleProps> = ({ response }) => {
 					</div>
 
 					<div className="hidden lg:flex items-center gap-2 mx-4">
+						<button
+							onClick={async () => {
+								await navigator.clipboard.writeText(unshortenUUID(response.uuid));
+							}}
+							title="Copy UUID to clipboard"
+							className="h-6 w-6 items-center justify-center rounded bg-muted hover:bg-muted/80 transition-colors cursor-pointer animate-press-hard"
+						>
+							<ClipboardPen className="h-6 w-6" />
+						</button>
 						<a
 							href={`https://namemc.com/profile/${response.player}`}
 							target="_blank"

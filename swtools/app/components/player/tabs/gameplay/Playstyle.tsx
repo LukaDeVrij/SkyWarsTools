@@ -68,35 +68,35 @@ function Playstyle({ response }: { response: OverallResponse }) {
 						</tr>
 					</thead> */}
 					<tbody className="">
-						<tr className="border-b-1 border-white">
+						<tr className="border-b border-white">
 							<td>Blocks Broken Ratio</td>
 							<td>{blocksBrokenRatio.toFixed(2)}</td>
 							<td>
 								<RiskBadge level={bbRisk} />
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b border-white">
 							<td>Kill/Win Ratio</td>
 							<td>{killWinRatio.toFixed(2)}</td>
 							<td>
 								<RiskBadge level={kwrRisk} />
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b border-white">
 							<td>Survived/Kills Ratio</td>
 							<td>{survivedPlayersRatio.toFixed(2)}</td>
 							<td>
 								<RiskBadge level={sprRisk} />
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b border-white">
 							<td>Has Mining Perks</td>
 							<td>{hasMiningPerks ? "Yes" : "No"}</td>
 							<td>
 								<RiskBadge level={perksRisk} />
 							</td>
 						</tr>
-						<tr className="border-b-1 border-white">
+						<tr className="border-b border-white">
 							<td>
 								<span title={activeMiningKits.join(", ") || "None"} className="cursor-help underline decoration-dotted">
 									Active Mining Kits

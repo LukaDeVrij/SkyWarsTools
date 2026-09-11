@@ -35,7 +35,10 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false, alignRigh
 	}, [open]);
 
 	return (
-		<div className={`relative float-right ${alignRight ? "ml-auto" : ""} ${mobile ? "block lg:hidden" : "hidden lg:block"}`} ref={dropdownRef}>
+		<div
+			className={`relative float-right ${alignRight ? "ml-auto" : ""} ${mobile ? "block lg:hidden" : "hidden lg:block"}`}
+			ref={dropdownRef}
+		>
 			<button
 				type="button"
 				className="p-2 rounded-md text-[var(--foreground)] font-montserrat font-[700] animate-press focus:outline-none cursor-pointer"
@@ -70,9 +73,14 @@ const NavBarProfile: React.FC<NavBarProfileProps> = ({ mobile = false, alignRigh
 							</Link>
 						</>
 					) : (
-						<Link href="/login" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
-							Login
+						<>
+							<Link href="/login" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
+								Login
 						</Link>
+							<Link href="/register" className="block px-4 py-2 text-white font-semibold" onClick={() => setOpen(false)}>
+								Register
+							</Link>
+						</>
 					)}
 				</div>
 			)}

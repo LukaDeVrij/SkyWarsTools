@@ -8,5 +8,6 @@ type UserProfile = {
 	emoji?: string | null;
 	patreon_cents?: number | null;
 	contrib?: boolean | null;
+	patreon_since?: number | null;
 };
 // Linter says this isnt used but it is!!!

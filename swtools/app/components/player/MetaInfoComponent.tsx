@@ -29,23 +29,30 @@ const MetaInfoComponent = ({
 
 	const [open, setOpen] = React.useState(false);
 
-    console.log(savedTheseStats, saveTime, nextSaveTime);
+	// console.log(savedTheseStats, saveTime, nextSaveTime);
 
 	return (
 		<>
 			<div className="ml-auto relative">
-				<div
-					className="inline-flex h-8 items-center justify-center cursor-pointer rounded"
-					onMouseEnter={() => setOpen(true)}
-					onMouseLeave={() => setOpen(false)}
-					onFocus={() => setOpen(true)}
-					onBlur={() => setOpen(false)}
-					tabIndex={0}
-					role="button"
-					aria-label="Snapshot and metainfo details"
-					aria-expanded={open}
-				>
-					{savedTheseStats == false ? <SnapshotCooldown saveTime={saveTime} nextSaveTime={nextSaveTime!} /> : <CloudCheck className="text-green-500" />}
+				<div className="flex flex-row gap-2 justify-center items-center">
+					<span className="font-light">{savedTheseStats ? "Snapshot saved!" : "On cooldown."}</span>
+					<div
+						className="inline-flex h-8 items-center justify-center cursor-pointer rounded"
+						onMouseEnter={() => setOpen(true)}
+						onMouseLeave={() => setOpen(false)}
+						onFocus={() => setOpen(true)}
+						onBlur={() => setOpen(false)}
+						tabIndex={0}
+						role="button"
+						aria-label="Snapshot and metainfo details"
+						aria-expanded={open}
+					>
+						{savedTheseStats == false ? (
+							<SnapshotCooldown saveTime={saveTime} nextSaveTime={nextSaveTime!} />
+						) : (
+							<CloudCheck className="text-green-500" />
+						)}
+					</div>
 				</div>
 
 				<div
