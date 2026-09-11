@@ -21,24 +21,24 @@ const FreqPlayerList = () => {
 
 	return (
 		<>
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+			<div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
 				{isLoading && <LoaderCircle className="animate-spin"></LoaderCircle>}
 				{error && <div>Could not get popular players ):</div>}
 				{!isLoading &&
 					!error &&
 					data &&
-					data.stats.slice(0, 9).map((entry: StatEntry, index: number) => (
+					data.stats.slice(0, 12).map((entry: StatEntry, index: number) => (
 						<a
 							key={index}
-							className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press border-2 border-[#ffffff22]"
+							className="flex items-center gap-2 lg:gap-3 bg-content rounded-md p-1 lg:p-2 w-full text-lg animate-press cursor-pointer border-2 border-[#ffffff22]"
 							href={`/player/${entry.value}/stats/table`}
 							id={entry.score.toString()}
 						>
 							<Image
 								src={`${process.env.NEXT_PUBLIC_HEADS_API}/${entry.value}`}
 								alt={"head" + entry.value}
-								width={40}
-								height={40}
+								width={30}
+								height={30}
 								className="rounded"
 							/>
 							<div className="min-w-0">

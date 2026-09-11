@@ -6,7 +6,7 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "npx eslint ."
 	},
 	"engines": {
 		"node": "24.16"
@@ -23,11 +23,9 @@
 		"lucide-react": "^0.539.0",
 		"next": "^16.3.0",
 		"node-dom": "^0.1.0",
-		"plotly.js": "^3.1.0",
 		"react": "^19.1.4",
 		"react-dom": "^19.1.4",
 		"react-firebase-hooks": "^5.1.1",
-		"react-plotly.js": "^2.6.0",
 		"react-tabs": "^6.1.0",
 		"react-widgets": "^5.8.6",
 		"swr": "^2.3.6",
@@ -41,8 +39,8 @@
 		"@types/react": "19.1.2",
 		"@types/react-dom": "19.1.0",
 		"@types/react-plotly.js": "^2.6.3",
-		"eslint": "^9",
-		"eslint-config-next": "15.4.6",
+		"eslint": "^9.39.5",
+		"eslint-config-next": "^16.3.4",
 		"sass": "^1.91.0",
 		"tailwindcss": "^4",
 		"typescript": "^5"

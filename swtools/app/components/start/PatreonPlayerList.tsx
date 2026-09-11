@@ -24,15 +24,12 @@ const PatreonPlayerList = () => {
 		{
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
-		}
+		},
 	);
-
-	console.log(data)
-
 
 	return (
 		<>
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+			<div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
 				{isLoading && <LoaderCircle className="animate-spin" />}
 				{error && <div>Could not get Patreon supporters ):</div>}
 				{!isLoading &&
@@ -44,24 +41,24 @@ const PatreonPlayerList = () => {
 							<a
 								href={`/redirect?uuid=${supporter.mc_account}`}
 								key={index}
-								className="flex items-center gap-3 lg:gap-4 bg-content rounded-md p-1 lg:p-2 w-full text-xl animate-press cursor-pointer enchanted border-2 border-[#ffffff22]"
+								className="flex items-center gap-2 lg:gap-3 bg-content rounded-md p-1 lg:p-2 w-full text-lg animate-press cursor-pointer enchanted border-2 border-[#ffffff22]"
 							>
 								<Image
 									src={`${process.env.NEXT_PUBLIC_HEADS_API}/${supporter.mc_account}`}
 									alt={supporter.name ?? "Minecraft avatar"}
-									width={40}
-									height={40}
+									width={30}
+									height={30}
 									className="rounded"
 								/>
 								<div className="min-w-0">
-									<div className="font-semibold truncate flex gap-2 items-center">
+									<div className="font-semibold truncate flex gap-1 lg:gap-2 items-center">
 										<span className="truncate ">{supporter.name ?? "Unknown"}</span>
 										{
 											<span
 												dangerouslySetInnerHTML={{
 													__html: twemoji.parse(supporter.emoji ?? "", { folder: "svg", ext: ".svg" }),
 												}}
-												style={{ width: 28, height: 28, display: "inline-block" }}
+												style={{ width: 24, height: 24, display: "inline-block" }}
 											/>
 										}
 									</div>
